@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+      http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+         http://www.springframework.org/schema/mvc
+		http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/util 
+		http://www.springframework.org/schema/util/spring-util.xsd">
+	<util:properties id="wxProperties" location="classpath:/wechat.properties" />
+	<!--扫描@Controller -->
+	<context:component-scan base-package="com.flyme.weixin">
+		<context:include-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+	<bean id="viewResolver"
+		class="com.flyme.core.freemarker.config.RichFreeMarkerViewResolver">
+		<property name="prefix" value="/weixin/" />
+		<property name="suffix" value=".html" />
+		<property name="contentType" value="text/html;charset=UTF-8" />
+		<property name="allowRequestOverride" value="true" />
+		<property name="allowSessionOverride" value="true" />
+		<property name="exposeSessionAttributes" value="true" />
+	</bean>
+	<mvc:annotation-driven />
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/*/*.wx" />
+			<mvc:exclude-mapping path="/*/author.wx" />
+			<mvc:exclude-mapping path="/author.wx" />
+			<mvc:exclude-mapping path="/*/api.wx" />
+			<bean class="com.flyme.weixin.core.interceptor.WxAuthInterceptor"></bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
+	<!--模板配置 -->
+	<bean id="freemarkerConfiguration"
+		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="location" value="classpath:freemarker.properties" />
+	</bean>
+	<bean id="freemarkerConfig"
+		class="com.flyme.core.freemarker.config.ShiroTagFreeMarkerConfigurer">
+		<property name="templateLoaderPath" value="/WEB-INF" />
+		<property name="freemarkerVariables">
+			<map>
+				<entry key="fm" value-ref="freemarkerDirective" />
+			</map>
+		</property>
+		<property name="freemarkerSettings" ref="freemarkerConfiguration" />
+	</bean>
+</beans>

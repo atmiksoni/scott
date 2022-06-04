@@ -1,0 +1,1308 @@
+﻿<!DOCTYPE html>
+<!--[if IE 6 ]> <html class="ie6 lte_ie6 lte_ie7 lte_ie8 lte_ie9"> <![endif]-->
+<!--[if lte IE 6 ]> <html class="lte_ie6 lte_ie7 lte_ie8 lte_ie9"> <![endif]-->
+<!--[if lte IE 7 ]> <html class="lte_ie7 lte_ie8 lte_ie9"> <![endif]-->
+<!--[if lte IE 8 ]> <html class="lte_ie8 lte_ie9"> <![endif]-->
+<!--[if lte IE 9 ]> <html class="lte_ie9"> <![endif]-->
+<!--[if (gte IE 10)|!(IE)]><!-->
+<html>
+<!--<![endif]-->
+<head>
+<title>基础权限管理系统</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="renderer" content="ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=10,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<script type="text/javascript">
+	var MYOA_JS_SERVER = "";
+	var baseUrl = "${base}";
+	var MYOA_STATIC_SERVER = "";
+</script>
+<link rel="stylesheet" type="text/css" href="${base}/res/theme/vogue/js/bootstrap/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/theme/vogue/js/bootstrap/tag/bootstrap.tag.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/theme/vogue/js/intro/show_guide.css" />
+<link rel="stylesheet" href="${base}/res/theme/vogue/css/iconfont/iconfont.css">
+<link rel="stylesheet" href="${base}/plug-in/jquery/plugins/animate/css/animate.min.css">
+<link rel="stylesheet" type="text/css" href="${base}/res/theme/vogue/css/index.css" />
+<script type="text/javascript" src="${base}/plug-in/jquery/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="${base}/plug-in/jquery/plugins/tmpl/jquery.tmpl.min.js"></script>
+<script type="text/javascript" src="${base}/plug-in/jquery/plugins/json2/JSON.js"></script>
+<script type="text/javascript" src="${base}/plug-in/bootstrap/bootstrap.min.js"></script>
+<script type="text/javascript" src="${base}/plug-in/bootstrap/tag/bootstrap.tag.js"></script>
+<script type="text/javascript" src="${base}/res/theme/vogue/js/tabs_plugins.js"></script>
+<script type="text/javascript" src="${base}/plug-in/jquery/plugins/mousewheel/jquery.mousewheel.min.js"></script>
+<script type="text/javascript" src="${base}/plug-in/jquery/cookie/jquery.cookie.js"></script>
+<script type="text/javascript" src="${base}/plug-in/jquery/plugins/base64/base64.min.js"></script>
+<script type="text/javascript" src="${base}/plug-in/webuploader/webuploader.js"></script>
+<script type="text/javascript" src="${base}/res/theme/vogue/js/js_lang.js"></script>
+<script type="text/javascript" src="${base}/res/theme/vogue/js/plugin.js"></script>
+<script type="text/javascript" src="${base}/plug-in/seajs/2.1.1/sea.js"></script>
+<script src="${base}/plug-in/artTemplate/template.js?version=1.1.0" type="text/javascript"></script>
+<script src="${base}/flyme/flyme_main.js?version=1.1.0" type="text/javascript" config="debug:yes"></script>
+<script type="text/javascript" src="${base}/flyme/flyme_zdialog.js"></script>
+<script src="${base}/plug-in/layer/layer.js?v=2.0"></script>
+<script src="${base}/res/theme/vogue/js/module.js"></script>
+<script src="${base}/res/theme/common/js/menu.js"></script>
+<script type="text/javascript">
+	seajs.config({
+		base : '${base}/res/theme/vogue/js/',
+		alias : {
+			'underscore' : 'backbone/underscore.js',
+			'backbone' : 'backbone/backbone.min.js',
+			'menu-aim' : 'jquery.menu-aim.js',
+			'miniNotification' : 'miniNotification.js',
+			'tDesktop' : 'tDesktop/desktop.js'
+		}
+	});
+</script>
+<script>
+	jQuery(function() {
+		seajs.use([ 'tDesktop', 'backbone' ], function(tDesktop) {
+			var tDesktop = new tDesktop.TDesktop;
+			window.tDesktop = tDesktop;
+		});
+		//检测是否支持WebUploader
+		if (!WebUploader.Uploader.support()) {
+			alert('提示：您所使用的浏览器不支持WebUploader组件，该组件会影响系统内文件上传功能。如果您所使用的是IE浏览器，请尝试升级flash播放器');
+		}
+	});
+	function formatCalendarTitle(cstring) {
+		var transMap = [ {
+			lable : '会议',
+			key : 'meeting'
+		}, {
+			lable : '车辆',
+			key : 'car'
+		} ];
+		jQuery.each(transMap, function(k, v) {
+			var lable = v.lable;
+			var tips = new RegExp("^" + lable + ":", "g");
+			cstring = cstring.replace(tips, '<span class="calendar-title-tip">' + lable + '：' + '</span><span>');
+		});
+		return cstring;
+	}
+</script>
+<script>
+	function show_feedback() {
+	}
+</script>
+</head>
+<!--显示控制面板向导-->
+<div id="guide" style="display: none">
+	<link rel="stylesheet" type="text/css" href="${base}/res/theme/vogue/js/setting_guide/css/panel.css">
+	<link rel="stylesheet" type="text/css" href="${base}/plug-in/webuploader/webuploader.css">
+	<script type="text/javascript">
+		function initUpload() {
+			var uploader = {};
+			window.uploader = uploader;
+			uploader = new WebUploader.Uploader({
+				resize : false,
+				duplicate : true,
+				auto : true,
+				swf : '${base}/plug-in/webuploader/Uploader.swf',
+				server : '',
+				pick : '#AVATAR',
+				accept : {
+					title : 'Images',
+					extensions : 'gif,jpg,jpeg,png',
+					mimeTypes : 'image/*'
+				}
+			});
+			uploader.on('uploadSuccess', function(file, data) {
+				var avatarid = data.id;
+				var avatarname = data.name;
+				var _img = new Image();
+				_img.src = data.url;
+				_img.onload = function() {
+					jQuery('#AVATAR2') && jQuery('#AVATAR2').val(avatarid);
+					jQuery('#AVATAR3') && jQuery('#AVATAR3').val(avatarname);
+					//获取上传图片的原始尺寸
+					if (_img.width > 64 || _img.height > 64) {
+						alert("图片大小不能超过64像素");
+						//及时删除上传到临时文件夹的不符合要求的图片
+						jQuery.ajax({
+							url : '',
+							data : {
+								avatarid : avatarid,
+								avatarname : avatarname
+							},
+							async : true,
+							type : 'post',
+							success : function(d) {
+								//
+							}
+						});
+					} else {
+						uploader.makeThumb(file, function(error, ret) {
+							if (error) {
+							} else {
+								jQuery('#default-avatar').attr("src", ret);
+							}
+						});
+					}
+				}
+			});
+			var uploader1 = {};
+			window.uploader1 = uploader1;
+			uploader1 = new WebUploader.Uploader({
+				resize : false,
+				duplicate : true,
+				auto : true,
+				swf : '${base}/plug-in/webuploader/Uploader.swf',
+				server : '',
+				pick : '#PHOTO',
+				accept : {
+					title : 'Images',
+					extensions : 'gif,jpg,jpeg,png',
+					mimeTypes : 'image/*'
+				}
+			});
+			uploader1.on('uploadSuccess', function(file, data) {
+				var avatarid = data.id;
+				var avatarname = data.name;
+				//按比例缩放上传图片
+				var _img = new Image();
+				_img.src = data.url;
+				_img.onload = function() {
+					jQuery('#PHOTO2') && jQuery('#PHOTO2').val(avatarid);
+					jQuery('#PHOTO3') && jQuery('#PHOTO3').val(avatarname);
+					//获取上传图片的原始尺寸
+					if (_img.width > 200 || _img.height > 200) {
+						alert("图片大小不能超过200像素");
+						jQuery.ajax({
+							url : '',
+							data : {
+								avatarid : avatarid,
+								avatarname : avatarname
+							},
+							async : true,
+							type : 'post',
+							success : function(d) {
+								//
+							}
+						});
+					} else {
+						uploader1.makeThumb(file, function(error, ret) {
+							if (error) {
+							} else {
+								jQuery('#default-avatar1').attr("src", ret);
+							}
+						});
+					}
+				}
+			});
+		}
+	</script>
+	<script type="text/javascript" src="${base}/res/theme/vogue/js/setting_guide/guide.js"></script>
+	<script type="text/javascript" src="${base}/res/theme/vogue/js/setting_guide/scrollable.js"></script>
+	<script type="text/javascript" src="${base}/res/theme/vogue/js/js_lang.js"></script>
+	<style>
+.webuploader-pick {
+	padding: 5px 15px;
+}
+</style>
+	<div id="personlay">&nbsp;</div>
+	<div id="guide-main" style="display:">
+		<form enctype="multipart/form-data">
+			<div class="wizard">
+				<a href="javascript:void(0)" class="main-close" hidefocus="hidefocus" id="a_close"></a>
+				<ul class="status" style="display:">
+					<li class="active">欢迎 ></li>
+					<li>修改密码 ></li>
+					<li>个人资料 ></li>
+					<li>昵称与头像 ></li>
+					<li>界面主题 ></li>
+					<li>完成</li>
+				</ul>
+				<div class="items">
+					<div class="page">
+						<div class="first" style="position: relative; left: 115px;">
+							<div style="position: absolute; left: -95px; top: -15px;">
+								<img src="${base}/res/theme/vogue/js/setting_guide/images/robot.png" />
+							</div>
+							<div class="first-head" style="display:; font-size: 38px; font-weight: bold;">个人设置向导</div>
+							<h2 style="font-weight: normal;">智万家机器人BfSoft将引导您完成以下设置</h2>
+							<div class="first-content">
+								<div class="first-content-list">
+									<img src="${base}/res/theme/vogue/js/setting_guide/images/1_15.png" />
+									<lable class="first-font">修改密码</lable>
+								</div>
+								<div class="first-content-list">
+									<img src="${base}/res/theme/vogue/js/setting_guide/images/1_16.png" />
+									<lable class="first-font">修改个人资料</lable>
+								</div>
+								<div class="first-content-list">
+									<img src="../res/theme/vogue/js/setting_guide/images/1_17.png" />
+									<lable class="first-font">设置昵称与头像</lable>
+								</div>
+								<div class="first-content-list">
+									<img src="../res/theme/vogue/js/setting_guide/images/1_18.png" />
+									<lable class="first-font">设置界面主题</lable>
+								</div>
+							</div>
+						</div>
+						<div class="controll-bar-second" style="margin-top: 70px; margin-right: 25px; *+ margin-top: 10px;">
+							<input type="button" class="next" style="padding: 0px 8px;" value="开始" />&nbsp;&nbsp;&nbsp; <input type="button" class="cancle" style="padding: 0px 8px;" value="关闭" />&nbsp;&nbsp;
+						</div>
+					</div>
+					<div class="page">
+						<div class="explorer-list-group list">
+							<span class="head" style="display: none">步骤一：<lable>修改密码</label></span>
+							<div class="first">
+								<div class="second-content">
+									<div style="float: left">
+										<img src="../res/theme/vogue/js/setting_guide/images/2_01.png" />
+									</div>
+
+									<table class="Guide-TableBlock">
+										<tr>
+											<td class="Guide-TableData">原 密 码：</td>
+											<td><input type="password" name="PASS0" id="PASS0" class="GuideInput" size="20"></td>
+										</tr>
+										<tr>
+											<td class="Guide-TableData">新 密 码：</td>
+											<td><input type="password" name="PASS1" id="PASS1" class="GuideInput" size="20"><span>8-20位，必须同时包含字母和数字</span></td>
+
+										</tr>
+										<tr>
+											<td class="Guide-TableData" style="white-space: nowrap">确认新密码：</td>
+											<td><input type="password" name="PASS2" id="PASS2" class="GuideInput" size="20"><span>8-20位，必须同时包含字母和数字 </span></td>
+										</tr>
+										<input type="hidden" id="SEC_PASS_MIN" name="SEC_PASS_MIN" value="8">
+										<input type="hidden" id="SEC_PASS_MAX" name="SEC_PASS_MAX" value="20">
+										<input type="hidden" id="SEC_PASS_SAFE" name="SEC_PASS_SAFE" value="1">
+									</table>
+								</div>
+							</div>
+
+							<div class="controll-bar-second">
+								<input type="button" class="next" style="padding: 0px 8px;" value="下一步" />&nbsp;&nbsp; <input type="button" class="cancle" style="padding: 0px 8px;" value="取消" />&nbsp;&nbsp;
+							</div>
+						</div>
+					</div>
+					<div class="page">
+						<div class="explorer-list-group list">
+							<span class="head" style="display: none">步骤二：<lable>修改个人资料</lable></span>
+							<div class="first">
+								<div class="second-content">
+									<div style="float: left">
+										<img src="../res/theme/vogue/js/setting_guide/images/3_01.png" />
+									</div>
+									<table class="Guide-TableBlock">
+										<tr>
+											<td class="Guide-TableData">工作电话：</td>
+											<td><input type="text" name="TEL_NO_DEPT" id="TEL_NO_DEPT" class="GuideInput" size="20" value=""></td>
+										</tr>
+										<tr>
+											<td class="Guide-TableData">手机：</td>
+											<td><input type="text" name="MOBIL_NO" id="MOBIL_NO" class="GuideInput" size="20" value=""></td>
+										</tr>
+										<tr>
+											<td class="Guide-TableData">电子邮箱：</td>
+											<td><input type="text" name="EMAIL" id="EMAIL" class="GuideInput" size="20" maxlength="50" value=""></td>
+										</tr>
+									</table>
+								</div>
+							</div>
+							<div class="controll-bar-second">
+								<input type="button" class="prev" style="padding: 0px 8px;" value="上一步" />&nbsp;&nbsp; <input type="button" class="next" style="padding: 0px 8px;" value="下一步" />&nbsp;&nbsp; <input type="button" class="cancle" style="padding: 0px 8px;" value="取消" />&nbsp;&nbsp;
+							</div>
+						</div>
+					</div>
+					<div class="page">
+						<div class="explorer-list-group list">
+							<span class="head" style="display: none">步骤三：<lable>修改昵称与头像</lable></span>
+							<div class="first">
+								<div class="second-content">
+									<div style="float: left">
+										<img src="../res/theme/vogue/js/setting_guide/images/4_01.png" />
+									</div>
+									<table class="Guide-TableBlock">
+										<tr>
+											<td class="Guide-TableData">设置昵称：</td>
+											<td><input type="text" name="NICK_NAME" id="NICK_NAME" class="GuideInput" size="20" maxlength="25" title="用于讨论区交流" value=""></td>
+										</tr>
+
+										<tr>
+											<td class="Guide-TableData">上传小头像：</td>
+											<td class="selectinput" style="float: left; height: 30px; padding-top: 0px;"><span id="AVATAR" title="选择附件">选择附件</span>&nbsp;<img id="default-avatar" src="../res/theme/vogue/js/setting_guide/images/4_02.png" style="vertical-align: baseline; width: 30px; height: 30px;" />&nbsp;&nbsp;<span><img id="AVATAR1" src="" width="30px" height="30px" class="img-class"></span> <input id="AVATAR2" name="AVATAR2" type="hidden" value=""> <input id="AVATAR3" name="AVATAR3" type="hidden" value=""> <!--<input id="AVATAR3" name="AVATAR3" type="hidden" value="0">--> <span id="fsUploadProgress" class="flash" style="display: inline-block;"></span></td>
+										</tr>
+
+										<tr>
+											<td></td>
+											<td style="font-size: 12px; height: 30px">小头像文件要求是gif、jpg、png格式，大小不能超过64*64像素</td>
+											<!--
+                                        <td style="font-size:12px;height:30px">小头像文件要求是gif、jpg、png格式，大小不能超过128*128像素 </td>
+                                        -->
+										</tr>
+										<tr>
+											<td class="Guide-TableData">上传照片：</td>
+											<td class="selectinput" style="float: left; height: 30px;"><span id="PHOTO" title="选择附件">选择附件</span> &nbsp;<img id="default-avatar1" src="../res/theme/vogue/js/setting_guide/images/4_03.png" style="vertical-align: baseline; width: 30px; height: 30px;" />&nbsp;&nbsp;<span><img id="PHOTO1" width="30px" height="30px" class="img-class"></span> <input id="PHOTO2" name="PHOTO2" type="hidden" value=""> <input id="PHOTO3" name="PHOTO3" type="hidden" value=""> <!--<input id="PHOTO3" name="PHOTO3" type="hidden" value="">--> <span id="fsUploadProgress2" class="flash" style="display: inline-block;"></span></td>
+										</tr>
+										<tr>
+											<td></td>
+											<td style="font-size: 12px; height: 30px">照片文件要求是gif、jpg、png格式，大小不能超过200*200像素</td>
+										</tr>
+									</table>
+								</div>
+							</div>
+							<div class="controll-bar-second">
+								<input type="button" class="prev" style="padding: 0px 8px;" value="上一步" />&nbsp;&nbsp; <input type="button" class="next" style="padding: 0px 8px;" value="下一步" />&nbsp;&nbsp; <input type="button" class="cancle" style="padding: 0px 8px;" value="取消" />&nbsp;&nbsp;
+							</div>
+						</div>
+					</div>
+					<div class="page">
+						<div class="explorer-list-group list">
+							<span class="head" style="display: none">步骤四：<lable>设置界面主题</lable></span>
+							<div class="first">
+								<div class="second-content" style="font-size: 14px">
+									<div style="float: left">
+										<img src="../res/theme/vogue/js/setting_guide/images/5.1_06.png" />
+									</div>
+									<div style="float: left; padding: 20px; color: #fff">界面主题：</div>
+									<div class="theme-class">
+										<a class="theme-setting " index="1"><img src="../res/theme/vogue/js/setting_guide/images/5_01.png" width="65px" height="75px" /><span>儒雅深沉</span></a> <a class="theme-setting " " index="2"><img src="../res/theme/vogue/js/setting_guide/images/5_02.png" width="65px" height="75px" /><span>清新怡然</span></a> <a class="theme-setting " " index="9"><img src="../res/theme/vogue/js/setting_guide/images/5_09.png" width="65px" height="75px" /><span>生命与自然之美</span></a> <a class="theme-setting " " index="10"><img src="../res/theme/vogue/js/setting_guide/images/5_10.png" width="65px" height="75px" /><span>宁静的思考</span></a> <a class="theme-setting " " index="13"><img
+											src="../res/theme/vogue/js/setting_guide/images/5_13.png" width="65px" height="75px" /><span>现代或未来</span></a> <a class="theme-setting current" " index="15"><img src="../res/theme/vogue/js/setting_guide/images/5_15.png" width="65px" height="75px" style="border-radius: 3px;" /><span>T-OS桌面平台</span></a> <input type="hidden" id="THEME_VALUE" name="THEME_VALUE" value="15" />
+									</div>
+								</div>
+							</div>
+							<div class="controll-bar-second">
+								<input type="button" class="prev" style="padding: 0px 8px;" value="上一步" />&nbsp;&nbsp; <input type="button" class="next" style="padding: 0px 8px;" id="sub" value="保存" />&nbsp;&nbsp; <input type="button" class="cancle" style="padding: 0px 8px;" value="取消" />&nbsp;&nbsp;
+							</div>
+						</div>
+					</div>
+					<div class="page">
+						<div class="explorer-list-group list">
+							<div class="first">
+								<div class="second-content">
+									<span id="submit" style="font-size: 27px; color: #fff; font-weight: bolder;">正在发送请求，请稍后</span> <span id="success" style="font-size: 27px; color: #fff; font-weight: bolder; display: none;">恭喜您完成基本设置！<br /> <br /> <a id="a1" href="/general/person_info" target="_blank" style="color: #F7E409; text-decoration: none;">点击进入高级设置</a></span> <span id="failed" style="font-size: 27px; color: #fff; font-weight: bolder; display: none;">数据保存失败</span>
+								</div>
+							</div>
+							<div class="controll-bar-second">
+								<input type="button" class="prev" style="padding: 0px 8px;" value="上一步" />&nbsp;&nbsp; <input type="button" class="next" style="padding: 0px 8px;" id="sub1" value="完成" />&nbsp;&nbsp;
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+
+
+</div>
+
+<link rel="stylesheet" type="text/css" href="${base}/res/theme/vogue/js/intro/introjs1.0.0.css" />
+<script type="text/javascript" src="${base}/res/theme/vogue/js/intro/intro1.0.0.js"></script>
+<script type="text/javascript" src="${base}/res/theme/vogue/js/intro/index_intro.js"></script>
+<script type="text/javascript">
+	//-- 首次登录界面介绍
+	jQuery(document).ready(function() {
+		setTimeout(show_intro, 200);
+		intro = introJs();
+		intro.setOptions({
+			nextLabel : '下一步',
+			prevLabel : '上一步',
+			skipLabel : '退出向导',
+			doneLabel : '退出向导',
+			showStepNumbers : false
+		});
+		intro['_introBeforeChangeCallback'] = function(o) {
+			if (this['_currentStep'] >= 5 && this['_currentStep'] <= 10) {
+				jQuery('.infonav').addClass('highlight');
+			} else {
+				jQuery('.infonav').removeClass('highlight');
+			}
+		};
+		intro['_introExitCallback'] = function(o) {
+			jQuery('.infonav').removeClass('highlight');
+			show_guide();
+		}
+		intro['_introCompleteCallback'] = function(o) {
+			jQuery('.infonav').removeClass('highlight');
+			show_guide();
+		}
+		jQuery('#show_intro').click(function() {
+			document.getElementById("show_intro_back").style.display = "none";
+			document.getElementById("show_intro_content").style.display = "none";
+			jQuery.ajax({
+				type : 'get',
+				url : '',
+				data : "change_val=1"
+			});
+			intro.start();
+		});
+	});
+</script>
+
+<!--显示是否进入主界面向导-->
+<div id="show_intro_back"></div>
+<div id="show_intro_content" class="modal td-intro-guide">
+	<div class="modal-body" style="max-height: 300px; height: 300px; overflow: visible; background-color: #3FBDEE;">
+		<img class="td-intro-robot-img" src="${base}/res/theme/vogue/images/robot.png" />
+		<p style="font-size: 18px; margin-top: 50px;">您好，欢迎进入系统引导。</p>
+		<p style="font-size: 18px; margin-top: 10px; margin-bottom: 90px;">欢迎您进入到通达OA！这是一款神奇的软件。是否需要我带您进入操作提示向导？</p>
+		<div class="td-intro-btn-group">
+			<button class="btn btn-primary" id="show_intro" style="width: 135px; margin-right: 5px;">进入操作提示向导</button>
+			<button class="btn" onClick="hide_intro_guide();" style="width: 85px; margin-right: 5px;">下次提示</button>
+			<button class="btn" onClick="hide_intro_guide_forever();" style="width: 85px;">不再提示</button>
+		</div>
+	</div>
+</div>
+
+<!--显示是否进入控制面板向导-->
+<div id="show_guide_back"></div>
+<div id="show_guide_content" class="modal td-intro-guide">
+	<div class="modal-body" style="max-height: 300px; height: 300px; overflow: visible; background-color: #3FBDEE;">
+		<img class="td-intro-robot-img" src="${base}/res/theme/vogue/js/setting_guide/images/robot.png" />
+		<p style="font-size: 18px; margin-top: 50px;">通达OA操作提示向导已结束！</p>
+		<p style="font-size: 18px; margin-top: 10px; margin-bottom: 90px;">相信您已经初步掌握了软件使用的基本知识。现在，让我带您进入个人设置向导，进行必要的设置，需要进入么？</p>
+		<div class="td-intro-btn-group" style="margin-left: 260px;">
+			<button class="btn btn-primary" onClick="setting_guide('0');">进入个人设置向导</button>
+			<button class="btn" onClick="hide_show_guide();">退出</button>
+		</div>
+	</div>
+</div>
+<body class="TOS">
+	<style>
+.vmPanel {
+	padding-left: 9px;
+	margin: 10px 0;
+	background: url("../res/theme/vogue/images/voicemsg/sound_bg.png") no-repeat left top;
+	height: 38px;
+	line-height: 38px;
+	cursor: pointer;
+}
+
+.vmContent {
+	background: url("../res/theme/vogue/images/voicemsg/sound_bg.png") no-repeat right -38px;
+	font-size: 12px;
+	font-weight: bold;
+	color: #668A0D;
+	text-align: right;
+	padding-right: 10px;
+}
+
+.vmContent .icoVoice, .vmContent .icoVoicePlaying, .vmContent .icoVoiceDown {
+	float: left;
+	width: 32px;
+	height: 32px;
+	margin-top: 4px;
+	display: inline;
+}
+
+.vmContent .icoVoice {
+	background: url("../res/theme/vogue/images/voicemsg/icon_sound.png") no-repeat 0 3px;
+}
+
+.vmContent .icoVoiceDown {
+	background: url("../res/theme/vogue/images/voicemsg/icon_download.png") no-repeat -32px 0;
+}
+
+.vmContent .icoVoicePlaying {
+	background: url("../res/theme/vogue/images/voicemsg/you_voice_play.gif") no-repeat 0 4px;
+}
+
+.vmPanel.vmYou {
+	background-position: left top;
+}
+
+.vmPanel.vmYou .vmContent {
+	background-position: right -38px;
+}
+
+.vmPanel.vmMe {
+	background-position: left -76px;
+}
+
+.vmPanel.vmMe .vmContent {
+	background-position: right -114px;
+	color: #9e9e9e;
+}
+
+.vmPanel.vmMe .vmContent .icoVoice {
+	background: url("../res/theme/vogue/images/voicemsg/icon_sound.png") no-repeat -31px 3px;
+}
+
+.vmPanel.vmMe .vmContent .icoVoiceDown {
+	background: url("../res/theme/vogue/images/voicemsg/icon_download.png") no-repeat 0 0;
+}
+
+.vmPanel.vmMe .vmContent .icoVoicePlaying {
+	background: url("../res/theme/vogue/images/voicemsg/me_voice_play.gif") no-repeat 0 5px;
+}
+
+.emotions {
+	vertical-align: middle;
+}
+
+.imPanel, a.fmPanel, .lmPanel {
+	margin: 5px 0;
+}
+
+a.fmPanel {
+	border-radius: 2px;
+	display: block;
+	width: 182px;
+	height: 40px;
+	line-height: 40px;
+	background: url(../res/theme/vogue/images/ipanel/download.jpg) no-repeat;
+	text-decoration: none;
+}
+
+a.fmPanel span {
+	display: block;
+	padding-left: 50px;
+	background-position: 4px center;
+	background-repeat: no-repeat;
+	color: #9e9e9e;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.lmPanel {
+	display: inline-block;
+	height: 18px;
+	padding-left: 20px;
+	line-height: 18px;
+	background: url(../res/theme/vogue/images/ipanel/location.png) no-repeat;
+}
+</style>
+	<script src="${base}/res/theme/vogue/js/ispirit.js"></script>
+	<script type="text/javascript">
+		(function($) {
+
+			var imageMsg = {
+				init : function() {
+					$(document).delegate(".imPanel[node-type='tMImage']", "click", function(e) {
+						var _href = $(this).attr('node-data');
+						e.stopPropagation();
+
+						if (typeof (window.external.PlayVoiceMsg) == "undefined") {
+							mytop = (screen.availHeight - 510) / 2;
+							myleft = (screen.availWidth - 660) / 2;
+							window.open(_href, "imageShow", "height=510, width=660, top=" + mytop + ", left=" + myleft + ",toolbar=no, menubar=no, scrollbars=yes, resizable=no, location=no, status=no");
+						} else {
+							if (parent && parent.openURL) {
+								parent.openURL(_href);
+							}
+						}
+						return;
+					});
+				}
+			}
+
+			var voiceMsg = {
+				"init" : function() {
+					$(document).delegate(".vmPanel[action-type='play']", "click", function(e) {
+						e.stopPropagation();
+
+						if (typeof ($(this).attr("status")) == "undefined")
+							var status = "stop";
+						else
+							var status = $(this).attr("status");
+
+						if (status == "stop") {
+							$(this).attr("status", "palying");
+							voiceMsg.play($(this));
+							$(this).attr("title", "点击停止播放");
+						} else {
+							$(this).attr("status", "stop");
+							voiceMsg.stop();
+							$(this).attr("title", "点击播放");
+						}
+						return;
+					});
+
+					$(document).delegate(".vmPanel[action-type='download']", "click", function() {
+						voiceMsg.download($(this));
+					});
+				},
+				"play" : function(handler) {
+					var voice_data = handler.attr("action-data");
+					this.stop();
+					handler.find("[un='voiceStatus']").attr("class", "icoVoicePlaying");
+					if (typeof (window.external.PlayVoiceMsg) == "undefined") {
+
+					} else {
+						window.external.PlayVoiceMsg(voice_data);
+					}
+				},
+				"stop" : function() {
+					if (typeof (window.external.StopVoiceMsg) == "undefined") {
+					} else {
+						window.external.StopVoiceMsg("");
+					}
+					StopVoiceMsg();
+				},
+				"download" : function(handler) {
+					var voice_data = handler.attr("action-data-url");
+					window.open(voice_data);
+				}
+			}
+
+			$(function() {
+				replaceVMDom();
+				voiceMsg.init();
+				imageMsg.init();
+			});
+
+		})(jQuery);
+
+		function replaceVMDom() {
+
+			if (!window.external)
+				return;
+
+			if (typeof (window.external.OA_SMS) == "undefined") {
+				//默认是下载不需要替换
+			} else {
+				if (!window.external.OA_SMS("", "", "GET_VERSION") || window.external.OA_SMS("", "", "GET_VERSION") < '20121210') {
+					var vm = jQuery(".vmPanel");
+					vm.before("<span style='color:red'>系统提示：客户端版本过低，请升级客户端</span>");
+					vm.remove();
+				} else {
+
+					//有通过后台传值判断精灵的部分不替换
+					if (jQuery(".vmPanel").size() > 0) {
+						var defaultaction = jQuery(".vmPanel").eq(0).attr("action-type");
+						if (defaultaction == "play" && typeof (window.external.PlayVoiceMsg) != "undefined")
+							return;
+
+					} else {
+						return;
+					}
+
+					jQuery(".vmPanel").each(function() {
+						jQuery(this).attr({
+							"action-type" : "play",
+							"title" : "点击播放"
+						});
+						jQuery(this).find("[un='voiceStatus']").attr("class", "icoVoice");
+					});
+				}
+			}
+		}
+
+		function StopVoiceMsg() {
+			jQuery("[un='voiceStatus']").attr("class", "icoVoice");
+		}
+
+		top.StopVoiceMsg = StopVoiceMsg;
+	</script>
+	<div id="north" class="navwrapper">
+		<div id="infobar" class="navbar pull-right">
+			<ul class="infonav">
+				<li id="mobile_code" class="navin" data-placement="left" data-toggle="tooltip" data-original-title="下载移动版"><a href="javascript:;" id="code" class="nav-item iconfont">&#xe682;</a>
+					<div class="code-wrap">
+						<a href="javascript:;"><img src="../res/theme/vogue/images/ios_code.png"></a>
+						<p>iOS版</p>
+						<hr>
+						<a href="javascript:;"><img src="../res/theme/vogue/images/android_code.png"></a>
+						<p>Android版</p>
+						<hr>
+						<a href="javascript:;"><img src="../res/theme/vogue/images/ding_code.jpg"></a>
+						<p>下载钉钉</p>
+						<hr>
+						<a href="javascript:;"><img src="../res/theme/vogue/images/wechat.jpg"></a>
+						<p>通达OA公众号</p>
+
+					</div></li>
+				<li id="info_avater" class="navin" data-placement="left" data-toggle="tooltip" title="" data-original-title="我的OA账号" data-step="6" data-intro="<b style='display:block'>6、我的OA账号</b>鼠标移上显示个人账户信息。" data-position="left"><a href="javascript:;" id="avatar" class="nav-item iconfont">&#xe63e;</a>
+					<div class="info-wrap">
+						<div class="person-info-header clearfix">
+							<div class="person-info-avator">
+								<img src="../res/theme/vogue/images/avatar/0.gif" width="60" height="60" id="loginavatar">
+							</div>
+							<div class="person-info-content">
+								<h6 class="person-info-name">
+									<span>系统管理员</span>
+									<div class="person-info-online">
+										<i class="iconfont tip-1" id="online_flag"> &#xe63d; </i>
+										<div class="person-info-tip" id="on_status">
+											<a href="javascript:;" status="1" hidefocus="hidefocus"> <i class="iconfont tip-1">&#xe63d;</i> <span class="info-tip-title">在线</span>
+											</a> <a href="javascript:;" status="2" hidefocus="hidefocus"> <i class="iconfont tip-2">&#xe63c;</i> <span class="info-tip-title">忙碌</span>
+											</a> <a href="javascript:;" status="3" hidefocus="hidefocus"> <i class="iconfont tip-3">&#xe63b;</i> <span class="info-tip-title">离开</span>
+											</a>
+										</div>
+									</div>
+								</h6>
+								<p class="person-info-detail">
+									<span class="person-info-department">北方测试研究公司</span> <span>-OA 管理员</span>
+								</p>
+								<p class="person-info-detail" title=""></p>
+							</div>
+						</div>
+						<div class="person-info-body">
+							<a href="javascript:;" id="person_info" hidefocus="hidefocus">控制面板</a> <a href="javascript:;" id="logout" hidefocus="hidefocus">注销</a>
+						</div>
+					</div></li>
+				<li class="navin" data-step="7" data-intro="<b style='display:block'>7、搜索</b>通过“搜索”，可以快速搜索用户、菜单、工作流、通讯簿、日程安排和在线帮助。" data-position="left"><a href="javascript:;" id="searchbar" class="nav-item searchbar iconfont" data-placement="bottom" data-toggle="tooltip" title="" data-original-title="搜索">&#xe603;</a></li>
+				<li class="navin" data-step="8" data-intro="<b style='display:block'>8、任务中心</b>点击进入“任务中心”，可以看到按时间和紧急程度排序的待办任务，并可快速建立任务。" data-position="left"><a href="javascript:;" id="totaskbar" class="nav-item iconfont" data-placement="bottom" data-toggle="tooltip" title="" data-original-title="任务中心">&#xe641;</a></li>
+				<li class="navin" data-step="9" data-intro="<b style='display:block'>9、企业社区</b>点击进入“企业社区”，促进企业信息交流与知识共享。" data-position="left"><a href="javascript:;" id="tosns" class="nav-item iconfont" data-placement="bottom" data-toggle="tooltip" title="" data-original-title="企业社区">&#xe67b;</a></li>
+				<li class="navin" data-step="10" data-intro="<b style='display:block'>10、更换皮肤</b>通达OA为您提供了完备的界面换肤功能，通过“更换皮肤”按钮，一触即换。" data-position="left"><a href="javascript:;" id="theme" class="nav-item iconfont" data-placement="bottom" data-toggle="tooltip" title="" data-original-title="换肤" style="font-size: 24px;">&#xe60f;</a></li>
+				<li class="navin" data-step="11" data-intro="<b style='display:block'>11、通知中心</b>“通知中心”为您提供今日消息、事务提醒，增强网页微讯交流，支持文件分享与群发。" data-position="left"><a href="javascript:;" id="eastbar" class="nav-item iconfont" data-placement="bottom" data-toggle="tooltip" title="" data-original-title="通知中心">&#xe60b;</a></li>
+			</ul>
+		</div>
+		<div id="logo" class="pull-left">
+			<a href="javascript:;" onClick="javascript:createTab('portal_5', '我的桌面', '/portal/personal/', '0');"> <img src="${base}/res/theme/vogue/images/logo_simple.png" style="margin: 8px 0 0 10px;" />
+			</a>
+		</div>
+		<div id="taskbar" class="pull-left">
+			<div id="tabs_left_scroll" class="tabs-scroll scroll-left"></div>
+			<div id="tabs_container" class="tabs-container"></div>
+			<div id="tabs_right_scroll" class="tabs-scroll scroll-right"></div>
+		</div>
+	</div>
+	<div id="funcbar" class="funcbar">
+		<div id='funcmenu_switcher'>
+			<span>导航菜单</span> <i class="funcmenu_switcher" data-step="1" data-intro="<b style='display:block'>1、导航菜单按钮的使用</b>您已进入到通达OA主操作界面，您可以点击“导航菜单”按钮，控制主菜单显隐。" data-position="right"></i>
+		</div>
+		<div id="funcbar_left"></div>
+		<div id="funcbar_right">
+			<i class="iconfont js-inOrg" data-placement="bottom" data-toggle="tooltip" title="" data-original-title="组织">&#xe67f;</i> <i class="iconfont js-inNocbox" data-placement="bottom" data-toggle="tooltip" title="" data-original-title="事务提醒">&#xe681;</i> <i class="iconfont js-inWeixun" style="font-size: 18px;" data-placement="bottom" data-toggle="tooltip" title="" data-original-title="微讯">&#xe605;</i>
+		</div>
+	</div>
+	<div id="west" class="west">
+		<div id="west-body-wrapper">
+			<div class="west-body">
+				<div class="menu-scroll scroll-up"></div>
+				<ul id="first_menu" class="first-menu" data-step="2" data-intro="<b style='display:block'>2、主菜单</b>利用“菜单导航”功能，您可以找到所需要的功能选项。" data-position="right"></ul>
+				<div class="menu-scroll scroll-down"></div>
+			</div>
+		</div>
+		<div class="west-footer">
+			<span id="new_sms_sound" style="width: 1px; height: 1px; position: fixed; bottom: 0px; left: 0px;"></span>
+			<ul class="ft-links clearfix">
+				<li class="ft-link ft-link-icon"><a href="javascript:;" class="iconfont" onClick="createTab(59,'我的门户','portal','');" data-placement="top" data-toggle="tooltip" title="" data-original-title="我的门户" data-step="3" data-intro="<b style='display:block'>3、我的门户</b>点击打开“门户列表”区域，选择您想打开的门户。" data-position="top">&#xe60e;</a></li>
+				<li class="ft-link ft-link-icon"><a href="/module/help" class="iconfont" hidefocus="hidefocus" data-placement="top" data-toggle="tooltip" title="" data-original-title="在线帮助" target="_blank" data-step="4" data-intro="<b style='display:block'>4、在线帮助</b>“通达OA在线帮助”汇集了常见的用户问题，帮助用户快速掌握软件各项功能的使用。" data-position="top">&#xe61b;</a></li>
+				<li class="ft-link"><a href="javascript:;" style="height: 22px !important; font-size: 18px;" class="west-handle" data-step="5" data-intro="<b style='display:block'>5、图标模式</b>点击切换菜单模式。" data-position="top"><i class="iconfont left_arrow" data-placement="top" data-toggle="tooltip" title="" data-original-title="图标模式">&#xe636;</i><i class="iconfont right_arrow" data-placement="top" data-toggle="tooltip" title="" data-original-title="图标+文字模式">&#xe637;</i></a></li>
+			</ul>
+		</div>
+	</div>
+	<div id="center" class="center">
+		<div class="tosbg" id="tosbg">
+			<div>
+				<img src="../res/theme/vogue/images/themeswitch/logo_tos.png" /><a href="javascript:;" onClick="createTab('portal_5','我的桌面','../portal/personal/','');">我的桌面</a>
+			</div>
+		</div>
+		<div id="notice_tip">
+			<div id="notice_head"></div>
+			<div id="notice_body"></div>
+			<div id="notice_foot"></div>
+		</div>
+	</div>
+	<div id="south" style="display: block;">
+		<div id="hero_bar" title="底栏">
+			<div id="tongdainfo">
+				推荐网址： <a href="http://www.bfrj.net/" target="_blank" class="blue first_link"><span>兵锋软件官网</span></a> <a href="javascript:;" target="_blank" class="red"><span>智万家门户</span></a> <a href="javascript:;" target="_blank"><span>OA可选组件</span></a> <a href="javascript:;" target="_blank"><span>版权保护声明</span></a>
+			</div>
+			<div id="reg_area">
+				<a href="javascript:;" class="reg free_ver" style="margin-right: 5px" onclick="openURL('reg_free', '永久免费版注册', '/inc/reg_free.php?TAB=1');" data-step="12" data-intro="<b style='display:block'>12、永久免费版注册</b>点击注册为通达OA永久免费版，包含OA20用户。" data-position="left"><span>永久免费版注册</span></a><a class="reg" href="javascript:;" onclick="openURL('reg', '正式版注册', '/inc/reg_cloud_online.php?TAB=1');" data-step="13" data-intro="<b style='display:block'>13、正式版注册</b>已购买的正式用户点击进行注册。" data-position="left"><span>正式版注册</span></a>
+			</div>
+		</div>
+		<table>
+			<tbody>
+				<tr>
+					<td class="left"></td>
+					<td class="left">
+						<div id="new_sms"></div> <span id="new_sms_sound" style="width: 1px; height: 1px;"></span>
+					</td>
+					<td class="center">
+						<div id="status_text">
+							智万家物业管理云平台<br>中国物业软件领跑者<br>住智慧社区过智能生活<br>
+						</div>
+					</td>
+					<td class="reg">1 <span class="days">30</span> 天
+					</td>
+					<td style="cursor: pointer;" class="right"><div onClick="show_feedback()" title="将问题提交给开发商进行解决">问题反馈</div></td>
+					<td class="right"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<ul class="msg-list">
+		<div id="msg-ignore">
+			<i class="iconfont"></i><span>忽略全部</span>
+		</div>
+	</ul>
+	<div id="east" class="east">
+		<ul class="nav nav-tabs">
+			<li class="nav-pill active" panelType="today"><a href="javascript:;" class="pill-bg">今日</a></li>
+			<li class="nav-pill" panelType="msg"><a href="javascript:;" class="pill-bg">消息</a></li>
+			<li class="nav-pill" panelType="org"><a href="javascript:;" class="pill-bg">组织</a></li>
+		</ul>
+		<div class="tab-content" id="east-tab">
+			<div class="tab-pane pane-today active">
+				<div class="dateArea" id="datetime">
+					<div id="date" class="weather-date" title="2016年5月26日">
+						<span>5月26日</span>星期四
+					</div>
+					<div id="mdate" title="农历 四月二十">农历四月二十</div>
+				</div>
+				<div class="mod" id="weatherarea">
+					<div class="mod-hd">
+						<span class="mod-hd-title">天气</span>
+						<div class="city">
+							<i id="changecity" class="iconfont">&#xe63f;</i>
+						</div>
+					</div>
+					<div class="mod-bd">
+						<span id="city"></span>
+						<div id="weather" class="clearfix"></div>
+						<div id="area_select" style="display: none">
+							<div>
+								<select id="w_province" onChange="InitCity(this.value);"></select> <select id="w_city" onChange="InitCounty(this.value);"></select> <select id="w_county"></select>
+							</div>
+							<div class="btns">
+								<button type="button" class="btn btn-mini btn-primary" id="saveWeather">确定</button>
+								<button type="button" class="btn btn-mini" id="closeWeather">取消</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="mod">
+					<div class="mod-hd">
+						<span class="mod-hd-title">日程</span>
+					</div>
+					<div class="mod-bd">
+						<ul id="cal_list" class="calendar-list"></ul>
+						<div class="notip" id="caltip">今日暂无日程</div>
+					</div>
+				</div>
+				<div class="mod">
+					<div class="mod-hd">
+						<span class="mod-hd-title">提醒事项</span>
+					</div>
+					<div class="mod-bd">
+						<ul id="remind_list" class="remind_list"></ul>
+						<div class="notip" id="remindtip">今日暂无提醒</div>
+					</div>
+				</div>
+			</div>
+			<div class="tab-pane pane-msg">
+				<div class="btn-group msg-tool" id="msg-tool">
+					<button type="button" msg-panel="nocbox" class="btn btn-mini btn-primary">
+						<span>事务提醒</span>
+					</button>
+					<button type="button" msg-panel="weixun" class="btn btn-mini">
+						<span>微讯</span>
+					</button>
+				</div>
+				<div id="nocbox" class="msg-panel active">
+					<div class="noc" id="new_noc_panel">
+						<div id="nocbox_tips" class="nocbox_tips">
+							<div class="loading"></div>
+						</div>
+						<div id="nodata_tips" class="nodata_tips">
+							<div class="">
+								没有未读的事务提醒<a href="javascript:;" hidefocus="hidefocus" id="tohistory" class="tohistory">查看历史消息</a>
+							</div>
+						</div>
+						<div class="noc-info" id="new_noc_title">
+							共<span id="noc_item_num" class="noc_item_num">0</span>条消息记录
+						</div>
+						<div id="new_noc_list_wrapper">
+							<div id="new_noc_list" class="new_noc_list"></div>
+						</div>
+						<div class="noc-nav-bar">
+							<a href="javascript:;" hidefocus="hidefocus" id="ViewAllNoc" class="viewbtn"><i class="iconfont">&#xe60c;</i>全部已阅</a> <a href="javascript:;" hidefocus="hidefocus" id="ViewDetail" class="viewbtn"><i class="iconfont">&#xe609;</i>查看全部</a> <a href="javascript:;" hidefocus="hidefocus" class="noc-right" id="check_remind_histroy"><i class="iconfont">&#xe606;</i>历史消息</a>
+						</div>
+					</div>
+				</div>
+				<div id="weixun" class="msg-panel">
+					<div class="weixun-panel active" id="recent">
+						<ul class="recentlist" id="recentlist"></ul>
+						<div class="rec_tips" id="rec_tips">暂无最近联系人</div>
+						<div class="rec-ft">
+							<button type="button" id="tosend" class="btn btn-info btn-mini pull-left">
+								<i class="iconfont multi">&#xe605;</i>群发
+							</button>
+							<i class="iconfont refresh pull-right" title="刷新" id="refresh-rec">&#xe60a;</i> <i class="iconfont del pull-right" title="清空" id="clear-rec">&#xe644;</i>
+						</div>
+
+					</div>
+					<div class="weixun-panel" id="send">
+						<div class="sendwrapper">
+							<a href="javascript:;" id="torecent">返回</a>
+							<div class="input-append send-header">
+								<input id="search" type="text"> <span class="send-inner-icon"><i class="iconfont send-info-size">&#xe603;</i></span>
+								<button tyle="button" class="send-info-btn btn" id="adduser">
+									<i class="iconfont send-info-size">&#xe602;</i>
+								</button>
+							</div>
+							<div class="send_mod">
+								<div class="send_hd clearfix">
+									<a href="javascript:;" id="clearall" class="clearall pull-right">清空</a>
+								</div>
+								<div class="send_bd user-tags" id="user-tags"></div>
+								<div class="no-tag-tips" id="no-tag-tips">暂未选择任何联系人</div>
+								<input type="hidden" id="userid" name="TO_UID"> <input type="hidden" id="username" name="TO_NAME">
+							</div>
+							<div>
+								<a href="javascript:;" class="getmore" id="getmore">更多</a>
+							</div>
+							<div class="send-footer">
+								<div id="uploader" class="uploader">
+									<div class="btns pick">
+										<div id="picker">选择文件</div>
+									</div>
+									<div id="uploadlist" class="uploader-list"></div>
+								</div>
+								<textarea id="sms_content" name="CONTENT"></textarea>
+								<div class="send-footer-info clearfix">
+									<input type="hidden" name="I_VER" value=""> <input type="hidden" name="C" value="">
+									<button type="button" class="btn btn-primary pull-right" data-loading-text="正在发送" id="sms_send">发送</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="tab-pane pane-org">
+				<div class="btn-group org_tool" id="org_tool">
+					<button type="button" class="btn btn-mini online-btn btn-primary" user-type="user_online">
+						<span>在线</span><span class="user_online"></span>
+					</button>
+					<button type="button" class="btn btn-mini online-btn" user-type="user_all">
+						<span>全部</span>
+					</button>
+				</div>
+				<div class="org-panel" id="org_panel">
+					<div id="user_online" class="online-panel">
+						<div id="orgTree0"></div>
+					</div>
+					<div id="user_all" class="online-panel">
+						<div id="orgTree1"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<a href="javascript:;" class="east-handle"><i class="iconfont left_arrow">&#xe637;</i></a>
+		<div class="chat-wrapper" id="chat-wrapper">
+			<div class="chat_side">
+				<!--<div id="smsbox_scroll_up" style="display: none;"></div>-->
+				<div id="smsbox_list">
+					<div id="smsbox_list_container" class="list-container"></div>
+				</div>
+				<!--<div id="smsbox_scroll_down" style="display: none;"></div>-->
+			</div>
+			<div class="chat_panel">
+				<div class="chat-header">
+					<h6 id="chat-title" class="chat-title"></h6>
+					<span id="chat-status" class="chat-status"></span>
+					<button type="button" class="close" id="smsbox_toolbar_del">×</button>
+					<button type="button" class="close" id="smsbox_toolbar_shrink">-</button>
+				</div>
+				<div class="chat-body" id="smsbox_msg_container">
+					<div id="moreHistoryMsg">
+						<a target="_blank">点击查看更多</a><img src="../res/theme/vogue/images/ztree/loading.gif" style="display: none;">
+					</div>
+				</div>
+				<div class="chat-footer" id="chat_uploader">
+					<textarea id="smsbox_textarea"></textarea>
+					<div class="send_area">
+						<div class="send_tool">
+							<a href="javascript:;" id="uploadBar"><i class="iconfont">&#xe642;</i></a> <a href="javascript:;" id="quickBar"><i class="iconfont">&#xe643;</i></a>
+							<div class="quickReply" id="quickReplyPop">
+								<select id="smsbox_rapid_reply" title="请到系统管理->系统代码->微讯快捷回复 进行设置">
+									<option value="">快捷回复</option>
+								</select>
+								<div class="quickarrow"></div>
+							</div>
+						</div>
+						<button class="btn btn-small btn-primary" id="smsbox_send_msg" data-loading-text="提交中">发送</button>
+					</div>
+				</div>
+			</div>
+			<div class="chat-delete" id="chat-delete">
+				<div class="close_hd">
+					关闭会话
+					<button type="button" class="close" id="chatDeleteClose">×</button>
+				</div>
+				<div class="close_bd">关闭所有会话还是关闭当前会话？</div>
+				<div class="close_ft">
+					<button class="btn btn-mini btn-warning" type="button" id="closeAllChat">关闭所有</button>
+					<button class="btn btn-mini" type="button" id="closeActiveChat">关闭当前</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="mask"></div>
+	<!--聊天窗口-->
+
+	<!-- lijun -->
+	<div class="search-container">
+		<!-- 关闭按钮 -->
+		<div class="iconfont search-close-btn">&#xe621;</div>
+		<!-- 搜索框 -->
+		<div class="search-box">
+			<span class="search-input"><input id="search-input" type="text" autocomplete="off" placeholder="搜索用户、菜单、工作流、通讯簿、日程、帮助..."></span> <span class="search-btn"><input id="search-btn" type="submit" value="搜索" search-type="user"></span>
+		</div>
+
+		<!-- 搜索结果返回区 -->
+		<div class="search-results-wrapper">
+			<!-- 搜索结果切换tab -->
+			<ul class="search-results-tabs">
+				<li class="user-tab active" search-type="user" searched=""><span>用户</span><span class="search-counter search-counter-user">(0)</span></li>
+				<li class="menu-tab" search-type="menu" searched=""><span>菜单</span><span class="search-counter search-counter-menu">(0)</span></li>
+				<li class="workflow-tab" search-type="workflow" searched=""><span>工作流</span><span class="search-counter search-counter-workflow">(0)</span></li>
+				<li class="contacts-tab" search-type="contacts" searched=""><span>通讯簿</span><span class="search-counter search-counter-contacts">(0)</span></li>
+				<li class="calendar-tab" search-type="calendar" searched=""><span>日程安排</span><span class="search-counter search-counter-calendar">(0)</span></li>
+				<li class="helper-tab" search-type="helper"><span><a href="/module/help" target="_blank">在线帮助</a></span></li>
+			</ul>
+			<!-- 陈列所有结果 -->
+			<div class="search-results-container" id="search-results-container">
+				<div class="search-results-iscroll">
+					<ul class="search-results-user">
+						<!-- 翻页插件容器 -->
+						<div id="pagination-user" class="pagination"></div>
+					</ul>
+					<ul class="search-results-menu">
+						<!-- 翻页插件容器 -->
+						<div id="pagination-menu" class="pagination"></div>
+					</ul>
+					<ul class="search-results-workflow">
+						<!-- 翻页插件容器 -->
+						<div id="pagination-workflow" class="pagination"></div>
+					</ul>
+					<ul class="search-results-contacts">
+						<!-- 翻页插件容器 -->
+						<div id="pagination-contacts" class="pagination"></div>
+					</ul>
+					<ul class="search-results-calendar">
+						<!-- 翻页插件容器 -->
+						<div id="pagination-calendar" class="pagination"></div>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- 激光加载条(pulse bar) -->
+	<div id="progressBar" class="done">
+		<span id="flashBar"></span>
+	</div>
+
+	<!-- 消息(Message) -->
+	<div id="mini-notification">
+		<p>The notification has been successfully displayed</p>
+	</div>
+
+	<!-- lijun -->
+
+	<!-- 主题切换 -->
+	<div id="theme_panel" class="over-mask-layer">
+		<div class="center">
+			<div class="theme clearfix" id="theme_slider"></div>
+		</div>
+	</div>
+	<div id="overlay_theme"></div>
+
+</body>
+<#noparse>
+<!--一级菜单-->
+<script id="menuTmpl" type="text/x-jquery-tmpl">
+<li data-submenu-id="second-menu-${menuId}">
+	<div id="m${menuId}" hidefocus="hidefocus" class="first-menu-item"><i class="iconfont">${iconfont}</i><span class="first-menu-title">${menuText}</span></div>
+	<div id="second-menu-${menuId}" class="second-panel">
+		<h4>${menuText}</h4>
+		<ul id="second-menulist-${menuId}" class="second-menu clearfix">  
+		</ul>
+	</div>
+</li> 
+</script>
+<!--二级菜单-->
+<script id="secondMenuTmpl" type="text/x-jquery-tmpl">
+<li class="{{if expand !=false }}expand{{/if}}"><a id="${menuId}" class="second-menu-item" title="${menuText}" href="javascript:;" onclick="${actionType}" hidefocus="hidefocus">${menuText}</a>{{if expand !=false }}<ul id="third-menulist-${menuId}" class="third-menu"></ul>{{/if}}</li>
+</script>
+<!--三级菜单-->
+<script id="thirdMenuTmpl" type="text/x-jquery-tmpl">
+<li><a id="${menuId}" class="third-menu-item" href="javascript:;" title="${menuText}" onclick="${actionType}" hidefocus="hidefocus">${menuText}</a></li>
+</script>
+<!--系统消息提示条-->
+<script type="text/template" id="item-template">
+<div class="msg-wrapper  msg-id-${mid}">
+	<div class="msg-icon iconfont">   </div>
+	<p class="msg-title"></p>
+	<p class="msg-content"></p>
+	<div class="msg-count"></div>
+	<div class="msg-close"></div>
+    <div class="msg-op">
+        <i>
+            <svg version="1.1" id="图形" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1024px" height="1024px" viewBox="0 0 1024 1024" enable-background="new 0 0 1024 1024" xml:space="preserve">
+                <path fill="#272636" d="M746.662019 300c0-51.835575 42.044582-93.865831 93.865831-93.865831 51.851948 0 93.865831 42.029232 93.865831 93.865831 0 51.836599-42.013883 93.865831-93.865831 93.865831C788.706601 393.864808 746.662019 351.836599 746.662019 300zM89.604272 300c0-51.835575 42.043558-93.865831 93.864808-93.865831 51.822272 0 93.865831 42.029232 93.865831 93.865831 0 51.836599-42.043558 93.865831-93.865831 93.865831C131.648854 393.864808 89.604272 351.836599 89.604272 300zM418.132634 300c0-51.835575 42.013883-93.865831 93.866854-93.865831 51.821249 0 93.864808 42.029232 93.864808 93.865831 0 51.836599-42.043558 93.865831-93.864808 93.865831C460.146517 393.864808 418.132634 351.836599 418.132634 300z" transform="translate(0, 812) scale(1, -1)"/>
+            </svg>
+        </i>
+        <div class="msg-op-btns">
+            <div class="ignore-this">忽略此条</div>
+            <div class="ignore-all">忽略全部</div>
+           
+            	<div class="mark-read">已阅此条</div>
+            	<div class="mark-all">已阅全部</div>
+           
+        </div>
+</div>
+</div>
+</script>
+<!--天气-->
+<script type="text/template" id="weather-templ">
+<div class="tempimg">
+    <img src="../res/theme/vogue/images/weather/png/day/${img1}.png" /> 
+    <img src="../res/theme/vogue/images/weather/png/night/${img2}.png" /> 
+    <div class="temperature">${temperature}</div>
+</div>
+<div class="temp">
+    <span>${weather}</span>
+    <span>${wind}</span>
+</div>
+</script>
+<!--聊天窗口左侧人-->
+<script id="chatUser-template" type="text/template">
+<div class="chatuser ${unread}" group_id="${from_id}" user="${from_id}" online="${online_status}" >
+    <img src="${avatar}" />
+    <span class="fromname">${from_name}</span>
+    <span class="count">
+    {{if count>0}}
+        ${count}
+    {{/if}}
+    </span>
+    <i class="iconfont">&#xe621;</i>
+</div>
+</script>
+<!--聊天窗口右侧消息-->
+<script type="text/template" id="chatMsg-template">
+<div class="chatmsg {{if $data.from_id == loginUser.uid }} to {{else}} from {{/if}} clearfix" sms_id="${sms_id}" type_id="${type_id}" url="${url}" from_type_name="${from_type_name}">
+    <div class="chat-popbox-dialogbox-time">${time}</div>
+    <div class="chat-popbox-dialogbox">
+        <div class="chat-popbox-avatar">
+            <img src="${avatar}" onerror='fixAvatar(${from_id});' class="ui-li-thumb"/>
+        </div>
+        <div class="chat-popbox-bg">{{html content}}</div>
+    </div>
+</div>
+</script>
+<!--会话部分-->
+<script id="recentList-template" type="text/template">
+<li>
+	<a href="javascript:;" fromid="${from_id}" class="recentItem">
+		<img src="${avatar}" class="rec_avatar" onerror='fixAvatar(${from_id});'/>
+		<div class="rec_info">
+		    <span class="rec_name">${from_name}</span>
+		    <span class="rec_time">${time_stamp}</span>
+		    <p class="rec_content">{{html content}}</p>
+		</div>    
+	</a>
+</li>
+</script>
+<!--日程-->
+<script id="calendar-template" type="text/template">
+<li><a href="javascript:;" cal_id="${id}" cal_type="${type}" class="common-font"><span class="cal_content">{{html formatCalendarTitle(title) }}</span><span class="pull-right">${shortstart}</span></a></li>
+</script>
+<!--提醒事项-->
+<script id="reminder-template" type="text/template">
+<li><a href="javascript:;" data_id="${id}" class="common-font"><span class="cal_content">${title}</span><span class="pull-right">${appoint_time}</span></a></li>
+</script>
+<!--事务提醒模块-->
+<script id="noc-template" type="text/template">
+<div class="noc_item noc_item_${type_id}">
+    <div class="noc_item_title">
+        <a href="javascript:;" class="noc_item_read pull-right" type_id="${type_id}" title='查看全部'><i class="iconfont">&#xe609;</i></a>
+        <a href="javascript:;" class="noc_item_cancel pull-right" type_id="${type_id}" title='全部已阅'><i class="iconfont">&#xe640;</i></a>
+        <span>${type_name}</span>
+    </div>
+    <ul class="noc_item_data">
+    </ul>
+</div>
+</script>
+<!--事务提醒条目-->
+<script id="nocitem-template" type="text/template">
+<li id="noc_li_${sms_id}" sms_id="${sms_id}" url="${url}" type_id="${type_id}" class="">
+    <a href="javascript:;" class="noc-subitem">
+        <p class="noc_item_info">
+            <span class="noc_item_time pull-right ">${send_time}</span>
+            <span class="name">${from_name}</span>
+        </p>
+        <p class="noc_item_content">{{html content }}</p>
+    </a>
+</li>
+</script>
+<!-- 搜索模块的js模板 -->
+<!-- 用户模板 -->
+<script type="text/template" id="search-template-user">
+    <li u_id="${uid}" userid="${userid}">
+        <div class="user-avatar"><a class="user-main-page" href="ipanel/user/user_info.php?USER_ID=${userid}" target="_blank"><img src="${portraitUrl}"></a></div>
+        <div class="user-body">
+            <a class="user-body-name user-main-page" href="ipanel/user/user_info.php?USER_ID=${userid}" target="_blank">${userName}</a> 
+            {{if cur_login_user_id != userid}}
+                {{if is_concern == 0}}
+                    <button class="user-body-follow">关注</button>
+                    <button class="user-body-hasfollow hide">已关注</button>
+                {{else}}
+                    <button class="user-body-follow hide">关注</button>
+                    <button class="user-body-hasfollow">已关注</button>
+                {{/if}}
+            {{else}}
+            {{/if}}
+            <div>${department}</div>
+            <div>{{if phoneNum}}电话：${phoneNum}{{/if}} &nbsp;&nbsp;&nbsp; {{if email}}邮箱：${email}{{/if}} &nbsp;&nbsp;&nbsp; {{if qq}}QQ：${qq}{{/if}}</div>
+            <div>{{if signature}}签名：${signature}{{/if}}</div>
+        </div>
+        <div class="op-labels">
+            {{if isPriv}}
+                <!-- no right to access -->
+            {{else}}
+                <a href="status_bar/sms_back.php?TO_UID=${uid}&TO_NAME=${userName}" target="_blank"><button class="send-msg">微讯</button></a>
+                <a href="email/new/?TO_ID=${userid}&TO_NAME=${userName}" target="_blank"><button class="send-email">邮件</button></a>
+            {{/if}}
+        </div>
+    </li>
+</script>
+<!-- 菜单模板 -->
+<script type="text/template" id="search-template-menu">
+    <li menu_id="${menuId}" onclick="createTab('${menuId}','${menuTitle}','${menuUrl}','');">${menuTitle}</li>
+</script>
+<!-- 工作流模板 -->
+<script type="text/template" id="search-template-workflow">
+    <li class="workflow-search-results" url="${url}" run_id="${runId}">
+        <a flow_id="${flowId}">${runName}</a>
+        <div>工作流ID：<span>${runId}</span> &nbsp;<br />当前办理步骤：第 <span>${prcsId}</span> 步</div>
+    </li>
+</script>
+<!-- 通讯簿模板 -->
+<script type="text/template" id="search-template-contacts">
+    <li u_id="${uid}">
+        <div class="contacts-avatar"><img src="${portraitUrl}"></div>
+        <div class="contacts-body">
+            <span class="contacts-name">${uName}</span>
+            <div class="contacts-company">${company} ${department}</div>
+            <div class="contacts-contact">{{if phoneNum}}电话：${phoneNum}{{/if}} &nbsp;&nbsp;&nbsp; {{if email}}邮箱：${email}{{/if}} &nbsp;&nbsp;&nbsp; {{if qq}}QQ：${qq}{{/if}}</div>
+            <div class="contacts-address">{{if address}}地址：${address}{{/if}}</div>
+        </div>
+        <div class="op-labels">
+        {{if groupName != '1'}}
+            {{if groupName == '0'}}
+                <a href="email/new/?TO_ID=${userid}&TO_NAME=${uName}" target="_blank"><button class="send-email">邮件</button></a>
+            {{else}}
+                {{if email}}
+                    <a href="email/new/?TO_WEBMAIL=${email}" target="_blank"><button class="send-email">邮件</button></a>
+                {{/if}}
+            {{/if}}
+        {{/if}}
+        </div>
+    </li>
+</script>
+<!-- 日程安排模板 -->
+<script type="text/template" id="search-template-calendar">
+    <li cal_id="${calId}">
+            <a href="calendar/arrange/cal_note.php?CAL_ID=${calId}" target="_blank">${content}</a>
+            <div class="calendarTime" >${calTime} — ${endTime}</div>
+    </li>
+</script>
+</#noparse>
+</html>
+<div id="overlay"></div>
+<div style="display: none;"></div>
+</body>
+</html>

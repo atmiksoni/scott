@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,EasyUI,AnyDataGrid"/>
+<script type="text/javascript">
+	$(function() {
+	    prasebooks = new Dd("prasebooks");
+	    prasebooks.title = "常用语";
+	    prasebooks.colM = [ [ {
+	        title : "主键",
+	        field : "prasebooksId",
+	        align : "left",
+	        alias : "p",
+	        hidden : true
+	    }, {
+	        title : "用户名",
+	        field : "user_userName",
+	        alias : "u",
+	        width : 100,
+	        align : "center"
+	    }, {
+	        title : "常用语",
+	        field : "praseContent",
+	        alias : "p",
+	        width : 100,
+	        align : "center"
+	    }, {
+	        title : "创建时间",
+	        field : "createDate",
+	        alias : "p",
+	        width : 100,
+	        align : "center"
+	    } ] ];
+
+	    prasebooks.toolbar = [ {
+	        text : "新增",
+	        iconCls : "icon-add",
+	        handler : function() {
+	        	prasebooks.open2({
+					title : "新增",
+					h : "300px",
+					w : "600px",
+					url : "add_prasebooks_turn.do",
+				});
+	        }
+	    }, {
+	    	id : "prasebooks_edit",
+	        text : "修改",
+	        iconCls : "icon-edit",
+	        disabled : true,
+	        handler : function() {
+	        	prasebooks.open2({
+					title : "修改",
+					h : "300px",
+					w : "600px",
+					url : "edit_prasebooks_turn.do",
+					params : {
+						id : prasebooks.rowKey
+					}
+				});
+	        }
+	    }, {
+	    	id : "prasebooks_remove",
+	        text : "删除",
+	        iconCls : "icon-remove",
+	        handler : function() {
+		        prasebooks.remove({
+		            title : "删除商品",
+		            url : "delete_prasebooks_sub.do",
+		            params : {
+			            prasebooksId : prasebooks.rowKey
+		            }
+		        });
+	        }
+	    } ];
+	    prasebooks.url = "list_prasebooks_data.do";
+	    prasebooks.singleSelect = true;
+	    prasebooks.onClickRow = function(rowIndex, rowData) {
+			$("#prasebooks_edit,#prasebooks_remove").linkbutton("enable");
+		}
+	    prasebooks.onLoadSuccess = function(data) {
+			$("#prasebooks_edit,#prasebooks_remove").linkbutton("disable");
+		};
+	    prasebooks.LoadDataGrid();
+
+    });
+</script>
+</head>
+<body>
+ <div fit="true" class="easyui-layout">
+  <div region="center" style="border: none;">
+   <table fit="true" namespace="prasebooks" id="prasebooks" class="datagrid"></table>
+  </div>
+ </div>
+</body>
+</html>

@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll,webuploader"/>
+</head>
+<body>
+<@p.valid id="firm" action="firm_add_sub.do" class="layui-form" layui=true>
+ <@p.legend text="${(languaged !='')?string('client information','添加客户')}"/> 
+         <div class="layui-form-item"> 
+          <@p.layinput label="${(languaged !='')?string('account number','账户名')}" datamsgrequired="${(required)!''}"  datarule="required;niName;remote[${base}/admin/account/ennineer_check_sub.do]" name="niName" />
+           <@p.layinput label="${(languaged !='')?string('contact number','客户电话')}"  datarule="required;" datamsgrequired="${(required)!''}" name="mobile" />
+	     </div>
+         <div class="layui-form-item"> 
+           <@p.layinput label="${(languaged !='')?string('company name','客户名称')}"  datarule="required;" datamsgrequired="${(required)!''}" name="companyName" />
+           <@p.layinput label="${(languaged !='')?string('company address','所属地址')}"  datarule="required;" datamsgrequired="${(required)!''}" name="Address" />
+	     </div>
+         <div class="layui-form-item"> 
+           <@p.layinput label="${(languaged !='')?string('Email','联系邮箱')}"  datarule="required;" datamsgrequired="${(required)!''}" name="compEmail" />
+           <@p.layinput label="${(languaged !='')?string('Contact','联系人')}"  datarule="required;" datamsgrequired="${(required)!''}" name="linkman" />
+	     </div>
+         <div class="layui-form-item"> 
+           <@p.layinput label="${(languaged !='')?string('Phone number','联系电话')}"  datarule="required;" datamsgrequired="${(required)!''}" name="Linkphone" />
+           <@p.layinput label="${(languaged !='')?string('Postal code','邮政编码')}"  datarule="required;" datamsgrequired="${(required)!''}" name="postcodes" />
+	     </div>
+	     <div class="layui-form-item"> 
+	   <div class="layui-inline">
+      <label class="layui-form-label" style="margin-left: -13px;" ><b>${(languaged !='')?string('next service maintenance date','提醒日期')}:</b></label>
+      <div class="layui-input-inline" style=" width:190px;">
+        <input type="text" class="layui-input" style="margin-left: 10px;" id="test1" placeholder="${(languaged !='')?string('reminderDate','提醒日期')}" name="reminderDate">
+      </div>
+	     </div>
+           <@p.layinput label="${(languaged !='')?string('Normal hour labour rate','每小时收费')}"  datarule="required;" datamsgrequired="${(required)!''}" name="hourlyFee" />
+	     <div class="layui-form-item"> 
+           <@p.layinput label="${(languaged !='')?string('overtime hourly rate','加班时薪')}"  datarule="required;" datamsgrequired="${(required)!''}" name="overTimeFee" />
+           <@p.layinput label="${(languaged !='')?string('Double time hourly rate','双倍时薪')}"  datarule="required;" datamsgrequired="${(required)!''}" name="doubleTimeFee" />
+	     </div>
+	     </div>
+	       <!-- <@p.layinput label="${(languaged !='')?string('bankCard','银行卡号')}"  datarule="required;" datamsgrequired="${(required)!''}" name="bankCard" /> -->
+	     
+        <!--  <div class="layui-form-item"> 
+           <@p.layinput label="${(languaged !='')?string('Head','公司配图')}"  datarule="required;" datamsgrequired="${(required)!''}" name="Head" />
+	     </div> -->
+	     	    <@p.legend text="LOGO" btnId="pre"/>
+		<div class="layui-form-item">
+		<div class="layui-inline" style="padding-left: 20px;"><@p.upload id="prePic" name="prePic" /></div>
+		<input id="Head" name="Head" type="hidden" class="layui-input">
+		</div>
+</@p.valid>
+<script>
+layui.use('laydate', function(){
+	  var laydate = layui.laydate;
+	  
+	  //执行一个laydate实例
+	  laydate.render({
+	    elem: '#test1' //指定元素
+	    ,format: 'yyyy-MM-dd HH:mm:ss'
+	    ,type: 'datetime', lang: 'en'
+	  });
+	});
+		$(function() {
+			var imgs = [];
+			var pre = new Upload({
+				filePicker : "pre",
+				fileList : "prePic",
+				num : 1,
+				params : {
+					businessKey : "30",
+					subClassName : "Head"
+				},
+				server : "${base}/admin/firm/firm_image_upload.do"
+			});
+			pre.uploadSuccess = function(file, data) {
+				$('#Head').val(data.filePath);
+			};
+		});
+	</script>
+</body>
+</html>

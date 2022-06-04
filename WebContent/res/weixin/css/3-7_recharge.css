@@ -1,0 +1,11 @@
+.recharge h2 {margin: 50px 0 0;text-align: center;padding: 0.6rem 0;font-size: 0.9rem;}
+.hand_re {width: 92%;margin: 0.5rem 0;padding: 0 4%;}
+.hand_re input {width: 100%;height: 2rem;border: 1px solid #EBEBEB;border-radius: 3px;text-indent: 0.8rem;line-height: 2rem;}
+.fix_re li {float: left;border: 1px solid #DCDCDC;background-color: white;border-radius: 5px;margin:0.5rem 2%;width: 28.5%;text-align: center;cursor: pointer;}
+.fix_re {overflow: hidden;width: 96%;padding: 0 2%;}
+.fix_re h4 {margin: 0.5rem 0 0 0;}
+.fix_re p {margin: 0 0 0.5rem 0;font-size: 0.6rem;color: #666;}
+.recharge_btn {margin: 3rem 0 0;}
+.btn, .tip {width: 94%;margin: 0 auto;text-align: center;}
+.tip span {font-size: 0.65rem;color: #666;}
+.tip span a {color: #E63C2D;}

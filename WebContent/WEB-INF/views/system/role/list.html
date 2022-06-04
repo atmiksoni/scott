@@ -1,0 +1,100 @@
+<body style="overflow-y: hidden">
+	<script type="text/javascript">
+		var role;
+		var roleId;
+		var roleCode;
+		$(function() {
+			role = new Dd("role");
+			role.title = "${(languaged !='')?string('Role Management',' 角色管理 ')}";
+			role.colM = [ [ {
+				title : "主键",
+				field : "roleId",
+				alias : "r",
+				hidden : true
+			}, {
+				title : "${(languaged !='')?string('Character name ','角色名称')}",
+				field : "roleName",
+				alias : "r",
+				width : 30,
+				align : "center"
+			}, {
+				title : "${(languaged !='')?string('English name ','角色英文名称')}",
+				field : "roleEnglishName",
+				alias : "r",
+				width : 30,
+				align : "center"
+			}, {
+				title : "${(languaged !='')?string('Character encoding','角色编码')}",
+				field : "roleCode",
+				alias : "r",
+				sortable:true,
+				width : 50,
+				align : "center"
+			}, {
+				title : "${(languaged !='')?string('remark ','备注')}",
+				field : "remark",
+				alias : "r",
+				width : 100,
+				align : "center"
+			}, {
+				field : "opt",
+				title : '${(languaged !='')?string('operation ','操作')}',
+				formatter : function(value, role, index) {
+					if (value == "" || value == null) {
+					}
+					var href = "";
+					href += "[<a href='javascript:;' onclick=setResource('" + role.roleId + "','" + role.roleName + "','" + role.roleCode + "');return flase;>${(languaged !='')?string('permission setting','权限设置')}</a>]";
+					return href;
+				}
+			} ] ];
+			role.url = "role_list_data.do";
+			role.singleSelect = true;
+            role.toolbar = [ {
+                id : "role_add",
+                text : "${(languaged !='')?string('add',' 添加 ')}",
+                iconCls : "icon-add",
+                handler : function() {
+                    role.open2({
+                        title : "${(languaged !='')?string('Add Roles',' 添加角色 ')}",
+                        h : "60%",
+                        w : "40%",
+                        url : "role_add_turn.do",
+                        params : myparams
+                    });
+                }
+            }, {
+                id : "role_edit",
+                text : "${(languaged !='')?string('edit',' 修改')}",
+                iconCls : "icon-edit",
+                handler : function() {
+                    role.updata2({
+                        title : "${(languaged !='')?string('Edit Account','修改账户信息')}",
+                        h : "60%",
+                        w : "40%",
+                        url : "role_edit_turn.do",
+                        params : {
+                            id : role.rowKey
+                        }
+                    });
+                }
+            }];
+			role.LoadDataGrid();
+		});
+		function setResource(roleId, roleName, roleCode) {
+			$("#function-panel").panel({
+				title : "${(languaged !='')?string('permission setting','权限设置')}(<span style=\"color:red\">" + roleName + "</span>)",
+				href : "allot_role_turn.do",
+				queryParams : {
+					roleId : roleId,
+					roleCode : roleCode
+				}
+			});
+		}
+	</script>
+
+	<div fit="true" class="easyui-layout">
+		<div region="center" style="overflow: hidden; border: none;">
+			<table fit="true" namespace="role" id="role" class="datagrid"></table>
+		</div>
+	</div>
+</body>

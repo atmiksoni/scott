@@ -1,0 +1,68 @@
+<body style="overflow: hidden">
+	<script type="text/javascript">
+		var user;
+		$(function() {
+			user = new Dd("user");
+			user.url = "select_user_data.do";
+			user.colM = [ [ {
+				title : "主键",
+				field : "accountInfoId",
+				alias : "u",
+				hidden : true,
+				width : 100,
+				align : "center"
+			},{
+				title : "会员姓名",
+				field : "userName",
+				alias : "u",
+				width : 100,
+				align : "center"
+			},  {
+				title : "手机号",
+				field : "telephone",
+				alias : "u",
+				width : 100,
+				align : "center"
+			},] ];
+			user.param = myparams;
+			user.onClickRow = function(rowIndex, rowData) {
+				func.setTextBox(rowData);
+			}
+			user.onLoadSuccess = function(data) {
+
+			};
+			user.LoadDataGrid();
+			$('#search').linkbutton({
+				iconCls : 'icon-save',
+				onClick : function() {
+					user.search(myparams);
+				}
+			});
+		});
+		/*区域点击事件*/
+		function tree_click(node) {
+			myparams.areaCode = node.code;
+			user.search(myparams);
+		}
+		/*传值给父页面*/
+		function setTextBox(rowData) {
+			alert(iframeWin);
+			if (iframeWin) {
+				iframeWin.setValue(rowData);
+			} else {
+				top.getIframe().setValue(rowData);
+			}
+		}
+	</script>
+	<div fit="true" class="easyui-layout">
+		<div region="north"  style="height:50px;">
+			<div class="pannel_search">
+			    
+				<a href="javascript:;" id="search">查询</a>
+			</div>
+		</div>
+		<div region="center" style="overflow: hidden; border: none;">
+			<table fit="true" namespace="componet" id="user" class="datagrid"></table>
+		</div>
+	</div>
+</body>

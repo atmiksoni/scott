@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll,zui,EasyUI"/>
+</head>
+<body>
+	<@p.valid id="consult" action="" layui=true>
+	<fieldset class="layui-elem-field layui-field-title">
+		<legend>详细信息</legend>
+	</fieldset>
+		<div class="layui-form-item">
+		<div class="layui-inline">
+			<label class="layui-form-label">反馈人：</label>
+			<div class="layui-input-inline">
+				<input  value="${accountInfo.userName}" type="text" readonly="readonly" style="border:none"  class="layui-input">
+			</div>
+		</div>
+	</div>
+	<div class="layui-form-item">
+		<div class="layui-inline">
+			<label class="layui-form-label">内容：</label>
+			<div class="layui-input-inline">
+				<textarea  readonly="readonly" style="border:none;width: 350px;height: 150px;">${consult.content}</textarea>
+			</div>
+		</div>
+	</div>
+	</@p.valid>
+</body>
+</html>

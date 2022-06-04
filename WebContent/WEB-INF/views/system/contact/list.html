@@ -1,0 +1,70 @@
+<body style="overflow: hidden">
+	<script type="text/javascript">
+		var contact;
+		$(function() {
+			contact = new Dd("contact");
+			contact.url = "contact_list_data.do";
+			contact.title = "信息";
+			contact.colM = [ [ {
+				title : "主键",
+				field : "contactId",
+				alias : "c",
+				hidden : true
+			}, {
+				title : "联系人",
+				field : "name",
+				alias : "c",
+				width : 100,
+				align : "center"
+			}, {
+				title : "电话",
+				field : "telephone",
+				alias : "c",
+				width : 100,
+				align : "center"
+			}, {
+				title : "内容",
+				field : "content",
+				alias : "c",
+				width : 100,
+				align : "center"
+			}, {
+				title : "创建时间",
+				field : "createDate",
+				alias : "c",
+				width : 100,
+				align : "center"
+			} ] ];
+
+			contact.toolbar = [];
+			contact.param = myparams;
+			contact.onClickRow = function(rowIndex, rowData) {
+				$("#contact_edit,#contact_del").linkbutton("enable");
+			}
+			contact.onLoadSuccess = function(data) {
+				$("#contact_edit,#contact_del").linkbutton("disable");
+			};
+			contact.LoadDataGrid();
+			$('#search').linkbutton({
+				iconCls : 'icon-search',
+				onClick : function() {
+					myparams.name=$("#name").val();
+					myparams.telephone=$("#telephone").val();
+					contact.search(myparams);
+				}
+			});
+		});
+	</script>
+	<div fit="true" class="easyui-layout">
+		<div region="north" title="查询条件" style="height: 70px;">
+			<div class="pannel_search">
+			联系人：<input type="text" class="easyui-textbox" id="name" /> 
+			电话：<input type="text" class="easyui-textbox" id="telephone" /> 
+				<a href="javascript:;" id="search">查询</a>
+			</div>
+		</div>
+		<div region="center" style="overflow: hidden; border: none;">
+			<table fit="true" namespace="contact" id="contact" class="datagrid"></table>
+		</div>
+	</div>
+</body>

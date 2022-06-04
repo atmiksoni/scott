@@ -1,0 +1,6 @@
+.content {margin: 0px 0 0;background-color: white;border: 0px solid #DCDCDC;box-shadow: 1px 1px 2px 2px #D9D9D9;}
+.content img {width:100%;vertical-align: top;}
+.content .top {position: relative;}
+.content a {display: block;position: absolute;bottom: 2rem;left: 0;margin: 0 2rem;}
+.content .act-a {bottom: 1.4rem;margin: 0 4rem;}
+.content a .img_btnpre {display: none;}

@@ -1,0 +1,189 @@
+@charset "UTF-8";
+
+body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	font-family: "微软雅黑"
+}
+
+html {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+html, body, div, h1, ul, li, select, p, iframe, input, textarea {
+	margin: 0;
+	padding: 0;
+}
+
+@charset "UTF-8";
+
+#fang_type {
+	padding-right: 10px;
+	list-style-type: none;
+	float: right
+}
+
+#box_border {
+	border: 1px solid #EDEDED;
+}
+
+#box_top {
+	height: 37px;
+	line-height: 37px;
+	color: #fff;
+	background: #044599;
+	padding-left: 20px;
+}
+
+#box_center {
+	height: 50px;
+	line-height: 50px;
+	border-bottom: 1px solid #EDEDED;
+}
+
+#box_bottom {
+	height: 40px;
+	line-height: 40px;
+	text-align: right;
+}
+
+#box_border {
+	height: 50px;
+	line-height: 40px;
+	text-align: center;
+}
+
+#fang_type li {
+	width: 80px;
+	height: 22px;
+	line-height: 22px;
+	color: #FFF;
+	display: inline-block;
+}
+
+.fy_table_td {
+	color: #fff;
+}
+
+.fang_th {
+	background: #0080ff; no-repeat;
+	text-align: center;
+	border-left: 1px solid #c0c0c0;
+	border-bottom: 1px solid #c0c0c0;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	font-size: 14px;
+	color: #fff;
+	height: 37px;
+}
+
+a:link, a:visited, a:hover, a:active {
+	list-style: none;
+	outline: none;
+	text-decoration: none;
+	color: #909090;
+}
+
+a:hover {
+	list-style: none;
+	color: #1A5CC6;
+}
+
+.unit-the-table {
+	align:center;
+	margin: 0;
+	border-collapse: 0;
+	border-spacing: 0;
+}
+
+.table {
+	padding: 0;
+	margin: 0;
+	position: relative;
+	margin: 0 auto;
+}
+
+.table tbody tr th {
+	background: #044599 no-repeat;
+	text-align: center;
+	border-right: 1px solid #02397F;
+	border-bottom: 1px solid #02397F;
+	border-top: 1px solid #02397F;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	font-size: 14px;
+	color: #fff;
+	height: 37px;
+}
+
+.table tbody tr td {
+	text-align: center;
+	border-right: 1px solid #ECECEC;
+	border-bottom: 1px solid #ECECEC;
+	font-size: 15px;
+	color: #909090;
+	height: 37px;
+}
+
+.checkbuttonNo {
+	margin: 1px;
+	width: auto;
+	height: 40px;
+	background: transparent;
+	float: left;
+	cursor: pointer;
+}
+
+.checkbuttonOk {
+	margin: 1px;
+	width: auto;
+	height: 40px;
+	background: transparent;
+	float: left;
+}
+
+.checktext {
+	float: left;
+	width: 70px;
+	padding-left: 0px;
+	line-height: 40px;
+	text-align: center;
+}
+
+.checktext img {
+	vertical-align: middle;
+	padding-right: 0px;
+	padding-bottom: 3px;
+}
+
+.checkbuttonNo .triangleNo {
+	display: block;
+	height: 25px;
+	width: 25px;
+	background: transparent;
+	line-height: 0px;
+	float: right;
+}
+
+.checkbuttonOk .triangleOk {
+	display: block;
+	height: 25px;
+	width: 25px;
+	float: left;
+	background: url('../images/checkicon.png');
+}
+
+.checkfloor {
+	vertical-align: middle;
+	margin-top: -2px;
+	margin-bottom: 1px;
+}
+
+.checkunit {
+	vertical-align: middle;
+	margin-top: -2px;
+	margin-bottom: 1px;
+}

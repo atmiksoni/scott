@@ -1,0 +1,81 @@
+/*确认订单*/
+.content .order_info>ul {padding: 0 1rem;background-color: white;}
+.order_info>ul>li {border-bottom: 1px solid #DCDCDC;}
+.order_info>ul>li:last-child {border-bottom: 0px solid #DCDCDC;}
+.order_info>ul>li:nth-child(n+3) {text-indent: 0.75rem;color: #666;}
+.submit_btn {width:100%;position: absolute;bottom: 0.5rem;left: 0;}
+.btn {width: 94%;margin: 0 auto;}
+.pickshop, .returnshop {padding: 0.6rem 0;}
+.cost {width: 100%;}
+.cost h2 {line-height: 2rem;color: #212121;text-indent: 0.75rem;font-size: 0.9rem;}
+.cost h2 span {float: right;padding-right: 1rem;color: #666;}
+.cost h2 span em {color: #E63C2D;}
+.cost ul {background-color: white;}
+.cost ul li {position: relative;width: 100%;height: 1.6rem;line-height: 1.6rem;font-size: 0.7rem;color: #666;}
+.cost ul li span {position: absolute;top: 0;}
+.cost ul li span:first-child {left: 0.75rem;}
+.cost ul li span:nth-child(2) {left: 50%;margin-left: -1rem;}
+.cost ul li span:last-child {right: 1rem;}
+.alert ul li {float:left;width: 100%;height: 50px;line-height: 50px;border-top: 1px solid #DCDCDC;color: #E63C2D;}
+
+/*车型--门店*/
+.chosetime {margin:5px 0 0.5rem;background-color: white;}
+.chosetime .top>div, .chosetime .bottom>div {float: left;}
+.chosetime .top, .chosetime .bottom {overflow: hidden;}
+.chosetime .left {width: 28%;}
+.chosetime .right {width: 72%;}
+.chosetime .top .left img {padding-top:5px;width:100%;margin: 0 5%;}
+.chosetime .top .left {text-align: center;}
+.chosetime .top .left p {font-size: 0.5rem;color: #999;}
+.weui_cells>img {position: absolute;top: 0.5rem;left: 0;}
+.weui_cells {margin-top: 0;}
+.weui_cells>img {width: 1rem;margin-top: 0.3rem;}
+.weui_label {width: 100%;}
+.weui_cell_primary i {float: right;height: 1rem;}
+.weui_cell_primary i img {height: 1rem;margin-right: 0.4rem;vertical-align: middle;}
+.weui_cells .weui_cell {padding: 0.75rem 0 0.75rem 1.5rem;}
+.weui_btn.weui_btn_mini {font-size: 0.5rem;color: #E63C2D;}
+.chosetime .bottom .left {text-align: center;}
+.chosetime .bottom .right {font-size: 0.6rem;line-height: 1rem;}
+.chosetime .bottom .right img {height:1rem;vertical-align: middle;}
+.stores ul {}
+.stores ul li {height:3.6rem;margin: 0.5rem 0;padding:0.6rem;background-color: white;overflow: hidden;}
+.stores ul li>div {float: left;width: 100%;}
+.stores ul li .left {float: left;width: 10%;height:3.0rem;}
+.stores ul li .left img {width: 1.4rem;margin-top:0.4rem;}
+.stores ul li .middle {float: left;width: 65%;}
+.stores ul li .right {float: left;width: 25%;position: relative;}
+.stores ul li .middle h3 {font-size: 0.75rem;}
+.stores ul li .middle p {font-size: 0.6rem;color: #999;}
+.figure, .star {width: 0.9rem;}
+.stores ul li .right p {font-size: 0.6rem;color: #999;float: right;}
+.stores ul li .right p spoan {color: #E63C2D;}
+.right .weui_btn {font-size: 0.75rem;line-height: 1.2rem;display:block;position: absolute;top: 1.2rem;right: 0;}
+.popup {width:100%;height:100%;display: none;z-index:500;position: fixed;top: 0;left: 0;background-color: rgba(0, 0, 0, 0.5);}
+.popup .main {width: 80%;height: 210px;background-color: white;position: absolute;left: 10%;top: 50%;margin-top: -105px;border-radius: 0.3rem;overflow: hidden;}
+.popup .main .top {width: 100%;height: 49px;text-align: center;line-height: 50px;background-color: #E63C2D;font-size: 0.7rem;color: white;}
+.popup .main .middle li {padding: 1% 6%;font-size: 0.6rem;color: #555;}
+.popup .main .middle li:nth-child(2n+1) {width: 28%;float: left;text-align: right;}
+.popup .main .middle li:nth-child(2n) {width: 48%;float: right;}
+.popup .main .middle {overflow: hidden;padding: 2% 0;}
+.popup .main .bottom {position: absolute;bottom: 0;left: 0;width: 100%;height: 40px;border-top: 1px solid #DCDCDC;text-align: center;line-height: 40px;font-size: 0.7rem;color: #E63C2D;cursor: pointer;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

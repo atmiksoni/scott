@@ -1,0 +1,18 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll"/>
+</head>
+<body>
+<@p.valid id="freightarea" action="freightarea_add_sub.do" class="layui-form" layui=true>
+ <@p.legend text="提示信息"/> 
+         <div class="layui-form-item">
+		   <@p.layinput label="运费ID"  datarule="required;" name="freightId" />
+	     </div>
+         <div class="layui-form-item">
+		   <@p.layinput label="区域ID"  datarule="required;" name="areaId" />
+	     </div>
+</@p.valid>
+</body>
+</html>

@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,EasyUI,ueditor"/>
+</head>
+<body>
+	<@p.valid id="notice" action="notice_add_sub.do" class="layui-form" layui=true>
+	<input type="hidden" name="type" value="2" /> <@p.legend text="发布通知公告"/>
+
+	<div class="layui-form-item">
+		<div class="layui-inline"><@p.layinput label="标题" id="title" width="513" name="title" datarule="标题:required;length[5~50]" placeholder="请输入标题" remark="长度5-50"/></div>
+	</div>
+	<div class="layui-form-item">
+		<div class="layui-inline"><@p.switch label="发布状态" value="1" name="sendStatus" forhide="#invoiceInfoDiv"/></div>
+	</div>
+	
+	<@p.legend text="公告内容"/>
+	<div class="layui-form-item">
+		<div class="layui-inline"><@p.ueditor label="" id="container"  name="content" /></div>
+	</div>
+	</@p.valid>
+	<script type="text/javascript">
+		$(function() {
+			var ue = new Ue("container");
+			ue.init();
+		});
+	</script>
+</body>
+</html>

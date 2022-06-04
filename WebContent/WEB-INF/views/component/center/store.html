@@ -1,0 +1,71 @@
+<body style="overflow: hidden">
+	<script type="text/javascript">
+		var store;
+		$(function() {
+			store = new Dd("store");
+			store.url = "select_store_data.do";
+			store.colM = [ [ {
+				field : "ck",
+				checkbox : true,
+				align : "center"
+			}, {
+				title : "主键",
+				field : "storeId",
+				alias : "s",
+				hidden : true,
+				width : 100,
+				align : "center"
+			}, {
+				title : "门店名称",
+				field : "storeName",
+				alias : "s",
+				width : 100,
+				align : "center"
+			}, {
+				title : "所属区域",
+				field : "area_areaName",
+				alias : "a",
+				width : 100,
+				align : "center"
+			} ] ];
+			store.param = myparams;
+			store.onClickRow = function(rowIndex, rowData) {
+				setTextBox(rowData.storeName, rowData.storeId);
+			}
+			store.onLoadSuccess = function(data) {
+
+			};
+			store.LoadDataGrid();
+			$('#search').linkbutton({
+				iconCls : 'icon-save',
+				onClick : function() {
+					store.search(myparams);
+				}
+			});
+		});
+		/*区域点击事件*/
+		function tree_click(node) {
+			myparams.areaCode = node.code;
+			store.search(myparams);
+		}
+		/*传值给父页面*/
+		function setTextBox(text, value) {
+			if (iframeWin) {
+				iframeWin.setValue(text, value);
+			} else {
+				top.getIframe().setValue(text, value);
+			}
+
+		}
+	</script>
+	<div fit="true" class="easyui-layout">
+		<div region="north" title="门店筛选" style="height: 70px;">
+			<div class="pannel_search">
+				<a href="javascript:;" id="search">查询</a>
+			</div>
+		</div>
+		<div region="center" style="overflow: hidden; border: none;">
+			<table fit="true" namespace="componet" id="store" class="datagrid"></table>
+		</div>
+	</div>
+</body>

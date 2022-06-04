@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll,zui,EasyUI"/>
+</head>
+<body>
+ <@p.valid id="bankcard" action="bankcard_edit_sub.do">
+    <input type="hidden" name="bankcardId" value="${bankcard.bankcardId}" />
+    <table align="center" class="table table-form">
+          	 <tr>
+           <th class="w-80px">用户：</th>
+            <td><input type="text" name="accountInfoId" value="${bankcard.accountInfoId}" class="form-control input-sm w-p50" data-rule="required;"/></td>
+          	</tr>
+          	 <tr>
+           <th class="w-80px">卡号：</th>
+            <td><input type="text" name="cardNo" value="${bankcard.cardNo}" class="form-control input-sm w-p50" data-rule="required;"/></td>
+          	</tr>
+          	 <tr>
+           <th class="w-80px">银行名称：</th>
+            <td><input type="text" name="bankName" value="${bankcard.bankName}" class="form-control input-sm w-p50" data-rule="required;"/></td>
+          	</tr>
+          	 <tr>
+           <th class="w-80px">卡片类型：</th>
+            <td><input type="text" name="cardType" value="${bankcard.cardType}" class="form-control input-sm w-p50" data-rule="required;"/></td>
+          	</tr>
+          	 <tr>
+           <th class="w-80px">信用卡级别：</th>
+            <td><input type="text" name="cardLevel" value="${bankcard.cardLevel}" class="form-control input-sm w-p50" data-rule="required;"/></td>
+          	</tr>
+          	 <tr>
+           <th class="w-80px">银行卡有效期：</th>
+            <td><input type="text" name="validDate" value="${bankcard.validDate}" class="form-control input-sm w-p50" data-rule="required;"/></td>
+          	</tr>
+          	 <tr>
+           <th class="w-80px">证件类型：</th>
+            <td><input type="text" name="papersType" value="${bankcard.papersType}" class="form-control input-sm w-p50" data-rule="required;"/></td>
+          	</tr>
+          	 <tr>
+           <th class="w-80px">持卡人姓名：</th>
+            <td><input type="text" name="cardHolderName" value="${bankcard.cardHolderName}" class="form-control input-sm w-p50" data-rule="required;"/></td>
+          	</tr>
+          	 <tr>
+           <th class="w-80px">证件号：</th>
+            <td><input type="text" name="papersCardNo" value="${bankcard.papersCardNo}" class="form-control input-sm w-p50" data-rule="required;"/></td>
+          	</tr>
+          	 <tr>
+           <th class="w-80px">安全码：</th>
+            <td><input type="text" name="safetyCode" value="${bankcard.safetyCode}" class="form-control input-sm w-p50" data-rule="required;"/></td>
+          	</tr>
+    </table>
+ </@p.valid> 
+</body>
+</html>

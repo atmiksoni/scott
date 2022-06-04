@@ -1,0 +1,131 @@
+<body style="overflow: hidden">
+ <script type="text/javascript">
+      var note;
+    $(function() {
+      note = new Dd("note");
+      note.url = "note_list_data.do";
+      note.title = "信息";
+      note.colM = [ [ {
+        field : "ck",
+        checkbox : true,
+        align : "center"
+      }, {
+        title : "主键",
+        field : "noteId",
+        alias : "n",
+        hidden:true,
+        width : 100,
+        align : "center"
+      } ,{
+        title : "发票抬头",
+        field : "noteTitle",
+        alias : "n",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "联系手机",
+        field : "mobile",
+        alias : "n",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "所在地区",
+        field : "address",
+        alias : "n",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "详细地址",
+        field : "addressDetails",
+        alias : "n",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "邮政编码",
+        field : "postalCode",
+        alias : "n",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "创建日期",
+        field : "createDate",
+        alias : "n",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "用户",
+        field : "accountInfoId",
+        alias : "n",
+        width : 100,
+        align : "center"
+      } ] ];
+
+      note.toolbar = [ {
+        id : "note_add",
+        text : "添加",
+        iconCls : "icon-add",
+        handler : function() {
+          note.open2({
+            title : "添加",
+            h : "300px",
+			w : "450px",
+            url : "note_add_turn.do"
+          });
+        }
+      }, {
+        id : "note_edit",
+        text : "修改",
+        iconCls : "icon-edit",
+        disabled : true,
+        handler : function() {
+          note.updata2({
+            title : "修改",
+            h : "300px",
+			w : "450px",
+            url : "note_edit_turn.do",
+            params : {
+                noteId : note.rowKey
+            }
+		  });
+        }
+      }, {
+        id : "note_del",
+        text : "删除",
+        iconCls : "icon-remove",
+        disabled : true,
+        handler : function() {
+          note.remove({
+             url : "note_del_sub.do",
+             params : {
+                noteId : note.rowKey
+             }
+		  });
+        }
+      } ];
+      note.param = myparams;
+      note.onClickRow = function(rowIndex, rowData) {
+       $("#note_edit,#note_del").linkbutton("enable");
+      }
+      note.onLoadSuccess = function(data) {
+       $("#note_edit,#note_del").linkbutton("disable");
+      };
+      note.LoadDataGrid();
+      $('#search').linkbutton({
+        iconCls : 'icon-save',
+        onClick : function() {
+          note.search(myparams);
+        }
+      });
+    });
+  </script>
+ <div fit="true" class="easyui-layout">
+  <div region="north" title="查询条件" style="height: 70px;">
+   <div class="pannel_search">
+       <a href="javascript:;" id="search">查询</a>
+   </div>
+  </div>
+  <div region="center" style="overflow: hidden;border: none;">
+   <table fit="true" namespace="note" id="note" class="datagrid"></table>
+  </div>
+ </div>
+</body>

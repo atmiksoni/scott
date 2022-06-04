@@ -1,0 +1,124 @@
+<body style="overflow: hidden">
+ <script type="text/javascript">
+      var checkitem;
+    $(function() {
+      checkitem = new Dd("checkitem");
+      checkitem.url = "checkitem_list_data.do";
+      checkitem.title = "${(languaged !='')?string('items info',' 检查项目信息 ')}";
+      checkitem.colM = [ [ /* {
+        field : "ck",
+        checkbox : true,
+        align : "center"
+      }, */ {
+        title : "主键",
+        field : "checkitemId",
+        alias : "c",
+        hidden:true
+      } ,{
+        title : "${(languaged !='')?string('Device type two','设备类型名称二')}",
+        field : "equipmentTypeTwoName",
+        alias : "equipmentTypeTwo",
+        width : 100,
+        align : "center"
+      } /* ,{
+        title : "${(languaged !='')?string('equipmentTypeName','设备类型名称')}",
+        field : "equipmentTypeName",
+        alias : "equipmentType",
+        width : 100,
+        align : "center"
+      } */ ,{
+        title : "${(languaged !='')?string('items','项目检查名称')}",
+        field : "checkItemName",
+        alias : "c",
+        width : 100,
+        align : "center"
+      } ,{
+          title : "${(languaged !='')?string('items english','项目检查英文名称')}",
+          field : "checkItemEnglishName",
+          alias : "c",
+          width : 100,
+          align : "center"
+        } ,{
+        title : "${(languaged !='')?string('creation time','创建时间')}",
+        field : "createDate",
+        alias : "c",
+        width : 100,
+        align : "center"
+      } ] ];
+
+      checkitem.toolbar = [ {
+        id : "checkitem_add",
+        text : "${(languaged !='')?string('add',' 添加 ')}",
+        iconCls : "icon-add",
+        disabled : true,
+        handler : function() {
+          checkitem.open2({
+            title : "${(languaged !='')?string('add','添加 检查项目')}",
+            h : "70%",
+			w : "45%",
+			btn:["${(languaged !='')?string('confirm',' 确认 ')}","${(languaged !='')?string('close',' 关闭 ')}"],
+            url : "checkitem_add_turn.do",
+            params : myparams
+          });
+        }
+      }, {
+        id : "checkitem_edit",
+        text : "${(languaged !='')?string('edit',' 修改')}",
+        iconCls : "icon-edit",
+        disabled : true,
+        handler : function() {
+          checkitem.updata2({
+            title : "${(languaged !='')?string('edit','修改 检查项目')}",
+            h : "70%",
+			w : "45%",
+            url : "checkitem_edit_turn.do",
+            btn:["${(languaged !='')?string('confirm',' 确认 ')}","${(languaged !='')?string('close',' 关闭 ')}"],
+            params : {
+            	checkItemId : checkitem.rowKey
+            }
+		  });
+        }
+      }/* , {
+        id : "checkitem_del",
+        text : "${(languaged !='')?string('delete',' 删除')}",
+        iconCls : "icon-remove",
+        disabled : true,
+        handler : function() {
+          checkitem.remove({
+             url : "checkitem_del_sub.do",
+             params : {
+                checkitemId : checkitem.rowKey
+             },
+             title:"${(languaged !='')?string('are you delete?','')}",
+             content:"${(languaged !='')?string('delete content','确定要删除所选记录吗?')}",
+              btn:["${(languaged !='')?string('confirm',' 确认 ')}","${(languaged !='')?string('close',' 关闭 ')}"]
+		  });
+        }
+      } */ ];
+      checkitem.param = myparams;
+      checkitem.onClickRow = function(rowIndex, rowData) {
+       $("#checkitem_edit,#checkitem_del").linkbutton("enable");
+      }
+      checkitem.onLoadSuccess = function(data) {
+       $("#checkitem_edit,#checkitem_del").linkbutton("disable");
+      };
+      checkitem.LoadDataGrid();
+      $('#search').linkbutton({
+        iconCls : 'icon-search',
+        onClick : function() {
+          checkitem.search(myparams);
+        }
+      });
+    });
+  </script>
+ <div fit="true" class="easyui-layout">
+<!--   <div region="north" title="查询条件" style="height: 70px;">
+   <div class="pannel_search">
+       <a href="javascript:;" id="search">${(languaged !='')?string('search','查询')}</a>
+   </div>
+  </div> -->
+  <div region="center" style="overflow: hidden;border: none;">
+   <table fit="true" namespace="checkitem" id="checkitem" class="datagrid"></table>
+  </div>
+ </div>
+</body>

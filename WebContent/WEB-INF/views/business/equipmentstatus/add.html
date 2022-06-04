@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll"/>
+</head>
+<body>
+<@p.valid id="equipmentstatus" action="equipmentstatus_add_sub.do" class="layui-form" layui=true>
+ <@p.legend text="${(languaged !='')?string('Device condition','添加设备状态')}"/> 
+         <div class="layui-form-item"> 
+           <@p.layinput label="${(languaged !='')?string('Condition number','状态编号')}"  datarule="required;" datamsgrequired="${(required)!''}" name="equipmentStatusCode" />
+	     </div>
+         <div class="layui-form-item"> 
+           <@p.layinput label="${(languaged !='')?string('Condition name','状态名称')}"  datarule="required;" datamsgrequired="${(required)!''}" name="equipmentStatusName" />
+	     </div>
+	     <div class="layui-form-item"> 
+           <@p.layinput label="${(languaged !='')?string('English name','状态英文名称')}"  datarule="required;" datamsgrequired="${(required)!''}" name="equipmentStatusEnglishName" />
+	     </div>
+         <div class="layui-form-item"> 
+           <@p.layinput label="${(languaged !='')?string('sequence','排序')}"  datarule="required;" datamsgrequired="${(required)!''}" name="Indexs" />
+	     </div>
+</@p.valid>
+</body>
+</html>

@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll"/>
+</head>
+<body>
+<@p.valid id="prescription" action="prescription_add_sub.do" class="layui-form" layui=true>
+ <@p.legend text="提示信息"/> 
+         <div class="layui-form-item">
+		   <@p.layinput label="处方名称"   datarule="required;" name="prescriptionName" />
+	     </div>
+         <div class="layui-form-item">
+		   <@p.textare  width=600label="处方内容"   name="prescriptionContent" />
+	     </div>
+         <div class="layui-form-item">
+		   <@p.textare  width=600 label="付数"   name="prescriptionCount" />
+	     </div>
+         <div class="layui-form-item">
+		   <@p.textare  width=600label="用法"   name="prescriptionUsage" />
+	     </div>
+         <div class="layui-form-item">
+		   <@p.textare   width=600 label="诊断"   name="diagnosis" />
+	     </div>
+         <div class="layui-form-item">
+		   <@p.textare  width=600 label="治则 "   name="treatment" />
+	     </div>
+         <div class="layui-form-item">
+		   <@p.textare  width=600 label="组成"   name="constitute" />
+	     </div>
+</@p.valid>
+</body>
+</html>

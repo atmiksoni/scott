@@ -1,0 +1,43 @@
+<body>
+	<div class="datagrid-toolbar">
+		<a href="javascript:;" id="btn_save" class="easyui-linkbutton" plain="true" icon="icon-save">保存</a>
+	</div>
+	<script type="text/javascript">
+		var accountInfoTree;
+		$(function() {
+			accountInfoTree = new Tree();
+			accountInfoTree.checkbox = true;
+			accountInfoTree.url = "company_setaccountinfo_tree.do";
+			accountInfoTree.queryParams = {
+				companyId : "${companyId}"
+			};
+			accountInfoTree.onLoadSuccess = function(node, data) {
+				accountInfoTree.expandAll();
+				var options = accountInfoTree.getOptions();
+				$(options.checkeds).each(function(i, value) {
+					var node = $('#accountInfoTree').tree('find', value);
+					if (accountInfoTree.isLeaf(node)) {
+						accountInfoTree.checkNode(node);
+					}
+				});
+			}
+
+			accountInfoTree.initTree("accountInfoTree");
+			$("#btn_save").on("click", save);
+		});
+
+		function save() {
+			var options = $("#accountInfoTree").tree("options");
+			var accountInfoIds = accountInfoTree.getCheckedId();
+			var myparams = {
+				companyId : "${companyId}",
+				accountInfoIds : accountInfoIds.join(",")
+			};
+			top.Dg.z.ajax("company/company_setaccountinfo_sub.do", myparams, function(data) {
+				options.checkeds = accountInfoIds;
+				company.search(myparams);
+			});
+		}
+	</script>
+	<ul id="accountInfoTree"></ul>
+</body>

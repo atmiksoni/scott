@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>流程设计器</title>
+<!-- <script src="${base}/plug-in/jquery/jquery-1.11.1.min.js?version=${version}"></script><link rel="stylesheet" type="text/css" href="${base}/plug-in/easyui/themes/bootstrap/easyui.css?version=${version}"/>
+<link rel="stylesheet" type="text/css" href="${base}/plug-in/easyui/themes/icon.css?version=${version}"/>
+<link rel="stylesheet" type="text/css" href="${base}/plug-in/easyui/themes/color.css?version=${version}"/>
+<script src="${base}/plug-in/easyui/jquery.easyui.min.js?version=${version}"></script>
+<script src="${base}/plug-in/easyui/locale/easyui-lang-zh_CN.js?version=${version}"></script>
+
+ -->
+
+<script type="text/javascript" src="${base}/plug-in/designer/easyui/jquery-1.7.2.min.js"></script>
+<link id="easyuiTheme" rel="stylesheet" href="${base}/plug-in/designer/easyui/easyui.css" type="text/css"></link>
+<link rel="stylesheet" href="${base}/plug-in/designer/easyui/icon.css" type="text/css"></link>
+<script type="text/javascript" src="${base}/plug-in/designer/easyui/jquery.easyui.min.1.3.0.js"></script>
+<script type="text/javascript" src="${base}/plug-in/designer/easyui/easyui-lang-zh_CN.js"></script>
+<script type='text/javascript' src='${base}/plug-in/jquery/plugins/jquery-autocomplete/lib/jquery.bgiframe.min.js'></script>
+<script type='text/javascript' src='${base}/plug-in/jquery/plugins/jquery-autocomplete/lib/jquery.ajaxQueue.js'></script>
+<script type='text/javascript' src='${base}/plug-in/jquery/plugins/jquery-autocomplete/jquery.autocomplete.min.js'></script>
+<link href="${base}/plug-in/designer/designer.css" type="text/css" rel="stylesheet" />
+<script src="${base}/plug-in/designer/draw2d/wz_jsgraphics.js"></script>
+<script src='${base}/plug-in/designer/draw2d/mootools.js'></script>
+<script src='${base}/plug-in/designer/draw2d/moocanvas.js'></script>
+<script src='${base}/plug-in/designer/draw2d/draw2d.js'></script>
+<script src="${base}/plug-in/designer/MyCanvas.js"></script>
+<script src="${base}/plug-in/designer/ResizeImage.js"></script>
+<script src="${base}/plug-in/designer/event/Start.js"></script>
+<script src="${base}/plug-in/designer/event/End.js"></script>
+<script src="${base}/plug-in/designer/connection/MyInputPort.js"></script>
+<script src="${base}/plug-in/designer/connection/MyOutputPort.js"></script>
+<script src="${base}/plug-in/designer/connection/DecoratedConnection.js"></script>
+<script src="${base}/plug-in/designer/task/Task.js"></script>
+<script src="${base}/plug-in/designer/task/UserTask.js"></script>
+<script src="${base}/plug-in/designer/task/ManualTask.js"></script>
+<script src="${base}/plug-in/designer/task/ServiceTask.js"></script>
+<script src="${base}/plug-in/designer/gateway/ExclusiveGateway.js"></script>
+<script src="${base}/plug-in/designer/gateway/ParallelGateway.js"></script>
+<script src="${base}/plug-in/designer/boundaryevent/TimerBoundary.js"></script>
+<script src="${base}/plug-in/designer/boundaryevent/ErrorBoundary.js"></script>
+<script src="${base}/plug-in/designer/subprocess/CallActivity.js"></script>
+<script src="${base}/plug-in/designer/task/ScriptTask.js"></script>
+<script src="${base}/plug-in/designer/task/MailTask.js"></script>
+<script src="${base}/plug-in/designer/task/ReceiveTask.js"></script>
+<script src="${base}/plug-in/designer/task/BusinessRuleTask.js"></script>
+<script src="${base}/plug-in/designer/designer.js"></script>
+<script src="${base}/plug-in/designer/mydesigner.js"></script>
+<script type="text/javascript">
+	$(function() {
+		try {
+			_task_obj = $('#task');
+			_task_context_menu = $('#task-context-menu').menu({});
+			$('.easyui-linkbutton').draggable({
+				proxy : function(source) {
+					var n = $('<div class="draggable-model-proxy"></div>');
+					n.html($(source).html()).appendTo('body');
+					return n;
+				},
+				deltaX : 0,
+				deltaY : 0,
+				revert : true,
+				cursor : 'auto',
+				onStartDrag : function() {
+					$(this).draggable('options').cursor = 'not-allowed';
+				},
+				onStopDrag : function() {
+					$(this).draggable('options').cursor = 'auto';
+				}
+			});
+			$('#paintarea').droppable({
+				accept : '.easyui-linkbutton',
+				onDragEnter : function(e, source) {
+					$(source).draggable('options').cursor = 'auto';
+				},
+				onDragLeave : function(e, source) {
+					$(source).draggable('options').cursor = 'not-allowed';
+				},
+				onDrop : function(e, source) {
+					$(this).removeClass('over');
+					var wfModel = $(source).attr('wfModel');
+					var shape = $(source).attr('shape');
+					if (wfModel) {
+						var x = $(source).draggable('proxy').offset().left;
+						var y = $(source).draggable('proxy').offset().top;
+						var xOffset = workflow.getAbsoluteX();
+						var yOffset = workflow.getAbsoluteY();
+						var scrollLeft = workflow.getScrollLeft();
+						var scrollTop = workflow.getScrollTop();
+						addModel(wfModel, x - xOffset + scrollLeft, y - yOffset + scrollTop, shape);
+					}
+				}
+			});
+			//$('#paintarea').bind('contextmenu',function(e){
+			//alert(e.target.tagName);
+			//});
+
+		} catch (e) {
+
+		}
+	});
+//-->
+</script>
+</head>
+<body id="designer" class="easyui-layout">
+	<div region="west" split="true" iconCls="palette-icon" title="流程元素" style="width: 110px;">
+		<div class="easyui-accordion" fit="true" border="false">
+			<div id="event" title="事件" iconCls="palette-menu-icon" class="palette-menu">
+				<a href="javascript:;" class="easyui-linkbutton" plain="true" iconCls="start-event-icon" wfModel="Start">开始</a> <br> <a href="javascript:;" class="easyui-linkbutton" plain="true" iconCls="end-event-icon" wfModel="End">结束</a> <br>
+			</div>
+			<div id="task" title="任务" iconCls="palette-menu-icon" selected="true" class="palette-menu">
+				<a href="javascript:;" class="easyui-linkbutton" plain="true" iconCls="user-task-icon" wfModel="UserTask">用户任务</a> <br> <a href="javascript:;" class="easyui-linkbutton" plain="true" iconCls="manual-task-icon" wfModel="ManualTask">手动任务</a> <br> <a href="javascript:;" class="easyui-linkbutton" plain="true" iconCls="service-task-icon" wfModel="ServiceTask">服务任务</a> <br> <a href="javascript:;" class="easyui-linkbutton" plain="true" iconCls="script-task-icon" wfModel="ScriptTask">脚本任务</a> <br> <a href="javascript:;" class="easyui-linkbutton" plain="true" iconCls="mail-task-icon" wfModel="MailTask">邮件任务</a> <br> <a href="javascript:;" class="easyui-linkbutton" plain="true" iconCls="receive-task-icon" wfModel="ReceiveTask">接收任务</a> <br> <a href="javascript:;"
+					class="easyui-linkbutton" plain="true" iconCls="business-rule-task-icon" wfModel="BusinessRuleTask">业务规则</a> <br> <a href="javascript:;" class="easyui-linkbutton" plain="true" iconCls="subprocess-icon">子流程</a> <br> <a href="javascript:;" class="easyui-linkbutton" plain="true" iconCls="callactivity-icon" wfModel="CallActivity">调用活动</a> <br>
+			</div>
+			<div id="gateway" title="网关" iconCls="palette-menu-icon" class="palette-menu">
+				<a href="javascript:;" class="easyui-linkbutton" plain="true" iconCls="parallel-gateway-icon" wfModel="ParallelGateway">同步</a> <br> <a href="javascript:;" class="easyui-linkbutton" plain="true" iconCls="exclusive-gateway-icon" wfModel="ExclusiveGateway">分支</a> <br>
+			</div>
+			<div id="boundary-event" title="边界事件" iconCls="palette-menu-icon" class="palette-menu">
+				<a href="javascript:;" class="easyui-linkbutton" plain="true" iconCls="timer-boundary-event-icon" wfModel="TimerBoundary">时间边界</a> <br> <a href="javascript:;" class="easyui-linkbutton" plain="true" iconCls="error-boundary-event-icon" wfModel="ErrorBoundary">错误边界</a> <br>
+			</div>
+		</div>
+	</div>
+	<div id="process-panel" region="center" style="padding: 1px" split="true" iconCls="process-icon" title="流程">
+		<div id="process-definition-tab">
+			<div id="designer-area" title="设计" style="POSITION: absolute; width: 100%; height: 100%; padding: 0; border: none; overflow: auto;">
+				<div id="paintarea" style="POSITION: absolute; WIDTH: 2000px; HEIGHT: 2000px"></div>
+			</div>
+			<div id="xml-area" title="源码" style="width: 100%; height: 100%; overflow: hidden; overflow-x: hidden; overflow-y: hidden;">
+				<textarea id="descriptorarea" rows="38" style="width: 100%; height: 100%; padding: 0; border: none; font-size: 12px" readonly="readonly"></textarea>
+			</div>
+		</div>
+	</div>
+	<!-- toolbar -->
+	<div id="toolbar-panel" region="north" border="false" style="height: 55px; background: #d8e4fe;" title="工具栏">
+		<input type="hidden" name="processId" id="processId" value="${id}"> <img width="20" height="18" title="创建流程" src="${base}/plug-in/designer/img/save.png" onclick="saveProcessDef()" class="buttonStyle" /> <img width="20" height="18" title="上一步" src="${base}/plug-in/designer/img/back.png" onclick="undo()" class="buttonStyle" /> <img width="20" height="18" title="下一步" src="${base}/plug-in/designer/img/next.png" onclick="redo()" class="buttonStyle" /> <img width="20" height="18" title="导出" src="${base}/plug-in/designer/img/printer.png" onclick="exportProcessDef(this)" class="buttonStyle" />
+	</div>
+	<div region="east" id="properties-panel" href="properties.do?turn=processProperties" split="true" iconCls="properties-icon" title="流程属性" style="padding: 1px; width: 280px;"></div>
+	<!-- task context menu -->
+	<div id="task-context-menu" class="easyui-menu" style="width: 120px;">
+		<div id="properties-task-context-menu" iconCls="properties-icon">属性</div>
+		<div id="delete-task-context-menu" iconCls="icon-remove">删除</div>
+	</div>
+	<!-- form configuration window -->
+	<div id="form-win" title="表单配置" style="width: 720px; height: 300px;"></div>
+	<!-- form configuration window -->
+	<div id="variable-win" title="变量配置" style="width: 720px; height: 300px;"></div>
+	<!-- listener configuration window -->
+	<div id="listener-win" title="监听配置" style="width: 720px; height: 300px;"></div>
+	<!-- candidate configuration window -->
+	<div id="task-candidate-win" title="任务配置" style="width: 720px; height: 300px;"></div>
+	<script type="text/javascript">
+		$('#process-definition-tab').tabs({
+			fit : true,
+			onSelect : function(title) {
+				if (title == '设计') {
+				} else if (title == '源码') {
+					$('#descriptorarea').val(workflow.toXML());
+
+				}
+			}
+		});
+	</script>
+	<script type="text/javascript">
+		createCanvas('0', false);
+	</script>
+</body>
+</html>

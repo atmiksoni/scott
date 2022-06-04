@@ -1,0 +1,146 @@
+<body style="overflow: hidden; border: none">
+	<script type="text/javascript">
+		var accountinfo;
+		$(function() {
+			accountinfo = new Dd("accountinfo");
+			accountinfo.url = "list_shipper_data.do?accountType=App_Shipper";
+			accountinfo.title = "用户信息";
+			accountinfo.fcolM = [ [
+					{
+						title : "主键",
+						field : "accountInfoId",
+						alias : "a",
+						hidden : true,
+						width : 100,
+						align : "center"
+					},
+					{
+						title : "姓名",
+						field : "userName",
+						alias : "a",
+						width : 80,
+						align : "center"
+					},
+					{
+						title : "昵称",
+						field : "nickName",
+						alias : "a",
+						width : 120,
+						hidden : true,
+						align : "center"
+					},
+					{
+						title : "性别",
+						field : "sex",
+						alias : "a",
+						width : 50,
+						align : "center",
+						formatter : function(value, row, index) {
+							return Fm.formatter({
+								"0" : "女",
+								"1" : "男",
+							}, value);
+						}
+					},
+					{
+						title : "年龄",
+						field : "age",
+						alias : "a",
+						width : 50,
+						align : "center"
+					},
+					{
+						title : "身份信息ID",
+						field : "identityId",
+						alias : "a",
+						hidden : true,
+						width : 100,
+						align : "center"
+					},
+					{
+						title : "联系电话",
+						field : "telephone",
+						alias : "a",
+						width : 80,
+						align : "center"
+					},
+					{
+						title : "企业名称",
+						field : "companyName",
+						alias : "identity",
+						width : 130,
+						align : "center"
+					},
+					{
+						title : "生日",
+						field : "birthday",
+						alias : "a",
+						hidden : true,
+						width : 100,
+						align : "center"
+					},
+					{
+						title : "个人二维码",
+						field : "qrode",
+						alias : "a",
+						hidden : true,
+						width : 100,
+						align : "center"
+					},
+					{
+						title : "身份证号",
+						field : "cardNo",
+						alias : "identity",
+						align : "center"
+					},
+					{
+						title : "创建日期",
+						field : "createDate",
+						alias : "a",
+						width : 100,
+						align : "center"
+					} ] ];
+
+			accountinfo.toolbar = [ ];
+			myparams.roleId = "${roleId}";
+			accountinfo.param = myparams;
+			accountinfo.onClickRow = function(rowIndex, rowData) {
+				$("#accountinfo_edit,#accountinfo_del,#accountinfo_resetpwd").linkbutton("enable");
+			}
+			accountinfo.onLoadSuccess = function(data) {
+				$("#accountinfo_edit,#accountinfo_del,#accountinfo_resetpwd").linkbutton("disable");
+			}
+			accountinfo.LoadDataGrid();
+			$('#accountinfo_search').linkbutton({
+				iconCls : 'icon-search',
+				onClick : function() {
+					myparams.status = $("#status").val();
+					myparams.userName = $("#userName").val();
+					myparams.telephone = $("#telephone").val();
+					accountinfo.search(myparams);
+				}
+			});
+			
+			$('#sub').linkbutton({
+				iconCls : 'icon-save',
+				onClick : function() {
+					func.setTextBox(accountinfo.getSelectedRow());
+					var index = parent.layer.getFrameIndex(window.name); //获取窗口索引  
+					parent.layer.close(index);//关闭弹出的子页面窗口 
+				}
+			});
+		});
+	</script>
+	<div fit="true" class="easyui-layout" style="border: none">
+		<div region="north" style="height: 40px;">
+			<div class="pannel_search">
+				姓名：<input type="text" class="easyui-textbox" id="userName" name="userName" /> 
+				电话：<input type="text" class="easyui-textbox" id="telephone" name="telephone" />
+				<a href="javascript:;" id="accountinfo_search">查询 </a> <a href="javascript:;" id="sub">确认</a>
+			</div>
+		</div>
+		<div region="center" style="overflow: hidden; border: none;">
+			<table fit="true" namespace="user" id="accountinfo" class="datagrid"></table>
+		</div>
+	</div>
+</body>

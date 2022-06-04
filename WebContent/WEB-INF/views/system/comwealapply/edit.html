@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll"/>
+</head>
+<body>
+<@p.valid id="comwealapply" action="comwealapply_edit_sub.do" class="layui-form" layui=true>
+ <@p.legend text="提示信息"/> 
+ <input type="hidden" name="comwealapplyId" value="${comwealapply.comwealapplyId}" />
+         <div class="layui-form-item">
+		    <@p.layinput label="姓名"  datarule="required;" name="name" value="${comwealapply.name}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="性别"  datarule="required;" name="sex" value="${comwealapply.sex}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="出生日期"  datarule="required;" name="birthdate" value="${comwealapply.birthdate}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="籍贯"  datarule="required;" name="birthplace" value="${comwealapply.birthplace}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="民族"  datarule="required;" name="nation" value="${comwealapply.nation}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="身份证号"  datarule="required;" name="identitycard" value="${comwealapply.identitycard}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="学校"  datarule="required;" name="school" value="${comwealapply.school}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="专业"  datarule="required;" name="domain" value="${comwealapply.domain}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="年级"  datarule="required;" name="grade" value="${comwealapply.grade}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="邮箱"  datarule="required;" name="email" value="${comwealapply.email}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="手机号"  datarule="required;" name="mobile" value="${comwealapply.mobile}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="家庭所在地ID"  datarule="required;" name="areaId" value="${comwealapply.areaId}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="详细地址"  datarule="required;" name="addressdetails" value="${comwealapply.addressdetails}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="家庭户口"  datarule="required;" name="household" value="${comwealapply.household}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="家庭年收入"  datarule="required;" name="income" value="${comwealapply.income}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="家庭总人数"  datarule="required;" name="peoplecount" value="${comwealapply.peoplecount}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="收入来源"  datarule="required;" name="incomesource" value="${comwealapply.incomesource}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="申请理由"  datarule="required;" name="reason" value="${comwealapply.reason}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="学习规划"  datarule="required;" name="studyplan" value="${comwealapply.studyplan}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="职业规划"  datarule="required;" name="careerplan" value="${comwealapply.careerplan}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="创建日期"  datarule="required;" name="createdate" value="${comwealapply.createdate}"/>
+	     </div>
+</@p.valid>
+</body>
+</html>

@@ -1,0 +1,17 @@
+
+<ul id="mytree" class="ztree"></ul>
+
+<script type="text/javascript">
+	var tree;
+	$(function() {
+		niceScroll(".panel-body");
+		tree = new Tree();
+		tree.queryParams = myparams;
+		tree.url = "${base}/admin/component/select_dataitem_data.do";
+		tree.initTree("mytree");
+		tree.onClick = function(node) {
+			tree_click(node);
+		};
+	});
+</script>
+</body>

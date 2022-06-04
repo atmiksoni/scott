@@ -1,0 +1,209 @@
+<body style="overflow: hidden; border: none">
+	<script src="/plug-in/viewer/js/viewer.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="/plug-in/viewer/css/viewer.min.css" />
+	<script type="text/javascript">
+      var accountinfo;
+    $(function() {
+      accountinfo = new Dd("accountinfo");
+      accountinfo.url = "accountinfo_admin_list_data.do";
+      accountinfo.title = "管理员信息";
+      accountinfo.colM = [ [
+		{
+	    title : "主键",
+	    field : "accountInfoId",
+	    alias : "u",
+	    hidden:true,
+	    width : 100,
+	    align : "center"
+	  } ,{
+	    title : "账户",
+	    field : "accountId",
+	    alias : "u",
+	    hidden:true,
+	    width : 100,
+	    align : "center"
+	  } ,{
+	      title : "头像",
+	      field : "userhead",
+	      alias : "u",
+	      width : 100,
+	      align : "center",
+	      formatter : function(value, row, index) {
+				return '<img onclick="show()"  width="38px;" align="center" height="38px;" src="../../'+row.userhead+'" />';
+			}
+	    } ,{						
+	     title : "姓名",
+	     field : "userName",
+	     alias : "u",
+	     width : 80,
+	     align : "center"
+	   }, {
+	     title : "昵称",
+	     field : "nickName",
+	     alias : "u",
+	     width : 120,
+	     hidden:true,
+	     align : "center"
+	   } ,{
+         title : "性别",
+         field : "sex",
+         alias : "u",
+         width : 50,
+         align : "center",
+         formatter : function(value, row, index) {
+ 			return Fm.formatter({
+ 				"0" : "女",
+ 				"1" : "男",
+ 			}, value);
+  		}
+        } ,{
+          title : "年龄",
+          field : "age",
+          alias : "u",
+          width : 50,
+          align : "center"
+        },{
+        title : "身份信息ID",
+        field : "identityId",
+        alias : "u",
+        hidden:true,
+        width : 100,
+        align : "center"
+      },{
+            title : "联系电话",
+            field : "telephone",
+            alias : "u",
+            width : 130,
+            align : "center"
+      },{
+        title : "QQ",
+        field : "qq",
+        alias : "u",
+        hidden:true,
+        width : 100,
+        align : "center"
+      },{
+        title : "签名",
+        field : "motto",
+        alias : "u",
+        width : 200,
+        hidden:true,
+        align : "center"
+      } ,{
+        title : "生日",
+        field : "birthday",
+        alias : "u",
+        hidden:true,
+        width : 100,
+        align : "center"
+      } ,{
+        title : "个人二维码",
+        field : "qrode",
+        alias : "u",
+        hidden:true,
+        width : 100,
+        align : "center"
+      } ,{
+        title : "创建日期",
+        field : "createDate",
+        alias : "u",
+        width : 150,
+        align : "center"
+      }] ];
+      accountinfo.toolbar = [ {
+        id : "accountinfo_add",
+        text : "新增",
+        iconCls : "icon-add",
+        handler : function() {
+          accountinfo.open2({
+            title : "添加管理员",
+            h : "55%",
+			w : "35%",
+            url : "accountInfo_add_turn.do",
+            params : {
+            	accountInfoId : accountinfo.rowKey,
+            	organizId : myparams.organizId,
+            	roleId : 3
+            }
+          });
+        }
+      }, {
+        id : "accountinfo_edit",
+        text : "编辑",
+        iconCls : "icon-edit",
+        disabled : true,
+        handler : function() {
+          accountinfo.updata2({
+            title : "编辑管理员信息",
+            h : "55%",
+			w : "35%",
+            url : "accountinfo_edit_turn.do",
+            params : {
+            	accountInfoId : accountinfo.rowKey,
+            	roleId : 3
+            }
+		  });
+        }
+      }, {
+        id : "accountinfo_del",
+        text : "删除",
+        iconCls : "icon-remove",
+        disabled : true,
+        handler : function() {
+          accountinfo.remove({
+             url : "accountinfo_del_sub.do",
+             params : {
+            	 accountInfoId : accountinfo.rowKey
+             }
+		  });
+        }
+      },{
+		id : "accountinfo_resetpwd",
+		text : "重置密码",
+		iconCls : "icon-renew",
+		disabled : true,
+		handler : function() {
+		accountinfo.confirmajax({
+                 url : "../account/account_resetpwd_sub.do",
+                 content : "重置后,密码为888888,确认重置？",
+                 params : {
+                	 accountId : accountinfo.rowKey
+                 }
+    		  });
+			}
+		}];
+      myparams.roleId = "${roleId}";
+      accountinfo.param = myparams; 
+      accountinfo.onClickRow = function(rowIndex, rowData) {
+       $("#accountinfo_edit,#accountinfo_del,#accountinfo_resetpwd").linkbutton("enable");
+      }
+      accountinfo.onLoadSuccess = function(data) {
+       $("#accountinfo_edit,#accountinfo_del,#accountinfo_resetpwd").linkbutton("disable");
+      };
+      accountinfo.LoadDataGrid();
+      $('#accountinfo_search').linkbutton({
+        iconCls : 'icon-search',
+        onClick : function() {
+          accountinfo.search(myparams);
+        }
+      });
+    });
+   	function search(myparams){
+ 		accountinfo.search(myparams);
+ 	}
+   	function nameSearch(){
+   		myparams.accountName = $("#accountinfo_accountName").val();
+   	}
+  </script>
+	<div fit="true" class="easyui-layout" style="border: none">
+		<div region="north" style="height: 40px;">
+			<div class="pannel_search">
+				姓名：<input type="text" class="easyui-textbox" id="accountinfo_accountName" name="accountName" /> 
+				<a href="javascript:;" id="accountinfo_search" onClick="nameSearch()";>查询&nbsp;</a>
+			</div>
+		</div>
+		<div id="imgdiv" region="center" style="overflow: hidden; border: none;">
+			<table fit="true" namespace="user" id="accountinfo" class="datagrid"></table>
+		</div>
+	</div>
+</body>

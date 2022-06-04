@@ -1,0 +1,143 @@
+<body style="overflow: hidden">
+ <script type="text/javascript">
+		var log;
+        $(function() {
+	        log = new Dd("log");
+	        log.url = "log_list_data.do";
+	        log.title = "操作日志";
+	        log.colM = [ [ {
+	            title : "主键",
+	            field : "logId",
+	            alias : "l",
+	            hidden : true,
+	            width : 100,
+	            align : "center"
+	        }, {
+	            title : "日志类型",
+	            field : "type",
+	            alias : "l",
+	            width : 60,
+	            align : "center",
+	            formatter : function(value, row, index) {
+	            	if (value == "invalid") {
+				        return "作废票据";
+			        }
+		            if (value == "login") {
+			            return "登陆日志";
+		            }
+		            if (value == "del") {
+			            return "删除";
+		            }
+		            if (value == "edit") {
+			            return "修改";
+		            }
+		            if (value == "add") {
+			            return "添加";
+		            }
+	            }
+	        }, {
+	            title : "操作内容",
+	            field : "content",
+	            alias : "l",
+	            width : 100,
+	            align : "center"
+	        }, {
+	            title : "IP",
+	            field : "ip",
+	            alias : "l",
+	            width : 60,
+	            align : "center"
+	        }, {
+	            title : "操作人",
+	            field : "user_userName",
+	            alias : "u",
+	            width : 60,
+	            align : "center"
+	        }, {
+	            title : "操作时间",
+	            field : "createDate",
+	            alias : "l",
+	            width : 100,
+	            align : "center"
+	        }, {
+	            title : "备注",
+	            field : "remark",
+	            alias : "l",
+	            width : 120,
+	            align : "center"
+	        } ] ];
+
+	        log.param = myparams;
+	        log.onClickRow = function(rowIndex, rowData) {
+		        $("#log_edit,#log_del").linkbutton("enable");
+	        }
+	        log.onLoadSuccess = function(data) {
+		        $("#log_edit,#log_del").linkbutton("disable");
+	        };
+	        log.LoadDataGrid();
+	        /*查询*/
+	        $("#search").linkbutton({
+	            iconCls : 'icon-search',
+	            onClick : function() {
+	            	var content = $("#content").val();
+	            	myparams = {
+	            		content:content
+	            	}
+	            	log.search(myparams);
+	            }
+	        });
+	        
+	        $('#log').datagrid({
+				view : detailview,
+				detailFormatter : function(index, row) {
+					return '<div style="padding:2px"><table class="ddv"></table></div>';
+					
+				},
+				onExpandRow : function(index, row) {
+					var ddv = $(this).datagrid('getRowDetail',index).find('table.ddv');
+					ddv.datagrid({
+								url : 'log_getdetail.do?logId='+row.logId,
+								fitColumns : true,
+								singleSelect : true,
+								rownumbers : true,
+								height : 'auto',
+								columns : [ [ {
+						            title : '标题',
+						            sortable : true,
+						            field : 'title',
+						            width : 20,
+						            align : 'center'
+						        }, {
+						            title : '内容',
+						            sortable : true,
+						            field : 'content',
+						            width : 60,
+						            align : 'center'
+						        }, {
+						            title : '备注',
+						            field : 'remark',
+						            width : 20,
+						            align : 'center'
+						        }] ],
+								onResize : function() {
+									$('log').datagrid('fixDetailRowHeight',index);
+								},
+								onLoadSuccess : function() {
+									
+								}
+							});
+					$('#log').datagrid('fixDetailRowHeight',index);
+				}
+			});
+        });
+	</script>
+ <div fit="true" class="easyui-layout">
+  <div region="north" title="查询条件" style="height: 70px; padding:10px;">
+    操作内容：<input type="text" class="easyui-textbox" id="content" name="content" /> 
+    <a href="javascript:;" id="search">查询&nbsp;</a>
+  </div>
+  <div region="center" style="border: none;">
+   <table fit="true" namespace="log" id="log" class="datagrid"></table>
+  </div>
+ </div>
+</body>

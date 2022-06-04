@@ -1,0 +1,200 @@
+<body style="overflow: hidden">
+	<script src="/plug-in/viewer/js/viewer.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="/plug-in/viewer/css/viewer.min.css" />
+	<script type="text/javascript">
+		var slider;
+		$(function() {
+			slider = new Dd("slider");
+			slider.url = "slider_list_data.do";
+			slider.colM = [ [ {
+				title : "主键",
+				field : "sliderId",
+				alias : "s",
+				hidden : true,
+				width : 100,
+				align : "center"
+			}, {
+				title : "标题",
+				field : "sliderTitle",
+				alias : "s",
+				width : 80,
+				align : "center"
+			}, {
+				title : "内容",
+				field : "content",
+				alias : "s",
+				width : 100,
+				hidden : true,
+				align : "center"
+			}, {
+				title : "图片",
+				field : "sliderImg",
+				alias : "s",
+				width : 100,
+				align : "center",
+				formatter : function(value, row, index) {
+					return '<img onclick="show()"  width="80px;" height="50px;" src="../../' + row.sliderImg + '" />';
+				}
+			}, {
+				title : "创建人",
+				field : "accountInfo_userName",
+				alias : "u",
+				width : 60,
+				align : "center"
+			}, {
+				title : "发布状态",
+				field : "sendStatus",
+				alias : "s",
+				width : 60,
+				align : "center",
+				formatter : function(value, row, index) {
+					return Fm.formatter({
+						"0" : "未发布",
+						"1" : "已发布",
+					}, value);
+				}
+			}, {
+				title : "类型",
+				field : "sliderType",
+				alias : "s",
+				width : 60,
+				align : "center",
+				formatter : function(value, row, index) {
+					return Fm.formatter({
+						"Packages_Index" : "健康超市",
+						"All" : "所有",
+						"App_Index" : "APP首页",
+					}, value);
+				}
+			}, {
+				title : "跳转链接",
+				field : "href",
+				alias : "s",
+				width : 150,
+				align : "center"
+			}, {
+				title : "创建时间",
+				field : "createDate",
+				alias : "s",
+				width : 50,
+				align : "center"
+			} ] ];
+
+			slider.toolbar = [ {
+				id : "slider_add",
+				text : "添加",
+				iconCls : "icon-add",
+				handler : function() {
+					slider.open2({
+						title : "添加",
+						h : "65%",
+						w : "42%",
+						url : "slider_add_turn.do"
+					});
+				}
+			}, {
+				id : "slider_edit",
+				text : "编辑",
+				iconCls : "icon-edit",
+				disabled : true,
+				handler : function() {
+					slider.updata2({
+						title : "编辑",
+						h : "65%",
+						w : "42%",
+						url : "slider_edit_turn.do",
+						params : {
+							sliderId : slider.rowKey
+						}
+					});
+				}
+			}, {
+				id : "slider_del",
+				text : "删除",
+				iconCls : "icon-remove",
+				disabled : true,
+				handler : function() {
+					slider.remove({
+						url : "slider_del_sub.do",
+						params : {
+							sliderId : slider.rowKey
+						}
+					});
+				}
+			}, {
+				id : "slider_send",
+				text : "发布",
+				iconCls : "icon-ok",
+				disabled : true,
+				handler : function() {
+					slider.confirmajax({
+						url : "sendStatus_edit_sub.do",
+						content : "确认发布?",
+						params : {
+							sliderId : slider.rowKey,
+							sendStatus : 1
+						}
+					});
+				}
+			}, {
+				id : "slider_notSend",
+				text : "取消发布",
+				iconCls : "icon-lock",
+				disabled : true,
+				handler : function() {
+					slider.confirmajax({
+						url : "sendStatus_edit_sub.do",
+						content : "取消发布?",
+						params : {
+							sliderId : slider.rowKey,
+							sendStatus : 0
+						}
+					});
+				}
+			} ];
+			slider.param = myparams;
+			slider.onClickRow = function(rowIndex, rowData) {
+				$("#slider_edit,#slider_del").linkbutton("enable");
+				if (slider.getSelected("sendStatus") == "0") {
+					$("#slider_send").linkbutton("enable");
+					$("#slider_notSend").linkbutton("disable");
+				}
+				if (slider.getSelected("sendStatus") == "1") {
+					$("#slider_notSend").linkbutton("enable");
+					$("#slider_send").linkbutton("disable");
+				}
+
+			}
+			slider.onLoadSuccess = function(data) {
+				$("#slider_edit,#slider_del").linkbutton("disable");
+			};
+			slider.LoadDataGrid();
+			$('#search').linkbutton({
+				iconCls : 'icon-save',
+				onClick : function() {
+					myparams.sliderType=$("#sliderType").val();
+					myparams.sendStatus=$("#sendStatus").val();
+					slider.search(myparams);
+				}
+			});
+		});
+		
+		function show() {
+			var viewer = new Viewer(document.getElementById('imgdiv'), {
+				url : 'data-original'
+			});
+			viewer.show();
+		}
+	</script>
+	<div fit="true" class="easyui-layout">
+	<div region="north" title="查询条件" style="height: 70px;">
+			<div class="pannel_search">
+				发布类型: <@p.select class="easyui-combobox" id="sliderType" list={"App_Index":"App首页","App_Shopping":"App商城"} width="150" defVal="全部"/>&nbsp;&nbsp; 
+				发布状态: <@p.select class="easyui-combobox" id="sendStatus" list={"1":"已发布","0":"未发布"} width="150" defVal="全部"/>&nbsp;&nbsp; 
+			</div>
+		</div>
+		<div id="imgdiv" region="center" style="overflow: hidden; border: none;">
+			<table fit="true" namespace="slider" id="slider" class="datagrid"></table>
+		</div>
+	</div>
+</body>

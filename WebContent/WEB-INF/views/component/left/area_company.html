@@ -1,0 +1,26 @@
+<ul id="mytree" class="ztree"></ul>
+<script type="text/javascript">
+	var tree;
+	var myparams = {};
+	$(function() {
+		tree = new Tree();
+		tree.queryParams = myparams;
+		tree.url = "${base}/admin/componet/select_area_company_data.do";
+		tree.initTree("mytree");
+		$('#treepanel').panel({
+			tools : [ {
+				iconCls : 'icon-add',
+				handler : function() {
+					tree.expandAll();
+				}
+			} ]
+		});
+		tree.onClick = function(node) {
+			myparams.areaId = node.id;
+			myparams.nodeCode = node.code;
+			var isLeaf = tree.isLeaf(node);
+			tree_click(node, isLeaf);
+		};
+	});
+</script>
+</body>

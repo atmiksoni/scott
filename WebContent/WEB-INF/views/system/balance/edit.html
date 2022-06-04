@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<link rel="stylesheet" href="net/plug-in/webui/layui/css/layui.css" media="all">
+<link rel="stylesheet" href="net/plug-in/webui/layui/css/global.css" media="all">
+<@p.resource types="Jquery,EasyUI"/>
+</head>
+<body>
+<@p.valid id="balance" action="balance_edit_sub.do" class="layui-form">
+	<fieldset class="layui-elem-field layui-field-title">
+			<legend>车辆信息</legend>
+	</fieldset>
+	<div class="layui-form-item">
+		<div class="layui-inline">
+			<label class="layui-form-label">用户：</label>
+			<div class="layui-input-inline">
+				<input id="accountInfoId" name="accountInfoId" value="${balance.accountInfoId}" type="text" data-rule="required"  class="layui-input">
+			</div>
+		</div>
+	</div>
+	<div class="layui-form-item">
+		<div class="layui-inline">
+			<label class="layui-form-label">金额：</label>
+			<div class="layui-input-inline">
+				<input id="amount" name="amount" value="${balance.amount}" type="text" data-rule="required"  class="layui-input">
+			</div>
+		</div>
+	</div>
+	<div class="layui-form-item">
+		<div class="layui-inline">
+			<label class="layui-form-label">版本：</label>
+			<div class="layui-input-inline">
+				<input id="version" name="version" value="${balance.version}" type="text" data-rule="required"  class="layui-input">
+			</div>
+		</div>
+	</div>
+  </@p.valid>
+  <script>
+		$(function() {
+			var form = layui.form()
+			var layer = layui.layer;
+		});
+	</script>
+</body>
+</html>

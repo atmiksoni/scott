@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:p="http://www.springframework.org/schema/p" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context" xmlns:websocket="http://www.springframework.org/schema/websocket" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+       http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket.xsd">
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basename" value="classpath:messages_zh_CN" />
+	</bean>
+	<bean id="localeResolver" class="com.flyme.core.springmvc.bean.MyLocaleResolver" />
+	<!-- 定义json转换器 -->
+	<bean id="mappingJacksonHttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+		<property name="supportedMediaTypes">
+			<list>
+				<value>text/html;charset=UTF-8</value>
+				<value>text/json;charset=UTF-8</value>
+				<value>application/json;charset=UTF-8</value>
+			</list>
+		</property>
+		<property name="objectMapper" ref="objectMapper" />
+	</bean>
+	<bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper">  
+        <property name="dateFormat">  
+            <bean class="java.text.SimpleDateFormat">  
+                <constructor-arg>  
+                    <value>yyyy-MM-dd HH:mm:ss</value>  
+                </constructor-arg>  
+            </bean>  
+        </property>  
+        <property name="serializationInclusion">  
+            <value type="com.fasterxml.jackson.annotation.JsonInclude.Include">NON_NULL</value>  
+        </property>  
+    </bean>  
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" p:defaultEncoding="UTF-8">
+		<property name="maxUploadSize">
+			<value>504857600</value>
+		</property>
+		<property name="maxInMemorySize">
+			<value>4096</value>
+		</property>
+	</bean>
+	<!-- 注册转换器 -->
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+		<property name="messageConverters">
+			<list>
+				<ref bean="mappingJacksonHttpMessageConverter" />
+			</list>
+		</property>
+	</bean>
+	<bean id="exceptionMessageAdapter" class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerExceptionResolver">
+		<property name="messageConverters">
+			<list>
+				<ref bean="mappingJacksonHttpMessageConverter" />
+			</list>
+		</property>
+	</bean>
+		<!--管理验证信息的bean -->
+	<bean id="tokenManager" class="com.flyme.app.core.manager.impl.RedisTokenManager">
+		<!--Token失效时间 -->
+		<property name="tokenExpireSeconds" value="604800" />
+		<!--Redis客户端 -->
+		<property name="jedisPool" ref="jedisPool" />
+	</bean>
+	<bean class="com.google.code.kaptcha.impl.DefaultKaptcha">
+		<property name="config">
+			<bean class="com.google.code.kaptcha.util.Config">
+				<constructor-arg type="java.util.Properties">
+					<props>
+						<prop key="kaptcha.border">no</prop>
+						<prop key="kaptcha.textproducer.font.size">20</prop>
+						<prop key="kaptcha.textproducer.font.names">Arial, Courier</prop>
+						<prop key="kaptcha.textproducer.char.space">6</prop>
+						<prop key="kaptcha.textproducer.font.color">255,255,255</prop>
+						<prop key="kaptcha.image.width">80</prop>
+						<prop key="kaptcha.image.height">40</prop>
+						<prop key="kaptcha.background.clear.from">20,113,216</prop>
+						<prop key="kaptcha.background.clear.to">20,113,216</prop>
+						<prop key="kaptcha.word.impl">com.flyme.core.hcaptcha.misc.MyWordRenderer</prop>
+						<prop key="kaptcha.obscurificator.impl">com.flyme.core.hcaptcha.misc.DefaultRipple</prop>
+					</props>
+				</constructor-arg>
+			</bean>
+		</property>
+	</bean>
+
+
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<!-- 注入httpInclude -->
+			<mvc:mapping path="/**/*.html" />
+			<bean class="com.flyme.core.springmvc.interceptor.ShareRenderArgsVariableInterceptor"></bean>
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<!-- 注入httpInclude -->
+			<mvc:mapping path="/**/*.bs" />
+			<bean class="com.flyme.core.springmvc.interceptor.ShareRenderArgsVariableInterceptor"></bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
+	<!-- 全局异常配置 -->
+	<bean id="exceptionResolver" class="com.flyme.common.exception.MySimpleMappingExceptionResolver">
+		<property name="exceptionMappings">
+			<props>
+				<prop key="java.lang.Exception">errors/500</prop>
+				<prop key="java.lang.RuntimeException">errors/500</prop>
+				<prop key="java.lang.Throwable">errors/400</prop>
+			</props>
+		</property>
+		<property name="statusCodes">
+			<props>
+				<prop key="errors/500">500</prop>
+				<prop key="errors/400">404</prop>
+			</props>
+		</property>
+		<!-- 设置日志输出级别 -->
+		<property name="warnLogCategory" value="error"></property>
+		<!-- 默认错误页面 -->
+		<property name="defaultErrorView" value="errors/error"></property>
+		<!-- 默认HTTP状态码 -->
+		<property name="defaultStatusCode" value="500"></property>
+		<property name="exceptionAttribute" value="ex"></property>
+	</bean>
+</beans>

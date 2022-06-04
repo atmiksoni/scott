@@ -1,0 +1,164 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,EasyUI"/>
+<script type="text/javascript">
+	var myparams = {};
+</script>
+</head>
+<body style="overflow: hidden">
+	<@p.resource types="AnyDataGrid"/>
+	<script type="text/javascript">
+	var smsTemplate;
+		$(function() {
+			smsTemplate = new Dd("smsTemplate");
+			smsTemplate.title = "短信模版";
+			smsTemplate.colM = [ [ {
+				title : "主键",
+				field : "smsTemplateId",
+				alias : "smst",
+				align : "left",
+				width : 100,
+				hidden : true
+			}, {
+				title : "模版简称",
+				field : "templateName",
+				alias : "smst",
+				width : 100,
+				align : "center"
+			},{
+				title : "模版类型",
+				field : "templateTypeName",
+				width : 100,
+				align : "center",
+			},{
+				title : "模版类型",
+				field : "templateType",
+				alias : "smst",
+				width : 100,
+				align : "center",
+				hidden : true
+			},{
+				title : "模版创建时间",
+				field : "templateCreateDate",
+				alias : "smst",
+				width : 50,
+				align : "center"
+			}, {
+				title : "模版状态",
+				field : "templateStatus",
+				alias : "smst",
+				width : 50,
+				hidden : true,
+				align : "center"
+			}, {
+				title : "模版状态",
+				field : "templateStatusName",
+				width : 50,
+				align : "center"
+			} ] ];
+
+			smsTemplate.toolbar = [ {
+				id : "smsTemplate_add",
+				text : "新增",
+				iconCls : "icon-add",
+				disabled : true,
+				handler : function() {
+					smsTemplate.open2({
+						title : "新增",
+						h : "330px",
+						w : "600px",
+						url : "add_SmsTemplate_turn.do",
+						params : myparams
+					});
+				}
+			}, {
+				id : "smsTemplate_edit",
+				text : "修改",
+				iconCls : "icon-edit",
+				disabled : true,
+				handler : function() {
+					smsTemplate.updata2({
+						title : "修改",
+						h : "330px",
+						w : "600px",
+						url : "edit_SmsTemplate_turn.do",
+						params : {
+							id : smsTemplate.rowKey
+						}
+					});
+				}
+			}, {
+				id : "smsTemplate_remove",
+				text : "删除",
+				iconCls : "icon-remove",
+				disabled : true,
+				handler : function() {
+					smsTemplate.remove({
+				            url : "delete_SmsTemplate_sub.do",
+				            params : {
+				            	smsTemplateId : smsTemplate.rowKey
+				            }
+				    });
+				}
+			}, {
+				id : "smsTemplate_release",
+				text : "发布",
+				iconCls : "icon-edit",
+				disabled : true,
+		        onClick : function() {
+		            top.Dg.confirm("确认发布?", function() {
+		              if (smsTemplate.checkObj(smsTemplate.rowKey)) {
+		                var param = {
+		                		smsTemplateId : smsTemplate.rowKey
+		                };
+		                top.Dg.z.ajax("smsTemplate/release_template_sub.do", param);
+		                smsTemplate.LoadDataGrid();
+		              }
+		            });
+		          }
+			},{
+				id : "smsTemplate_unrelease",
+				text : "取消发布",
+				iconCls : "icon-remove",
+				disabled : true,
+		        onClick : function() {
+		            top.Dg.confirm("确认取消发布?", function() {
+		              if (smsTemplate.checkObj(smsTemplate.rowKey)) {
+		                var param = {
+		                		smsTemplateId : smsTemplate.rowKey
+		                };
+		                top.Dg.z.ajax("smsTemplate/unrelease_template_sub.do", param);
+		                smsTemplate.LoadDataGrid();
+		              }
+		            });
+		          }
+			} ];
+			smsTemplate.url = "list_smsTemplate_data.do";
+			smsTemplate.singleSelect = true;
+			smsTemplate.param = myparams;
+			smsTemplate.onLoadSuccess = function(data) {
+					$("#smsTemplate_add").linkbutton("enable");
+					$("#smsTemplate_edit,#smsTemplate_remove").linkbutton("disable");
+			};
+			smsTemplate.onClickRow = function(rowIndex, rowData) {
+				$("#smsTemplate_edit,#smsTemplate_remove").linkbutton("enable");
+				$("#smsTemplate_release,#smsTemplate_unrelease").linkbutton("disable");
+				if(rowData.templateStatus=="0"){
+					$("#smsTemplate_release").linkbutton("enable");
+				}else{
+					$("#smsTemplate_unrelease").linkbutton("enable");
+				}
+				
+			}
+			smsTemplate.LoadDataGrid();
+		});
+	</script>
+	<div fit="true" class="easyui-layout">
+		<div region="center" style="border: none;">
+			<table fit="true" namespace="smsTemplate" id="smsTemplate" class="datagrid"></table>
+		</div>
+	</div>
+</body>
+</html>

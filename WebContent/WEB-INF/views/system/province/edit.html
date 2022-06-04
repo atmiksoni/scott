@@ -1,0 +1,22 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll"/>
+</head>
+<body>
+<@p.valid id="province" action="province_edit_sub.do" class="layui-form" layui=true>
+ <@p.legend text="${(languaged !='')?string('Hint information','提示信息')}"/> 
+ <input type="hidden" name="provinceId" value="${province.provinceId}" />
+         <!-- <div class="layui-form-item">
+		    <@p.layinput label='${(languaged !="")?string("englishName","")}'  datarule="required;" datamsgrequired='${(required)!""}' name="provinceId" value="${province.provinceId}"/>
+	     </div> -->
+         <div class="layui-form-item">
+		    <@p.layinput label='${(languaged !="")?string("englishName","国家Id")}'  datarule="required;" datamsgrequired='${(required)!""}' name="countyId" value="${province.countyId}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label='${(languaged !="")?string("englishName","省名称")}'  datarule="required;" datamsgrequired='${(required)!""}' name="provinceName" value="${province.provinceName}"/>
+	     </div>
+</@p.valid>
+</body>
+</html>

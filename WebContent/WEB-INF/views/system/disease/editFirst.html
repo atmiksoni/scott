@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll,webuploader"/>
+</head>
+<body>
+	<@p.valid id="disease" action="disease_edit_sub.do" class="layui-form" layui=true> 
+	<@p.legend text="提示信息"/>
+		<input type="hidden" name="diseaseId" value="${disease.diseaseId}" />
+	<input type="hidden" value="1" name="level" />
+	<div class="layui-form-item"><@p.layinput label="疾病名称" datarule="required;" name="diseaseName" value="${disease.diseaseName}"/></div>
+	<div class="layui-form-item"><@p.layinput label="排序号" datarule="required;range[~100]" name="indexs" value="${disease.indexs}"/></div>
+	<!-- <div class="layui-form-item"><@p.switch label="状态" name="status" value="1" text="启用|禁用" /></div> -->
+	<div class="layui-form-item"><@p.layinput label="备注" datarule="required;" name="remark" value="${disease.remark}"/></div>
+	<@p.legend text="配图" btnId="pre"/>
+	<div class="layui-form-item">
+		<div class="layui-inline" style="padding-left: 20px;">
+		<@p.upload id="prePic" name="prePic" value="${disease.icon}" delurl="disease_image_del.do"/></div>
+		<input id="goodsHead" name="icon" type="hidden" class="layui-input" value="${disease.icon}">
+	</div>
+	
+	</@p.valid>
+	<script>
+	$(function() {
+		var imgs = [];
+		var pre = new Upload({
+			filePicker : "pre",
+			fileList : "prePic",
+			num : 1,
+			params : {
+				businessKey : "30",
+				subClassName : "disease"
+			},
+			server : "${base}/admin/disease/disease_image_upload.do"
+		});
+		pre.uploadSuccess = function(file, data) {
+			$('#goodsHead').val(data.filePath);
+		};
+		
+	 VF.callbackBefore = function(data) {
+				top.frames['iframe105106'].location.reload();
+				var index = parent.layer.getFrameIndex(window.name);
+				top.Dg.z.msg(data)
+				top.frames['iframe105106'].location.reload();
+				if (data.close == true) {
+					parent.layer.close(index);
+				}
+			} 
+	});
+	</script>
+</body>
+</html>

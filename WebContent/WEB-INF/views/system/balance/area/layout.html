@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<@p.resource types="Jquery,Easyui,AnyDataGrid,Tree,NiceScroll"/>
+<script type="text/javascript">
+	var myparams = {};
+	function tree_click(node, isLeaf) {
+		$("#area_add").linkbutton("enable");
+		myparams.areaCode = node.code;
+		area.search(myparams);
+	}
+</script>
+</head>
+<body class="easyui-layout" style="overflow-y: hidden">
+	<div region="west" split="true" href="${base}/admin/componet/select_area_turn.do" minWidth="230" maxWidth="230" title="区域选择" style="overflow: hidden; border-bottom: none"></div>
+	<div region="center" href="area_list_turn.do" style="padding: 0px; overflow: hidden; border: none"></div>
+</body>
+</html>

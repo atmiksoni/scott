@@ -1,0 +1,174 @@
+<body style="overflow: hidden">
+	<script type="text/javascript">
+		var joinapply;
+		$(function() {
+			joinapply = new Dd("joinapply");
+			joinapply.url = "joinapply_list_data.do";
+			joinapply.title = "信息";
+			joinapply.colM = [ [ {
+				title : "主键",
+				field : "joinapplyId",
+				alias : "j",
+				hidden : true
+			}, {
+				title : "省份",
+				field : "provinceName",
+				width : 100,
+				align : "center"
+			}, {
+				title : "地市",
+				field : "cityName",
+				width : 100,
+				align : "center"
+			}, {
+				title : "区县",
+				field : "districtName",
+				width : 100,
+				align : "center"
+			}, {
+				title : "地址",
+				field : "address",
+				alias : "j",
+				width : 100,
+				align : "center"
+			}, {
+				title : "店名",
+				field : "storeName",
+				alias : "j",
+				width : 100,
+				align : "center"
+			}, {
+				title : "面积",
+				field : "acreage",
+				alias : "j",
+				width : 100,
+				align : "center"
+			}, {
+				title : "固定电话",
+				field : "telephone",
+				alias : "j",
+				width : 100,
+				align : "center"
+			}, {
+				title : "联系人",
+				field : "linkman",
+				alias : "j",
+				width : 100,
+				align : "center"
+			}, {
+				title : "手机号",
+				field : "mobile",
+				alias : "j",
+				width : 100,
+				align : "center"
+			}, {
+				title : "邮编",
+				field : "postcode",
+				alias : "j",
+				width : 100,
+				align : "center"
+			}, {
+				title : "场所",
+				field : "place",
+				alias : "j",
+				width : 100,
+				align : "center"
+			}, {
+				title : "椅位",
+				field : "chaircount",
+				alias : "j",
+				width : 100,
+				align : "center"
+			}, {
+				title : "医生数",
+				field : "doctorcount",
+				alias : "j",
+				width : 100,
+				align : "center"
+			}, {
+				title : "护士数",
+				field : "nursecount",
+				alias : "j",
+				width : 100,
+				align : "center"
+			}, {
+				title : "其他人员",
+				field : "othercount",
+				alias : "j",
+				width : 100,
+				align : "center"
+			}, {
+				title : "创建日期",
+				field : "createDate",
+				alias : "j",
+				width : 100,
+				align : "center"
+			} ] ];
+
+			joinapply.toolbar = [ {
+				id : "joinapply_edit",
+				text : "修改",
+				iconCls : "icon-edit",
+				disabled : true,
+				handler : function() {
+					joinapply.updata2({
+						title : "修改",
+						h : "70%",
+						w : "45%",
+						url : "joinapply_edit_turn.do",
+						params : {
+							joinapplyId : joinapply.rowKey
+						}
+					});
+				}
+			}, {
+				id : "joinapply_del",
+				text : "删除",
+				iconCls : "icon-remove",
+				disabled : true,
+				handler : function() {
+					joinapply.remove({
+						url : "joinapply_del_sub.do",
+						params : {
+							joinapplyId : joinapply.rowKey
+						}
+					});
+				}
+			} ];
+			joinapply.param = myparams;
+			joinapply.onClickRow = function(rowIndex, rowData) {
+				$("#joinapply_edit,#joinapply_del").linkbutton("enable");
+			}
+			joinapply.onLoadSuccess = function(data) {
+				$("#joinapply_edit,#joinapply_del").linkbutton("disable");
+			};
+			joinapply.LoadDataGrid();
+			$('#search').linkbutton({
+				iconCls : 'icon-search',
+				onClick : function() {
+					myparams.storeName=$("#storeName").val();
+					myparams.address=$("#address").val();
+					myparams.telephone=$("#telephone").val();
+					myparams.mobile=$("#mobile").val();
+					myparams.linkman=$("#linkman").val();
+					joinapply.search(myparams);
+				}
+			});
+		});
+	</script>
+	<div fit="true" class="easyui-layout">
+		<div region="north" title="查询条件" style="height: 70px;">
+			<div class="pannel_search">
+				店名：<input type="text" class="easyui-textbox" id="storeName" /> 
+				地址：<input type="text" class="easyui-textbox" id="address" /> 
+				固话：<input type="text" class="easyui-textbox" id="telephone" /> 
+				手机号：<input type="text" class="easyui-textbox" id="mobile" /> 
+				联系人：<input type="text" class="easyui-textbox" id=linkman /> 
+				<a href="javascript:;" id="search">查询</a>
+			</div>
+		</div>
+		<div region="center" style="overflow: hidden; border: none;">
+			<table fit="true" namespace="joinapply" id="joinapply" class="datagrid"></table>
+		</div>
+	</div>
+</body>

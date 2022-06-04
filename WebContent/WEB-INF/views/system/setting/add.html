@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>添加信息</title>
+<@p.resource types="Jquery,Form,NiceScroll"/>
+</head>
+<body>
+<@p.form id="setting" action="add_save.do" btnSubmit=true dialog=true>
+<input type="hidden" id="btn_sub" class="btn_sub"/>
+ <table class="tbformtop">
+    <tr>
+      <td>
+       <table class="tbform">
+          <tr>
+            <td colspan="2">
+              <div class="z-legend">
+                <b>基本信息</b>
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="tdl" width="20%">参数名称：</td>
+            <td width="80%"><input type="text" name="name"/></td>
+          </tr>
+          <tr>
+            <td class="tdl">参数值：</td>
+            <td><input type="text" name="value"/></td>
+          </tr>
+          <tr>
+            <td class="tdl">参数代码：</td>
+            <td><input type="text" name="code"/></td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+  </@p.form>
+   <script type="text/javascript">
+			$(function() {
+				niceScroll("body");
+				var api = frameElement.api, W = api.opener;
+				api.button({
+					name : '确定',
+					callback : function() {
+						iframe = this.iframe.contentWindow;
+						$('#btn_sub', iframe.document).click();
+						return false;
+					},
+					focus : true
+				}, {
+					name : '关闭',
+					callback : function() {
+						this.close();
+						return false;
+					}
+				});
+			});
+		</script>
+</body>
+</html>

@@ -1,0 +1,378 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll,EasyUI,webuploader"/>
+<link rel="stylesheet" href="http://cache.amap.com/lbs/static/main.css?v=1.0" />
+<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.4&key=ad811487332814ceeb6f7e4666b87b91&plugin=AMap.TruckDriving"></script>
+<script src="http://webapi.amap.com/ui/1.0/main.js"></script>
+</head>
+<body>
+	<@p.valid id="accountinfo" action="accountinfo_add_sub.do" class="layui-form" layui=true>
+	<fieldset class="layui-elem-field layui-field-title">
+		<legend>司机信息</legend>
+	</fieldset>
+	<div class="layui-form-item">
+		<div class="layui-inline">
+			<label class="layui-form-label">姓名:</label>
+			<div class="layui-input-inline">
+				<input id="userName" name="userName" type="text" data-rule="required;length[2~10]" class="layui-input">
+			</div>
+		</div>
+
+		<div class="layui-inline">
+			<label class="layui-form-label">身份证号:</label>
+			<div class="layui-input-inline">
+				<input id="cardNo" name="cardNo" type="text" data-rule="required;" class="layui-input">
+			</div>
+		</div>
+	</div>
+
+	<div class="layui-form-item">
+		<div class="layui-inline">
+			<label class="layui-form-label">从业资格证号:</label>
+			<div class="layui-input-inline">
+				<input id="qualificationNo" name="qualificationNo" type="text" data-rule="required;" class="layui-input">
+			</div>
+		</div>
+
+		<div class="layui-inline">
+			<label class="layui-form-label">营运证号1:</label>
+			<div class="layui-input-inline">
+				<input id="operationCertificateNo" name="operationCertificateNo" type="text" data-rule="required;" class="layui-input">
+			</div>
+		</div>
+
+		<div class="layui-inline">
+			<label class="layui-form-label">营运证号2:</label>
+			<div class="layui-input-inline">
+				<input id="operationCertificateNo" name="operationCertificateNoAgain" type="text" class="layui-input">
+			</div>
+		</div>
+	</div>
+
+	<div class="layui-form-item">
+		<div class="layui-inline">
+			<label class="layui-form-label">年龄:</label>
+			<div class="layui-input-inline">
+				<input id="age" name="age" type="text" data-rule="required;length[0~3]" class="layui-input">
+			</div>
+		</div>
+		<div class="layui-inline">
+			<label class="layui-form-label">手机:</label>
+			<div class="layui-input-inline">
+				<input id="telephone" name="telephone" type="text" data-rule="required;mobile;remote[${base}/admin/user/user_check_sub.do]" class="layui-input">
+			</div>
+		</div>
+	</div>
+	<div class="layui-form-item">
+		<div class="layui-inline">
+			<label class="layui-form-label">性别:</label>
+			<div class="layui-input-block">
+				<input type="radio" name="sex" value="1" title="男" checked="checked"> <input type="radio" name="sex" value="0" title="女">
+			</div>
+		</div>
+	</div>
+
+	<fieldset class="layui-elem-field layui-field-title">
+		<legend>车辆信息</legend>
+	</fieldset>
+	<div class="layui-form-item">
+		<div class="layui-inline">
+			<label class="layui-form-label">车牌号:</label>
+			<div class="layui-input-inline">
+				<input id="plateNumber" name="plateNumber" type="text" data-rule="required;" class="layui-input">
+			</div>
+		</div>
+		<div class="layui-inline">
+			<label class="layui-form-label">品牌:</label>
+			<div class="layui-input-inline">
+				<input id="address" name="brand" type="text" class="layui-input">
+			</div>
+		</div>
+	</div>
+
+	<div class="layui-form-item" id="cityarea">
+		<div class="layui-inline">
+			<label class="layui-form-label">车型:</label>
+			<div class="layui-input-inline">
+				<select id="carTypeId" name="carTypeId" lay-filter="citys"> <#list carTypeList as carType >
+					<option value="${carType.carTypeId}">${carType.carTypeName}</option> </#list>
+				</select>
+			</div>
+		</div>
+		<div class="layui-inline">
+			<label class="layui-form-label">车长:</label>
+			<div class="layui-input-inline">
+				<select id="carLengthId" name="carLengthId" lay-filter="citys"> <#list carLengthList as carLength >
+					<option value="${carLength.carLengthId}">${carLength.carLengthName}</option> </#list>
+				</select>
+			</div>
+		</div>
+	</div>
+
+	<div class="layui-form-item">
+		<div class="layui-inline"><@p.laydate label="出厂年份:" istime=true name="manufactureYear" id="manufactureYear" min="0" format="YYYY"/></div>
+		<div class="layui-inline">
+			<label class="layui-form-label">是否重车:</label>
+			<div class="layui-input-inline">
+				<input type="radio" name="isLoad" value="1" title="是"> <input type="radio" name="isLoad" value="0" title="否" checked="checked">
+			</div>
+		</div>
+	</div>
+
+	<div class="layui-form-item">
+		<div class="layui-inline">
+			<label class="layui-form-label">载重:</label>
+			<div class="layui-input-inline">
+				<input id="loads" name="loads" type="text" class="layui-input">
+			</div>
+		</div>
+		<div class="layui-inline">
+			<label class="layui-form-label">是否可见:</label>
+			<div class="layui-input-inline">
+				<input type="radio" name="isCanSee" value="1" title="是" checked="checked"> <input type="radio" name="isCanSee" value="0" title="否">
+			</div>
+		</div>
+	</div>
+
+	<@p.legend text="位置" btnId="xxx"/>
+	<div class="layui-form-item"><@p.layinput label="纬度" id="lastLat" name="lastLat" /> <@p.layinput label="经度"
+		id="lastLng" name="lastLng" /></div>
+	<div id="container" style="width: 100%; height: 300px"></div>
+
+	<@p.legend text="上传身份证正面图片" btnId="frontCardPre"/>
+	<div class="layui-form-item">
+		<div class="layui-inline" style="padding-left: 20px;"><@p.upload id="frontCardPrePic" name="frontCardPrePic" /></div>
+		<input id="frontCard" name="frontCard" type="hidden" class="layui-input">
+	</div>
+
+	<@p.legend text="上传身份证反面图片" btnId="backCardPre"/>
+	<div class="layui-form-item">
+		<div class="layui-inline" style="padding-left: 20px;"><@p.upload id="backCardPrePic" name="backCardPrePic" /></div>
+		<input id="backCard" name="backCard" type="hidden" class="layui-input">
+	</div>
+
+	<@p.legend text="上传手持身份证图片" btnId="handCardPre"/>
+	<div class="layui-form-item">
+		<div class="layui-inline" style="padding-left: 20px;"><@p.upload id="handCardPrePic" name="handCardPrePic" /></div>
+		<input id="handCard" name="handCard" type="hidden" class="layui-input">
+	</div>
+
+	<@p.legend text="上传行驶证图片" btnId="travelCertificatePre"/>
+	<div class="layui-form-item">
+		<div class="layui-inline" style="padding-left: 20px;"><@p.upload id="travelCertificatePrePic" name="travelCertificatePrePic" /></div>
+		<input id="travelCertificate" name="travelCertificate" type="hidden" class="layui-input">
+	</div>
+
+	<@p.legend text="再次上传行驶证图片" btnId="travelCertificateAgainPre"/>
+	<div class="layui-form-item">
+		<div class="layui-inline" style="padding-left: 20px;"><@p.upload id="travelCertificateAgainPrePic" name="travelCertificateAgainPrePic" /></div>
+		<input id="travelCertificateAgain" name="travelCertificateAgain" type="hidden" class="layui-input">
+	</div>
+
+	<@p.legend text="上传驾驶证图片" btnId="driverLicensePre"/>
+	<div class="layui-form-item">
+		<div class="layui-inline" style="padding-left: 20px;"><@p.upload id="driverLicensePrePic" name="driverLicensePrePic" /></div>
+		<input id="driverLicense" name="driverLicense" type="hidden" class="layui-input">
+	</div>
+
+	<@p.legend text="上传从业资格证图片" btnId="qualificationPre"/>
+	<div class="layui-form-item">
+		<div class="layui-inline" style="padding-left: 20px;"><@p.upload id="qualificationPrePic" name="qualificationPrePic" /></div>
+		<input id="qualification" name="qualification" type="hidden" class="layui-input">
+	</div>
+
+	<@p.legend text="上传营运证图片" btnId="operationCertificatePre"/>
+	<div class="layui-form-item">
+		<div class="layui-inline" style="padding-left: 20px;"><@p.upload id="operationCertificatePrePic" name="operationCertificatePrePic" /></div>
+		<input id="operationCertificate" name="operationCertificate" type="hidden" class="layui-input">
+	</div>
+
+	<@p.legend text="再次上传营运证图片" btnId="operationCertificateAgainPre"/>
+	<div class="layui-form-item">
+		<div class="layui-inline" style="padding-left: 20px;"><@p.upload id="operationCertificateAgainPrePic" name="operationCertificateAgainPrePic"
+			/></div>
+		<input id="operationCertificateAgain" name="operationCertificateAgain" type="hidden" class="layui-input">
+	</div>
+
+	<@p.legend text="上传道路运输经营许可证图片" btnId="optPre"/>
+	<div class="layui-form-item">
+		<div class="layui-inline" style="padding-left: 20px;"><@p.upload id="optPrePic" name="optPrePic" /></div>
+		<input id="opt" name="opt" type="hidden" class="layui-input">
+	</div>
+	</@p.valid>
+	<script type="text/javascript">
+		$(function() {
+			/**下面是图片上传*/
+			niceScroll("body");
+			var marker;
+			var map = new AMap.Map('container', {
+				zoom : 10,
+				center : [ 116.39, 39.9 ]
+			});
+			AMap.plugin([ 'AMap.ToolBar', 'AMap.Scale', 'AMap.OverView' ], function() {
+				map.addControl(new AMap.ToolBar());
+				map.addControl(new AMap.Scale());
+				map.addControl(new AMap.OverView({
+					isOpen : true
+				}));
+			});
+			//为地图注册click事件获取鼠标点击出的经纬度坐标
+			var clickEventListener = map.on('click', function(e) {
+				
+				map.clearMap();				
+				marker = new AMap.Marker({
+					icon : "http://webapi.amap.com/theme/v1.3/markers/n/mark_b.png",
+					position : [e.lnglat.getLng(), e.lnglat.getLat()]
+				});
+				marker.setMap(map);
+				map.setFitView();// 执行定位
+				$("#lastLat").val(e.lnglat.getLat());
+				$("#lastLng").val(e.lnglat.getLng());
+				console.log(e.lnglat.getLng() + ',' + e.lnglat.getLat());
+			});
+
+			var frontCard = new Upload({
+				filePicker : "frontCardPre",
+				fileList : "frontCardPrePic",
+				fileVal : "frontCard_file",
+				params : {
+					businessKey : "30",
+					subClassName : "slider"
+				},
+				server : "${base}/admin/identity/identity_image_upload.do"
+			});
+			frontCard.uploadSuccess = function(file, data) {
+				$('#frontCard').val(data.filePath);
+			}
+
+			var backCard = new Upload({
+				filePicker : "backCardPre",
+				fileList : "backCardPrePic",
+				fileVal : "backCard_file",
+				params : {
+					businessKey : "30",
+					subClassName : "slider"
+				},
+				server : "${base}/admin/identity/identity_image_upload.do"
+			});
+			backCard.uploadSuccess = function(file, data) {
+				$('#backCard').val(data.filePath);
+			}
+
+			var handCard = new Upload({
+				filePicker : "handCardPre",
+				fileList : "handCardPrePic",
+				fileVal : "handCard_file",
+				params : {
+					businessKey : "30",
+					subClassName : "slider"
+				},
+				server : "${base}/admin/identity/identity_image_upload.do"
+			});
+			handCard.uploadSuccess = function(file, data) {
+				$('#handCard').val(data.filePath);
+			}
+
+			var travelCertificate = new Upload({
+				filePicker : "travelCertificatePre",
+				fileList : "travelCertificatePrePic",
+				fileVal : "travelCertificate_file",
+				params : {
+					businessKey : "30",
+					subClassName : "slider"
+				},
+				server : "${base}/admin/identity/identity_image_upload.do"
+			});
+			travelCertificate.uploadSuccess = function(file, data) {
+				$('#travelCertificate').val(data.filePath);
+			}
+
+			var travelCertificateAgain = new Upload({
+				filePicker : "travelCertificateAgainPre",
+				fileList : "travelCertificateAgainPrePic",
+				fileVal : "travelCertificateAgain_file",
+				params : {
+					businessKey : "30",
+					subClassName : "slider"
+				},
+				server : "${base}/admin/identity/identity_image_upload.do"
+			});
+			travelCertificateAgain.uploadSuccess = function(file, data) {
+				$('#travelCertificateAgain').val(data.filePath);
+			}
+
+			var driverLicense = new Upload({
+				filePicker : "driverLicensePre",
+				fileList : "driverLicensePrePic",
+				fileVal : "driverLicense_file",
+				params : {
+					businessKey : "30",
+					subClassName : "slider"
+				},
+				server : "${base}/admin/identity/identity_image_upload.do"
+			});
+			driverLicense.uploadSuccess = function(file, data) {
+				$('#driverLicense').val(data.filePath);
+			}
+
+			var operationCertificate = new Upload({
+				filePicker : "operationCertificatePre",
+				fileList : "operationCertificatePrePic",
+				fileVal : "operationCertificate_file",
+				params : {
+					businessKey : "30",
+					subClassName : "slider"
+				},
+				server : "${base}/admin/identity/identity_image_upload.do"
+			});
+			operationCertificate.uploadSuccess = function(file, data) {
+				$('#operationCertificate').val(data.filePath);
+			}
+
+			var opt = new Upload({
+				filePicker : "optPre",
+				fileList : "optPrePic",
+				fileVal : "opt_file",
+				params : {
+					businessKey : "30",
+					subClassName : "slider"
+				},
+				server : "${base}/admin/identity/identity_image_upload.do"
+			});
+			opt.uploadSuccess = function(file, data) {
+				$('#opt').val(data.filePath);
+			}
+
+			var operationCertificateAgain = new Upload({
+				filePicker : "operationCertificateAgainPre",
+				fileList : "operationCertificateAgainPrePic",
+				fileVal : "operationCertificateAgain_file",
+				params : {
+					businessKey : "30",
+					subClassName : "slider"
+				},
+				server : "${base}/admin/identity/identity_image_upload.do"
+			});
+			operationCertificateAgain.uploadSuccess = function(file, data) {
+				$('#operationCertificateAgain').val(data.filePath);
+			}
+
+			var qualification = new Upload({
+				filePicker : "qualificationPre",
+				fileList : "qualificationPrePic",
+				fileVal : "qualification_file",
+				params : {
+					businessKey : "30",
+					subClassName : "slider"
+				},
+				server : "${base}/admin/identity/identity_image_upload.do"
+			});
+			qualification.uploadSuccess = function(file, data) {
+				$('#qualification').val(data.filePath);
+			}
+		});
+	</script>
+</body>
+</html>

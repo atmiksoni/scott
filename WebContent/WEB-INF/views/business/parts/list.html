@@ -1,0 +1,163 @@
+<body style="overflow: hidden">
+ <script type="text/javascript">
+      var parts;
+    $(function() {
+      parts = new Dd("parts");
+      parts.url = "parts_list_data.do";
+      parts.title = "${(languaged !='')?string('Parts information',' 配件信息')}";
+      parts.colM = [ [ /* {
+        field : "ck",
+        checkbox : true,
+        align : "center"
+      },  */{
+        title : "主键",
+        field : "partsId",
+        alias : "p",
+        hidden:true
+      } ,{
+        title : "${(languaged !='')?string('Device ID','设备编号')}",
+        field : "equipmentNo",
+        alias : "equipment",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "${(languaged !='')?string('Parts name','配件名称')}",
+        field : "partsName",
+        alias : "p",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "${(languaged !='')?string('Quality standard','质量标准')}",
+        field : "isoNormal",
+        alias : "p",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "${(languaged !='')?string('Power volume','容量')}",
+        field : "capacity",
+        alias : "p",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "${(languaged !='')?string('Quantity','配件数量')}",
+        field : "partsNumber",
+        alias : "p",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "${(languaged !='')?string('Model','机型')}",
+        field : "machinalModel",
+        alias : "p",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "${(languaged !='')?string('Serial number','流水号')}",
+        field : "serialNo",
+        alias : "p",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "${(languaged !='')?string('Brand','品牌')}",
+        field : "brand",
+        alias : "p",
+        width : 100,
+        align : "center"
+      }/*  ,{
+        title : "${(languaged !='')?string('remark','备注')}",
+        field : "remark",
+        alias : "p",
+        width : 100,
+        align : "center"
+      } */ ,{
+        title : "${(languaged !='')?string('Manufactue Date','出厂日期')}",
+        field : "factoryDate",
+        alias : "p",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "${(languaged !='')?string('createDate','创建时间')}",
+        field : "createDate",
+        alias : "p",
+        width : 100,
+        align : "center"
+      } ] ];
+
+      parts.toolbar = [ /* {
+        id : "parts_add",
+        text : "${(languaged !='')?string('add',' 添加 ')}",
+        iconCls : "icon-add",
+        handler : function() {
+          parts.open2({
+            title : "${(languaged !='')?string('add','添加 配件信息')}",
+            h : "70%",
+			w : "45%",
+			btn:["${(languaged !='')?string('confirm',' 确认 ')}","${(languaged !='')?string('close',' 关闭 ')}"],
+            url : "parts_add_turn.do",
+            params : myparams
+          });
+        }
+      }, {
+        id : "parts_edit",
+        text : "${(languaged !='')?string('edit',' 修改')}",
+        iconCls : "icon-edit",
+        disabled : true,
+        handler : function() {
+          parts.updata2({
+            title : "${(languaged !='')?string('edit','修改 配件信息')}",
+            h : "70%",
+			w : "45%",
+            url : "parts_edit_turn.do",
+            btn:["${(languaged !='')?string('confirm',' 确认 ')}","${(languaged !='')?string('close',' 关闭 ')}"],
+            params : {
+                partsId : parts.rowKey
+            }
+		  });
+        }
+      }, {
+        id : "parts_del",
+        text : "${(languaged !='')?string('delete',' 删除')}",
+        iconCls : "icon-remove",
+        disabled : true,
+        handler : function() {
+          parts.remove({
+             url : "parts_del_sub.do",
+             params : {
+                partsId : parts.rowKey
+             },
+             title:"${(languaged !='')?string('are you delete?','')}",
+             content:"${(languaged !='')?string('delete content','确定要删除所选记录吗?')}",
+              btn:["${(languaged !='')?string('confirm',' 确认 ')}","${(languaged !='')?string('close',' 关闭 ')}"]
+		  });
+        }
+      } */ ];
+      parts.param = myparams;
+      parts.onClickRow = function(rowIndex, rowData) {
+       $("#parts_edit,#parts_del").linkbutton("enable");
+      }
+      parts.onLoadSuccess = function(data) {
+       $("#parts_edit,#parts_del").linkbutton("disable");
+      };
+      parts.LoadDataGrid();
+      $('#search').linkbutton({
+        iconCls : 'icon-search',
+        onClick : function() {
+          parts.search(myparams);
+        }
+      });
+    });
+    function nameSearch(){
+   		myparams.searchContent = $("#searchContent").val();
+   	}
+  </script>
+ <div fit="true" class="easyui-layout">
+    <div region="north" title="${(languaged !='')?string('search',' 查询条件 ')}" style="height: 70px;">
+   <div class="pannel_search">
+   		${(languaged !='')?string('Parts name',' 配件名称')}：<input type="text" class="easyui-textbox" data-options="prompt:'${(languaged !='')?string('Parts name',' 配件名称')}'" id="searchContent"/> 
+       <a href="javascript:;" id="search" onClick="nameSearch()";>${(languaged !='')?string('search','查询')}</a>
+   </div>
+  </div>
+  <div region="center" style="overflow: hidden;border: none;">
+   <table fit="true" namespace="parts" id="parts" class="datagrid"></table>
+  </div>
+ </div>
+</body>

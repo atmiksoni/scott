@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="${base}/res/theme/default/login/css/base.css" />
+<link rel="stylesheet" href="${base}/res/theme/default/login/css/login.css" />
+<@p.resource types="Jquery"/>
+<script type="text/javascript" src="${base}/plug-in/Validform/js/Validform_v5.3.2.js"></script>
+<script src="${base}/plug-in/layer/layer.js?version=${version}"></script>
+<title>澳洲工单后台管理系统</title>
+</head>
+<body style="overflow-y: hidden">
+	<form id="loginForm" action="${base}/admin/checkuser.do?language=">
+		<input type="hidden" name="token" id="token" />
+		<div id="container">
+		<!-- <p id="oranger"  align="center"> 
+	  			<a class="hover" href="javascript:;">中文版</a> 
+	 			 <a href="javascript:;">English</a> 
+  			</p> -->
+			<div id="bd" class="tablea">
+			
+				<div class="login1 box box1" id="message">
+					<div class="login-top">
+						<h1 class="logo" id="logo">澳洲工单后台管理系统</h1>
+					</div>
+					<div class="login-input">
+						<p class="user ue-clear">
+							<label id="userName" style="margin-right: 12px">用户名</label><input type="text" name="accountName" datatype="*" nullmsg="请填写用户名" />
+						</p>
+						<p class="password ue-clear">
+							<label id="password"style="margin-right: 12px">密码</label><input type="password" name="password" datatype="*" nullmsg="请输入密码" />
+						</p>
+						<p class="yzm ue-clear">
+							<label id="code" style="margin-right: 12px">验证码</label> <input type="text" name="validateCode" id="validateCode" datatype="*" nullmsg="请输入验证码" /> <cite> <img
+								src="${base}/res/theme/default/login/images/code.png" alt="点击获取验证码" title="点击换一张" id="captchaImg"
+								style="padding-right: 30px; border: 0; cursor: pointer;" /></cite>
+						</p>
+					</div>
+					<div class="login-btn ue-clear">
+						<p class="btn" id="btn_sub">登录</p>
+						<!-- <div class="remember ue-clear">
+							<input type="checkbox" id="rememberMe" name="rememberMe" /> <em></em> <label for="remember" id="remerberd" style="margin-right: 10px">记住密码</label>
+						</div> -->
+						&nbsp;&nbsp;
+						<div class="remember ue-clear">
+							<input type="checkbox" id="enType" name="enType" /> <em></em> <label for="remember">English</label>
+						</div>
+					</div>
+				</div>
+			
+			</div>
+		</div>
+		<div id="ft">
+			<label id="ftcp">版权所有:</label>&nbsp;&nbsp;&nbsp;&nbsp;<label id="buft">澳洲工单</label><img herf="/res/bfpms/images/logo/police.png}"> <a target="_blank" href="http://www.miibeian.gov.cn/"></a>
+		</div>
+	</form>
+</body>
+
+<script type="text/javascript" src="${base}/res/theme/default/js/common.js"></script>
+<!-- <script type="text/javascript">
+		$(function(){
+			
+			$(".tablea").find(".box1:first").show();    //为每个BOX的第一个元素显示 
+			 $("#oranger a").on("mouseover",function(){ //给a标签添加事件  
+			     var index=$(this).index();  //获取当前a标签的个数  
+			     $(this).parent().next().find(".box").hide().eq(index).show(); //返回上一层，在下面查找css名为box隐藏，然后选中的显示  
+			     $(this).addClass("hover").siblings().removeClass("hover"); //a标签显示，同辈元素隐藏  
+			  })  
+		})
+</script> -->
+<script type="text/javascript">
+var height = $(window).height();
+$("#container").height(height);
+$("#bd").css("padding-top",height/2 - $("#bd").height()/2);
+$(window).resize(function(){
+	var height = $(window).height();
+	$("#bd").css("padding-top",$(window).height()/2 - $("#bd").height()/2);
+	$("#container").height(height);
+	
+});
+
+$('#remember').focus(function(){
+   $(this).blur();
+});
+$('#enType').focus(function(){
+	   $(this).blur();
+	});
+$('#remember').click(function(e) {
+
+	checkRemember($(this));
+});
+/* $('input:checkbox').click(function () { 
+	this.blur(); 
+	this.focus(); 
+	}); */ 
+$('#enType').click(function(e) {
+	var userName=$("#userName").text();
+	if(this.checked){
+		$("#loginForm").attr("action",$("#loginForm").attr("action")+"english");
+		
+		$("#userName").text("UserName");
+		$("input[name='accountName']").attr("nullmsg","Please input UserName");
+		
+		$("#password").text("PassWord");
+		$("input[name='password']").attr("nullmsg","Please input PassWord");
+		
+		$("#code").text("code");
+		$("input[name='validateCode']").attr("nullmsg","Please input code");
+		
+		$("#btn_sub").text("login");
+		
+		$("#remerberd").text("remember");
+		
+		$("#buft").text("SCOTT");
+		
+		$("#ftcp").text("Copyright Holder:");
+		
+		$("#logo").text("SCOTT");
+		
+	}else{
+		$("#loginForm").attr("action","${base}/admin/checkuser.do?language=");
+		
+		$("#userName").text("用户名");
+		$("input[name='accountName']").attr("nullmsg","请填写用户名");
+		
+		$("#password").text("密码");
+		$("input[name='password']").attr("nullmsg","请输入密码");
+		
+		$("#code").text("验证码");
+		$("input[name='validateCode']").attr("nullmsg","请输入验证码");
+		
+		$("#btn_sub").text("登录");
+		
+		$("#remerberd").text("记住密码");
+		
+		$("#buft").text("澳洲工单");
+		
+		$("#ftcp").text("版权所有:");
+		
+		$("#logo").text("澳洲工单后台管理系统");
+	}
+	
+	checkEnType($(this));
+});
+function checkEnType($this){
+	if(!-[1,]){
+		 if($this.prop("checked")){
+			$this.parent().addClass('checked');
+		}else{
+			$this.parent().removeClass('checked');
+		}
+	}
+};
+function checkRemember($this){
+	if(!-[1,]){
+		 if($this.prop("checked")){
+			$this.parent().addClass('checked');
+		}else{
+			$this.parent().removeClass('checked');
+		}
+	}
+}
+</script>
+<script>
+		$(function() {
+			reloadCaptcha();
+			var z = window.Flyme;
+			var ieVersion = z.ieVersion;
+			var isie = z.isIE;
+			if (window.top !== window.self) {
+				window.top.location = window.location;
+			}
+			var loginForm = $("#loginForm").Validform({
+				btnSubmit : "#btn_sub",
+				tiptype : 4,
+				ajaxPost : true,
+				beforeSubmit : function(form) {
+					if (isie) {
+						if (ieVersion < 8) {
+							z.tip("为获得更好的用户体验,请使用IE8以上或者谷歌浏览器", 3000, 500, "error");
+							return false;
+						}
+					}
+				},
+				callback : function(data) {
+					console.log(JSON.stringify(data));
+					if (data.info == "登陆成功") {
+						if(data.remark !=""){
+							Fm.set("language",data.remark);
+						}
+						
+						//alert(Fm.get("language"));
+						setTimeout(window.location.replace("${base}/admin/index.do"), 1000);
+					} else {
+						layer.msg(data.info, {
+							icon : 2
+						});
+					}
+				}
+			});
+			loginForm.tipmsg.p = "账户验证中,请稍后";
+			$('#password').bind('keypress', function(event) {
+				if (event.keyCode == "13") {
+					$('#btn_sub').click();
+					return false;
+				}
+			});
+			 
+		})
+	</script>
+</html>

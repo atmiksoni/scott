@@ -1,0 +1,95 @@
+<body style="overflow: hidden">
+	<script type="text/javascript">
+		var balance;
+		$(function() {
+			balance = new Dd("balance");
+			balance.url = "balance_list_data.do";
+			balance.colM = [ [ {
+				field : "ck",
+				checkbox : false,
+				hidden : true,
+				align : "center"
+			}, {
+				title : "主键",
+				field : "balanceId",
+				alias : "b",
+				hidden : true,
+				width : 100,
+				align : "center"
+			}, {
+				title : "用户名称",
+				field : "accountInfo_userName",
+				alias : "accountInfo",
+				width : 80,
+				align : "center"
+			}, {
+				title : "手机号",
+				field : "accountInfo_linkPhone",
+				alias : "accountInfo",
+				width : 100,
+				align : "center"
+			}, {
+				title : "用户ID",
+				field : "accountInfo_accountInfoId",
+				alias : "accountInfo",
+				hidden : true,
+				width : 100,
+				align : "center"
+			}, {
+				title : "账户余额",
+				field : "amount",
+				alias : "b",
+				width : 100,
+				align : "center"
+			}, {
+				title : "版本",
+				field : "version",
+				alias : "b",
+				hidden : true,
+				width : 100,
+				align : "center"
+			}, {
+				field : "opt",
+				title : '余额明细',
+				formatter : function(value, rowData, index) {
+					if (value == "" || value == null) {
+					}
+					var href = "";
+					href += "[<a href='javascript:;' onclick=balancelog_edit('" + rowData.accountInfo_accountInfoId + "','" + rowData.accountInfo_userName + "');return flase;>余额明细</a>]";
+					return href;
+				}
+			} ] ];
+			balance.param = myparams;
+			balance.LoadDataGrid();
+			$('#search').linkbutton({
+				iconCls : 'icon-search',
+				onClick : function() {
+					balance.search(myparams);
+				}
+			});
+		});
+		function nameSearch() {
+			myparams.userName = $("#userName").val();
+		}
+		function balancelog_edit(accountInfoId, userName) {
+			$("#balancelog_list").panel({
+				title : "用户(<span style=\"color:red\">" + userName + "</span>)的账户收支明细",
+				href : "${base}/admin/balancelog/balancelog_list_turn.do",
+				queryParams : {
+					accountInfoId : accountInfoId
+				}
+			});
+		}
+	</script>
+	<div fit="true" class="easyui-layout">
+		<div region="north" style="height: 40px;">
+			<div class="pannel_search">
+				姓名：<input type="text" class="easyui-textbox" id="userName" /> <a href="javascript:;" id="search" onClick="nameSearch()";>查询&nbsp;</a>
+			</div>
+		</div>
+		<div region="center" style="overflow: hidden; border: none;">
+			<table fit="true" namespace="balance" id="balance" class="datagrid"></table>
+		</div>
+		<div region="east" split="true" id="balancelog_list" title="余额明细" style="overflow: hidden; border-bottom: none; width: 30%;"></div>
+	</div>
+</body>

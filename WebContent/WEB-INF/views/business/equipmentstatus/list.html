@@ -1,0 +1,123 @@
+<body style="overflow: hidden">
+ <script type="text/javascript">
+      var equipmentstatus;
+    $(function() {
+      equipmentstatus = new Dd("equipmentstatus");
+      equipmentstatus.url = "equipmentstatus_list_data.do";
+      equipmentstatus.title = "${(languaged !='')?string('Device condition',' 设备状态')}";
+      equipmentstatus.colM = [ [ /* {
+        field : "ck",
+        checkbox : true,
+        align : "center"
+      }, */ {
+        title : "主键",
+        field : "equipmentstatusId",
+        alias : "e",
+        hidden:true
+      } ,{
+        title : "${(languaged !='')?string('Condition number','状态编号')}",
+        field : "equipmentStatusCode",
+        alias : "e",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "${(languaged !='')?string('Condition name','状态名称')}",
+        field : "equipmentStatusName",
+        alias : "e",
+        width : 100,
+        align : "center"
+      } ,{
+          title : "${(languaged !='')?string('Condition english name','状态英文名称')}",
+          field : "equipmentStatusEnglishName",
+          alias : "e",
+          width : 100,
+          align : "center"
+        },{
+        title : "${(languaged !='')?string('sequence','排序')}",
+        field : "Indexs",
+        alias : "e",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "${(languaged !='')?string('creation time','创建时间')}",
+        field : "createDate",
+        alias : "e",
+        width : 100,
+        align : "center"
+      } ] ];
+
+      equipmentstatus.toolbar = [ {
+        id : "equipmentstatus_add",
+        text : "${(languaged !='')?string('add',' 添加 ')}",
+        iconCls : "icon-add",
+        handler : function() {
+          equipmentstatus.open2({
+            title : "${(languaged !='')?string('add','添加 设备状态')}",
+            h : "70%",
+			w : "45%",
+			btn:["${(languaged !='')?string('confirm',' 确认 ')}","${(languaged !='')?string('close',' 关闭 ')}"],
+            url : "equipmentstatus_add_turn.do",
+            params : myparams
+          });
+        }
+      }, {
+        id : "equipmentstatus_edit",
+        text : "${(languaged !='')?string('edit',' 修改')}",
+        iconCls : "icon-edit",
+        disabled : true,
+        handler : function() {
+          equipmentstatus.updata2({
+            title : "${(languaged !='')?string('edit','修改 设备状态')}",
+            h : "70%",
+			w : "45%",
+            url : "equipmentstatus_edit_turn.do",
+            btn:["${(languaged !='')?string('confirm',' 确认 ')}","${(languaged !='')?string('close',' 关闭 ')}"],
+            params : {
+                equipmentstatusId : equipmentstatus.rowKey
+            }
+		  });
+        }
+      }/* , {
+        id : "equipmentstatus_del",
+        text : "${(languaged !='')?string('delete',' 删除')}",
+        iconCls : "icon-remove",
+        disabled : true,
+        handler : function() {
+          equipmentstatus.remove({
+             url : "equipmentstatus_del_sub.do",
+             params : {
+                equipmentstatusId : equipmentstatus.rowKey
+             },
+             title:"${(languaged !='')?string('are you delete?','')}",
+             content:"${(languaged !='')?string('delete content','确定要删除所选记录吗?')}",
+              btn:["${(languaged !='')?string('confirm',' 确认 ')}","${(languaged !='')?string('close',' 关闭 ')}"]
+		  });
+        }
+      } */ ];
+      equipmentstatus.param = myparams;
+      equipmentstatus.onClickRow = function(rowIndex, rowData) {
+       $("#equipmentstatus_edit,#equipmentstatus_del").linkbutton("enable");
+      }
+      equipmentstatus.onLoadSuccess = function(data) {
+       $("#equipmentstatus_edit,#equipmentstatus_del").linkbutton("disable");
+      };
+      equipmentstatus.LoadDataGrid();
+      $('#search').linkbutton({
+        iconCls : 'icon-search',
+        onClick : function() {
+          equipmentstatus.search(myparams);
+        }
+      });
+    });
+  </script>
+ <div fit="true" class="easyui-layout">
+<!--   <div region="north" title="查询条件" style="height: 70px;">
+   <div class="pannel_search">
+       <a href="javascript:;" id="search">${(languaged !='')?string('search','查询')}</a>
+   </div>
+  </div> -->
+  <div region="center" style="overflow: hidden;border: none;">
+   <table fit="true" namespace="equipmentstatus" id="equipmentstatus" class="datagrid"></table>
+  </div>
+ </div>
+</body>

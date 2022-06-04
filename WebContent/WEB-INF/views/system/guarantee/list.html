@@ -1,0 +1,102 @@
+<body style="overflow: hidden">
+	<script src="/plug-in/viewer/js/viewer.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="/plug-in/viewer/css/viewer.min.css" />
+	<script type="text/javascript">
+		var guarantee;
+		$(function() {
+			guarantee = new Dd("guarantee");
+			guarantee.url = "guarantee_list_data.do";
+			guarantee.title = "服务保障信息";
+			guarantee.colM = [ [ /* {
+					       field : "ck",
+					       checkbox : true,
+					       align : "center"
+					     }, */
+			{
+				title : "主键",
+				field : "guaranteeId",
+				alias : "g",
+				hidden : true
+			}, {
+				title : "标题",
+				field : "title",
+				alias : "g",
+				width : 100,
+				align : "center"
+			}, {
+				title : "备注",
+				field : "remark",
+				alias : "g",
+				width : 100,
+				align : "center"
+			}, {
+				title : "创建时间",
+				field : "createDate",
+				alias : "g",
+				width : 100,
+				align : "center"
+			} ] ];
+
+			guarantee.toolbar = [ {
+				id : "guarantee_edit",
+				text : "修改",
+				iconCls : "icon-edit",
+				disabled : true,
+				handler : function() {
+					guarantee.updata2({
+						title : "修改服务保障",
+						h : "70%",
+						w : "45%",
+						url : "guarantee_edit_turn.do",
+						params : {
+							guaranteeId : guarantee.rowKey
+						}
+					});
+				}
+			} ];
+			guarantee.param = myparams;
+			guarantee.onClickRow = function(rowIndex, rowData) {
+				$("#guarantee_edit,#guarantee_del").linkbutton("enable");
+			}
+			guarantee.onLoadSuccess = function(data) {
+
+				$(".ccc1").each(function(i, item) {
+					var guaranteeId = $(item).attr("data-id");
+					$(item).switchbutton({
+						checked : Boolean(Number(item.value)),
+						onText : '是',
+						offText : '否',
+						onChange : function(checked) {
+							Fm.ajax("${base}/admin/guarantee/sendStatus_edit_sub.do", {
+								sendStatus1 : checked,
+								guaranteeId : guaranteeId
+							});
+						}
+					})
+				});
+
+				$("#guarantee_edit,#guarantee_del").linkbutton("disable");
+			};
+			guarantee.LoadDataGrid();
+			$('#search').linkbutton({
+				iconCls : 'icon-search',
+				onClick : function() {
+					myparams.title = $("#title").val();
+					myparams.status = $("#sendStatus").combobox('getValue');
+					guarantee.search(myparams);
+				}
+			});
+		});
+		function show() {
+			var viewer = new Viewer(document.getElementById('imgdiv'), {
+				url : 'data-original'
+			});
+			viewer.show();
+		}
+	</script>
+	<div fit="true" class="easyui-layout">
+		<div id="imgdiv" region="center" style="overflow: hidden; border: none;">
+			<table fit="true" namespace="guarantee" id="guarantee" class="datagrid"></table>
+		</div>
+	</div>
+</body>

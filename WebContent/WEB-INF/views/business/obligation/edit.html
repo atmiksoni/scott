@@ -1,0 +1,23 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll"/>
+</head>
+<body>
+<@p.valid id="obligation" action="obligation_edit_sub.do" class="layui-form" layui=true>
+ <@p.legend text="${(languaged !='')?string('Design duty','修改设计职责')}"/> 
+ <input type="hidden" name="obligationId" value="${obligation.obligationId}" />
+         <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('Name of duty','设计职责名称')}"  datarule="required;" datamsgrequired="${(required)!''}" name="obligationName" value="${obligation.obligationName}"/>    
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('line number','行数')}"  datarule="required;" datamsgrequired="${(required)!''}" name="type" value="${obligation.type}"/>    
+	     </div>
+	     <div class="layui-form-item"> 
+           <@p.layinput label="${(languaged !='')?string('sort','排序')}"  datarule="required;" datamsgrequired="${(required)!''}" name="indexs" value="${obligation.indexs}"/>
+	     </div>
+	     
+</@p.valid>
+</body>
+</html>

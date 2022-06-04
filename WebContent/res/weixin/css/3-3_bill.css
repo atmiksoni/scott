@@ -1,0 +1,9 @@
+.bill {font-size: 0.7rem;}
+.bill_add {margin: 48px 0 0;}
+.bill_title ul li, .bill_add ul li {margin: 0.375rem 0;padding: 0.75rem;background-color: white;position: relative;}
+.bill_title ul li img, .bill_add ul li img {position: absolute;right: 0.5rem;top: 0.5rem;}
+.bill_add ul li p, .bill_add ul li h3 span {color: #666;}
+.bill_add ul li p {width: 80%;overflow : hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 1;-webkit-box-orient: vertical;}
+.create {position: fixed;bottom: 1rem;left: 0;width: 100%;}
+.create .btn {width: 92%;padding: 0 4%;}
+

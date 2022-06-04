@@ -1,0 +1,167 @@
+<body style="overflow: hidden">
+ <script type="text/javascript">
+      var firm;
+    $(function() {
+      firm = new Dd("firm");
+      firm.url = "platform_firm_list_data.do";
+      firm.title = "${(languaged !='')?string('client information',' 客户信息')}";
+      firm.colM = [ [  {
+        title : "主键",
+        field : "firmId",
+        alias : "f",
+        hidden:true
+      } ,{
+          title : "${(languaged !='')?string('LOGO','LOGO')}",
+          field : "Head",
+          alias : "f",
+          width : 100,
+          align : "center",
+          formatter : function(value, row, index) {
+     			return '<img width="71px;" align="center" height="40px;" src="../../../'+row.Head+'"" onerror="noImage();" />';
+     		}
+        } ,{
+        title : "${(languaged !='')?string('company  name','客户名称')}",
+        field : "companyName",
+        alias : "f",
+        width : 100,
+        align : "center"
+      } ,{
+          title : "${(languaged !='')?string('Repair Company','维修公司')}",
+          field : "cm",
+          width : 100,
+          align : "center"
+        },{
+        title : "${(languaged !='')?string('site address','所属地址')}",
+        field : "Address",
+        alias : "f",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "${(languaged !='')?string('company  contact number','客户电话')}",
+        field : "mobile",
+        alias : "f",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "${(languaged !='')?string('Contact Person','联系人')}",
+        field : "linkman",
+        alias : "f",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "${(languaged !='')?string('Phone number','联系电话')}",
+        field : "Linkphone",
+        alias : "f",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "${(languaged !='')?string('Email','联系邮箱')}",
+        field : "compEmail",
+        alias : "f",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "${(languaged !='')?string('Postal code','邮政编码')}",
+        field : "postcodes",
+        alias : "f",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "${(languaged !='')?string('creation time','创建时间')}",
+        field : "createDate",
+        alias : "f",
+        width : 100,
+        align : "center"
+      },{
+          title : "${(languaged !='')?string('Next Equipment Inspection Date','提醒时间')}",
+          field : "reminderDate",
+          alias : "f",
+          width : 100,
+          align : "center"
+        } ] ];
+
+      firm.toolbar = [ /* {
+        id : "firm_add",
+        text : "${(languaged !='')?string('add',' 添加 ')}",
+        iconCls : "icon-add",
+        handler : function() {
+          firm.open2({
+            title : "${(languaged !='')?string('add','添加客户信息')}",
+            h : "70%",
+			w : "45%",
+			btn:["${(languaged !='')?string('confirm',' 确认 ')}","${(languaged !='')?string('close',' 关闭 ')}"],
+            url : "firm_add_turn.do",
+            params : myparams
+          });
+        }
+      }, {
+        id : "firm_edit",
+        text : "${(languaged !='')?string('edit',' 修改')}",
+        iconCls : "icon-edit",
+        disabled : true,
+        handler : function() {
+          firm.updata2({
+            title : "${(languaged !='')?string('edit','修改客户信息')}",
+            h : "70%",
+			w : "45%",
+            url : "firm_edit_turn.do",
+            btn:["${(languaged !='')?string('confirm',' 确认 ')}","${(languaged !='')?string('close',' 关闭 ')}"],
+            params : {
+                firmId : firm.rowKey
+            }
+		  });
+        }
+      }, {
+        id : "firm_del",
+        text : "${(languaged !='')?string('delete',' 删除')}",
+        iconCls : "icon-remove",
+        disabled : true,
+        handler : function() {
+          firm.remove({
+             url : "firm_del_sub.do",
+             params : {
+                firmId : firm.rowKey
+             },
+             title:"${(languaged !='')?string('are you delete?','确定删除吗?')}",
+             content:"${(languaged !='')?string('delete content','确定要删除所选记录吗?')}",
+              btn:["${(languaged !='')?string('confirm',' 确认 ')}","${(languaged !='')?string('close',' 关闭 ')}"]
+		  });
+        }
+      } */ ];
+      firm.param = myparams;
+      firm.onClickRow = function(rowIndex, rowData) {
+       $("#firm_edit,#firm_del").linkbutton("enable");
+      }
+      firm.onLoadSuccess = function(data) {
+       $("#firm_edit,#firm_del").linkbutton("disable");
+      };
+      firm.LoadDataGrid();
+      $('#search').linkbutton({
+        iconCls : 'icon-search',
+        onClick : function() {
+          firm.search(myparams);
+        }
+      });
+    });
+    function nameSearch(){
+   		myparams.searchContent = $("#searchContent").val();
+   		myparams.repairCompany = $("#repairCompany").val();
+   		myparams.startDate=$("#startDate").datetimebox('getValue');				
+		myparams.endDate=$("#endDate").datetimebox('getValue');	
+   	}
+  </script>
+ <div fit="true" class="easyui-layout">
+  <div region="north" title="${(languaged !='')?string('search',' 查询条件 ')}" style="height: 70px;">
+   <div class="pannel_search">
+   	${(languaged !='')?string('client Name',' 客户名称')}：<input type="text" class="easyui-textbox" data-options="prompt:'${(languaged !='')?string('client Name',' 客户名称')}'" id="searchContent"/> 
+    ${(languaged !='')?string('repairCompany',' 维修公司 ')}：<input type="text" class="easyui-textbox" data-options="prompt:'${(languaged !='')?string('repairCompany',' 检维修公司')}'" id="repairCompany"/>
+       ${(languaged!='')?string('selectDate','日期选择')}：<input type="text" class="easyui-datetimebox" id="startDate"name="startDate" />-
+					 <input type="text" class="easyui-datetimebox"id="endDate" name="endDate" /> 
+       <a href="javascript:;" id="search" onClick="nameSearch()";>${(languaged !='')?string('search','查询')}</a>
+   </div>
+  </div>
+  <div region="center" style="overflow: hidden;border: none;">
+   <table fit="true" namespace="firm" id="firm" class="datagrid"></table>
+  </div>
+ </div>
+</body>

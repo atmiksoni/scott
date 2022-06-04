@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,Form,NiceScroll,EasyUI,ComBo,ueditor,webuploader"/>
+</head>
+<body>
+	<@p.valid id="expert" action="expert_edit_sub.do" class="layui-form" layui=true> <@p.legend text="提示信息"/>
+	<input type="hidden" name="expertId" value="${expert.expertId}" />
+	<input type="hidden" name="storeId" value="${expert.storeId}" />
+	<div class="layui-form-item"><@p.layinput label="专家姓名" datarule="required;" name="expertName" value="${expert.expertName}"/></div>
+	<div class="layui-form-item"><@p.layinput label="专家等级" datarule="required;" name="level" value="${expert.level}"/></div>
+	<div class="layui-form-item"><@p.layinput label="单位名称" datarule="required;" name="company" value="${expert.company}"/></div>
+	<div class="layui-form-item"><@p.layinput label="排序号" datarule="required;" name="indexs" value="${expert.indexs}"/></div>
+	<div class="layui-form-item"><@p.switch label="专家状态" name="status"value="${expert.status}" text="启用|禁用"/></div>
+	<@p.legend text="专家图片" btnId="pre"/>
+	<div class="layui-form-item" style="margin-left: 40px;">
+		<div class="layui-inline" style="padding-left: 20px;"><@p.upload id="prePic" name="prePic" value="${expert.expertHead}"
+			delurl="${base}/admin/expert/expert_image_del.do"/></div>
+		<input id="img" name="expertHead" type="hidden" class="layui-input" value="${expert.expertHead}">
+	</div>
+	<div class="layui-form-item"><@p.ueditor label="详细介绍" id="container" name="content" value="${expert.content}"/></div>
+	</@p.valid>
+
+	<script>
+		$(function() {
+			/**下面是图片上传*/
+			niceScroll("body");
+			var pre = new Upload({
+				filePicker : "pre",
+				fileList : "prePic",
+				fileVal : "img_file",
+				params : {
+					businessKey : "30",
+					subClassName : "expert"
+				},
+				server : "${base}/admin/expert/expert_image_upload.do"
+			});
+			pre.uploadSuccess = function(file, data) {
+				$('#img').val(data.filePath);
+			};
+			var ue = new Ue("container");
+			ue.params = {
+				"folder" : "message"
+			};
+			ue.init();
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll"/>
+</head>
+<body>
+<@p.valid id="equipment" action="equipment_edit_sub.do" class="layui-form" layui=true>
+ <@p.legend text="${(languaged !='')?string('Hint information','提示信息')}"/> 
+ <input type="hidden" name="equipmentId" value="${equipment.equipmentId}" />
+         <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('equipmentType','设备类型')}"  datarule="required;" datamsgrequired="${(required)!''}" name="equipmentType" value="${equipment.equipmentType}"/>    
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('equipmentNo','设备编号')}"  datarule="required;" datamsgrequired="${(required)!''}" name="equipmentNo" value="${equipment.equipmentNo}"/>    
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('orderNo','订购单号')}"  datarule="required;" datamsgrequired="${(required)!''}" name="orderNo" value="${equipment.orderNo}"/>    
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('equipmentAddress','设备地址')}"  datarule="required;" datamsgrequired="${(required)!''}" name="equipmentAddress" value="${equipment.equipmentAddress}"/>    
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('brand','品牌')}"  datarule="required;" datamsgrequired="${(required)!''}" name="brand" value="${equipment.brand}"/>    
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('factoryDate','出厂日期')}"  datarule="required;" datamsgrequired="${(required)!''}" name="factoryDate" value="${equipment.factoryDate}"/>    
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('isoNormal','质量标准')}"  datarule="required;" datamsgrequired="${(required)!''}" name="isoNormal" value="${equipment.isoNormal}"/>    
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('capacity','容量')}"  datarule="required;" datamsgrequired="${(required)!''}" name="capacity" value="${equipment.capacity}"/>    
+	     </div>
+</@p.valid>
+</body>
+</html>

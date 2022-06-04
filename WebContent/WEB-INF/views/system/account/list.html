@@ -1,0 +1,197 @@
+<body style="overflow: hidden">
+	<script type="text/javascript">
+	var account;
+	var tag = true;
+	$(function() {
+		account = new Dd("account");
+		account.url = "account_list_data.do";
+		account.title = "${(languaged !='')?string('Account list',' 账户列表 ')}";
+		account.fitColumns = false;
+		account.fcolM = [ [ {
+			title : "主键",
+			field : "accountId",
+			alias : "account",
+			hidden : true
+		}, {
+			title : "${(languaged !='')?string('account name','账户名')}",
+			field : "accountName",
+			alias : "account",
+			sortable : true,
+			width : "15%",
+			align : "center"
+		}, {
+			title : "${(languaged !='')?string('real name','真实姓名')}",
+			field : "userName",
+			sortable : true,
+			alias : "a",
+			width : "15%",
+			align : "center"
+		}, {
+			title : "${(languaged !='')?string('mobile','手机号')}",
+			field : "mobile",
+			alias : "account",
+			sortable : true,
+			width : "15%",
+			align : "center"
+		} , {
+			title : "${(languaged !='')?string('role','角色')}",
+			field : "roleName",
+			alias : "role",
+			width : "8%",
+			align : "center"
+		} , {
+			title : "${(languaged !='')?string('English name','角色英文')}",
+			field : "roleEnglishName",
+			alias : "role",
+			width : "8%",
+			align : "center"
+		}, {
+			title : '${(languaged !='')?string('isEnable','启用')}',
+			field : "isEnable",
+			alias : "account",
+			width : "15%",
+			align : "center",
+			formatter : function(value, rows, index) {
+				return "<input style='width:75px;height:18px' class='enabled' data-name='"+rows.accountName+"' data-id='"+rows.accountId+"' value='"+rows.isEnable+"'>";
+			}
+		}, {
+			title : "${(languaged !='')?string('createDate','创建日期')}",
+			field : "createDate",
+			alias : "account",
+			width : "25%",
+			sortable : true,
+			align : "center"
+		}] ]
+
+			account.toolbar = [ {
+				id : "account_add",
+				text : "${(languaged !='')?string('add',' 添加 ')}",
+				iconCls : "icon-add",
+				handler : function() {
+					account.open2({
+						title : "${(languaged !='')?string('Add account(Default Passwords:888888)','添加账户(默认密码:888888)')}",
+						h : "60%",
+						w : "40%",
+						btn:["${(languaged !='')?string('confirm',' 确认 ')}","${(languaged !='')?string('close',' 关闭 ')}"],
+						url : "account_add_turn.do",
+						params : myparams
+					});
+				}
+			}, {
+				id : "account_edit",
+				text : "${(languaged !='')?string('edit',' 修改')}",
+				iconCls : "icon-edit",
+				handler : function() {
+					account.updata2({
+						title : "${(languaged !='')?string('Modify account information','修改账户信息')}",
+						h : "60%",
+						w : "40%",
+						url : "account_edit_turn.do",
+						btn:["${(languaged !='')?string('confirm',' 确认 ')}","${(languaged !='')?string('close',' 关闭 ')}"],
+						params : {
+							accountId : account.rowKey
+						}
+					});
+				}
+			}, {
+				id : "account_resetpwd",
+				text : "${(languaged !='')?string('Reset Password',' 重置密码')}",
+				iconCls : "icon-renew",
+				disabled : true,
+				handler : function() {
+					account.confirmajax({
+						url : "account_resetpwd_sub.do",
+						title : "${(languaged !='')?string('Reset Password','重置密码')}",
+						content : "${(languaged !='')?string('Confirm to reset password 888888?','确认重置密码为888888?')}",
+						params : {
+							accountId : account.rowKey
+						}
+					});
+				}
+			}, {
+				id : "account_setup",
+				text : "${(languaged !='')?string('Account role','账户角色')}",
+				iconCls : "icon-setup",
+				disabled : true,
+				handler : function() {
+					var rowData = account.rowData;
+					$("#account_setting").panel({
+						title : "${(languaged !='')?string('Account Name','账户名')}：<span style=\"color:red\">" + rowData.accountName + "</span>",
+						href : "${base}/admin/account/account_settion_turn.do",
+						queryParams : {
+							accountId : rowData.accountId
+						}
+					});
+				}
+			} ];
+			account.param = myparams;
+			account.onClickRow = function(rowIndex, rowData) {
+				myparams.accountId = account.rowKey;
+				$("#account_edit,#account_resetpwd,#account_del,#account_setup").linkbutton("enable");
+				if(rowData.accountName=="admin"){
+					$("#account_del").linkbutton("disable");
+				}
+			}
+			account.onLoadSuccess = function(rowData) {
+				$(".enabled").each(function(i, item) {
+					var accountId = $(item).attr("data-id");
+					var accountName = $(item).attr("data-name");
+					$(item).switchbutton({
+						checked : Boolean(Number(item.value)),
+						onText : '${(languaged !='')?string('Enabled','启用')}',
+						offText : '${(languaged !='')?string('disable','禁用')}',
+						onChange : function(checked) {
+							Fm.ajax("${base}/admin/account/account_status_set.do", {
+								enabled : checked,
+								accountId : accountId
+							});
+						}
+					});
+					if(accountName=="admin"){
+						$(item).switchbutton('disable');
+					}
+				});
+				$("#account_edit,#account_resetpwd,#account_del,#account_setup").linkbutton("disable");
+			};
+			account.LoadDataGrid();
+			$('#search').linkbutton({
+				iconCls : 'icon-search',
+				onClick : function() {
+					setParams();
+					account.search(myparams);
+				}
+			});
+			$('#reset').linkbutton({
+				iconCls : 'icon-renew',
+				onClick : function() {
+					$("input[class^='easyui']").textbox('setValue', "");
+					$("#organizationId,#positionId,#isEnable").combobox('clear');
+					setParams();
+					account.search(myparams);
+				}
+			});
+			function setParams() {
+				myparams.accountName = $("#accountName").val();
+				<#if Organ_On>
+				myparams.organizationId = $("#organizationId").combobox('getValue');
+				</#if>
+				<#if Position_On>
+				myparams.positionId = $("#positionId").combobox('getValue');
+				</#if>
+				myparams.isEnable = $("#isEnable").combobox('getValue');
+			}
+		});
+	</script>
+	<div fit="true" class="easyui-layout" id="layout">
+		<div region="north" title="${(languaged !='')?string('search',' 查询条件 ')}" style="height: 70px;">
+			<div class="pannel_search">
+				${(languaged !='')?string('account name  ','账户名')}：<input type="text" class="easyui-textbox" id="accountName" name="accountName" /> 
+				<#if Organ_On> 公司：<@p.select class="easyui-combobox" id="organizationId" list=organizationList valueField="organizationId" textField="organizationName" width="190" defVal="--请选择公司--" /> </#if> <#if Position_On> 职位：<@p.select class="easyui-combobox" id="positionId" list=positionList valueField="positionId" textField="positionName" width="190" defVal="--请选择职位--" /> </#if> 状态：<@p.select class="easyui-combobox" id="isEnable" list={"1":"${(languaged !='')?string('Enabled','启用')}","0":"${(languaged !='')?string('disable','禁用')}"} width="190" defVal="${(languaged !='')?string('all','全部')}" /> <a href="javascript:;" id="search">${(languaged !='')?string('search','查询')}&nbsp;</a> <a href="javascript:;" id="reset">${(languaged !='')?string('reset ','重置')}</a>
+			</div>
+		</div>
+		<div region="center" style="overflow: hidden; border: none;">
+			<table fit="true" namespace="account" id="account" class="datagrid"></table>
+		</div>
+		<div region="east" split="true" hideCollapsedContent="false" minWidth="200" maxWidth="200" id="account_setting" title="${(languaged !='')?string('Account settings','账户设置')}" style="overflow: hidden;"></div>
+	</div>
+</body>

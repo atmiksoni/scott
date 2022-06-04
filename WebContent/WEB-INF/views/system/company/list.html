@@ -1,0 +1,276 @@
+<body style="overflow: hidden">
+	<script src="/plug-in/viewer/js/viewer.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="/plug-in/viewer/css/viewer.min.css" />
+	<script type="text/javascript">
+		var company;
+		$(function() {
+			company = new Dd("company");
+			company.url = "company_list_data.do";
+			company.title = "企业信息";
+			company.fitColumns = true;
+			company.fcolM = [ [ {
+				title : "主键",
+				field : "companyId",
+				alias : "c",
+				hidden : true,
+				width : 100,
+				align : "center"
+			}, {
+				title : "公司Logo",
+				field : "compLogo",
+				alias : "c",
+				width : 100,
+				align : "center",
+				formatter:function(value, row, index){
+					return '<img onclick="show()"  width="80px;" height="50px;" src="../../'+row.compLogo+'" />';
+				}
+			},{
+				title : "单位名称",
+				field : "compName",
+				alias : "c",
+				width : 180,
+				sortable : true,
+				align : "center"
+			}, {
+				title : "区域",
+				field : "areaName",
+				alias : "area",
+				width : 100,
+				align : "center"
+			} ] ]
+			company.colM = [ [ {
+				title : "联系人",
+				field : "linkMan",
+				alias : "c",
+				width : 60,
+				align : "center"
+			}, {
+				title : "法人",
+				field : "legalMan",
+				alias : "c",
+				width : 60,
+				align : "center"
+			}, {
+				title : "详细地址",
+				field : "address",
+				alias : "c",
+				width : 100,
+				align : "center"
+			}, {
+				title : "单位电话",
+				field : "compTel",
+				alias : "c",
+				width : 60,
+				align : "center"
+			}, {
+				title : "创建时间",
+				field : "createDate",
+				alias : "c",
+				width : 100,
+				sortable : true,
+				align : "center"
+			}, {
+				title : "企业家",
+				field : "userName",
+				alias : "accountInfo",
+				width : 60,
+				align : "center"
+			}, {
+				title : '启用',
+				field : "compStatus",
+				alias : "c",
+				width : 80,
+				align : "center",
+				formatter : function(value, rows, index) {
+					return "<input style='width:50px;height:18px' class='ccc' data-id='"+rows.companyId+"' value='"+rows.compStatus+"'>";
+				}
+			}/* , {
+				field : "opt",
+				title : '操作',
+				align : "center",
+				formatter : function(value, rowData, index) {
+					if (value == "" || value == null) {
+					}
+					var href = "";
+					href += "[<a href='javascript:;' onclick=companyset('" + rowData.companyId + "','" + rowData.compName + "');return flase;>单位设置</a>]";
+					return href;
+				}
+			} */ ] ];
+		      
+			company.toolbar = [ {
+				id : "company_add",
+				text : "添加",
+				disabled : false,
+				iconCls : "icon-add",
+				handler : function() {
+					company.open2({
+						title : "添加单位",
+						h : "70%",
+						w : "40%",
+						url : "company_add_turn.do",
+						params : myparams
+					});
+				}
+			}, {
+				id : "company_edit",
+				text : "编辑",
+				iconCls : "icon-edit",
+				disabled : true,
+				handler : function() {
+					company.updata2({
+						title : "编辑单位",
+						h : "70%",
+						w : "40%",
+						url : "company_edit_turn.do",
+						params : {
+							companyId : company.rowKey
+						}
+					});
+				}
+			}, {
+				id : "company_del",
+				text : "删除",
+				iconCls : "icon-remove",
+				disabled : true,
+				handler : function() {
+					company.remove({
+						url : "company_del_sub.do",
+						params : {
+							companyId : company.rowKey
+						}
+					});
+				}
+			}, {
+				id : "company_product",
+				text : "企业产品",
+				disabled : true,
+				iconCls : "icon-edit",
+				handler : function() {
+					company.open2({
+						title : "企业产品",
+						h : "60%",
+						w : "70%",
+						url : "company_product_layout.do",
+						params : {
+							companyId : company.rowKey
+						}
+					});
+				}
+			}, {
+				id : "company_supply",
+				text : "供货信息",
+				disabled : true,
+				iconCls : "icon-edit",
+				handler : function() {
+					company.open2({
+						title : "供货信息",
+						h : "60%",
+						w : "70%",
+						url : "company_supply_layout.do",
+						params : {
+							companyId : company.rowKey
+						}
+					});
+				}
+			}, {
+				id : "company_purchasing",
+				text : "采购信息",
+				disabled : true,
+				iconCls : "icon-edit",
+				handler : function() {
+					company.open2({
+						title : "采购信息",
+						h : "60%",
+						w : "70%",
+						url : "company_purchasing_layout.do",
+						params : {
+							companyId : company.rowKey
+						}
+					});
+				}
+			}, {
+				id : "company_cooperate",
+				text : "合作信息",
+				disabled : true,
+				iconCls : "icon-edit",
+				handler : function() {
+					company.open2({
+						title : "合作信息",
+						h : "60%",
+						w : "70%",
+						url : "company_cooperate_layout.do",
+						params : {
+							companyId : company.rowKey
+						}
+					});
+				}
+			}];
+			company.param = myparams;
+			company.onClickRow = function(rowIndex, rowData) {
+				$("#company_edit,#company_del,#company_product,#company_supply,#company_purchasing,#company_cooperate").linkbutton("enable");
+			}
+			company.onLoadSuccess = function(data) {
+		        $("#company_edit,#company_del,#company_product,#company_supply,#company_purchasing,#company_cooperate").linkbutton("disable");
+		    };
+			
+			company.onLoadSuccess = function(data) {
+				$(".ccc").each(function(i, item) {
+					var companyId = $(item).attr("data-id");
+					$(item).switchbutton({
+						checked : Boolean(Number(item.value)),
+						onText : '启用',
+						offText : '禁用',
+						onChange : function(checked) {
+							Fm.ajax("${base}/admin/company/company_status_set.do", {
+								enabled : checked,
+								companyId : companyId
+							});
+						}
+					})
+				});
+				$("#company_edit,#company_del").linkbutton("disable");
+			};
+			company.LoadDataGrid();
+			$('#search').linkbutton({
+				iconCls : 'icon-search',
+				onClick : function() {
+					myparams.compName = $("#compName").val();
+					company.search(myparams);
+				}
+			});
+			$('#export').linkbutton({
+				iconCls : 'icon-export',
+				onClick : function() {
+					var urlStr = top.Dg.initUrl("company_export.do", myparams);
+					window.location.href = urlStr;
+				}
+			});
+		});
+		function companyset(companyId, companyName) {
+			$("#companyset").panel({
+				title : "单位名：<span style=\"color:red\">" + companyName + "</span>",
+				href : "${base}/admin/company/company_settion_turn.do",
+				queryParams : {
+					companyId : companyId
+				}
+			});
+		}
+		function show() {
+			var viewer = new Viewer(document.getElementById('imgdiv'), {
+				url : 'data-original'
+			});
+			viewer.show();
+		}
+	</script>
+	<div fit="true" class="easyui-layout">
+		<div region="north" title="查询条件" style="height: 70px;">
+			<div class="pannel_search">
+				单位名称：<input type="text" class="easyui-textbox" id="compName" name="compName" /> <a href="javascript:;" id="search">查询</a> <a href="javascript:;" id="export">导出</a>
+			</div>
+		</div>
+		<div id="imgdiv" region="center" style="overflow: hidden; border: none;">
+			<table fit="true" namespace="company" id="company" class="datagrid"></table>
+		</div>
+		<!-- <div region="east" split="true" id="companyset" title="单位设置" style="overflow: hidden; border-bottom: none; width: 200px;"></div> -->
+	</div>
+</body>

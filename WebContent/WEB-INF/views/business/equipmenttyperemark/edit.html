@@ -1,0 +1,22 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll"/>
+</head>
+<body>
+<@p.valid id="equipmenttyperemark" action="equipmenttyperemark_edit_sub.do" class="layui-form" layui=true>
+ <@p.legend text="${(languaged !='')?string('Hint information','提示信息')}"/> 
+ <input type="hidden" name="equipmenttyperemarkId" value="${equipmenttyperemark.equipmenttyperemarkId}" />
+         <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('equipmentTypeRemarkNameZn','设备类型备注中文')}"  datarule="required;" datamsgrequired="${(required)!''}" name="equipmentTypeRemarkNameZn" value="${equipmenttyperemark.equipmentTypeRemarkNameZn}"/>    
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('equipmentTypeRemarkNameEn','设备类型备注英文')}"  datarule="required;" datamsgrequired="${(required)!''}" name="equipmentTypeRemarkNameEn" value="${equipmenttyperemark.equipmentTypeRemarkNameEn}"/>    
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('indexs','排序')}"  datarule="required;" datamsgrequired="${(required)!''}" name="indexs" value="${equipmenttyperemark.indexs}"/>    
+	     </div>
+</@p.valid>
+</body>
+</html>

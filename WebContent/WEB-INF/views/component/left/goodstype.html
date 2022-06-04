@@ -1,0 +1,64 @@
+<ul id="mytree" class="ztree"></ul>
+<div id="GoodsType" class="easyui-menu" style="width: 120px;">
+	<div id="remove" onclick="remove()" data-options="iconCls:'icon-remove'">删除</div>
+	<div id="edit" onclick="edit()" data-options="iconCls:'icon-edit'">修改</div>
+</div>
+<script type="text/javascript">
+	var tree;
+	$(function() {
+		tree = new Tree();
+		tree.queryParams = myparams;
+		tree.url = "${base}/admin/componet/select_goodstype_data.do?type=${type}";
+		tree.initTree("mytree");
+		$('#typeadd').linkbutton({
+			iconCls : 'icon-add',
+			onClick : function() {
+				top.Dg.open2({
+					title : "添加大类型",
+					h : "70%",
+					w : "45%",
+					url : "${base}/admin/goodstype/goodstype_add_turn.do?level=1",
+					params : myparams,
+					callback : function(data) {
+						tree.initTree("mytree");
+					}
+				});
+			}
+		});
+		tree.onClick = function(node) {
+			goodstypeId=node.id;
+			myparams.goodstypeId = node.id;
+			myparams.nodeCode = node.code;
+			$("#goodstype_add").linkbutton("enable");
+			var isLeaf = tree.isLeaf(node);
+			tree_click(node, isLeaf);
+		};
+	});
+	function remove() {
+		var node = tree.getNode();
+		tree.remove({
+			msg : "确定删除该节点吗?",
+			url : "${base}/admin/goodstype/goodstype_del_sub.do",
+			params : {
+				id : node.id
+			}
+		});
+	}
+
+	function edit() {
+		var node = tree.getNode();
+		top.Dg.open2({
+			title : "修改大类型",
+			h : "70%",
+			w : "45%",
+			url : "${base}/admin/goodstype/goodstype_edit_turn.do?level=1",
+			params : {
+				goodstypeId : node.id
+			},
+			callback : function(data) {
+				tree.initTree("mytree");
+			}
+		});
+	}
+</script>
+</body>

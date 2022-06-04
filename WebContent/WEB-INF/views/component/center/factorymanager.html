@@ -1,0 +1,134 @@
+<body style="overflow: hidden">
+	<script type="text/javascript">
+		var userinfo;
+		$(function() {
+			userinfo = new Dd("userinfo");
+			userinfo.url = "select_factorymanager_data.do";
+			userinfo.colM = [ [
+       		{
+       		    title : "主键",
+       		    field : "accountInfoId",
+       		    alias : "a",
+       		    hidden:true,
+       		    width : 100,
+       		    align : "center"
+       		  },{
+       		      title : "头像",
+       		      field : "userhead",
+       		      alias : "a",
+       		   hidden:true,
+       		      width : 100,
+       		      align : "center"
+       		    } ,{						
+       		     title : "姓名",
+       		     field : "userName",
+       		     alias : "a",
+       		     width : 100,
+       		     align : "center"
+       		   }/* , {
+       		     title : "昵称",
+       		     field : "nickName",
+       		     alias : "u",
+       		     width : 120,
+       		     hidden:true,
+       		     align : "center"
+       		   }  */,{
+       	         title : "性别",
+       	         field : "sex",
+       	         alias : "a",
+       	         width : 50,
+       	         align : "center",
+       	         formatter : function(value, row, index) {
+       	 			return Fm.formatter({
+       	 				"0" : "女",
+       	 				"1" : "男",
+       	 				"":"男"
+       	 			}, value);
+       	  		}
+       	        } ,{
+       	          title : "年龄",
+       	          field : "age",
+       	          alias : "a",
+       	          width : 50,
+       	       	  hidden:true,
+       	          align : "center"
+       	        },{
+       	        title : "身份信息ID",
+       	        field : "identityId",
+       	        alias : "a",
+       	        hidden:true,
+       	        width : 100,
+       	        align : "center"
+       	      } ,{
+  	            title : "联系电话",
+  	            field : "mobile",
+  	            alias : "u", 
+  	            width : 100,
+  	            align : "center"
+       	      } ,{
+       	        title : "QQ",
+       	        field : "qq",
+       	        alias : "a",
+       	        hidden:true,
+       	        width : 100,
+       	        align : "center"
+       	      },{
+       	        title : "签名",
+       	        field : "motto",
+       	        alias : "a",
+       	        width : 200,
+       	        hidden:true,
+       	        align : "center"
+       	      } ,{
+       	        title : "生日",
+       	        field : "birthday",
+       	        alias : "a",
+       	        hidden:true,
+       	        width : 100,
+       	        align : "center"
+       	      } ,{
+       	        title : "个人二维码",
+       	        field : "qrode",
+       	        alias : "a",
+       	        hidden:true,
+       	        width : 100,
+       	        align : "center"
+       	      } ,{
+       	        title : "创建日期",
+       	        field : "createDate",
+       	        alias : "a",
+       	        width : 100,
+       	        align : "center"
+       	      }] ];
+			userinfo.param = myparams;
+			userinfo.onClickRow = function(rowIndex, rowData) {
+				//alert(func.setTextBox);
+				func.setTextBox(rowData);
+			}
+			userinfo.onLoadSuccess = function(data) {
+
+			};
+			userinfo.LoadDataGrid();
+			$('#search').linkbutton({
+				iconCls : 'icon-search',
+				onClick : function() {
+					userinfo.search(myparams);
+				}
+			});
+		});
+		function nameSearch(){
+			myparams.userName = $("#userName").val();
+	   	}
+	</script>
+	<div fit="true" class="easyui-layout">
+		<div region="north" style="height: 40px;">
+			<div class="pannel_search">
+				姓名：<input type="text" class="easyui-textbox" id="userName"/> 
+				<a href="javascript:;" id="search" onClick="nameSearch()";>查询&nbsp;</a>
+			</div>
+		</div>
+		<div region="center" style="overflow: hidden; border: none;">
+			<table fit="true" namespace="component" id="userinfo" class="datagrid"></table>
+		</div>
+	</div>
+</body>

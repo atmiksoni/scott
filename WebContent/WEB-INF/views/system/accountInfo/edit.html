@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll,EasyUI,webuploader"/>
+</head>
+<body>
+	<@p.valid id="accountinfo" action="accountinfo_editdriver_sub.do" class="layui-form" layui=true>
+	<fieldset class="layui-elem-field layui-field-title">
+		<legend>编辑用户信息</legend>
+	</fieldset>
+	<input type="hidden" name="accountInfoId" value="${accountInfo.accountInfoId}" />
+	<input type="hidden" name="carId" value="${car.carId!accountInfo.accountInfoId}" />
+	<input type="hidden" name="identityId" value="${identity.identityId}" />
+
+	<div class="layui-form-item">
+		<div class="layui-inline">
+			<label class="layui-form-label">姓名：</label>
+			<div class="layui-input-inline">
+				<input id="userName" name="userName" value="${accountInfo.userName}" type="text" data-rule="required;length[2~10]" class="layui-input">
+			</div>
+		</div>
+
+		<div class="layui-inline">
+			<label class="layui-form-label">身份证号：</label>
+			<div class="layui-input-inline">
+				<input id="cardNo" name="cardNo" value="${identity.cardNo}" type="text" data-rule="required;" class="layui-input">
+			</div>
+		</div>
+	</div>
+	
+	<div class="layui-form-item">
+		<div class="layui-inline">
+			<label class="layui-form-label">年龄：</label>
+			<div class="layui-input-inline">
+				<input id="age" name="age" type="text"  value="${accountInfo.age}"  data-rule="required;length[0~3]" class="layui-input">
+			</div>
+		</div>
+		<div class="layui-inline">
+			<label class="layui-form-label">手机：</label>
+			<div class="layui-input-inline">
+				<input id="telephone" name="telephone" value="${accountInfo.telephone}" type="text" data-rule="required;mobile;remote[${base}/admin/user/user_check_sub.do?accountId=${accountInfo.accountInfoId}]" class="layui-input">
+			</div>
+		</div>
+	</div>
+	</@p.valid>
+	<script type="text/javascript">
+		$(function() {
+			/**下面是图片上传*/
+			niceScroll("body");
+
+			var frontCard = new Upload({
+				filePicker : "frontCardPre",
+				fileList : "frontCardPrePic",
+				fileVal : "frontCard_file",
+				params : {
+					businessKey : "30",
+					subClassName : "slider"
+				},
+				server : "${base}/admin/identity/identity_image_upload.do"
+			});
+			frontCard.uploadSuccess = function(file, data) {
+				$('#frontCard').val(data.filePath);
+			}
+
+			var backCard = new Upload({
+				filePicker : "backCardPre",
+				fileList : "backCardPrePic",
+				fileVal : "backCard_file",
+				params : {
+					businessKey : "30",
+					subClassName : "slider"
+				},
+				server : "${base}/admin/identity/identity_image_upload.do"
+			});
+			backCard.uploadSuccess = function(file, data) {
+				$('#backCard').val(data.filePath);
+			}
+
+			var handCard = new Upload({
+				filePicker : "handCardPre",
+				fileList : "handCardPrePic",
+				fileVal : "handCard_file",
+				params : {
+					businessKey : "30",
+					subClassName : "slider"
+				},
+				server : "${base}/admin/identity/identity_image_upload.do"
+			});
+			handCard.uploadSuccess = function(file, data) {
+				$('#handCard').val(data.filePath);
+			}
+
+			var travelCertificate = new Upload({
+				filePicker : "travelCertificatePre",
+				fileList : "travelCertificatePrePic",
+				fileVal : "travelCertificate_file",
+				params : {
+					businessKey : "30",
+					subClassName : "slider"
+				},
+				server : "${base}/admin/identity/identity_image_upload.do"
+			});
+			travelCertificate.uploadSuccess = function(file, data) {
+				$('#travelCertificate').val(data.filePath);
+			}
+
+			var travelCertificateAgain = new Upload({
+				filePicker : "travelCertificateAgainPre",
+				fileList : "travelCertificateAgainPrePic",
+				fileVal : "travelCertificateAgain_file",
+				params : {
+					businessKey : "30",
+					subClassName : "slider"
+				},
+				server : "${base}/admin/identity/identity_image_upload.do"
+			});
+			travelCertificateAgain.uploadSuccess = function(file, data) {
+				$('#travelCertificateAgain').val(data.filePath);
+			}
+
+			var driverLicense = new Upload({
+				filePicker : "driverLicensePre",
+				fileList : "driverLicensePrePic",
+				fileVal : "driverLicense_file",
+				params : {
+					businessKey : "30",
+					subClassName : "slider"
+				},
+				server : "${base}/admin/identity/identity_image_upload.do"
+			});
+			driverLicense.uploadSuccess = function(file, data) {
+				$('#driverLicense').val(data.filePath);
+			}
+
+			var operationCertificate = new Upload({
+				filePicker : "operationCertificatePre",
+				fileList : "operationCertificatePrePic",
+				fileVal : "operationCertificate_file",
+				params : {
+					businessKey : "30",
+					subClassName : "slider"
+				},
+				server : "${base}/admin/identity/identity_image_upload.do"
+			});
+			operationCertificate.uploadSuccess = function(file, data) {
+				$('#operationCertificate').val(data.filePath);
+			}
+
+			var opt = new Upload({
+				filePicker : "optPre",
+				fileList : "optPrePic",
+				fileVal : "opt_file",
+				params : {
+					businessKey : "30",
+					subClassName : "slider"
+				},
+				server : "${base}/admin/identity/identity_image_upload.do"
+			});
+			opt.uploadSuccess = function(file, data) {
+				$('#opt').val(data.filePath);
+			}
+
+			var operationCertificateAgain = new Upload({
+				filePicker : "operationCertificateAgainPre",
+				fileList : "operationCertificateAgainPrePic",
+				fileVal : "operationCertificateAgain_file",
+				params : {
+					businessKey : "30",
+					subClassName : "slider"
+				},
+				server : "${base}/admin/identity/identity_image_upload.do"
+			});
+			operationCertificateAgain.uploadSuccess = function(file, data) {
+				$('#operationCertificateAgain').val(data.filePath);
+			}
+			
+			var qualification = new Upload({
+				filePicker : "qualificationPre",
+				fileList : "qualificationPrePic",
+				fileVal : "qualification_file",
+				params : {
+					businessKey : "30",
+					subClassName : "slider"
+				},
+				server : "${base}/admin/identity/identity_image_upload.do"
+			});
+			qualification.uploadSuccess = function(file, data) {
+				$('#qualification').val(data.filePath);
+			}
+		});
+	</script>
+</body>
+</html>

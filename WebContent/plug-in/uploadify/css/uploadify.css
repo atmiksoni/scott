@@ -1,0 +1,134 @@
+/*
+Uploadify v3.0.0
+Copyright (c) 2010 Ronnie Garcia
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+*/
+
+.uploadifyButton {
+	background-color: #505050;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	color: #FFF;
+	font: 12px Arial, Helvetica, sans-serif;
+	padding: 8px 0;
+	text-align: center;
+	width: 100%;
+}
+.uploadify:hover .uploadifyButton {
+	background-color: #808080;
+}
+.uploadifyQueueItem {
+	background-color: #F5F5F5;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	margin-top: 5px;
+	max-width: 350px;
+	padding: 10px;
+}
+.uploadifyError {
+	background-color: #FDE5DD !important;
+}
+.uploadifyQueueItem .cancel {
+	float: right;
+}
+.uploadifyQueue .completed {
+	background-color: #E5E5E5;
+}
+.uploadifyProgress {
+	background-color: #E5E5E5;
+	margin-top: 10px;
+	width: 100%;
+}
+.uploadifyProgressBar {
+	background-color: #0099FF;
+	height: 3px;
+	width: 1px;
+}
+html,body,div,p,fieldset,input,button,input,h1,h2,h3,fieldset,form{margin:0;padding:0;}
+fieldset,img{border:0;}
+legend{display:none;}
+em{font-style:normal;}
+body{text-align:left;font:13px/2 \5FAE\8F6F\96C5\9ED1,Tahoma,Helvetica,Arial,\5B8B\4F53,sans-serif;color:#707070;background-color:#FFFFFF}
+.t_ipt,.btn,.point,.t_file,.uploadifyButton,.uploadifyError,.uploadifyQueue .completed,.uploadifyQueueItem,.file_box_head,.file_box_bom,.op_del{background:url(../images/bg.png) -999em -999em no-repeat;}
+.toclose,.btn{text-indent:-999em;overflow:hidden;display:block;}
+.t_ipt{overflow:hidden;width:290px;height:26px;line-height:26px;padding:4px 13px 4px 7px;font-size:14px;vertical-align:middle;margin-right:8px;float:left;background-position:0 0}
+.t_ipt input{border:none;background:none;width:292px;height:24px;line-height:24px;color:#7D7D7D}
+.btn,.t_ipt input,input,.uploadifyButton {border:none;font-family:\5FAE\8F6F\96C5\9ED1,Tahoma,Helvetica,Arial,\5B8B\4F53,sans-serif;}
+.btn,#bt input{cursor:pointer;color:#353535}
+.fbd{opacity:0.6; filter:alpha(opacity=60);cursor:default;}
+.btn{width:151px;height:46px;background-position:-110px -40px;font-size:14px}
+.btn_can{background-position:-265px -40px}
+.cont{width:495px;margin:0 auto;padding-left:10px;}
+.header{margin-top:128px}
+.header .cont{position:relative;height:78px;padding-left:2px;width:423px;background:url(../images/t.png) no-repeat 0 6px;}
+.header h2{position:absolute;top:0;font-size:14px;color:#898989}
+.header h1{padding-top:18px;font-size:24px;color:#323232;}
+.main{border-top:1px solid #FFFFFF}
+.main .cont{position:relative;top:-1px;border-top:1px solid #FFFFFF}
+.main h3{font-size:13px;padding-top:13px;color:#353535;font-size:14px}
+.point,#text{display:block;overflow:hidden;width:240px;clear:both;height:24px;line-height:24px;font-size:14px;margin-top:4px;background-position:-99px -207px;color:#CA8A00}
+.point_err{padding-left:25px;background-position:-315px 0;color:#B42323}
+.point_ok{background-position:-99px -255px;color:#49A300}
+.uploadify{margin-bottom:8px;}
+.upbox{position:relative;width:389px;height:34px}
+.demo-box{position:relative}
+.info_box{height:94px}
+.t_file,.fileName{padding-left:25px;}
+.t_file_uping{background:url(../images/loading.gif) 0 50% no-repeat;margin-top:31px}
+.t_file_ok{background-position:-315px -24px}
+.data{margin-left:8px;color:#2874FF;font-weight:normal;}
+.type-file-file{position:absolute;top:0;right:0;*right:-4px;height:34px;line-height:34px;filter:alpha(opacity:0);opacity:0;width:389px}
+.upbox2{width:71px;height:128px}
+#bt{display:block;}
+.uploadify{float:left;}
+.uploadifyQueueItem{clear:both}
+#text{position:absolute;top:42px;width:auto;}
+.fileName{display:inline}
+
+.c_over{color:#49A300}
+.c_uping{color:#2874FF}
+#file_upload{margin:5px;height:34px!important;}
+#file_upload_button{display:block;width:105px;height:39px;line-height:35px;font-size:14px;background-position:0 -40px;text-indent:18px;color:#353535;padding:0}
+#file_upload_queue{width:466px;margin:0 0 10px 2px;clear:both;}
+.file_box_head{height:39px;background-position:0 -109px;background-color:#F3F3F3;width:484px}
+.file_box_head h3{padding-top:0;line-height:39px;text-indent:12px;font-size:14px;font-weight:normal;color:#707070}
+.uploadifyQueueItem{position:relative;height:28px;width:466px;max-width:472px;padding:5px 0;margin:0;border-bottom:1px solid #EEEEEE;border-radius:0;text-shadow:1px 1px 0 #E7E7E7}
+.uploadifyProgress{display:none}
+.fileName{position:absolute;top:10px;left:2px;width:250px;height:18px;overflow:hidden;display:block;padding-left:8px;font:13px \5FAE\8F6F\96C5\9ED1,Tahoma,Helvetica,Arial,\5B8B\4F53,sans-serif}
+.data{position:absolute;top:6px;left:310px;width:64px;text-align:center;font-size:13px}
+.cancel{position:absolute;top:6px;_top:8px;left:397px;font-size:13px}
+.cancel img{vertical-align:middle;margin-right:4px}
+.cancel a{background-position:-462px -69px;color:#707070;text-decoration:none}
+.cancel a:hover{color:#B42323}
+
+.jscroll-e{background-color:#F9F9F9!important}
+
+.file_box{width:484px;margin-bottom:10px;clear:both;}
+.file_box_cont{width:482px;position:relative;height:50px;overflow:hidden;border-top-width:0;border-bottom-width:0;background-color:#FFFFFF;padding-top:5px;border-right:1px solid #D9D9D9;border-left:1px solid #D9D9D9;border-top-width:0}
+.file_list{width:466px}
+.file_box_bom{display:block;height:10px;overflow:hidden;background-position:0 -95px;margin-bottom:6px}
+.jspTrack{background:#EFEFEF!important}
+.jspVerticalBar{height:159px!important;width:7px!important;background:#EFEFEF!important;right:3px!important;top:3px!important;z-index:4}
+.jspDrag{border:none!important;display:block;width:7px!important;overflow:hidden;left:-1px!important;background:#EFEFEF url(../images/bg_drag.png) repeat-y!important;border:1px solid #D1D1D1!important}
+.jspDragTop{width:3px;height:7px;background:#D1D1D1 url(../images/drag.png);position:absolute;top:50%;left:2px;margin-top:-3px!important}
+
+#error_msg{margin-bottom:6px}

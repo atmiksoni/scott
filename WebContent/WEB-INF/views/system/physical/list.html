@@ -1,0 +1,132 @@
+<body style="overflow: hidden">
+ <script type="text/javascript">
+      var physical;
+    $(function() {
+      physical = new Dd("physical");
+      physical.url = "physical_list_data.do?accountInfoId=${accountInfoId}";
+      physical.title = "体检主信息";
+      physical.colM = [ [ {
+        title : "主键",
+        field : "physicalId",
+        alias : "p",
+        hidden:true
+      } ,{
+        title : "体检标题",
+        field : "physicalTitle",
+        alias : "p",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "用户ID",
+        field : "accountInfoId",
+        alias : "p",
+        width : 100,
+        align : "center",
+        hidden:true
+      } ,{
+        title : "体检编号",
+        field : "physicalNo",
+        alias : "p",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "医院ID",
+        field : "hospitalId",
+        alias : "p",
+        width : 100,
+        align : "center",
+        hidden:true
+      } ,{
+        title : "体检原件扫描图片",
+        field : "imgs",
+        alias : "p",
+        width : 100,
+        align : "center",
+        hidden:true
+      } ,{
+        title : "创建时间",
+        field : "createDate",
+        alias : "p",
+        width : 100,
+        align : "center"
+      } ] ];
+
+      physical.toolbar = [  {
+        id : "physical_add",
+        text : "详情",
+        iconCls : "icon-add",
+        handler : function() {
+          physical.open2({
+            title : "体检报告详情",
+            h : "70%",
+			w : "60%",
+			btn:"",
+            url : "../physicaldetails/physicaldetails_details_turn.do",
+            params : {
+                physicalId : physical.rowKey
+            }
+          });
+        }
+      }/*, {
+        id : "physical_edit",
+        text : "修改",
+        iconCls : "icon-edit",
+        disabled : true,
+        handler : function() {
+          physical.updata2({
+            title : "修改体检主",
+            h : "70%",
+			w : "45%",
+            url : "physical_edit_turn.do",
+            params : {
+                physicalId : physical.rowKey
+            }
+		  });
+        }
+      }, {
+        id : "physical_del",
+        text : "删除体检主",
+        iconCls : "icon-remove",
+        disabled : true,
+        handler : function() {
+          physical.remove({
+             url : "physical_del_sub.do",
+             params : {
+                physicalId : physical.rowKey
+             }
+		  });
+        }
+      } */ ];
+      physical.param = myparams;
+      physical.onClickRow = function(rowIndex, rowData) {
+    	  //physicaldetails.LoadDataGrid();
+       $("#physical_edit,#physical_del").linkbutton("enable");
+      }
+      physical.onLoadSuccess = function(data) {
+       $("#physical_edit,#physical_del").linkbutton("disable");
+      };
+      physical.LoadDataGrid();
+      $('#search').linkbutton({
+        iconCls : 'icon-search',
+        onClick : function() {
+          physical.search(myparams);
+        }
+      });
+    });
+  </script>
+ <div fit="true" class="easyui-layout">		
+  <div region="north" title="查询条件" style="height: 70px;">
+   <div class="pannel_search">
+       <a href="javascript:;" id="search">查询</a>
+   </div>
+  </div>
+  <div region="center" style="overflow: hidden;border: none;">
+   <table fit="true" namespace="physical" id="physical" class="datagrid"></table>
+  </div>
+<!-- 	 <div region="east" collapsible="false" title="" class="easyui-layout" split="true" minWidth="700" maxWidth="700"
+			style="overflow: hidden; border-bottom: none">
+			<div region="north" collapsible="false" split="true" href="${base}/admin/physicaldetails/physicaldetails_list_data.do" minWidth="700"
+				maxWidth="700" title="信息" style="height: 100%; overflow: hidden; border-bottom: none"></div>
+		</div>  --> 
+ </div>
+</body>

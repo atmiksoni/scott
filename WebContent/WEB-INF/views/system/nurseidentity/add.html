@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll"/>
+</head>
+<body>
+<@p.valid id="nurseidentity" action="nurseidentity_add_sub.do" class="layui-form" layui=true>
+ <@p.legend text="提示信息"/> 
+         <div class="layui-form-item">
+		   <@p.layinput label="主键ID"  datarule="required;" name="nurseInentityId" />
+	     </div>
+         <div class="layui-form-item">
+		   <@p.layinput label="用户ID"  datarule="required;" name="accountInfoId" />
+	     </div>
+         <div class="layui-form-item">
+		   <@p.layinput label="护士等级"  datarule="required;" name="nurseLevel" />
+	     </div>
+         <div class="layui-form-item">
+		   <@p.layinput label="医院名称"  datarule="required;" name="hospitalName" />
+	     </div>
+         <div class="layui-form-item">
+		   <@p.layinput label="科室ID"  datarule="required;" name="departmentId" />
+	     </div>
+         <div class="layui-form-item">
+		   <@p.layinput label="资格证"  datarule="required;" name="qualificationCertificate" />
+	     </div>
+         <div class="layui-form-item">
+		   <@p.layinput label="资格证编号"  datarule="required;" name="qualificationCertificateNo" />
+	     </div>
+         <div class="layui-form-item">
+		   <@p.layinput label="执业证"  datarule="required;" name="practiceCertificate" />
+	     </div>
+         <div class="layui-form-item">
+		   <@p.layinput label="执业证编号"  datarule="required;" name="practiceCertificateNo" />
+	     </div>
+         <div class="layui-form-item">
+		   <@p.layinput label="是否通过"  datarule="required;" name="isPass" />
+	     </div>
+         <div class="layui-form-item">
+		   <@p.layinput label="失败原因"  datarule="required;" name="reason" />
+	     </div>
+</@p.valid>
+</body>
+</html>

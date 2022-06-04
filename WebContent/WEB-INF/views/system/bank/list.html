@@ -1,0 +1,112 @@
+<body style="overflow: hidden">
+	<script type="text/javascript">
+		var bank;
+		$(function() {
+			bank = new Dd("bank");
+			bank.url = "bank_list_data.do";
+			bank.title = "信息";
+			bank.colM = [ [ {
+				title : "主键",
+				field : "bankId",
+				alias : "b",
+				hidden : true
+			}, {
+				title : "银行名称",
+				field : "bankName",
+				alias : "b",
+				width : 100,
+				align : "center"
+			}, {
+				title : "排序号",
+				field : "indexs",
+				alias : "b",
+				width : 100,
+				align : "center"
+			}, {
+				title : "银行卡背景图",
+				field : "iconUrl",
+				alias : "b",
+				width : 100,
+				align : "center",
+				formatter : function(value, row, index) {
+					return '<img  align="center" height="100px;" src="../../' + row.iconUrl
+							+ '" />';
+				}
+			}, {
+				title : "创建时间",
+				field : "createDate",
+				alias : "b",
+				width : 100,
+				align : "center"
+			} ] ];
+
+			bank.toolbar = [ {
+				id : "bank_add",
+				text : "添加",
+				iconCls : "icon-add",
+				handler : function() {
+					bank.open2({
+						title : "添加",
+						h : "70%",
+						w : "45%",
+						url : "bank_add_turn.do",
+						params : myparams
+					});
+				}
+			}, {
+				id : "bank_edit",
+				text : "修改",
+				iconCls : "icon-edit",
+				disabled : true,
+				handler : function() {
+					bank.updata2({
+						title : "修改",
+						h : "70%",
+						w : "45%",
+						url : "bank_edit_turn.do",
+						params : {
+							bankId : bank.rowKey
+						}
+					});
+				}
+			}, {
+				id : "bank_del",
+				text : "删除",
+				iconCls : "icon-remove",
+				disabled : true,
+				handler : function() {
+					bank.remove({
+						url : "bank_del_sub.do",
+						params : {
+							bankId : bank.rowKey
+						}
+					});
+				}
+			} ];
+			bank.param = myparams;
+			bank.onClickRow = function(rowIndex, rowData) {
+				$("#bank_edit,#bank_del").linkbutton("enable");
+			}
+			bank.onLoadSuccess = function(data) {
+				$("#bank_edit,#bank_del").linkbutton("disable");
+			};
+			bank.LoadDataGrid();
+			$('#search').linkbutton({
+				iconCls : 'icon-search',
+				onClick : function() {
+					bank.search(myparams);
+				}
+			});
+		});
+	</script>
+	<div fit="true" class="easyui-layout">
+		<div region="north" title="查询条件" style="height: 70px;">
+			<div class="pannel_search">
+				<a href="javascript:;" id="search">查询</a>
+			</div>
+		</div>
+		<div region="center" style="overflow: hidden; border: none;">
+			<table fit="true" namespace="bank" id="bank" class="datagrid"></table>
+		</div>
+	</div>
+</body>

@@ -1,0 +1,98 @@
+<body style="overflow: hidden">
+	<script type="text/javascript">
+		var about;
+		$(function() {
+			about = new Dd("about");
+			about.url = "about_list_data.do";
+			about.title = "信息";
+			about.colM = [ [ {
+				title : "主键",
+				field : "aboutId",
+				alias : "a",
+				hidden : true,
+				width : 100,
+				align : "center"
+			}, {
+				title : "标题",
+				field : "title",
+				alias : "a",
+				width : 100,
+				align : "center"
+			}, {
+				title : "排序号",
+				field : "indexs",
+				alias : "a",
+				width : 100,
+				align : "center"
+			}, {
+				title : "创建日期",
+				field : "createDate",
+				alias : "a",
+				width : 100,
+				align : "center"
+			} ] ];
+
+			about.toolbar = [ {
+				id : "about_add",
+				text : "添加",
+				iconCls : "icon-add",
+				handler : function() {
+					about.open2({
+						title : "添加",
+						h : "67%",
+						w : "43%",
+						url : "about_add_turn.do"
+					});
+				}
+			}, {
+				id : "about_edit",
+				text : "修改",
+				iconCls : "icon-edit",
+				disabled : true,
+				handler : function() {
+					about.updata2({
+						title : "修改",
+						h : "67%",
+						w : "43%",
+						url : "about_edit_turn.do",
+						params : {
+							aboutId : about.rowKey
+						}
+					});
+				}
+			}, {
+				id : "about_del",
+				text : "删除",
+				iconCls : "icon-remove",
+				disabled : true,
+				handler : function() {
+					about.remove({
+						url : "about_del_sub.do",
+						params : {
+							aboutId : about.rowKey
+						}
+					});
+				}
+			} ];
+			about.param = myparams;
+			about.onClickRow = function(rowIndex, rowData) {
+				$("#about_edit,#about_del").linkbutton("enable");
+			}
+			about.onLoadSuccess = function(data) {
+				$("#about_edit,#about_del").linkbutton("disable");
+			};
+			about.LoadDataGrid();
+			$('#search').linkbutton({
+				iconCls : 'icon-save',
+				onClick : function() {
+					about.search(myparams);
+				}
+			});
+		});
+	</script>
+	<div fit="true" class="easyui-layout">
+		<div region="center" style="overflow: hidden; border: none;">
+			<table fit="true" namespace="about" id="about" class="datagrid"></table>
+		</div>
+	</div>
+</body>

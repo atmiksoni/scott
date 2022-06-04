@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context" xsi:schemaLocation="http://www.springframework.org/schema/beans
+	 http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+	 http://www.springframework.org/schema/context
+     http://www.springframework.org/schema/context/spring-context.xsd">
+	<!-- <bean id="jobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass" value="com.flyme.job.PunishJob">
+		</property>
+		<property name="durability" value="true"></property>
+		<property name="jobDataAsMap">非常重要，用来向JobDetail传参
+			<map>
+				<entry key="punishService" value-ref="punishService" />
+				<entry key="timeout" value="50" />
+			</map>
+		</property>
+	</bean>
+
+	每隔5秒执行一次：*/5 * * * * ? 每隔1分钟执行一次：0 */1 * * * ? 每天23点执行一次：0 0 23 * * ? 每天凌晨1点执行一次：0 0 1 * * ? 每月1号凌晨1点执行一次：0 0 1 1 * ? 每月最后一天23点执行一次：0 0 23 L * ? 每周星期天凌晨1点实行一次：0 0 1 ? * L 在26分、29分、33分执行一次：0 26,29,33 * * * ? 每天的0点、13点、18点、21点都执行一次：0 0 0,13,18,21 * * ?
+	配置任务高度的的时间/周期
+	<bean id="billsCheckJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="jobDetail"></property>
+		   <property name="cronExpression" value="0 0 1 * * ?"></property>  
+		   <property name="cronExpression" value="0 */1 * * * ?"></property>
+		<property name="startDelay" value="5000"></property>
+	</bean>
+
+	<bean id="schedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="billsCheckJobTrigger" />
+			</list>
+		</property>
+	</bean> -->
+</beans>

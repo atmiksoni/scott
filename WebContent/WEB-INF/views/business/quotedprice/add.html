@@ -1,0 +1,18 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll"/>
+</head>
+<body>
+<@p.valid id="quotedprice" action="quotedprice_add_sub.do" class="layui-form" layui=true>
+ <@p.legend text="${(languaged !='')?string('add','添加货物信息')}"/> 
+         <div class="layui-form-item"> 
+           <@p.layinput label="${(languaged !='')?string('commodity','货物名')}"  datarule="required;" datamsgrequired="${(required)!''}" name="commodity" />
+	     </div>
+         <div class="layui-form-item"> 
+           <@p.layinput label="${(languaged !='')?string('price','价格')}"  datarule="required;" datamsgrequired="${(required)!''}" name="price" />
+	     </div>
+</@p.valid>
+</body>
+</html>

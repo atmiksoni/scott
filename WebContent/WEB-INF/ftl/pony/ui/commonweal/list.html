@@ -1,0 +1,170 @@
+<body style="overflow: hidden">
+<script src="/plug-in/viewer/js/viewer.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="/plug-in/viewer/css/viewer.min.css" />
+ <script type="text/javascript">
+      var commonweal;
+    $(function() {
+      commonweal = new Dd("commonweal");
+      commonweal.url = "commonweal_list_data.do";
+      commonweal.title = "康齿公益信息";
+      commonweal.colM = [ [ /* {
+        field : "ck",
+        checkbox : true,
+        align : "center"
+      }, */ {
+        title : "主键",
+        field : "commonwealId",
+        alias : "c",
+        hidden:true
+      } ,{
+        title : "标题",
+        field : "title",
+        alias : "c",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "图片",
+        field : "img",
+        alias : "c",
+        width : 100,
+        align : "center",
+        formatter : function(value, row, index) {
+			return '<img onclick="show()"  width="80px;" height="50px;" src="../../' + row.img + '" />';
+		}
+      } ,{
+        title : "详细介绍",
+        field : "content",
+        alias : "c",
+        width : 100,
+        hidden:true,
+        align : "center"
+      } ,{
+        title : "是否发布",
+        field : "status",
+        alias : "c",
+        width : 100,
+        align : "center",
+        formatter : function(value, rows, index) {
+			var href = "";
+			href += "<input style='width:50px;height:18px' class='ccc1' data-id='"+rows.commonwealId+"' value='"+rows.status+"'>";
+			return href;
+		}
+      } ,{
+        title : "排序",
+        field : "indexs",
+        alias : "c",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "备注",
+        field : "remark",
+        alias : "c",
+        width : 100,
+        align : "center"
+      } ,{
+          title : "创建时间",
+          field : "createDate",
+          alias : "c",
+          width : 100,
+          align : "center"
+        }] ];
+
+      commonweal.toolbar = [ {
+        id : "commonweal_add",
+        text : "添加",
+        iconCls : "icon-add",
+        handler : function() {
+          commonweal.open2({
+            title : "添加康齿公益",
+            h : "70%",
+			w : "45%",
+            url : "commonweal_add_turn.do",
+            params : myparams
+          });
+        }
+      }, {
+        id : "commonweal_edit",
+        text : "修改",
+        iconCls : "icon-edit",
+        disabled : true,
+        handler : function() {
+          commonweal.updata2({
+            title : "修改康齿公益",
+            h : "70%",
+			w : "45%",
+            url : "commonweal_edit_turn.do",
+            params : {
+                commonwealId : commonweal.rowKey
+            }
+		  });
+        }
+      }, {
+        id : "commonweal_del",
+        text : "删除",
+        iconCls : "icon-remove",
+        disabled : true,
+        handler : function() {
+          commonweal.remove({
+             url : "commonweal_del_sub.do",
+             params : {
+                commonwealId : commonweal.rowKey
+             }
+		  });
+        }
+      } ];
+      commonweal.param = myparams;
+      commonweal.onClickRow = function(rowIndex, rowData) {
+       $("#commonweal_edit,#commonweal_del").linkbutton("enable");
+      }
+      commonweal.onLoadSuccess = function(data) {
+    	  
+    	  $(".ccc1").each(function(i, item) {
+				var commonwealId = $(item).attr("data-id");
+				$(item).switchbutton({
+					checked : Boolean(Number(item.value)),
+					onText : '是',
+					offText : '否',
+					onChange : function(checked) {
+						Fm.ajax("${base}/admin/commonweal/sendStatus_edit_sub.do", {
+							sendStatus1 : checked,
+							commonwealId :commonwealId
+						});
+					}
+				})
+			});
+    	  
+    	  
+       $("#commonweal_edit,#commonweal_del").linkbutton("disable");
+      };
+      commonweal.LoadDataGrid();
+      $('#search').linkbutton({
+        iconCls : 'icon-search',
+        onClick : function() {
+        	myparams.title = $("#title").val();
+        	myparams.status=$("#sendStatus").combobox('getValue');	
+          	commonweal.search(myparams);
+        }
+      });
+    });
+    
+    function show() {
+		var viewer = new Viewer(document.getElementById('imgdiv'), {
+			url : 'data-original'
+		});
+		viewer.show();
+	}
+    
+  </script>
+ <div fit="true" class="easyui-layout">
+  <div region="north" title="查询条件" style="height: 70px;">
+   <div class="pannel_search">
+     标题：<input type="text" class="easyui-textbox" id="title" />
+     发布状态：<@p.select class="easyui-combobox" id="sendStatus" list={"0":"未发布","1":"已发布"} width="150" defVal="全部"/>  <a href="javascript:;"
+					id="search">查询</a>
+   </div>
+  </div>
+  <div region="center"  id="imgdiv" style="overflow: hidden;border: none;">
+   <table fit="true" namespace="commonweal" id="commonweal" class="datagrid"></table>
+  </div>
+ </div>
+</body>

@@ -1,0 +1,157 @@
+<body style="overflow: hidden">
+	<script type="text/javascript">
+		var expert;
+		$(function() {
+			expert = new Dd("expert");
+			expert.url = "expert_list_data.do";
+			expert.title = "信息";
+			expert.colM = [ [
+					{
+						title : "主键",
+						field : "expertId",
+						alias : "e",
+						hidden : true
+					},
+					{
+						title : "专家名称",
+						field : "expertName",
+						alias : "e",
+						width : 100,
+						align : "center"
+					},
+					{
+						title : "头像",
+						field : "expertHead",
+						alias : "e",
+						width : 100,
+						align : "center",
+						formatter : function(value, row, index) {
+							return '<img width="71px;" align="center" height="40px;" src="../../' + row.expertHead + '" />';
+						}
+					}, {
+						title : "单位名称",
+						field : "company",
+						alias : "e",
+						width : 100,
+						align : "center"
+					}, {
+						title : "专家等级",
+						field : "level",
+						alias : "e",
+						width : 100,
+						align : "center"
+					}, {
+						title : "排序",
+						field : "indexs",
+						alias : "e",
+						width : 100,
+						align : "center"
+					}, {
+						title : "专家状态",
+						field : "status",
+						alias : "e",
+						width : 100,
+						align : "center",
+						formatter : function(value, rows, index) {
+							var href = "";
+							href += "<input style='width:50px;height:18px' class='ddd1' data-id='"+rows.expertId+"' value='"+rows.status+"'>";
+							return href;
+						}
+					}, {
+						title : "创建日期",
+						field : "createDate",
+						alias : "e",
+						width : 100,
+						align : "center"
+					} ] ];
+
+			expert.toolbar = [ {
+				id : "expert_add",
+				text : "添加",
+				iconCls : "icon-add",
+				handler : function() {
+					expert.open2({
+						title : "添加",
+						h : "70%",
+						w : "45%",
+						url : "expert_add_turn.do",
+						params : myparams
+					});
+				}
+			}, {
+				id : "expert_edit",
+				text : "修改",
+				iconCls : "icon-edit",
+				disabled : true,
+				handler : function() {
+					expert.updata2({
+						title : "修改",
+						h : "70%",
+						w : "45%",
+						url : "expert_edit_turn.do",
+						params : {
+							expertId : expert.rowKey
+						}
+					});
+				}
+			}, {
+				id : "expert_del",
+				text : "删除",
+				iconCls : "icon-remove",
+				disabled : true,
+				handler : function() {
+					expert.remove({
+						url : "expert_del_sub.do",
+						params : {
+							expertId : expert.rowKey
+						}
+					});
+				}
+			} ];
+			expert.param = myparams;
+			expert.onClickRow = function(rowIndex, rowData) {
+				$("#expert_edit").linkbutton("enable");
+			}
+			expert.onLoadSuccess = function(data) {
+				$("#expert_edit").linkbutton("disable");
+				$(".ddd1").each(function(i, item) {
+					var expertId = $(item).attr("data-id");
+					$(item).switchbutton({
+						checked : Boolean(Number(item.value)),
+						onText : '启用',
+						offText : '禁用',
+						onChange : function(checked) {
+							Fm.ajax("${base}/admin/expert/sendstatus_edit_sub.do", {
+								sendStatus : checked,
+								expertId : expertId
+							});
+						}
+					})
+				});
+			};
+			expert.LoadDataGrid();
+			$('#search').linkbutton({
+				iconCls : 'icon-search',
+				onClick : function() {
+					myparams.expertName=$("#expertName").val();
+					myparams.company=$("#company").val();
+					myparams.status=$("#status").combobox('getValue');
+					expert.search(myparams);
+				}
+			});
+		});
+	</script>
+	<div fit="true" class="easyui-layout">
+		<div region="north" title="查询条件" style="height: 70px;">
+			<div class="pannel_search">
+				专家名称：<input type="text" class="easyui-textbox" id="expertName" />
+				单位名称：<input type="text" class="easyui-textbox" id="company" />
+				状态：<@p.select class="easyui-combobox" id="status" list={"0":"禁用","1":"启用"} width="150" defVal="全部"/>
+				<a href="javascript:;" id="search">查询</a>
+			</div>
+		</div>
+		<div region="center" style="overflow: hidden; border: none;">
+			<table fit="true" namespace="expert" id="expert" class="datagrid"></table>
+		</div>
+	</div>
+</body>

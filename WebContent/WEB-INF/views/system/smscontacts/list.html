@@ -1,0 +1,106 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,EasyUI"/>
+<script type="text/javascript">
+	var myparams = {
+	    userType : top.userType
+    };
+</script>
+</head>
+<body style="overflow: hidden">
+ <@p.resource types="AnyDataGrid"/>
+ <script type="text/javascript">
+		var smscontacts;
+        $(function() {
+	        smscontacts = new Dd("smscontacts");
+	        smscontacts.title = "短信联系人";
+	        smscontacts.colM = [ [ {
+	            title : "主键",
+	            field : "contactsId",
+	            alias : "ct",
+	            align : "left",
+	            width : 100,
+	            hidden : true
+	        }, {
+	            title : "姓名",
+	            field : "name",
+	            alias : "ct",
+	            width : 100,
+	            align : "center"
+	        }, {
+	            title : "手机号",
+	            field : "mobile",
+	            alias : "ct",
+	            width : 100,
+	            align : "center",
+	        }, {
+	            title : "创建时间",
+	            field : "createDate",
+	            alias : "ct",
+	            width : 50,
+	            align : "center"
+	        } ] ];
+
+	        smscontacts.toolbar = [ {
+	            id : "smscontacts_add",
+	            text : "新增",
+	            iconCls : "icon-add",
+	            disabled : false,
+	            handler : function() {
+		            smscontacts.open2({
+		                title : "新增",
+		                url : "add_smscontacts_turn.do",
+		                params : myparams
+		            });
+	            }
+	        }, {
+	            id : "smscontacts_edit",
+	            text : "修改",
+	            iconCls : "icon-edit",
+	            disabled : true,
+	            handler : function() {
+		            smscontacts.updata2({
+		                title : "修改",
+		                url : "edit_smscontacts_turn.do",
+		                params : {
+			                id : smscontacts.rowKey
+		                }
+		            });
+	            }
+	        }, {
+	            id : "smscontacts_remove",
+	            text : "删除",
+	            iconCls : "icon-remove",
+	            disabled : true,
+	            handler : function() {
+		            smscontacts.remove({
+		                url : "delete_smscontacts_sub.do",
+		                params : {
+			                smscontactsId : smscontacts.rowKey
+		                }
+		            });
+	            }
+	        } ];
+	        smscontacts.url = "list_smscontacts_data.do";
+	        smscontacts.singleSelect = true;
+	        smscontacts.param = myparams;
+	        smscontacts.onLoadSuccess = function(data) {
+		        $("#smscontacts_add").linkbutton("enable");
+		        $("#smscontacts_edit,#smscontacts_remove").linkbutton("disable");
+	        };
+	        smscontacts.onClickRow = function(rowIndex, rowData) {
+		        $("#smscontacts_edit,#smscontacts_remove").linkbutton("enable");
+
+	        };
+	        smscontacts.LoadDataGrid();
+        });
+	</script>
+ <div fit="true" class="easyui-layout">
+  <div region="center" style="border: none;">
+   <table fit="true" namespace="smscontacts" id="smscontacts" class="datagrid"></table>
+  </div>
+ </div>
+</body>
+</html>

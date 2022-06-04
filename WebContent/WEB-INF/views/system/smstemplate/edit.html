@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,Form,EasyUi,NiceScroll"/>
+</head>
+<body>
+	<@p.form id="smsTemplate" action="edit_SmsTemplate_update.do" js="flyme_form2" btnSubmit=true dialog=true>
+	<input type="hidden" id="btn_sub" class="btn_sub" />
+	<input type="hidden" name="smsTemplateId" value="${smsTemplate.smsTemplateId}" />
+			    <table class="tbform">
+				     <tr>
+				      <td colspan="2">
+				       <div class="z-legend">
+				        <b>基本信息</b>
+				       </div>
+				      </td>
+				     </tr>
+				     <tr>
+				      <td class="tdl" width="20%">模版简称：</td>
+				       <td width="50%"><input type="text" class="txtInput" id="templateName" name="templateName" value="${smsTemplate.templateName}" datatype="s1-50" /></td>
+				       <td width="30%"><span class="Validform_checktip">示例(春节祝福）</span></td>
+				     </tr>
+				     <tr>
+				      <td class="tdl">模版内容：</td>
+				      <td><textarea rows="6" cols="30" id="templateContent" name="templateContent" datatype="*1-200">${smsTemplate.templateContent}</textarea></td>
+				      <td ><span class="Validform_checktip"></span></td>
+				     </tr>
+				 
+				</table>
+	</@p.form>
+	<script type="text/javascript">
+		$(function() {
+			niceScroll("body");
+		
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll"/>
+</head>
+<body>
+<@p.valid id="medicalrecord" action="medicalrecord_edit_sub.do" class="layui-form" layui=true>
+ <@p.legend text="提示信息"/> 
+ <input type="hidden" name="medicalrecordId" value="${medicalrecord.medicalrecordId}" />
+         <div class="layui-form-item"> 
+		    <@p.text label="关联的服务ID"  value="${medicalrecord.doctorMedicalServiceId}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.text label="姓名" value="${medicalrecord.accountInfoId}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.text label="现病史"   value="${medicalrecord.hpi}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.text label="症状"   value="${medicalrecord.symptom}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.text label="检查"  value="${medicalrecord.inspect}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.text label="诊断"  value="${medicalrecord.diagnosis}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.text label="治疗计划"   value="${medicalrecord.treatmentPlanning}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.text label="治疗过程"  value="${medicalrecord.treatmenProcess}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.text label="或往史"   value="${medicalrecord.history}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.text label="个人史"  value="${medicalrecord.personalHistory}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.text label="家族史"   value="${medicalrecord.familyHistory}"/>
+	     </div>
+</@p.valid>
+</body>
+</html>

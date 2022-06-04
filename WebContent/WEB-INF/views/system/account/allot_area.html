@@ -1,0 +1,55 @@
+<body>
+	<div class="datagrid-toolbar">
+		<a href="javascript:;" id="userareabtn_save" class="easyui-linkbutton" plain="true" icon="icon-save">保存</a>
+	</div>
+	<script type="text/javascript">
+		var userArea;
+		$(function() {
+			$('#userareabtn_save').linkbutton({
+			    iconCls: 'icon-save',
+			    plain:true,
+			    disabled:true,
+			    onClick:function(){
+			    	var options = $("#userArea").tree("options");
+					var areaIds = userArea.getCheckedId();
+					var areaNames = encodeURI(userArea.getCheckedNames());
+					var myparams = {
+						accountId : "${accountId}",
+						areaIds : areaIds.join(","),
+						areaNames : areaNames,
+					};
+					//alert(areaIds.join(","));
+					top.Dg.z.ajax("account/account_allotarea_sub.do", myparams, function(data) {
+						options.checkeds = areaIds;
+						account.search(myparams);
+					});
+			    }
+			});
+			userArea = new Tree();
+			userArea.checkbox = true;
+			userArea.url = "account_allotarea_tree.do";
+			userArea.queryParams = {
+				accountId : "${accountId}"
+			};
+			userArea.onLoadSuccess = function(node, data) {
+				userArea.expandAll();
+				var options = userArea.getOptions();
+				$(options.checkeds).each(function(i, value) {
+					var node = $('#userArea').tree('find', value);
+					if (userArea.isLeaf(node)) {
+						userArea.checkNode(node);
+					}
+				});
+			}
+			userArea.onClick= function(node){
+				$('#userareabtn_save').linkbutton("enable");
+			}
+			userArea.onCheck= function(node){
+				$('#userareabtn_save').linkbutton("enable");
+			}
+			userArea.initTree("userArea");
+		});
+
+	</script>
+	<ul id="userArea"></ul>
+</body>

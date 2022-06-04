@@ -1,0 +1,5 @@
+.content {margin: 60px 0.5rem 0;padding:0.4rem;font-size: 0.7rem;color: #666666;background-color: white;border: 1px solid #EBEBEB;box-shadow: 1px 1px 1px 1px #ECECEC;}
+h3 {color: #333;font-size: 0.75rem;margin: 0.2rem 0;font-weight: 600;}
+.content p em {color: #E63C2D;}
+.content p {font-size: 0.65rem;}
+.content p span {display:inline-block;width: 3rem;text-align: justify;justify:inter-ideograph}

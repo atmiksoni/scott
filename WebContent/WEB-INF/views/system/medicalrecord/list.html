@@ -1,0 +1,160 @@
+<body style="overflow: hidden">
+ <script type="text/javascript">
+      var medicalrecord;
+    $(function() {
+      medicalrecord = new Dd("medicalrecord");
+      medicalrecord.url = "medicalrecord_list_data.do?accountInfoId=${accountInfoId}";
+      medicalrecord.title = "信息";
+      medicalrecord.colM = [ [ {
+        field : "ck",
+        checkbox : true,
+        align : "center"
+      }, {
+        title : "主键",
+        field : "medicalrecordId",
+        alias : "m",
+        hidden:true
+      } ,{
+        title : "关联的服务ID",
+        field : "doctorMedicalServiceId",
+        alias : "m",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "用户ID",
+        field : "accountInfoId",
+        alias : "m",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "现病史",
+        field : "hpi",
+        alias : "m",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "症状",
+        field : "symptom",
+        alias : "m",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "检查",
+        field : "inspect",
+        alias : "m",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "诊断",
+        field : "diagnosis",
+        alias : "m",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "治疗计划",
+        field : "treatmentPlanning",
+        alias : "m",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "治疗过程",
+        field : "treatmenProcess",
+        alias : "m",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "或往史",
+        field : "history",
+        alias : "m",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "个人史",
+        field : "personalHistory",
+        alias : "m",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "家族史",
+        field : "familyHistory",
+        alias : "m",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "创建时间",
+        field : "createDate",
+        alias : "m",
+        width : 100,
+        align : "center"
+      } ] ];
+
+      medicalrecord.toolbar = [ {
+        id : "medicalrecord_add",
+        text : "添加",
+        iconCls : "icon-add",
+        handler : function() {
+          medicalrecord.open2({
+            title : "添加",
+            h : "70%",
+			w : "45%",
+            url : "medicalrecord_add_turn.do",
+            params : myparams
+          });
+        }
+      }, {
+        id : "medicalrecord_edit",
+        text : "修改",
+        iconCls : "icon-edit",
+        disabled : true,
+        handler : function() {
+          medicalrecord.updata2({
+            title : "修改",
+            h : "70%",
+			w : "45%",
+            url : "medicalrecord_edit_turn.do",
+            params : {
+                medicalrecordId : medicalrecord.rowKey
+            }
+		  });
+        }
+      }, {
+        id : "medicalrecord_del",
+        text : "删除",
+        iconCls : "icon-remove",
+        disabled : true,
+        handler : function() {
+          medicalrecord.remove({
+             url : "medicalrecord_del_sub.do",
+             params : {
+                medicalrecordId : medicalrecord.rowKey
+             }
+		  });
+        }
+      } ];
+      medicalrecord.param = myparams;
+      medicalrecord.onClickRow = function(rowIndex, rowData) {
+       $("#medicalrecord_edit,#medicalrecord_del").linkbutton("enable");
+      }
+      medicalrecord.onLoadSuccess = function(data) {
+       $("#medicalrecord_edit,#medicalrecord_del").linkbutton("disable");
+      };
+      medicalrecord.LoadDataGrid();
+      $('#search').linkbutton({
+        iconCls : 'icon-search',
+        onClick : function() {
+          medicalrecord.search(myparams);
+        }
+      });
+    });
+  </script>
+ <div fit="true" class="easyui-layout">
+  <div region="north" title="查询条件" style="height: 70px;">
+   <div class="pannel_search">
+       <a href="javascript:;" id="search">查询</a>
+   </div>
+  </div>
+  <div region="center" style="overflow: hidden;border: none;">
+   <table fit="true" namespace="medicalrecord" id="medicalrecord" class="datagrid"></table>
+  </div>
+ </div>
+</body>

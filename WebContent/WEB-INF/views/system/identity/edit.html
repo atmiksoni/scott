@@ -1,0 +1,139 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<link rel="stylesheet" href="/plug-in/webui/layui/css/layui.css" media="all">
+<link rel="stylesheet" href="/plug-in/webui/layui/css/global.css" media="all">
+<@p.resource types="Jquery,EasyUI"/>
+</head>
+<body>
+	<@p.valid id="identity" action="identity_edit_sub.do" class="layui-form" layui=true>
+	<input type="hidden" name="identityId" value="${identity.identityId}" />
+	<input type="hidden" name="accountInfoId" value="${identity.accountInfoId}" />
+	<fieldset class="layui-elem-field layui-field-title">
+		<legend>认证信息</legend>
+	</fieldset>
+
+	<div class="layui-form-item">
+		<div class="layui-inline"><@p.text label="用户姓名" value="${(identity.userName)!}"/><@p.text label="用户姓名" value="${(identity.userName)!}"/></div>
+		<div class="layui-inline"><@p.text label="身份证号" value="${(identity.cardNo)!}"/></div>
+	</div>
+
+	<fieldset class="layui-elem-field layui-field-title">
+		<legend>身份证正面</legend>
+	</fieldset>
+	<div class="layui-form-item">
+		<div class="layui-inline">
+			<img class="go" style="cursor: pointer; padding-left: 40px;" height="100%" width="100%" src="../../${identity.frontCard}">
+		</div>
+	</div>
+
+	<fieldset class="layui-elem-field layui-field-title">
+		<legend>身份证反面</legend>
+	</fieldset>
+	<div class="layui-form-item">
+		<div class="layui-inline">
+			<img class="go" style="cursor: pointer; padding-left: 40px;" height="100%" width="90%" src="../../${identity.backCard}">
+		</div>
+	</div>
+
+	<fieldset class="layui-elem-field layui-field-title">
+		<legend>手持身份证</legend>
+	</fieldset>
+	<div class="layui-form-item">
+		<div class="layui-inline">
+			<img class="go" style="cursor: pointer; padding-left: 40px;" height="100%" width="90%" src="../../${identity.handCard}">
+		</div>
+	</div>
+
+	<#if account.accountType=='App_Shipper'>
+		<fieldset class="layui-elem-field layui-field-title">
+		<legend>营业执照</legend>
+		</fieldset>
+		<div class="layui-form-item">
+			<div class="layui-inline">
+				<img class="go" style="cursor: pointer; padding-left: 40px;" height="100%" width="90%" src="../../${identity.businessLicense}">
+			</div>
+		</div>
+		<fieldset class="layui-elem-field layui-field-title">
+		<legend>开户许可证</legend>
+		</fieldset>
+		<div class="layui-form-item">
+			<div class="layui-inline">
+				<img class="go" style="cursor: pointer; padding-left: 40px;" height="100%" width="90%" src="../../${identity.businessScope}">
+			</div>
+		</div>
+	</#if> 
+	<#if account.accountType=='App_Driver'>
+	<fieldset class="layui-elem-field layui-field-title">
+		<legend>行驶证1</legend>
+	</fieldset>
+	<div class="layui-form-item">
+		<div class="layui-inline">
+			<img class="go" style="cursor: pointer; padding-left: 40px;" height="100%" width="100%" src="../../${identity.travelCertificate}">
+		</div>
+	</div>
+	<#if identity.travelCertificateAgain!=''>
+	<fieldset class="layui-elem-field layui-field-title">
+		<legend>行驶证2</legend>
+	</fieldset>
+	<div class="layui-form-item">
+		<div class="layui-inline">
+			<img class="go" style="cursor: pointer; padding-left: 40px;" height="100%" width="100%" src="../../${identity.travelCertificateAgain}">
+		</div>
+	</div>
+	</#if>
+	<fieldset class="layui-elem-field layui-field-title">
+		<legend>驾驶证</legend>
+	</fieldset>
+	<div class="layui-form-item">
+		<div class="layui-inline">
+			<img class="go" style="cursor: pointer; padding-left: 40px;" height="100%" width="100%" src="../../${identity.driverLicense}">
+		</div>
+	</div>
+	<fieldset class="layui-elem-field layui-field-title">
+		<legend>从业资格证</legend>
+	</fieldset>
+	<div class="layui-form-item">
+		<div class="layui-inline">
+			<img class="go" style="cursor: pointer; padding-left: 40px;" height="100%" width="100%" src="../../${identity.qualification}">
+		</div>
+	</div>
+	<fieldset class="layui-elem-field layui-field-title">
+		<legend>营运证1</legend>
+	</fieldset>
+	<div class="layui-form-item">
+		<div class="layui-inline">
+			<img class="go" style="cursor: pointer; padding-left: 40px;" height="100%" width="100%" src="../../${identity.operationCertificate}">
+		</div>
+	</div>
+	<#if identity.travelCertificateAgain!=''>
+	<fieldset class="layui-elem-field layui-field-title">
+		<legend>营运证2</legend>
+	</fieldset>
+	<div class="layui-form-item">
+		<div class="layui-inline">
+			<img class="go" style="cursor: pointer; padding-left: 40px;" height="100%" width="100%" src="../../${identity.operationCertificateAgain}">
+		</div>
+	</div>
+	</#if>
+
+	<fieldset class="layui-elem-field layui-field-title">
+		<legend>道路运输经营许可证</legend>
+	</fieldset>
+	<div class="layui-form-item">
+		<div class="layui-inline">
+			<img class="go" style="cursor: pointer; padding-left: 40px;" height="100%" width="100%" src="../../${identity.opt}">
+		</div>
+	</div>
+	</#if>
+
+	<div class="layui-form-item">
+		<div class="layui-inline">
+			<div class="layui-inline"><@p.switch label="是否通过" name="isPass" value="1" /></div>
+		</div>
+	</div>
+	<div class="layui-form-item"><@p.textare label="<text style='font-weight:bold'>审核说明</text>"  name="reason" width=300/></div>
+	</@p.valid>
+</body>
+</html>

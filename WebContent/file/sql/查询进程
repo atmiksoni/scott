@@ -1,0 +1,107 @@
+select spid 进程,STATUS 状态, 登录帐号=SUBSTRING(SUSER_SNAME(sid),1,30)
+
+,用户机器名称=SUBSTRING(hostname,1,12)
+
+,是否被锁住=convert(char(3),blocked)
+
+,数据库名称=SUBSTRING(db_name(dbid),1,20),cmd 命令,waittype as 等待类型
+
+,last_batch 最后批处理时间,open_tran 未提交事务的数量
+
+from master.sys.sysprocesses
+
+Where  status='sleeping' and waittype=0x0000 and open_tran>0
+
+
+
+
+select t1.resource_type [资源锁定类型],DB_NAME(resource_database_id) as 数据库名
+
+,t1.resource_associated_entity_id 锁定对象,t1.request_mode as 等待者请求的锁定模式
+
+,t1.request_session_id 等待者SID
+
+,t2.wait_duration_ms 等待时间
+
+,(select TEXT from sys.dm_exec_requests r cross apply
+
+sys.dm_exec_sql_text(r.sql_handle) where r.session_id=t1.request_session_id) as 等待者要执行的SQL
+
+,(select SUBSTRING(qt.text,r.statement_start_offset/2+1,
+
+(case when r.statement_end_offset=-1 then DATALENGTH(qt.text) else r.statement_end_offset end -r.statement_start_offset)/2+1
+
+)
+
+from sys.dm_exec_requests r cross apply sys.dm_exec_sql_text(r.sql_handle)qt
+
+where r.session_id=t1.request_session_id) 等待者正要执行的语句
+
+,t2.blocking_session_id [锁定者SID]
+
+,(select TEXT from sys.sysprocesses p cross apply
+
+sys.dm_exec_sql_text(p.sql_handle)
+
+where p.spid=t2.blocking_session_id
+
+) 锁定者执行语句
+
+from sys.dm_tran_locks t1,sys.dm_os_waiting_tasks t2
+
+where t1.lock_owner_address=t2.resource_address
+
+
+
+
+
+UPDATE hfs
+		SET
+		hfs.price = fs.price
+		from T_PMS_HouseFeeStandard hfs,T_PMS_FeeStandard fs
+		where hfs.feeStandardId=fs.feeStandardId
+UPDATE hm
+		SET
+		hm.feeStandardId = hf.feeStandardId,hm.feeItemId=fs.feeItemId,hm.lastReadDate=hf.createEndDate
+		from T_PMS_HouseMeter hm, T_PMS_HouseFeeStandard hf,T_PMS_FeeStandard fs
+		where hf.feeStandardId in('2CC6C6A965E3408F8171367433E1B969','7FF3F05D15A040948EBBDC823232D82D','8F5E8E9485FF41D7BD1F33C752508B88','9FB6F3AAC70549EDA2BA582AD5FFA591','452DA0596C3A4A71A8A58B99A632A85E','71E51F757CB04B28839C8357D28B2DED','9FB6F3AAC70549EDA2BA582AD5FFA591')
+    and hf.houseFeeStandardId=hm.houseFeeStandardId and fs.feeStandardId=hf.feeStandardId
+
+
+delete T_PMS_HouseFeeStandard 
+		where feeStandardId in('2CC6C6A965E3408F8171367433E1B969','7FF3F05D15A040948EBBDC823232D82D','8F5E8E9485FF41D7BD1F33C752508B88','9FB6F3AAC70549EDA2BA582AD5FFA591','452DA0596C3A4A71A8A58B99A632A85E','71E51F757CB04B28839C8357D28B2DED','9FB6F3AAC70549EDA2BA582AD5FFA591')
+    
+
+
+
+UPDATE hmd
+		SET
+		hmd.feeStandardId = hm.feeStandardId
+		from T_PMS_HouseMeterData hmd,T_PMS_HouseMeter hm
+where hmd.houseMeterId=hm.houseMeterId and hm.feeStandardId in('2CC6C6A965E3408F8171367433E1B969','7FF3F05D15A040948EBBDC823232D82D','8F5E8E9485FF41D7BD1F33C752508B88','9FB6F3AAC70549EDA
+
+2BA582AD5FFA591','452DA0596C3A4A71A8A58B99A632A85E','71E51F757CB04B28839C8357D28B2DED','9FB6F3AAC70549EDA2BA582AD5FFA591')
+
+
+
+UPDATE fd
+		SET
+		fd.feeItemId = fs.feeItemId
+		from T_PMS_FeeReportDetails fd,T_PMS_FeeStandard fs
+		where fd.feeStandardId=fs.feeStandardId
+   and fs.feeStandardId in('2CC6C6A965E3408F8171367433E1B969','7FF3F05D15A040948EBBDC823232D82D','8F5E8E9485FF41D7BD1F33C752508B88','9FB6F3AAC70549EDA
+
+2BA582AD5FFA591','452DA0596C3A4A71A8A58B99A632A85E','71E51F757CB04B28839C8357D28B2DED','9FB6F3AAC70549EDA2BA582AD5FFA591')
+
+
+
+
+UPDATE T_PMS_FeeReportDetails set houseFeeStandardId=null where feeStandardId in ('2CC6C6A965E3408F8171367433E1B969','7FF3F05D15A040948EBBDC823232D82D','8F5E8E9485FF41D7BD1F33C752508B88','9FB6F3AAC70549EDA
+
+2BA582AD5FFA591','452DA0596C3A4A71A8A58B99A632A85E','71E51F757CB04B28839C8357D28B2DED')
+
+
+
+DELETE T_PMS_HouseMeter where feeItemId not in (select feeItemId from T_PMS_FeeItem)
+
+

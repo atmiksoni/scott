@@ -1,0 +1,195 @@
+<body style="overflow: hidden">
+	<script src="/plug-in/viewer/js/viewer.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="/plug-in/viewer/css/viewer.min.css" />
+ <script type="text/javascript">
+      var health;
+    $(function() {
+      health = new Dd("health");
+      health.url = "health_list_data.do";
+      health.title = "健康资讯信息";
+      health.colM = [ [ /* {
+        field : "ck",
+        checkbox : true,
+        align : "center"
+      }, */ {
+        title : "主键",
+        field : "healthId",
+        alias : "h",
+        hidden:true
+      } ,{
+        title : "类型ID",
+        field : "healthTypeId",
+        alias : "h",
+        width : 100,
+        align : "center",
+        hidden:true
+      } ,{
+        title : "标题",
+        field : "title",
+        alias : "h",
+        width : 100,
+        align : "center"
+      },{
+			title : "图片",
+			field : "imgs",
+			alias : "h",
+			width : 100,
+			align : "center",
+			formatter : function(value, row, index) {
+				return '<img onclick="show()"  width="80px;" height="50px;" src="../../' + row.imgs + '" />';
+			}
+		} /* ,{
+        title : "详细介绍",
+        field : "content",
+        alias : "h",
+        width : 100,
+        align : "center"
+      } */ ,{
+			title : "状态",
+			field : "status",
+			alias : "h",
+			width : 100,
+			align : "center",
+			formatter : function(value, row, index) {
+				return Fm.formatter({
+					"1" : "启用",
+					"0" : "禁用"
+				}, value);
+			}
+		} ,{
+        title : "备注",
+        field : "remark",
+        alias : "h",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "创建日期",
+        field : "createDate",
+        alias : "h",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "排序",
+        field : "indexs",
+        alias : "h",
+        width : 100,
+        align : "center"
+      } ,{
+			title : "热门资讯",
+			field : "isHot",
+			alias : "h",
+			width : 100,
+			align : "center",
+			formatter : function(value, row, index) {
+				return Fm.formatter({
+					"1" : "是",
+					"0" : "否"
+				}, value);
+			}
+		} ,{
+	        title : "获赞数",
+	        field : "praiseCount",
+	     /*    alias : "h", */
+	        width : 100,
+	        align : "center"
+	      } ] ];
+
+      health.toolbar = [ {
+        id : "health_add",
+        text : "添加",
+        iconCls : "icon-add",
+        disabled : true,
+        handler : function() {
+          health.open2({
+            title : "添加健康资讯",
+            h : "70%",
+			w : "45%",
+            url : "health_add_turn.do",
+            params : myparams
+          });
+        }
+      }, {
+        id : "health_edit",
+        text : "修改",
+        iconCls : "icon-edit",
+        disabled : true,
+        handler : function() {
+          health.updata2({
+            title : "修改健康资讯",
+            h : "70%",
+			w : "45%",
+            url : "health_edit_turn.do",
+            params : {
+                healthId : health.rowKey
+            }
+		  });
+        }
+      },{
+          id : "healthevaluate_detail",
+          text : "评论列表",
+          iconCls : "icon-add",
+          disabled : true,
+          handler : function() {
+            health.open2({
+              title : "健康评论列表",
+              h : "70%",
+  				w : "45%",
+              url : "../healthevaluate/healthevaluate_index.do",
+              params :{
+                  healthId : health.rowKey
+              }
+            });
+          }
+        }, {
+        id : "health_del",
+        text : "删除健康资讯",
+        iconCls : "icon-remove",
+        disabled : true,
+        handler : function() {
+          health.remove({
+             url : "health_del_sub.do",
+             params : {
+                healthId : health.rowKey
+             }
+		  });
+        }
+      } ];
+      health.param = myparams;
+      health.onClickRow = function(rowIndex, rowData) {
+       $("#health_edit,#health_del,#healthevaluate_detail").linkbutton("enable");
+      }
+      health.onLoadSuccess = function(data) {
+       $("#health_edit,#health_del,#healthevaluate_detail").linkbutton("disable");
+      };
+      health.LoadDataGrid();
+      $('#search').linkbutton({
+        iconCls : 'icon-search',
+        onClick : function() {
+        	myparams.title=$("#title").val();
+			myparams.status=$("#status").combobox('getValue');
+			myparams.isHot=$("#isHot").combobox('getValue');
+          health.search(myparams);
+        }
+      });
+    });
+    function show() {
+		var viewer = new Viewer(document.getElementById('imgdiv'), {
+			url : 'data-original'
+		});
+		viewer.show();
+	}
+  </script>
+ <div fit="true" class="easyui-layout">
+  <div region="north" title="查询条件" style="height: 70px;">
+   <div class="pannel_search">
+   	标题：<input type="text" class="easyui-textbox" id="title" />
+				发布状态：<@p.select class="easyui-combobox" id="status" list={"0":"禁用","1":"启用"} width="150" defVal="全部"/>
+				是否是热门资讯：<@p.select class="easyui-combobox" id="isHot" list={"0":"否","1":"是"} width="150" defVal="全部"/>
+       <a href="javascript:;" id="search">查询</a>
+   </div>
+  </div>
+  <div id="imgdiv"region="center" style="overflow: hidden;border: none;">
+   <table fit="true" namespace="health" id="health" class="datagrid"></table>
+  </div>
+ </div>
+</body>

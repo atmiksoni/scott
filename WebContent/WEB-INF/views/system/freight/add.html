@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll"/>
+</head>
+<body>
+<@p.valid id="freight" action="freight_add_sub.do" class="layui-form" layui=true>
+ <@p.legend text="提示信息"/> 
+         <div class="layui-form-item">
+		   <@p.layinput label="模版名称"  datarule="required;" name="freightName" />
+	     </div>
+         <!-- <div class="layui-form-item">
+		   <@p.layinput label="费用(元)"  datarule="required;range[~100]" name="amount" />
+	     </div>
+         <div class="layui-form-item">
+		   <@p.layinput label="首重(kg)"  datarule="required;range[~100]" name="first" />
+	     </div>
+         <div class="layui-form-item">
+		   <@p.layinput label="续重(kg)"  datarule="required;range[~100]" name="additional" />
+	     </div>
+         <div class="layui-form-item">
+		   <@p.layinput label="单价(元)"  datarule="required;range[~100]" name="additionalPrice" />
+	     </div> -->
+	     <div class="layui-form-item">
+		   <@p.layinput label="单价(件/元)"  datarule="required;range[~100]" name="price" />
+	     </div>
+</@p.valid>
+</body>
+</html>

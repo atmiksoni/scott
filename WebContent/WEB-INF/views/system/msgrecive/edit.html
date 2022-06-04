@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<link rel="stylesheet" href="/plug-in/webui/layui/css/layui.css" media="all">
+<link rel="stylesheet" href="/plug-in/webui/layui/css/global.css" media="all">
+<@p.resource types="Jquery,NiceScroll,EasyUI,webuploader"/>
+</head>
+<body>
+ <@p.valid id="msgrecive" action="msgrecive_edit_sub.do"  class="layui-form">
+    <fieldset class="layui-elem-field layui-field-title">
+		<legend>编辑</legend>
+	</fieldset>
+    <input type="hidden" name="msgReciveId" value="${msgRecive.msgReciveId}" />
+          
+          		
+          		<div class="layui-form-item">
+				    <div class="layui-inline">
+				   		<label class="layui-form-label">消息ID:</label>
+						<div class="layui-input-inline">
+							<input id="msgId" name="msgId" type="text" data-rule="required;" value="${msgRecive.msgId}" class="layui-input">
+						</div>
+				    </div>
+			     </div>
+          		
+          		<div class="layui-form-item">
+				    <div class="layui-inline">
+				   		<label class="layui-form-label">用户ID:</label>
+						<div class="layui-input-inline">
+							<input id="accountInfoId" name="accountInfoId" type="text" data-rule="required;" value="${msgRecive.accountInfoId}" class="layui-input">
+						</div>
+				    </div>
+			     </div>
+          		
+          		<div class="layui-form-item">
+				    <div class="layui-inline">
+				   		<label class="layui-form-label">状态0:未读1:已读:</label>
+						<div class="layui-input-inline">
+							<input id="isRead" name="isRead" type="text" data-rule="required;" value="${msgRecive.isRead}" class="layui-input">
+						</div>
+				    </div>
+			     </div>
+    </table>
+ </@p.valid> 
+  <script src="net/plug-in/webui/layui/lay/dest/layui.all.js" charset="utf-8"></script>
+</body>
+</html>

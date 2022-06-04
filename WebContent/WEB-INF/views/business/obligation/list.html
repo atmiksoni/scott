@@ -1,0 +1,111 @@
+<body style="overflow: hidden">
+ <script type="text/javascript">
+      var obligation;
+    $(function() {
+      obligation = new Dd("obligation");
+      obligation.url = "obligation_list_data.do";
+      obligation.title = "${(languaged !='')?string('Design duty',' 设计职责 ')}";
+      obligation.colM = [ [/*  {
+        field : "ck",
+        checkbox : true,
+        align : "center"
+      },  */{
+        title : "主键",
+        field : "obligationId",
+        alias : "o",
+        hidden:true
+      } ,{
+        title : "${(languaged !='')?string('Name of duty','设计职责名称')}",
+        field : "obligationName",
+        alias : "o",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "${(languaged !='')?string('According to the number of rows','显示行数')}",
+        field : "type",
+        alias : "o",
+        width : 100,
+        align : "center"
+      },{
+          title : "${(languaged !='')?string('sort','排序')}",
+          field : "indexs",
+          alias : "o",
+          width : 100,
+          align : "center"
+        } ] ];
+
+      obligation.toolbar = [ {
+        id : "obligation_add",
+        text : "${(languaged !='')?string('add',' 添加 ')}",
+        iconCls : "icon-add",
+        handler : function() {
+          obligation.open2({
+            title : "${(languaged !='')?string('add','添加 设计职责')}",
+            h : "70%",
+			w : "45%",
+			btn:["${(languaged !='')?string('confirm',' 确认 ')}","${(languaged !='')?string('close',' 关闭 ')}"],
+            url : "obligation_add_turn.do",
+            params : myparams
+          });
+        }
+      }, {
+        id : "obligation_edit",
+        text : "${(languaged !='')?string('edit',' 修改')}",
+        iconCls : "icon-edit",
+        disabled : true,
+        handler : function() {
+          obligation.updata2({
+            title : "${(languaged !='')?string('edit','修改 设计职责')}",
+            h : "70%",
+			w : "45%",
+            url : "obligation_edit_turn.do",
+            btn:["${(languaged !='')?string('confirm',' 确认 ')}","${(languaged !='')?string('close',' 关闭 ')}"],
+            params : {
+                obligationId : obligation.rowKey
+            }
+		  });
+        }
+      }/* , {
+        id : "obligation_del",
+        text : "${(languaged !='')?string('delete',' 删除')}",
+        iconCls : "icon-remove",
+        disabled : true,
+        handler : function() {
+          obligation.remove({
+             url : "obligation_del_sub.do",
+             params : {
+                obligationId : obligation.rowKey
+             },
+             title:"${(languaged !='')?string('are you delete?','')}",
+             content:"${(languaged !='')?string('delete content','确定要删除所选记录吗?')}",
+              btn:["${(languaged !='')?string('confirm',' 确认 ')}","${(languaged !='')?string('close',' 关闭 ')}"]
+		  });
+        }
+      }  */];
+      obligation.param = myparams;
+      obligation.onClickRow = function(rowIndex, rowData) {
+       $("#obligation_edit,#obligation_del").linkbutton("enable");
+      }
+      obligation.onLoadSuccess = function(data) {
+       $("#obligation_edit,#obligation_del").linkbutton("disable");
+      };
+      obligation.LoadDataGrid();
+      $('#search').linkbutton({
+        iconCls : 'icon-search',
+        onClick : function() {
+          obligation.search(myparams);
+        }
+      });
+    });
+  </script>
+ <div fit="true" class="easyui-layout">
+<!--   <div region="north" title="查询条件" style="height: 70px;">
+   <div class="pannel_search">
+       <a href="javascript:;" id="search">${(languaged !='')?string('search','查询')}</a>
+   </div>
+  </div> -->
+  <div region="center" style="overflow: hidden;border: none;">
+   <table fit="true" namespace="obligation" id="obligation" class="datagrid"></table>
+  </div>
+ </div>
+</body>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<title>添加信息</title>
+<@p.resource types="Jquery,Form,NiceScroll,EasyUI"/>
+</head>
+<body>
+	<@p.form id="prasebooks" action="add_prasebooks_save.do" js="flyme_form2" >
+	<input type="hidden" id="btn_sub" class="btn_sub" />
+	<table class="tbformtop">
+		<tr>
+			<td>
+				<table class="tbform">
+					<tr>
+						<td colspan="2">
+							<div class="z-legend">
+								<b>基本信息</b>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td class="tdl" width="20%">用户名：</td>
+						<td width="20%">${username}</td>
+						<td width="60%"></td>
+					</tr>
+					<tr>
+						<td class="tdl" width="20%">常用语：</td>
+						<td width="20%"><input type="text" name="praseContent" datatype="*"/></td>
+						<td width="60%"><span class="Validform_checktip">常用语不可为空</span></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	</@p.form>
+	<script type="text/javascript">
+		$(function() {
+			niceScroll("body");
+			
+		});
+	</script>
+</body>
+</html>

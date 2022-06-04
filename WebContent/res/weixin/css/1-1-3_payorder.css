@@ -1,0 +1,73 @@
+.content {margin:0px 0 0;color: #666;}
+.order_info {background-color: white;}
+.order_info>div {padding: 0.5rem 0;margin:0 0.6rem;border-bottom: 1px solid #DCDCDC;}
+.order_info>div:last-child {border-bottom: 0px solid #DCDCDC;}
+.order_info .top ul {overflow: hidden;font-size: 0.7rem;}
+.order_info .top ul li {float: left;color: #666;}
+.order_info .top ul li:nth-child(1), .order_info .top ul li:nth-child(3) {width: 68%;}
+.order_info .top ul li:nth-child(2), .order_info .top ul li:nth-child(4) {width: 32%;text-align: right;}
+.order_info .top ul li:last-child {width: 100%; text-align: right;}
+.order_info .top ul li:nth-child(3) {color: #999;}
+.order_info .top ul li:last-child span {color: #E63C2D;}
+.bottom h3 {font-size: 0.7rem;}
+.bottom p {font-size: 0.55rem;color: #999;}
+.tailor {width: 100%;height: 3px;background: url(../img/index/images/zhifu_dise_bg.png) repeat-x 0 0;}
+.deposit, .bill {position:relative;height: 2.8rem;width: 92%;padding: 0 4%;background-color: white;border-bottom: 1px solid #DCDCDC;overflow: visible;}
+.deposit>.left {width: 65%;float: left;}
+.deposit>.left h3 {font-size: 0.7rem;line-height: 1.8rem;height: 1.4rem;}
+.deposit>.left p {font-size: 0.6rem;color: #999;line-height: 1rem;}
+.deposit>.right {width: 27%;float: right;position: absolute;top: 0.5rem;right: 0.75rem;z-index: 500;background-color: white;border: 1px solid #E63C2D;border-radius: 5px;}
+.deposit>.right li {height:1.5rem;line-height:1.5rem;border-bottom: 1px solid #E63C2D;font-size: 0.75rem;color: #212121;}
+.deposit>.right li:nth-child(n+2):hover {background-color: #E63C2D;cursor: pointer;}
+.deposit>.right li:last-child {border-bottom: 0px solid #E63C2D;}
+.deposit>.right li {overflow: hidden;border-bottom: 1px solid #E63C2D;}
+.deposit>.right li .left {width: 77%;float: left;text-align: center;}
+.deposit>.right li .right {width: 23%;height:1.5rem;float: left;position: relative;}
+.show .right {background-color: #E63C2D;}
+.show .right img {width: 0.5rem;position: absolute;left: 50%;top: 50%;margin-top: -2.5px;margin-left: -5px;}
+.deposit>.right li:nth-child(n+2) {display: none;}
+
+
+.bill {font-size: 0.7rem;height: 5.4rem;}
+.bill li {height: 2.8rem;}
+.bill li:first-child {border-bottom: 1px solid #DCDCDC;line-height: 2.8rem;}
+.bill li:last-child {line-height: 0.6rem;}
+.bill li:last-child a {color: #666;}
+.bill li:last-child h3 {font-size: 0.75rem;line-height: 1.6rem;}
+.bill li:last-child p {font-size: 0.55rem;}
+.bill img {height:1rem;float: right;margin: 0.9rem 0.75rem;}
+.approach {background-color: white;}
+.approach ul li {height: 3rem;}
+.approach ul li div {float: left;}
+.approach ul li {overflow: hidden;}
+.approach ul li div.left {width: 10%;}
+.approach ul li div.middle {width: 55%;}
+.approach ul li div.right {width: 35%;}
+.approach ul li {border-bottom: 1px solid #DCDCDC;margin: 0 0.75rem;}
+.approach ul li:last-child {border-bottom: 0px solid #DCDCDC;}
+.approach ul li .middle h3 {font-size: 0.75rem;color: #333;margin-top: 0.65rem;}
+.approach ul li .middle p {font-size: 0.5rem;color: #999;}
+.approach ul li img {width: 1rem;margin-top: 1.1rem;}
+.approach ul li .right img {float: right;}
+.approach ul li.privilege .right span {font-size: 0.7rem;color: #333;line-height: 3rem;}
+.approach ul li.privilege .right img {width: 0.5rem;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

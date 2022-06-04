@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll"/>
+</head>
+<body>
+<@p.valid id="purchaseorder" action="purchaseorder_edit_sub.do" class="layui-form" layui=true>
+ <@p.legend text="${(languaged !='')?string('Hint information','提示信息')}"/> 
+ <input type="hidden" name="purchaseOrderId" value="${purchaseOrder.purchaseOrderId}" />
+ <input type="hidden" name="targetId" value="${purchaseOrder.targetId}" />
+ <input type="hidden" name="partsId" value="${partsId}" />
+         <div class="layui-form-item">
+		     <@p.layinput label="${(languaged !='')?string('purchaseOrderNo','采购订单号')}"  datarule="required;" datamsgrequired="${(required)!''}" name="purchaseOrderNo" value="${purchaseOrder.purchaseOrderNo}"/>    
+	     </div>
+
+	     <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('supplier Parts','零件名称')}"  datarule="required;" datamsgrequired="${(required)!''}" name="partsName" value="${partsName}" readonly="readonly"/>    
+		   <@p.layinput label="${(languaged !='')?string('supplier','供应商')}"  datarule="required;" datamsgrequired="${(required)!''}" name="supplier" value="${purchaseOrder.supplier}"/>    
+	     </div>
+	     <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('firmName','公司')}"  datarule="required;" datamsgrequired="${(required)!''}"  value="${firmName}" readonly="readonly"/>    
+		    <@p.layinput label="${(languaged !='')?string('partCost','零件成本')}"  datarule="required;" datamsgrequired="${(required)!''}" name="partCost" value="${purchaseOrder.partCost}"/>    
+	     </div>
+	     <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('Quantity','零件数量')}"  datarule="required;" datamsgrequired="${(required)!''}" name="partsNumber" value="${partsNumber}"/>    
+		    <@p.layinput label="${(languaged !='')?string('Selling price','出售价格')}"  datarule="required;" datamsgrequired="${(required)!''}" name="totalCost" value="${purchaseOrder.totalCost}"/>    
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('profits','单品利润')}"  datamsgrequired="${(required)!''}" name="profits" value="${purchaseOrder.profits}" readonly="readonly"/>    
+        <@p.layinput label="${(languaged !='')?string('total profits','零件总利润')}"  datamsgrequired="${(required)!''}" name="tprofits" readonly="readonly" value="${totalProfits}"/>
+	     </div>
+	      <div class="layui-form-item">
+         <@p.switch label="${(languaged !='')?string('Received','采购状态')}" name="status" value="${purchaseOrder.status}" />
+	     </div>
+         <div class="layui-form-item">
+	     </div>
+</@p.valid>
+</body>
+<script type="text/javascript">
+/* 监听input框默layui 不监听 */
+		 layui.use(['form', 'layedit', 'laydate','jquery'], function(){
+		//主要功能实现
+		$("input[name='totalCost").bind('input propertychange', check);			
+		$("input[name='partCost").bind('input propertychange', check1);		
+		
+		function check() {
+			var totalCost = $("input[name='totalCost']").val();
+			 var partCost = $("input[name='partCost']").val();
+			 var partsNumber = $("input[name='partsNumber']").val();
+			 if(parseInt(totalCost)>0){				 
+			 $("input[name='profits']").val(formatCurrency(totalCost-parseFloat(partCost)));
+			 $("input[name='tprofits']").val(formatCurrency((totalCost-parseFloat(partCost))*partsNumber));
+			 }else{
+				 $("input[name='profits']").val(0)
+			 } 
+				}
+		function check1() {
+			var totalCost = $("input[name='totalCost']").val();
+			 var partCost = $("input[name='partCost']").val();
+			 var partsNumber = $("input[name='partsNumber']").val();
+			 if(parseInt(totalCost)>0){				 
+			 $("input[name='profits']").val(totalCost-parseInt(partCost));
+			 $("input[name='tprofits']").val((totalCost-parseInt(partCost))*partsNumber);
+			 }else{
+				 $("input[name='profits']").val(0)
+			 } 
+				}
+		
+		function formatCurrency(num) {  
+		    num = num.toString().replace(/\$|\,/g,'');  
+		    if(isNaN(num))  
+		    num = "0";  
+		    sign = (num == (num = Math.abs(num)));  
+		    num = Math.floor(num*100+0.50000000001);  
+		    cents = num%100;  
+		    num = Math.floor(num/100).toString();  
+		    if(cents<10)  
+		    cents = "0" + cents;  
+		    for (var i = 0; i < Math.floor((num.length-(1+i))/3); i++)  
+		    num = num.substring(0,num.length-(4*i+3))+','+  
+		    num.substring(num.length-(4*i+3));  
+		    return (((sign)?'':'-') + num + '.' + cents);  
+		} 
+		}); 
+</script>
+</html>

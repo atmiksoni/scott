@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll"/>
+</head>
+<body>
+<@p.valid id="supply" action="supply_edit_sub.do" class="layui-form" layui=true>
+ <@p.legend text="提示信息"/> 
+ <input type="hidden" name="supplyId" value="${supply.supplyId}" />
+         <!-- <div class="layui-form-item">
+		    <@p.layinput label="所属公司"  datarule="required;" name="companyId" value="${supply.companyId}"/>
+	     </div> -->
+         <div class="layui-form-item">
+		    <@p.layinput label="发布人"  datarule="required;" readonly="readonly" name="publisher" value="${accountInfo.userName}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="产品描述"  datarule="required;" name="supplyDescribe" value="${supply.supplyDescribe}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="产品数量"  datarule="required;" name="supplyNum" value="${supply.supplyNum}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="批发价"  datarule="required;" name="tradePrice" value="${supply.tradePrice}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="零售价"  datarule="required;" name="retailPrice" value="${supply.retailPrice}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="截止日期"  datarule="required;" name="expiryDate" value="${supply.expiryDate}"/>
+	     </div>
+	     <!-- <@p.legend text="商品小图"/>
+		 <div class="layui-form-item">
+			<div class="layui-inline" style="padding-left: 20px;">
+			<@p.upload id="imageSmall" list=goodsSmall btnId="pre" name="imageSmall" delurl="${base}/admin/goods/goodsSamll_image_del.do" pathField="imageSmall" idField="goodsId" />
+			</div>
+		 </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="产品图片"  datarule="required;" name="supplyPic" value="../${supply.supplyPic}"/>
+	     </div> -->
+</@p.valid>
+</body>
+</html>

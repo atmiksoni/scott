@@ -1,0 +1,6 @@
+使用方法：
+<@p.select id="buildingId" value="${(building.buildingId)!}" name="building.buildingId" list=buildingList valueField="buildingId" textField="buildingName" />
+引入js:
+<@p.resource types="Jquery,EasyUI,Form,NiceScroll,ComBo"/>
+var buildingId = new Cb("buildingId");
+buildingId.LoadCombo();

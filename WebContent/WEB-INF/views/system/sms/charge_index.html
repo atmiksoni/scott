@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<@p.resource types="Jquery,Easyui,Tree,NiceScroll"/>
+<script type="text/javascript">
+	var myparams = {
+	};
+	var groupId;
+	$(function() {
+		niceScroll(".panel-body");
+
+		var smschargetree = new Tree();
+		smschargetree.url = "pmreading_tree_sms.do";
+		smschargetree.initTree("smschargetree");
+		smschargetree.onClick =  function() {
+			myparams.searchtime = initType.value;
+			myparams.searchgroupId = groupId;
+			smscharge.search(myparams);
+		}
+		}
+	});
+</script>
+</head>
+<body class="easyui-layout" style="overflow-y: hidden">
+	<div region="west" split="true" minWidth="190" maxWidth="190"
+		title="群组列表" style="overflow: hidden; border-bottom: none">
+		<div region="center"
+			style="border-left: none; border-right: none; border-bottom: none;">
+			<div id="houseinfo" fit="true" style="padding: 3px;"
+				class="easyui-panel" border="false" title="费用查询">
+				<ul id="smschargetree" class="ztree" style="height: 200px;"></ul>
+			</div>
+		</div>
+	</div>
+	<div region="center" href="smscharge_right.do"
+		style="padding: 0px; overflow: hidden; border: none"></div>
+</body>
+</html>

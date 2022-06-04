@@ -1,0 +1,49 @@
+<body style="overflow: hidden">
+	<script type="text/javascript">
+		var driver;
+		$(function() {
+			driver = new Dd("driver");
+			driver.url = "select_driver_data.do";
+			driver.colM = [ [ {
+				title : "主键",
+				field : "driverId",
+				alias : "d",
+				hidden : true,
+				width : 100,
+				align : "center"
+			}, {
+				title : "驾驶员",
+				field : "driverName",
+				alias : "d",
+				width : 100,
+				align : "center"
+			}, {
+				title : "联系方式",
+				field : "telephone",
+				alias : "d",
+				width : 100,
+				align : "center"
+			} ] ];
+			driver.param = myparams;
+			driver.onClickRow = function(rowIndex, rowData) {
+				func.setTextBox(rowData);
+			}
+			driver.onLoadSuccess = function(data) {
+
+			};
+			driver.LoadDataGrid();
+			$('#search').linkbutton({
+				iconCls : 'icon-save',
+				onClick : function() {
+					driver.search(myparams);
+				}
+			});
+		});
+	</script>
+	<div fit="true" class="easyui-layout">
+
+		<div region="center" style="overflow: hidden; border: none;">
+			<table fit="true" namespace="componet" id="driver" class="datagrid"></table>
+		</div>
+	</div>
+</body>

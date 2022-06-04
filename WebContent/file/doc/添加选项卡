@@ -1,0 +1,7 @@
+top.Dg.z.addTab({
+		            id : 'buildingfloor' + buildingunit.rowKey,
+		            url : 'buildingfloor/list_buildingfloor_turn.do?buildingUnitId=' + buildingunit.rowKey,
+		            title : '楼层管理',
+		            subtitle : buildingunit.getSelected('unitName'),
+		            params : myparams
+ });

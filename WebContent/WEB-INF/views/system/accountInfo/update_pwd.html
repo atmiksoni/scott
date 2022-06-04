@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,zui,EasyUI"/>
+</head>
+<body>
+	<@p.valid id="user" action="password_user_save.do" msgClass="n-right">
+
+	<table align="center" class="table table-form">
+		<tr>
+			<th class="w-80px">原始密码：</th>
+			<td><input type="password" class="form-control input-sm w-p30" name="old" data-rule="原密码:required;" /></td>
+
+		</tr>
+		<tr>
+			<th class="w-80px">新密码：</th>
+			<td><input type="password" class="form-control input-sm w-p30" name="password" data-rule="新密码: required;password;" /></td>
+
+		</tr>
+		<tr>
+			<th class="w-80px">确认密码：</th>
+			<td><input type="password" name="repassword" class="form-control input-sm w-p30" data-rule="确认密码: required;match(password);" /></td>
+
+		</tr>
+
+	</table>
+
+	</@p.valid>
+</body>
+<script type="text/javascript">
+	VF.callbackBefore = function(data) {
+		var index = parent.layer.getFrameIndex(window.name);
+		Fm.msg(data);
+		if (data.close == true) {
+			parent.layer.close(index);
+		}
+	}
+</script>
+</html>

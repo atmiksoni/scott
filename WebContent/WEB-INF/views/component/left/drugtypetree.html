@@ -1,0 +1,20 @@
+ <@p.resource types="Jquery,Easyui,AnyDataGrid,Tree,NiceScroll"/>
+<body class="easyui-layout" style="margin-top: 1px; overflow-y: hidden">
+	<div region="west" split="true" minWidth="180" maxWidth="180" title="类型分组列表" style="overflow: hidden;">
+		<ul id="mytree" class="ztree"></ul>
+	</div>
+	<script type="text/javascript">
+	var tree;
+	var myparams = {};
+	$(function() {
+		niceScroll(".panel-body");
+		tree = new Tree();
+		tree.queryParams = myparams;
+		tree.url = "${base}/admin/componet/drugtype_tree_data.do";
+		tree.initTree("mytree");
+		tree.onClick = function(node) {
+			type_click(node);
+		};
+	});
+</script>
+</body>

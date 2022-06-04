@@ -1,0 +1,67 @@
+1、treegrid修改
+   1：row._parentId 修改为row.parentId
+2、easyui.css 33行
+   .panel-body-noheader {
+     border-top-width:0px;
+   }
+   .panel-body {
+  overflow: auto;
+  border-top-width: 0;
+  padding: 0;
+  background: url('images/bg.gif') repeat;
+}
+色调修改#0081c2改为#00bbee
+easyui.css头部加入
+iframe{
+	border: 0;
+}
+.tabs-header{
+ border-width: 0px;
+}
+.tabs-header-bottom {
+  border-width: 0 1px 0px 1px;
+  padding: 0 0 2px 0;
+}
+.datagrid-footer td {
+  border-width: 0 1px 1px 0;
+  border-style: solid;
+  margin: 0;
+  padding: 0;
+}
+.panel-body
+.datagrid-body {
+  margin: 0;
+  padding: 0;
+  overflow: auto;
+  	scrollbar-face-color: #e4e4e4;
+	scrollbar-heightlight-color: #f0f0f0;
+	scrollbar-3dlight-color: #d6d6d6;
+	scrollbar-arrow-color: #240024;
+	scrollbar-darkshadow-color: #d6d6d6;
+	zoom: 1;
+}
+.datagrid-td-rownumber {
+  background-color: #F2F2F2;
+  background: -webkit-linear-gradient(top,#ffffff 0,#F2F2F2 100%);
+  background: -moz-linear-gradient(top,#ffffff 0,#F2F2F2 100%);
+  background: -o-linear-gradient(top,#ffffff 0,#F2F2F2 100%);
+  background: linear-gradient(to bottom,#ffffff 0,#F2F2F2 100%);
+  background-repeat: repeat-x;
+/*   background: url('images/datagrid_header_bg.gif') repeat; */
+   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffff,endColorstr=#F2F2F2,GradientType=0); 
+}
+layout-split-north 宽度改为3
+3、ztree css文件
+body{
+	/*font-family: 微软雅黑, 宋体, Arial, Helvetica, Verdana, sans-serif;*/
+}
+
+.datagrid-ftable td{
+   background: url('images/datagrid_header_bg.gif') repeat;
+  border: none;
+}
+
+panle loadingMessage："加载中..."
+
+
+.datagrid-ftable td  修改

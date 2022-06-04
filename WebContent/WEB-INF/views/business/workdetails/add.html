@@ -1,0 +1,21 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll"/>
+</head>
+<body>
+<@p.valid id="workdetails" action="workdetails_add_sub.do" class="layui-form" layui=true>
+ <@p.legend text="${(languaged !='')?string('Hint information','提示信息')}"/> 
+         <div class="layui-form-item"> 
+           <@p.layinput label="${(languaged !='')?string('engineerId','工程师姓名')}"  datarule="required;" datamsgrequired="${(required)!''}" name="engineerId" />
+	     </div>
+         <div class="layui-form-item"> 
+           <@p.layinput label="${(languaged !='')?string('charge','')}"  datarule="required;" datamsgrequired="${(required)!''}" name="charge" />
+	     </div>
+         <div class="layui-form-item"> 
+           <@p.layinput label="${(languaged !='')?string('order','所属单号')}"  datarule="required;" datamsgrequired="${(required)!''}" name="order" />
+	     </div>
+</@p.valid>
+</body>
+</html>

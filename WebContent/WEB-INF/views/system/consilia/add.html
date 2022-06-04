@@ -1,0 +1,149 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll,EasyUI,ueditor,webuploader"/>
+</head>
+<body>
+<@p.valid id="consilia" action="consilia_add_sub.do" class="layui-form" layui=true>
+ <@p.legend text="提示信息"/> 
+          <input type="hidden" name="doctorId" value="${doctorId}">
+         <div class="layui-form-item">
+		   <@p.layinput label="医案名称"  datarule="required;" name="consiliaName" />
+	     </div>
+<!-- 	      <div class="layui-form-item">
+		   <@p.layinput label="医案类型"  datarule="required;" name="diseaseId" />
+	     </div> -->
+	     <div class="layui-form-item"  id="diseaseType">
+		<label class="layui-form-label"><b>医案类型：</b></label> <a href="javascript:chooseDisease()" id="diseaseName" class="layui-btn">选择</a>
+		<input type="hidden"  name="diseaseId" id="diseaseId">
+		</div>
+         <div class="layui-form-item">
+		   <@p.layinput label="患者名称"  datarule="required;" name="patientName" />
+		     <@p.layinput label="就诊时间"  id="visitDate" datarule="required;" name="visitDate" />
+	     </div>
+         <div class="layui-form-item">
+		   <@p.layinput label="年龄"  datarule="required;integer[+0]; range[~199]" name="age" />
+		    <@p.layselect label="性别"  list={"0":"男","1":"女"} name="sex" />
+	     </div>
+         <div class="layui-form-item">
+		   <@p.textare width=600 label="症状主诉"  name="symptom" />
+	     </div>    
+         <div class="layui-form-item">
+		   <@p.textare width=600 label="既往史" name="history" />
+	     </div>
+         <div class="layui-form-item">
+		   <@p.textare width=600 label="刻下症"  name="EngravedDisease" />
+	     </div>
+	      <div class="layui-form-item">
+		   <@p.textare width=600 label="现病史" name="hpi" />
+	     </div>
+	      <@p.legend text="辅助检查图片" btnId="preSlider"/>
+		<div class="layui-form-item">
+			<div class="layui-inline" style="padding-left: 20px;">
+			<@p.upload id="prePicSlider" name="prePicSlider" /></div>
+			<input id="consiliaimgs" name="imgs" type="hidden" class="layui-input">
+		</div>
+         <div class="layui-form-item">
+		   <@p.textare width=600 label="中医诊断"  name="cmDiagnosis" />
+	     </div>
+         <div class="layui-form-item">
+		   <@p.textare width=600 label="西医诊断" name="wmDiagnosis" />
+	     </div>
+	     <@p.legend text="医药处方"/> 
+         <div class="layui-form-item">
+		   <@p.layinput label="处方名称"  datarule="required;" name="prescriptionName" />
+	     </div>
+         <div class="layui-form-item">
+		   <@p.textare width=600 label="组成"  name="constitute" />
+	     </div>
+         <div class="layui-form-item">
+		   <@p.layinput label="付数"  datarule="required;" name="prescriptionCount" />
+		   <@p.switch label="是否名家医案" name="isMasters" value="1" text="是|否"/>
+	     </div>
+         <div class="layui-form-item">
+		   <@p.textare width=600 label="用法"   name="prescriptionUsage" />
+	     </div>
+         <div class="layui-form-item">
+		   <@p.textare width=600 label="治疗方法" name="treatment" />
+	     </div>
+</@p.valid>
+</body>
+<script type="text/javascript">
+	//layui  日期
+	layui.use('laydate', function() {
+	    var laydate = layui.laydate;
+	    laydate.render({
+	       // type: 'time',
+	       // format: 'HH:mm',
+	        elem: '#visitDate', //指定元素
+	        //value: '08:00'//默认值
+	    });
+	}); 
+	$(function() {
+		var imgs = [];
+		var preSlider = new Upload({
+			filePicker : "preSlider",
+			fileList : "prePicSlider",
+			params : {
+				businessKey : "30"
+			},
+			server : "${base}/admin/consilia/consilia_image_upload.do"
+		});
+		preSlider.uploadSuccess = function(file, data) {
+			var img = {};
+			img.name = file.id;
+			img.value = data.filePath;
+			imgs.push(img);
+			getImgsUrl();
+		};
+
+		preSlider.onFileDequeued = function(file) {
+			for (var i = 0; i < imgs.length; i++) {
+				if (imgs[i].name == file.id) {
+					imgs.splice(i, 1);
+				}
+			}
+			getImgsUrl();
+		};
+
+		function getImgsUrl() {
+			var imsUrl = "";
+			for (var i = 0; i < imgs.length; i++) {
+				imsUrl += "," + imgs[i].value;
+			}
+			$('#consiliaimgs').val(imsUrl.substring(1));
+		}
+		
+	
+	});
+	function chooseDisease() {
+		 //alert("进入");
+		top.Dg.select({
+			title : "疾病类型选择",
+			center : "disease",
+			setTextBox : function(rowData) {
+				//console.log(rowData);
+				var nId="";
+				var nValue=""; 
+				 if(rowData){
+                     for(var i = 0;i<rowData.length;i++){ 
+                        var veh = rowData[i];
+                        if(i==0){
+                        	 nId=veh.diseaseId;
+                             nValue=veh.diseaseName;
+                        }else{
+                        	 nId=nId+","+veh.diseaseId;
+                             nValue=nValue+" "+ veh.diseaseName;
+                        }
+                       
+
+                     }
+              }
+				 $("#diseaseName").text(nValue);
+				 $("#diseaseId").val(nId);		
+			}
+		});
+		};
+</script>
+</html>

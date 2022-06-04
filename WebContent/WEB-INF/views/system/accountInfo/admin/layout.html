@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<@p.resource types="Jquery,Easyui,Tree,NiceScroll,AnyDataGrid"/>
+<script type="text/javascript">
+
+	var myparams = {
+		userId : top.userId
+	};
+
+	function noImage() {
+		var img = event.srcElement;
+		img.src = "../../res/nbxy/image/noone.png";
+		img.onerror = null;
+	}
+	
+	function train_click(node) {
+		search(myparams);
+	}
+</script>                          
+</head>
+<body class="easyui-layout" style="overflow-y: hidden">
+	<!-- 中央 -->
+	<div region="center" split="true" title="数据管理员" style="border:none;overflow: hidden;" href="list_user_turn.do?roleId=2"></div>
+</body>
+</html>

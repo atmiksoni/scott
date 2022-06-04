@@ -1,0 +1,9 @@
+.aboutUs {position: fixed;top: 0;left: 0;width: 100%;height: 100%;}
+.logo {margin: 20px 0 0;width: 100%;height: 20%;text-align: center;}
+.logo div {width:24%;margin: 40px auto 0;}
+.logo div img {width:100%;}
+.content {border-bottom: 0px solid #EBEBEB;padding: 0.5rem;font-size: 0.6rem;text-indent:25px;}
+.content{border-top: 0px solid #EBEBEB;}
+.content li, .copyright li {font-size: 0.6rem;}
+.copyright {width:100%;position: absolute;bottom: 0.2rem;left: 0;margin: 0 auto;margin: 0 auto;}
+.copyright li {text-align: center;font-size: 0.45rem;color: #999;}

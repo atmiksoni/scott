@@ -1,0 +1,149 @@
+<body style="overflow: hidden">
+ <script type="text/javascript">
+      var engineer;
+    $(function() {
+      engineer = new Dd("engineer");
+      engineer.url = "engineer_list2_data.do";
+      engineer.title = "${(languaged !='')?string('Technician',' 工程师信息 ')}";
+      engineer.colM = [ [ /* {
+        field : "ck",
+        checkbox : true,
+        align : "center"
+      },  */{
+        title : "主键",
+        field : "engineerId",
+        alias : "e",
+        hidden:true
+      } ,{
+          title : "${(languaged !='')?string('Photo ','用户头像')}", 
+          field : "head",
+          alias : "e",
+          width : 50,
+          align : "center",
+          formatter : function(value, row, index) {
+   			return '<img width="71px;" align="center" height="40px;" src="../../'+row.head+'"" onerror="noImage();" />';
+   		}
+        } ,{
+        title : "${(languaged !='')?string('Technician Name ','工程师名称')}",
+        field : "userName",
+        alias : "accountInfo",
+        width : 100,
+        align : "center"
+      } /* ,{
+        title : "工程师名称",
+        field : "engineerName",
+        alias : "e",
+        width : 100,
+        align : "center"
+      }  */,{
+        title : "${(languaged !='')?string('department ','所属部门')}", 
+        field : "departmentName",
+        alias : "e",
+        width : 100,
+        align : "center"
+      } ,{
+          title : "${(languaged !='')?string('mobile ','手机号')}",
+          field : "mobile",
+          alias : "e",
+          width : 100,
+          align : "center"
+        } ,{
+        title : "${(languaged !='')?string('createDate ','创建时间')}",
+        field : "createDate",
+        alias : "e",
+        width : 100,
+        align : "center"
+      } ] ];
+
+      engineer.toolbar = [ /* {
+        id : "engineer_add",
+        text : "${(languaged !='')?string('add',' 添加 ')}",
+        iconCls : "icon-add",
+        handler : function() {
+          engineer.open2({
+            title : "${(languaged !='')?string('add','添加工程师信息')}",
+            h : "70%",
+			w : "45%",
+			btn:["${(languaged !='')?string('confirm',' 确认 ')}","${(languaged !='')?string('close',' 关闭 ')}"],
+            url : "engineer_add_turn.do",
+            params : myparams
+          });
+        }
+      }, */ {
+        id : "engineer_edit",
+        text : "${(languaged !='')?string('edit',' 修改')}",
+        iconCls : "icon-edit",
+        disabled : true,
+        handler : function() {
+          engineer.updata2({
+            title : "${(languaged !='')?string('edit','修改工程师信息')}",
+            h : "70%",
+			w : "45%",
+			 btn:["${(languaged !='')?string('confirm',' 确认 ')}","${(languaged !='')?string('close',' 关闭 ')}"],
+            url : "engineer_edit_turn.do",
+            params : {
+                engineerId : engineer.rowKey
+            }
+		  });
+        }
+      }/* , {
+        id : "engineer_del",
+        text : "删除工程师信息",
+        iconCls : "icon-remove",
+        disabled : true,
+        handler : function() {
+          engineer.remove({
+             url : "engineer_del_sub.do",
+             params : {
+                engineerId : engineer.rowKey
+             }
+		  });
+        }
+      }  */, {
+			id : "engineer_location",
+			text : "${(languaged !='')?string('Technician Location',' 工程师位置')}",
+			iconCls : "icon-search",
+			handler : function() {
+				engineer.open2({
+					title : "工程师位置详情",
+					h : "70%",
+					w : "45%",
+					url : "engineer_map_index.do",
+					btn : "",
+					params : {
+						engineerId : engineer.rowKey
+					}
+				});
+			}
+		}];
+      engineer.param = myparams;
+      engineer.onClickRow = function(rowIndex, rowData) {
+       $("#engineer_edit,#engineer_del").linkbutton("enable");
+      }
+      engineer.onLoadSuccess = function(data) {
+       $("#engineer_edit,#engineer_del").linkbutton("disable");
+      };
+      engineer.LoadDataGrid();
+      $('#search').linkbutton({
+        iconCls : 'icon-search',
+        onClick : function() {
+          engineer.search(myparams);
+        }
+      });
+    });
+    function nameSearch(){
+   		myparams.searchContent = $("#searchContent").val();
+   	}
+  </script>
+ <div fit="true" class="easyui-layout">
+   <div region="north" title="${(languaged !='')?string('search',' 查询条件 ')}" style="height: 70px;">
+   <div class="pannel_search">
+   		${(languaged !='')?string('Engineer name',' 工程师名称')}：<input type="text" class="easyui-textbox" data-options="prompt:'${(languaged !='')?string('Engineer name',' 工程师名称')}'" id="searchContent"/> 
+       <a href="javascript:;" id="search" onClick="nameSearch()";>${(languaged !='')?string('search','查询')}</a>
+   </div>
+  </div>
+  <div region="center" style="overflow: hidden;border: none;">
+   <table fit="true" namespace="engineer" id="engineer" class="datagrid"></table>
+  </div>
+ </div>
+</body>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>详细页面</title>
+<@p.resource types="Jquery,Form,NiceScroll"/>
+</head>
+<body>
+    <table class="tbformtop">
+      <tr>
+        <td>
+          <table class="tbform">
+            <tr>
+              <td colspan="2">
+                <div class="z-legend">
+                  <b>基本信息</b>
+                </div>
+              </td>
+            </tr>
+          	 <tr>
+            <td class="tdl" width="20%">资源名称：</td>
+            <td width="80%">${resource.resName}</td>
+          	</tr>
+          	 <tr>
+            <td class="tdl">资源地址：</td>
+            <td>${resource.resUrl}</td>
+          	</tr>
+          	 <tr>
+            <td class="tdl">所属上级：</td>
+            <td>${resource.resPid}</td>
+          	</tr>
+          	 <tr>
+            <td class="tdl">优先级：</td>
+            <td>${resource.resPriority}</td>
+          	</tr>
+          	 <tr>
+            <td class="tdl">类型：</td>
+            <td>${resource.resType}</td>
+          	</tr>
+          	 <tr>
+            <td class="tdl">编码：</td>
+            <td>${resource.resCode}</td>
+          	</tr>
+          	 <tr>
+            <td class="tdl">是否允许编辑：</td>
+            <td>${resource.allowEdit}</td>
+          	</tr>
+          	 <tr>
+            <td class="tdl">是否允许删除：</td>
+            <td>${resource.allowDelete}</td>
+          	</tr>
+          	 <tr>
+            <td class="tdl">备注：</td>
+            <td>${resource.remark}</td>
+          	</tr>
+          	 <tr>
+            <td class="tdl">图标：</td>
+            <td>${resource.icon}</td>
+          	</tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  <script type="text/javascript">
+	$(function() {
+		niceScroll("body");
+	});
+  </script>
+</body>
+</html>

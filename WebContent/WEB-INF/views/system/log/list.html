@@ -1,0 +1,68 @@
+<body style="overflow: hidden">
+	<script type="text/javascript">
+		var log;
+		$(function() {
+			log = new Dd("log");
+			log.url = "log_list_data.do";
+			log.title = "${(languaged !='')?string('log management',' 日志管理 ')}";
+			log.colM = [ [ {
+				title : "主键",
+				field : "logId",
+				alias : "l",
+				hidden : true,
+				width : 100,
+				align : "center"
+			}, {
+				title : "${(languaged !='')?string('userName ','用户')}",
+				field : "userName",
+				alias : "u",
+				width : 100,
+				align : "center"
+			}, {
+				title : "${(languaged !='')?string('content ','日志内容')}",
+				field : "content",
+				alias : "l",
+				width : 100,
+				align : "center"
+			}, {
+				title : "${(languaged !='')?string('type ','日志类型')}",
+				field : "type",
+				alias : "l",
+				width : 100,
+				align : "center"
+			}, {
+				title : "${(languaged !='')?string('optIp ','操作IP')}",
+				field : "optIp",
+				alias : "l",
+				width : 100,
+				align : "center"
+			}, {
+				title : "${(languaged !='')?string('creation time ','创建日期')}",
+				field : "createDate",
+				alias : "l",
+				width : 100,
+				align : "center"
+			} ] ];
+
+			log.param = myparams;
+			log.onClickRow = function(rowIndex, rowData) {
+				$("#log_edit,#log_del").linkbutton("enable");
+			}
+			log.onLoadSuccess = function(data) {
+				$("#log_edit,#log_del").linkbutton("disable");
+			};
+			log.LoadDataGrid();
+			$('#search').linkbutton({
+				iconCls : 'icon-save',
+				onClick : function() {
+					log.search(myparams);
+				}
+			});
+		});
+	</script>
+	<div fit="true" class="easyui-layout">
+		<div region="center" style="overflow: hidden; border: none;">
+			<table fit="true" namespace="log" id="log" class="datagrid"></table>
+		</div>
+	</div>
+</body>

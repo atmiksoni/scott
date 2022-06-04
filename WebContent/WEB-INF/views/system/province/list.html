@@ -1,0 +1,111 @@
+<body style="overflow: hidden">
+ <script type="text/javascript">
+      var province;
+    $(function() {
+      province = new Dd("province");
+      province.url = "province_list_data.do";
+      province.title = '${(languaged !="")?string("englishName","测试省信息")}';
+      province.colM = [ [ {
+        field : "ck",
+        checkbox : true,
+        align : "center"
+      }, {
+        title : "主键",
+        field : "provinceId",
+        alias : "p",
+        hidden:true
+      } ,{
+        title : '${(languaged !="")?string("englishName","国家Id信息")}',
+        field : "countyId",
+        alias : "p",
+        width : 100,
+        align : "center"
+      } ,{
+        title : '${(languaged !="")?string("englishName","省名称信息")}',
+        field : "provinceName",
+        alias : "p",
+        width : 100,
+        align : "center"
+      } ,{
+        title : '${(languaged !="")?string("englishName","信息")}',
+        field : "createDate",
+        alias : "p",
+        width : 100,
+        align : "center"
+      } ] ];
+
+      province.toolbar = [ {
+        id : "province_add",
+        text : "${(languaged !='')?string('add','添加')}",
+        iconCls : "icon-add",
+        handler : function() {
+          province.open2({
+            title : '${(languaged !="")?string("englishName","添加测试省")}',
+            h : "70%",
+			w : "45%",
+			btn:['${(languaged !="")?string("confirm","确认")}','${(languaged !="")?string("close","关闭")}'],
+            url : "province_add_turn.do",
+            params : myparams
+          });
+        }
+      }, {
+        id : "province_edit",
+        text : "${(languaged !='')?string('modify','修改')}",
+        iconCls : "icon-edit",
+        disabled : true,
+        handler : function() {
+          province.updata2({
+            title : '${(languaged !="")?string("englishName","修改测试省")}',
+            h : "70%",
+			w : "45%",
+            url : "province_edit_turn.do",
+            btn:['${(languaged !="")?string("confirm","确认")}','${(languaged !="")?string("close","关闭")}'],
+            params : {
+                provinceId : province.rowKey
+            }
+		  });
+        }
+      }, {
+        id : "province_del",
+        text : '${(languaged !="")?string("delete","删除")}',
+        iconCls : "icon-remove",
+        disabled : true,
+        handler : function() {
+          province.remove({
+             url : "province_del_sub.do",
+             params : {
+                provinceId : province.rowKey
+             },
+              title : '${(languaged !="")?string("are you delete?","")}',
+              content:'${(languaged !="")?string("delete content?","确定要删除所选记录吗?")}',
+               btn:['${(languaged !="")?string("confirm","确认")}','${(languaged !="")?string("close","关闭")}'],
+		  });
+        }
+      } ];
+      province.param = myparams;
+      province.onClickRow = function(rowIndex, rowData) {
+       $("#province_edit,#province_del").linkbutton("enable");
+      }
+      province.onLoadSuccess = function(data) {
+       $("#province_edit,#province_del").linkbutton("disable");
+      };
+      province.LoadDataGrid();
+      $('#search').linkbutton({
+        iconCls : 'icon-search',
+        onClick : function() {
+          province.search(myparams);
+        }
+      });
+    });
+  </script>
+ <div fit="true" class="easyui-layout">
+  <div region="north" title="查询条件" style="height: 70px;">
+   <div class="pannel_search">
+       <a href="javascript:;" id="search">${(languaged !='')?string('search','查询')}</a>
+   </div>
+  </div>
+  <div region="center" style="overflow: hidden;border: none;">
+   <table fit="true" namespace="province" id="province" class="datagrid"></table>
+  </div>
+ </div>
+</body>

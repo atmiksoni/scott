@@ -1,0 +1,160 @@
+<body style="overflow: hidden">
+ <script type="text/javascript">
+      var equipment;
+    $(function() {
+      equipment = new Dd("equipment");
+      equipment.url = "equipment_list_data.do";
+      equipment.title = "${(languaged !='')?string('device state',' 设备状态')}";
+      equipment.colM = [ [ /* {
+        field : "ck",
+        checkbox : true,
+        align : "center"
+      },  */{
+        title : "主键",
+        field : "equipmentId",
+        alias : "e",
+        hidden:true
+      } ,{
+        title : "${(languaged !='')?string('Device type','设备类型')}",
+        field : "equipmentTypeName",
+        alias : "equipmentType",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "${(languaged !='')?string('Device ID','设备编号')}",
+        field : "equipmentNo",
+        alias : "e",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "${(languaged !='')?string('order number','订购单号')}",
+        field : "orderNo",
+        alias : "e",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "${(languaged !='')?string('Device address','设备地址')}",
+        field : "equipmentAddress",
+        alias : "e",
+        width : 100,
+        align : "center"
+      } /* ,{
+        title : "${(languaged !='')?string('brand','品牌')}",
+        field : "brand",
+        alias : "e",
+        width : 100,
+        align : "center"
+      } */ 
+      ,{
+          title : "${(languaged !='')?string('Equipment summary','设备简介')}",
+          field : "equipmentIntroduce",
+          alias : "e",
+          width : 100,
+          align : "center"
+        },{
+        title : "${(languaged !='')?string('Manufactur Date','出厂日期')}",
+        field : "factoryDate",
+        alias : "e",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "${(languaged !='')?string('Quality standard','质量标准')}",
+        field : "isoNormal",
+        alias : "e",
+        width : 100,
+        align : "center"
+      }  ,{
+          title : "${(languaged !='')?string('Manufacturer','制造商')}",
+          field : "manufacturer",
+          alias : "e",
+          width : 100,
+          align : "center"
+        } ,{
+        title : "${(languaged !='')?string('Power volume','容量')}",
+        field : "capacity",
+        alias : "e",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "${(languaged !='')?string('creation time','创建时间')}",
+        field : "createDate",
+        alias : "e",
+        width : 100,
+        align : "center"
+      } ] ];
+
+      equipment.toolbar = [ {
+        id : "equipment_add",
+        text : "${(languaged !='')?string('add',' 添加 ')}",
+        iconCls : "icon-add",
+        handler : function() {
+          equipment.open2({
+            title : "${(languaged !='')?string('add','添加 设备信息')}",
+            h : "70%",
+			w : "45%",
+			btn:["${(languaged !='')?string('confirm',' 确认 ')}","${(languaged !='')?string('close',' 关闭 ')}"],
+            url : "equipment_add_turn.do",
+            params : myparams
+          });
+        }
+      }, {
+        id : "equipment_edit",
+        text : "${(languaged !='')?string('edit',' 修改')}",
+        iconCls : "icon-edit",
+        disabled : true,
+        handler : function() {
+          equipment.updata2({
+            title : "${(languaged !='')?string('edit','修改 设备信息')}",
+            h : "70%",
+			w : "45%",
+            url : "equipment_edit_turn.do",
+            btn:["${(languaged !='')?string('confirm',' 确认 ')}","${(languaged !='')?string('close',' 关闭 ')}"],
+            params : {
+                equipmentId : equipment.rowKey
+            }
+		  });
+        }
+      }, {
+        id : "equipment_del",
+        text : "${(languaged !='')?string('delete',' 删除')}",
+        iconCls : "icon-remove",
+        disabled : true,
+        handler : function() {
+          equipment.remove({
+             url : "equipment_del_sub.do",
+             params : {
+                equipmentId : equipment.rowKey
+             },
+             title:"${(languaged !='')?string('are you delete?','')}",
+             content:"${(languaged !='')?string('delete content','确定要删除所选记录吗?')}",
+              btn:["${(languaged !='')?string('confirm',' 确认 ')}","${(languaged !='')?string('close',' 关闭 ')}"]
+		  });
+        }
+      } ];
+      equipment.param = myparams;
+      equipment.onClickRow = function(rowIndex, rowData) {
+       $("#equipment_edit,#equipment_del").linkbutton("enable");
+      }
+      equipment.onLoadSuccess = function(data) {
+       $("#equipment_edit,#equipment_del").linkbutton("disable");
+      };
+      equipment.LoadDataGrid();
+      $('#search').linkbutton({
+        iconCls : 'icon-search',
+        onClick : function() {
+          equipment.search(myparams);
+        }
+      });
+    });
+  </script>
+ <div fit="true" class="easyui-layout">
+  <div region="north" title="查询条件" style="height: 70px;">
+   <div class="pannel_search">
+       <a href="javascript:;" id="search">${(languaged !='')?string('search','查询')}</a>
+   </div>
+  </div>
+  <div region="center" style="overflow: hidden;border: none;">
+   <table fit="true" namespace="equipment" id="equipment" class="datagrid"></table>
+  </div>
+ </div>
+</body>

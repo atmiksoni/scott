@@ -1,0 +1,96 @@
+SELECT
+  h.houseId,
+	h.houseNum,
+	h.houseOwnerName,
+  CASE when hfs.feeStandardId='A9453818A98249CC8813CD29092217B1' then 1 else 0
+  end feeStandardState ,
+  CASE when hfs.houseFeeStandardId is  null or hfs.houseFeeStandardId='' then 0 else 1
+  end feeItemState,
+  CASE when ((b.receivable is  null or b.receivable<=0) or hfs.feeItemTypeCode='F_DISPOSABLE')  then 0 else 1
+  end feeReportDetailsState
+FROM
+	T_PMS_House h
+LEFT JOIN T_PMS_HouseFeeStandard hfs ON h.houseId = hfs.houseId
+AND feeItemId = '5493EED2162C4E2FB8315FD784CDEBF3'
+AND state = 1
+LEFT JOIN (
+	SELECT
+		SUM (receivable) receivable,
+		houseId
+	FROM
+		T_PMS_Bills
+	GROUP BY
+		houseId
+) b ON b.houseId = h.houseId
+WHERE
+	h.buildingUnitId = '0E7279C3B7524C6CAC9227344D93EE1E'
+AND h.buildingFloorId = '7D3EDB1F60FD49E1B048E9C9284E828E'
+
+
+
+create table tb(id int, value varchar(10))
+insert into tb values(1, 'aa')
+insert into tb values(1, 'bb')
+insert into tb values(2, 'aaa')
+insert into tb values(2, 'bbb')
+insert into tb values(2, 'ccc')
+go
+ 
+select id, [value] = stuff((select ',' + [value] from tb t where id = tb.id for XML path('')) , 1 , 1 , '')
+from tb
+group by id
+
+
+//同步公式计费方式
+UPDATE hfs
+		SET
+		hfs.calculateType = fs.calculateType
+		from T_PMS_HouseFeeStandard hfs,T_PMS_FeeStandard fs
+		where hfs.feeStandardId=fs.feeStandardId
+		
+		
+		
+		
+		
+		
+		SELECT
+  max(b.communityId),
+	COUNT (
+		CASE
+		WHEN feeItemId = '66446A75314C417E889AB6F46D7AAAD5' THEN
+			b.proceeds
+		END
+	) '66446A75314C417E889AB6F46D7AAAD5JCount',
+	SUM (
+		CASE
+		WHEN feeItemId = '6F074DE4007B4329B4E843BBD93E35B4' THEN
+			b.proceeds
+		END
+	) '6F074DE4007B4329B4E843BBD93E35B4JAmount',
+	COUNT (
+		CASE
+		WHEN fefund > 0 THEN
+			b.fefund
+		END
+	) '66446A75314C417E889AB6F46D7AAAD5TCount',
+	SUM (
+		CASE
+		WHEN fefund > 0 THEN
+			b.fefund
+		END
+	) '66446A75314C417E889AB6F46D7AAAD5TAmount'
+FROM
+	T_PMS_BillsDetails b
+LEFT JOIN T_PMS_Bills bs ON bs.billsId = b.billsId
+WHERE
+	(
+		b.createDate >= '2015-08-12'
+		AND b.createDate < '2015-08-31'
+		AND b.organizationId = '94DBCBD0D689495097A6523B146710A5'
+		AND feeItemId IN (
+			'66446A75314C417E889AB6F46D7AAAD5',
+			'6F074DE4007B4329B4E843BBD93E35B4'
+		)
+	)
+GROUP BY
+	b.communityId

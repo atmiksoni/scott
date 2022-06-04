@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>详细页面</title>
+<@p.resource types="Jquery,Form,NiceScroll"/>
+</head>
+<body>
+    <table class="tbformtop">
+      <tr>
+        <td>
+          <table class="tbform">
+            <tr>
+              <td colspan="2">
+                <div class="z-legend">
+                  <b>基本信息</b>
+                </div>
+              </td>
+            </tr>
+          	 <tr>
+            <td class="tdl" width="20%">参数名称：</td>
+            <td width="80%">${setting.name}</td>
+          	</tr>
+          	 <tr>
+            <td class="tdl">参数值：</td>
+            <td>${setting.value}</td>
+          	</tr>
+          	 <tr>
+            <td class="tdl">参数代码：</td>
+            <td>${setting.code}</td>
+          	</tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  <script type="text/javascript">
+	$(function() {
+		niceScroll("body");
+	});
+  </script>
+</body>
+</html>

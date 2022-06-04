@@ -1,0 +1,104 @@
+<body style="overflow: hidden">
+	<script type="text/javascript">
+		var area;
+		$(function() {
+			area = new Dd("area");
+			area.url = "area_list_data.do";
+			area.title = "区域信息";
+			area.colM = [ [ {
+				title : "主键",
+				field : "areaId",
+				alias : "a",
+				hidden : true,
+				width : 100,
+				align : "center"
+			}, {
+				title : "区域名称",
+				field : "areaName",
+				alias : "a",
+				width : 60,
+				align : "center"
+			}, {
+				title : "区域编码",
+				field : "adCode",
+				alias : "a",
+				width : 60,
+				align : "center"
+			}, {
+				title : "级别",
+				field : "areaLevel",
+				alias : "a",
+				width : 60,
+				align : "center",
+				formatter : function(value, row, index) {
+					return Fm.formatter({
+						"1" : "省",
+						"2" : "市",
+						"3" : "区"
+					}, value);
+				}
+			}, {
+				title : "经度",
+				field : "lng",
+				alias : "a",
+				width : 100,
+				align : "center"
+			}, {
+				title : "纬度",
+				field : "lat",
+				alias : "a",
+				width : 100,
+				align : "center"
+			}, {
+				title : "全拼",
+				field : "fullLetter",
+				alias : "a",
+				width : 100,
+				align : "center"
+			} ] ];
+
+			area.toolbar = [ {
+				id : "area_edit",
+				text : "修改",
+				iconCls : "icon-edit",
+				disabled : true,
+				handler : function() {
+					area.updata2({
+						title : "修改区域",
+						h : "70%",
+						w : "45%",
+						url : "area_edit_turn.do",
+						params : {
+							areaId : area.rowKey
+						}
+					});
+				}
+			} ];
+			area.param = myparams;
+			area.onClickRow = function(rowIndex, rowData) {
+				$("#area_edit,#area_del").linkbutton("enable");
+			}
+			area.onLoadSuccess = function(data) {
+				$("#area_edit,#area_del").linkbutton("disable");
+			};
+			area.LoadDataGrid();
+			$('#search').linkbutton({
+				iconCls : 'icon-search',
+				onClick : function() {
+					myparams.areaName=$("#areaName").val();
+					area.search(myparams);
+				}
+			});
+		});
+	</script>
+	<div fit="true" class="easyui-layout">
+		<div region="north" title="区域查询" style="height: 70px;">
+			<div class="pannel_search">
+				区域名：<input type="text" class="easyui-textbox" id="areaName" /> <a href="javascript:;" id="search">查询</a>
+			</div>
+		</div>
+		<div region="center" style="overflow: hidden; border: none;">
+			<table fit="true" namespace="area" id="area" class="datagrid"></table>
+		</div>
+	</div>
+</body>

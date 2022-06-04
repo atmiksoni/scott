@@ -1,0 +1,119 @@
+<body style="overflow: hidden">
+	<script src="/plug-in/viewer/js/viewer.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="/plug-in/viewer/css/viewer.min.css" />
+	<script type="text/javascript">
+		var purchasing;
+		$(function() {
+			purchasing = new Dd("purchasing");
+			purchasing.url = "purchasing_detial_data.do?companyId=${companyId}";
+			purchasing.title = "产品信息";
+			purchasing.colM = [ [ {
+				title : "主键",
+				field : "purchasingId",
+				alias : "p",
+				hidden : true,
+				width : 100,
+				align : "center"
+			}, {
+				title : "产品图片",
+				field : "supplyPic",
+				alias : "p",
+				width : 100,
+				align : "center",
+				formatter:function(value, row, index){
+					return '<img onclick="show()"  width="80px;" height="50px;" src="../../'+value.supplyPic+'" />';
+				}
+			},   {
+				title : "批发价格",
+				field : "tradePrice",
+				alias : "p",
+				width : 100,
+				align : "center"
+			}, {
+				title : "零售价格",
+				field : "retailPrice",
+				alias : "p",
+				width : 100,
+				align : "center"
+			}, {
+				title : "产品数量",
+				field : "supplyNum",
+				alias : "p",
+				width : 100,
+				align : "center"
+			}, {
+				title : "发布人",
+				field : "userName",
+				alias : "accountInfo",
+				width : 100,
+				align : "center"
+			}, {
+				title : "截止时间",
+				field : "expiryDate",
+				alias : "p",
+				width : 100,
+				align : "center"
+			}, {
+				title : "产品描述",
+				field : "supplyDescribe",
+				alias : "p",
+				width : 100,
+				align : "center"
+			}] ];
+			purchasing.toolbar = [{
+				id : "purchasing_edit",
+				text : "编辑",
+				iconCls : "icon-edit",
+				disabled : true,
+				handler : function() {
+					purchasing.updata2({
+						title : "编辑供货信息",
+						h : "70%",
+						w : "40%",
+						url : "purchasing_edit_turn.do",
+						params : {
+							purchasingId : purchasing.rowKey
+						}
+					});
+				}
+			},{
+				id : "purchasing_del",
+				text : "删除",
+				iconCls : "icon-remove",
+				disabled : true,
+				handler : function() {
+					purchasing.remove({
+						url : "purchasing_del_sub.do",
+						params : {
+							purchasingId : purchasing.rowKey
+						}
+					});
+				}
+			}];
+			purchasing.param = myparams;
+			purchasing.onClickRow = function(rowIndex, rowData) {
+			  $("#purchasing_edit,#purchasing_del").linkbutton("enable");
+			}
+			purchasing.onLoadSuccess = function(data) {
+		      $("#purchasing_edit,#purchasing_del").linkbutton("disable");
+		    };
+		    purchasing.LoadDataGrid();
+		});
+		function show() {
+			var viewer = new Viewer(document.getElementById('imgdiv'), {
+				url : 'data-original'
+			});
+			viewer.show();
+		}
+	</script>
+	<div fit="true" class="easyui-layout">
+		<!-- <div region="north" title="查询条件" style="height: 70px;">
+			<div class="pannel_search">
+				单位名称：<input type="text" class="easyui-textbox" id="compName" name="compName" /> <a href="javascript:;" id="search">查询</a> <a href="javascript:;" id="export">导出</a>
+			</div>
+		</div> -->
+		<div id="imgdiv" region="center" style="overflow: hidden; border: none;">
+			<table fit="true" namespace="purchasing" id="purchasing" class="datagrid"></table>
+		</div>
+	</div>
+</body>

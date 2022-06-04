@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll"/>
+</head>
+<body>
+<@p.valid id="checkresult" action="checkresult_edit_sub.do" class="layui-form" layui=true>
+ <@p.legend text="${(languaged !='')?string('edit Result','修改检查结果')}"/> 
+ <input type="hidden" name="checkResultId" value="${checkresult.checkResultId}" />
+       <!--   <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('checkResultId','')}"  datarule="required;" datamsgrequired="${(required)!''}" name="checkResultId" value="${checkresult.checkResultId}"/>    
+	     </div> -->
+         <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('Result code','检查结果编号')}"  datarule="required;" datamsgrequired="${(required)!''}" name="checkResultCode" value="${checkresult.checkResultCode}"/>    
+		    <@p.layinput label="${(languaged !='')?string('Sorting','排序')}"  datarule="required;" datamsgrequired="${(required)!''}" name="Indexs" value="${checkresult.indexs}"/>    
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('Result name','检查结果名称')}"  datarule="required;" datamsgrequired="${(required)!''}" name="checkResultName" value="${checkresult.checkResultName}"/>    
+		    <@p.layinput label="${(languaged !='')?string('Result english Name','检查结果英文名称')}"  datarule="required;" datamsgrequired="${(required)!''}" name="checkResultEnglishName" value="${checkresult.checkResultEnglishName}"/>    
+	     </div>
+</@p.valid>
+</body>
+</html>

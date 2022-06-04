@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll,webuploader"/>
+</head>
+<body>
+<@p.valid id="engineer" action="engineer_add_sub.do" class="layui-form" layui=true>
+  <@p.legend text="${(languaged !='')?string('Repair Enginner','工程师添加')}"/> 
+         <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('Engineer name','工程师名称')}"  datarule="required;" datamsgrequired="${(required)!''}" name="engineerName" />
+		   <@p.layinput label="${(languaged !='')?string('account number','账号')}"  datarule="required;niName;remote[${base}/admin/account/ennineer_check_sub.do]" datamsgrequired="${(required)!''}" name="niName" />
+	     </div>
+	     <div class="layui-form-item">
+	     </div>
+         <div class="layui-form-item">
+         <@p.layinput label="${(languaged !='')?string('department','所属部门')}"  datarule="required;" datamsgrequired="${(required)!''}" name="departmentName" />
+		   <@p.layinput label="${(languaged !='')?string('phone number','手机号')}"  datarule="required;remote[${base}/admin/account/mobile_check_sub.do]" datamsgrequired="${(required)!''}" name="mobile" />
+	     </div>
+	      <div class="layui-form-item">
+	      
+	       <@p.layinput label="${(languaged !='')?string('wage','时薪')}"  datarule="required;" datamsgrequired="${(required)!''}" name="wage" />
+	     </div>
+	    <@p.legend text="${(languaged !='')?string('head portrait','头像')}" btnId="pre"/> 
+	<div class="layui-form-item">
+		<div class="layui-inline" style="padding-left: 20px;"><@p.upload id="preP" name="preP" /></div>
+		<input id="head" name="head" type="hidden" class="layui-input">
+	</div>
+	
+		  <!--   <@p.legend text="${(languaged !='')?string('signature','签名')}" btnId="pree"/> 
+	<div class="layui-form-item">
+		<div class="layui-inline" style="padding-left: 20px;"><@p.upload id="prePic" name="prePic" /></div>
+		<input id="signature" name="signature" type="hidden" class="layui-input">
+	</div> -->
+</@p.valid>
+<script>
+		$(function() {
+			var imgs = [];
+			var pre = new Upload({
+				filePicker : "pre",
+				fileList : "preP",
+				num : 1,
+				params : {
+					businessKey : "30",
+					subClassName : "head"
+				},
+				server : "${base}/admin/engineer/engineer_image_upload.do"
+			});
+			pre.uploadSuccess = function(file, data) {
+				$('#head').val(data.filePath);
+			};
+			niceScroll("body");
+			var pree = new Upload({
+				filePicker : "pree",
+				fileList : "prePic",
+				num : 1,
+				params : {
+					businessKey : "30",
+					subClassName : "signature"
+				},
+				server : "${base}/admin/engineer/signature_image_upload.do"
+			});
+			pree.uploadSuccess = function(file, data) {
+				$('#signature').val(data.filePath);
+			};
+		});
+	</script>
+</body>
+</html>

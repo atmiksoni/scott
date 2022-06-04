@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll"/>
+</head>
+<body>
+<@p.valid id="equipmenttypetwo" action="equipmenttypetwo_edit_sub.do" class="layui-form" layui=true>
+ <@p.legend text="${(languaged !='')?string('Device type two','修改设备类型')}"/> 
+ <input type="hidden" name="equipmentTypeTwoId" value="${equipmenttypetwo.equipmentTypeTwoId}" />
+         <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('Type name','设备类型名称')}"  datarule="required;" datamsgrequired="${(required)!''}" name="equipmentTypeTwoName" value="${equipmenttypetwo.equipmentTypeTwoName}"/>    
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('English name','设备类型英文名称')}"  datarule="required;" datamsgrequired="${(required)!''}" name="equipmentTypeTwoEnglishName" value="${equipmenttypetwo.equipmentTypeTwoEnglishName}"/>    
+	     </div>
+       <!--   <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('equipmentTypeId','设备类型Id')}"  datarule="required;" datamsgrequired="${(required)!''}" name="equipmentTypeId" value="${equipmenttypetwo.equipmentTypeId}"/>    
+	     </div> -->
+         <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('line number','显示行数')}"  datarule="required;" datamsgrequired="${(required)!''}" name="type" value="${equipmenttypetwo.type}"/>    
+	     </div>
+</@p.valid>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<@p.resource types="Jquery,Easyui,AnyDataGrid,Tree,NiceScroll"/>
+<script type="text/javascript">
+	var iframeWin;
+	var myparams = {};
+	var func = {
+		setTextBox : function(rowData) {
+		}
+	}
+	function initParams(option, iframeWin) {
+		func.setTextBox = option.setTextBox;
+		$.extend(myparams, option.params);
+	}
+</script>
+</head>
+<body class="easyui-layout" style="margin-top: 1px; overflow-y: hidden">
+	<#if left!="">
+	<div region="west" split="true" href="select_${left}_turn.do" minWidth="180" maxWidth="180" title="区域目录" style="overflow: hidden;"></div>
+	</#if>
+	<div region="center" href="select_${center}_turn.do" style="padding: 0px; overflow: hidden; border: none"></div>
+</body>
+</html>

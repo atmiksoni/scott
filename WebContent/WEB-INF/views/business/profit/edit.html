@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll"/>
+</head>
+<body>
+<@p.valid id="profit" action="profit_edit_sub.do" class="layui-form" layui=true>
+ <@p.legend text="${(languaged !='')?string('Hint information','提示信息')}"/> 
+ <input type="hidden" name="profitId" value="${profit.profitId}" />
+       
+	     <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('GSTrate(%)','销售税率(%)')}"  datarule="required;" datamsgrequired="${(required)!''}" name="GSTrate" value="${profit.GSTrate}"/>    
+		    <@p.layinput label="${(languaged !='')?string('GST','销售税')}"  datarule="required" datamsgrequired="${(required)!''}" name="GST" value="${profit.GST}" readonly="readonly"/>    
+	     </div>
+	        <div class="layui-form-item">
+	      <@p.layinput label="${(languaged !='')?string('manualQuote','工人报单总金额')}"  datamsgrequired="${(required)!''}" name="manualQuote" value="${profit.manualQuote}" readonly="readonly"/>    
+	      <@p.layinput label="${(languaged !='')?string('partQuotation','零件报单总金额')}"  datarule="required;" datamsgrequired="${(required)!''}" name="partQuotation" value="${profit.partQuotation}" readonly="readonly"/>    
+	     </div>
+	     <div class="layui-form-item">
+	      <@p.layinput label="${(languaged !='')?string('amountDue','报单总金额')}"  datarule="required;" datamsgrequired="${(required)!''}" name="amountDue" value="${profit.manualQuote+ profit.partQuotation+ profit.GST}" readonly="readonly"/>    
+	     </div>
+	     <div class="layui-form-item">
+	      <@p.layinput label="${(languaged !='')?string('Remark','备注')}"  datarule="required;" datamsgrequired="${(required)!''}" name="remark" value="${profit.remark}" />    
+	     </div>
+	    
+       
+</@p.valid>
+</body>
+<script type="text/javascript">
+/* 监听input框默layui 不监听 */
+		layui.use(['form', 'layedit', 'laydate','jquery'], function(){
+		//主要功能实现
+		$("input[name='GSTrate").bind('input propertychange', check);			
+		function check() {
+			 var gstrate = $("input[name='GSTrate']").val();//获取税率
+			 var manualQuote = $("input[name='manualQuote']").val();//获取工人报单总金额
+			 var partQuotation = $("input[name='partQuotation']").val();//获取零件报单总金额
+			 var zj=parseInt(manualQuote)+parseInt(partQuotation);
+			 //计算销售税 (人工+零件) * GST%
+			 //计算总报单金额  原始报单金额 +销售税
+			 if(parseFloat(gstrate)>0){				 
+			 	//计算销售税   
+			 var gst=	formatCurrency((zj) *parseFloat(gstrate)/100 )
+			 $("input[name='GST']").val(gst);//设置销售税
+				 $("input[name='amountDue']").val(zj+parseFloat(gst));
+			 }else{
+				 $("input[name='amountDue']").val(${profit.amountDue})
+			 }
+				}
+		function formatCurrency(num) {  
+		    num = num.toString().replace(/\$|\,/g,'');  
+		    if(isNaN(num))  
+		    num = "0";  
+		    sign = (num == (num = Math.abs(num)));  
+		    num = Math.floor(num*100+0.50000000001);  
+		    cents = num%100;  
+		    num = Math.floor(num/100).toString();  
+		    if(cents<10)  
+		    cents = "0" + cents;  
+		    for (var i = 0; i < Math.floor((num.length-(1+i))/3); i++)  
+		    num = num.substring(0,num.length-(4*i+3))+','+  
+		    num.substring(num.length-(4*i+3));  
+		    return (((sign)?'':'-') + num + '.' + cents);  
+		} 
+		});
+</script>
+</html>

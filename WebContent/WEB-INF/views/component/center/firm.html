@@ -1,0 +1,85 @@
+<body style="overflow: hidden">
+	<script type="text/javascript">
+		var firm;
+		$(function() {
+			firm = new Dd("firm");
+			firm.url = "select_firm_data.do";
+			firm.colM = [ [  /* {
+		        field : "ck",
+		        checkbox : true,
+		        align : "center"
+		      },  */{
+		        title : "主键",
+		        field : "firmId",
+		        alias : "f",
+		        hidden:true
+		      } ,{
+		          title : "${(languaged !='')?string('Company name','客户名称')}",
+		          field : "companyName",
+		          alias : "f",
+		          width : 100,
+		          align : "center"
+		        },{
+		            title : "${(languaged !='')?string('mobile','客户电话')}",
+		            field : "mobile",
+		            alias : "f",
+		            width : 100,
+		            align : "center"
+		          },{
+			            title : "${(languaged !='')?string('Company address','客户地址')}",
+			            field : "Address",
+			            alias : "f",
+			            width : 100,
+			            align : "center"
+			          }] ];
+			
+			firm.param = myparams;
+			firm.onClickRow = function(rowIndex, rowData) {
+				func.setTextBox(rowData);
+			}
+			firm.onDblClickRow = function(rowIndex, rowData) {
+				func.setTextBox(rowData);
+// 				top.Dg.parentDg.refresh();
+            	top.layer.close(top.Dg.index);
+			}
+			firm.onLoadSuccess = function(data) {
+				
+			};
+			firm.LoadDataGrid();
+			$('#search').linkbutton({
+				iconCls : 'icon-save',
+				onClick : function() {
+					firm.search(myparams);
+				}
+			});
+		});
+		/*区域点击事件*/
+// 		function tree_click(node) {
+// 			myparams.areaId = node.code;
+// 			firm.search(myparams);
+// 		}
+		/*传值给父页面*/
+// 		function setTextBox(text, value) {
+// 			if (iframeWin) {
+// 				iframeWin.setValue(text, value);
+// 			} else {
+// 				top.getIframe().setValue(text, value);
+// 			}
+
+// 		}
+		function nameSearch(){
+   		myparams.searchContent = $("#searchContent").val();
+   	}
+	</script>
+	<div fit="true" class="easyui-layout">
+		  <div region="north" title="${(languaged !='')?string('search client',' 选择客户 ')}" style="height: 70px;">
+   <div class="pannel_search">
+   	${(languaged !='')?string('Customer Name',' 客户名称')}：<input type="text" class="easyui-textbox" data-options="prompt:'${(languaged !='')?string('Customer Name',' 客户名称')}'" id="searchContent"/> 
+       <a href="javascript:;" id="search" onClick="nameSearch()";>${(languaged !='')?string('search','查询')}</a>
+   </div>
+  </div>
+		<div region="center" style="overflow: hidden; border: none;">
+			<table fit="true" namespace="component" id="firm" class="datagrid"></table>
+		</div>
+	</div>
+</body>

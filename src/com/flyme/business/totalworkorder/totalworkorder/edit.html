@@ -1,0 +1,22 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll"/>
+</head>
+<body>
+<@p.valid id="totalworkorder" action="totalworkorder_edit_sub.do" class="layui-form" layui=true>
+ <@p.legend text="${(languaged !='')?string('Hint information','提示信息')}"/> 
+ <input type="hidden" name="totalworkorderId" value="${totalworkorder.totalworkorderId}" />
+         <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('totalWorkOrderNo','总工单编号')}"  datarule="required;" datamsgrequired="${(required)!''}" name="totalWorkOrderNo" value="${totalworkorder.totalWorkOrderNo}"/>    
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('firmId','客户Id')}"  datarule="required;" datamsgrequired="${(required)!''}" name="firmId" value="${totalworkorder.firmId}"/>    
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('IsDel','是否删除')}"  datarule="required;" datamsgrequired="${(required)!''}" name="IsDel" value="${totalworkorder.IsDel}"/>    
+	     </div>
+</@p.valid>
+</body>
+</html>

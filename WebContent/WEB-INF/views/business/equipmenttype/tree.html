@@ -1,0 +1,40 @@
+ <@p.resource types="Jquery,Easyui,AnyDataGrid,Tree,NiceScroll"/>
+<body class="easyui-layout" style="margin-top: 1px; overflow-y: hidden">
+	<div region="west" split="true" minWidth="180" maxWidth="180" title="类型分组列表" style="overflow: hidden;">
+		<ul id="mytree" class="ztree"></ul>
+	</div>
+	<script type="text/javascript">
+	var tree;
+	var myparams = {};
+	$(function() {
+		niceScroll(".panel-body");
+		tree = new Tree();
+		tree.queryParams = myparams;
+		tree.url = "${base}/admin/equipmenttype/equipmenttype_tree_data.do";
+		tree.initTree("mytree");
+		tree.onClick = function(node) {
+			group_click(node);
+		};
+	});
+	/* $(function() {
+		tree = new Tree();
+		tree.queryParams = myparams;
+		tree.url = "${base}/admin/viptype/viptype_tree_data.do";
+		tree.initTree("mytree");
+		$('#treepanel').panel({
+			tools : [ {
+				iconCls : 'icon-add',
+				handler : function() {
+					tree.expandAll();
+				}
+			} ]
+		});
+		tree.onClick = function(node) {
+			myparams.viptypeId = node.id;
+			myparams.nodeCode = node.code;
+			var isLeaf = tree.isLeaf(node);
+			tree_click(node, isLeaf);
+		};
+	}); */
+</script>
+</body>

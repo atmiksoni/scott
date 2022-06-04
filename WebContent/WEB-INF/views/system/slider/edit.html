@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll,EasyUI,webuploader"/>
+</head>
+<body>
+	<@p.valid id="slider" action="slider_edit_sub.do" class="layui-form" layui=true>
+	<fieldset class="layui-elem-field layui-field-title">
+		<legend>编辑轮播</legend>
+	</fieldset>
+	<input type="hidden" name="sliderId" value="${slider.sliderId}" />
+	<div class="layui-form-item" style="margin-left:-65px;">
+		<label class="layui-form-label"></label>
+		<div class="layui-input-block">
+			<input type="radio" name="sliderType" value="All" title="全部" <#if "${slider.sliderType=='All'}">checked="checked"</#if> > 
+			<input type="radio" name="sliderType" value="App_Index"  title="首页" <#if "${slider.sliderType=='App_Index'}">checked="checked"</#if> >
+			<input type="radio" name="sliderType" value="Packages_Index"  title="健康超市" <#if "${slider.sliderType=='Packages_Index'}">checked="checked"</#if> >
+		</div>
+	</div>
+	<div class="layui-form-item">
+		<div class="layui-inline">
+			<label class="layui-form-label">标题:</label>
+			<div class="layui-input-inline">
+				<input id="sliderTitle" name="sliderTitle" data-rule="required;" style="width: 180px;" type="text" value="${slider.sliderTitle}" class="layui-input">
+			</div>
+		</div>
+	</div>
+
+	<div class="layui-form-item" hidden="true">
+		<div class="layui-inline">
+			<label class="layui-form-label">内容:</label>
+			<div class="layui-input-inline">
+				<input id="content" name="content" type="text"  class="layui-input">
+			</div>
+		</div>
+	</div>
+
+	<div class="layui-form-item">
+		<div class="layui-inline">
+			<label class="layui-form-label">链接:</label>
+			<div class="layui-input-inline">
+				<input id="href" name="href" type="text" data-rule="required;" style="width: 180px;" value="${slider.href}" class="layui-input">
+			</div>
+		</div>
+	</div>
+
+	<@p.legend text="更改图片 建议510×286" btnId="pre"/>
+	<div class="layui-form-item">
+		<div class="layui-inline" style="padding-left: 20px;">
+		<@p.upload id="prePic" name="prePic" value="${slider.sliderImg}" delurl="${base}/admin/slider/slider_image_del.do" /></div>
+		<@p.upload id="prePic" name="prePic" value="${doctor.doctorHead}" delurl="${base}/admin/doctor/doctor_image_del.do"/></div>
+		<input id="sliderImg" name="sliderImg" type="hidden" value="${slider.sliderImg}" class="layui-input">
+	</div>
+
+	</@p.valid>
+	<script type="text/javascript">
+		$(function() {
+			/**下面是图片上传*/
+			niceScroll("body");
+			var pre = new Upload({
+				filePicker : "pre",
+				fileList : "prePic",
+				fileVal : "slider_file",
+				params : {
+					businessKey : "30",
+					subClassName : "slider"
+				},
+				server : "${base}/admin/slider/slider_image_upload.do"
+			});
+			pre.uploadSuccess = function(file, data) {
+				$('#sliderImg').val(data.filePath);
+			}
+		});
+	</script>
+</body>
+</html>

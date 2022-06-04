@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll"/>
+</head>
+<body>
+	<@p.valid id="department" action="department_edit_sub.do" class="layui-form" layui=true> <@p.legend text="提示信息"/>
+	<input type="hidden" name="departmentId" value="${department.departmentId}" />
+	<input type="hidden" name="level" value="${department.level}" />
+	<div class="layui-form-item"><@p.layinput label="类型名称" datarule="required;" name="departmentName" value="${department.departmentName}"/></div>
+	<div class="layui-form-item"><@p.layinput label="排序号" datarule="required;" name="indexs" value="${department.indexs}"/></div>
+	<!-- <div class="layui-form-item"><@p.switch label="状态" name="status" value="1" text="启用|禁用" value="${goodstype.status}"/></div>
+	<div class="layui-form-item"><@p.layinput label="备注" datarule="required;" name="remark" value="${goodstype.remark}"/></div> -->
+	</@p.valid>
+</body>
+<script>
+	$(function() {
+	VF.callbackBefore = function(data) {
+				top.frames['iframe105104'].location.reload();
+				var index = parent.layer.getFrameIndex(window.name);
+				top.Dg.z.msg(data)
+				top.frames['iframe105104'].location.reload();
+				if (data.close == true) {
+					parent.layer.close(index);
+				}
+			}
+	});
+	</script>
+</html>

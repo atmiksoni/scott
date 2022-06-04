@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<@p.resource types="Jquery,Easyui,AnyDataGrid,Tree,NiceScroll"/>
+<script type="text/javascript">
+  var myparams = {
+    userId : top.userId
+  };
+  $(function() {
+    niceScroll(".panel-body");
+    var tree = new Tree();
+    tree.queryParams = myparams;
+    tree.url = "physical_tree_data.do";
+    tree.initTree("mytree");
+    tree.onClick = onClick;
+  });
+  function onClick(node) {
+    physical.search(myparams);
+  }
+</script>
+</head>
+<body class="easyui-layout" style="overflow-y: hidden">
+ <div region="center" href="physical_list_turn.do?accountInfoId=${accountInfoId}" style="padding: 0px; overflow: hidden; border: none"></div>
+ <!-- <div region="east" href="../physicaldetails/physicaldetails_list_data.do" style="padding: 0px; overflow: hidden; border: none"></div> -->
+   
+
+</body>
+</html>

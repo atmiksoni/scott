@@ -1,0 +1,141 @@
+<body style="overflow: hidden">
+	<script type="text/javascript">
+		var company;
+		$(function() {
+			company = new Dd("company");
+			company.url = "company_list2_data.do";
+			company.title = "信息";
+			company.colM = [ [ {
+				title : "主键",
+				field : "companyId",
+				alias : "c",
+				hidden : true,
+				width : 100,
+				align : "center"
+			},  {
+				title : "公司名称",
+				field : "compName",
+				alias : "c",
+				width : 80,
+				align : "center"
+			}, {
+				title : "负责人",
+				field : "linkMan",
+				alias : "c",
+				width : 50,
+				align : "center"
+			}, {
+				title : "公司地址",
+				field : "address",
+				alias : "c",
+				width : 100,
+				align : "center"
+			}, {
+				title : "联系电话",
+				field : "compTel",
+				alias : "c",
+				width : 50,
+				align : "center"
+			}, {
+				title : "创建时间",
+				field : "createDate",
+				alias : "c",
+				width : 50,
+				align : "center"
+			},{
+				title : '启用',
+				field : "compStatus",
+				alias : "c",
+				width : 50,
+				align : "center",
+				formatter : function(value, rows, index) {
+					return "<input style='width:50px;height:18px' class='ccc' data-id='"+rows.companyId+"' value='"+rows.compStatus+"'>";
+				}
+			}] ];
+
+			company.toolbar = [ {
+				id : "company_add",
+				text : "添加",
+				iconCls : "icon-add",
+				handler : function() {
+					company.open2({
+						title : "添加公司",
+						h : "70%",
+						w : "40%",
+						url : "company_add2_turn.do",
+						params : myparams
+					});
+				}
+			}, {
+				id : "company_edit",
+				text : "编辑",
+				iconCls : "icon-edit",
+				disabled : true,
+				handler : function() {
+					company.updata2({
+						title : "编辑公司",
+						h : "70%",
+						w : "40%",
+						url : "company_edit2_turn.do",
+						params : {
+							companyId : company.rowKey
+						}
+					});
+				}
+			}, {
+				id : "company_del",
+				text : "删除",
+				iconCls : "icon-remove",
+				disabled : true,
+				handler : function() {
+					company.remove({
+						url : "company_del_sub.do",
+						params : {
+							companyId : company.rowKey
+						}
+					});
+				}
+			} ];
+			company.param = myparams;
+			company.onClickRow = function(rowIndex, rowData) {
+				$("#company_edit,#company_del").linkbutton("enable");
+			}
+			company.onLoadSuccess = function(data) {
+				$(".ccc").each(function(i, item) {
+					var companyId = $(item).attr("data-id");
+					$(item).switchbutton({
+						checked : Boolean(Number(item.value)),
+						onText : '启用',
+						offText : '禁用',
+						onChange : function(checked) {
+							Fm.ajax("${base}/admin/company/company_status_set.do", {
+								enabled : checked,
+								companyId : companyId
+							});
+						}
+					})
+				});
+				$("#company_edit,#company_del").linkbutton("disable");
+			};
+			company.LoadDataGrid();
+			$('#search').linkbutton({
+				iconCls : 'icon-search',
+				onClick : function() {
+					myparams.compName = $("#compName").val();
+					company.search(myparams);
+				}
+			});
+			
+		});
+	</script>
+	<div fit="true" class="easyui-layout">
+		<div region="north" title="查询条件" style="height: 70px;">
+			<div class="pannel_search">
+				公司名称：<input type="text" class="easyui-textbox" id="compName" name="compName" /> <a href="javascript:;" id="search">查询</a> 
+			</div>
+		</div>
+		<div region="center" style="overflow: hidden; border: none;">
+			<table fit="true" namespace="company" id="company" class="datagrid"></table>
+		</div>
+	</div>
+</body>

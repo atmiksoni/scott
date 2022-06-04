@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<@p.resource types="Jquery,Easyui,Tree,NiceScroll"/>
+<script type="text/javascript">
+	var myparams = {
+        userType : top.userType
+    };
+    var sms;
+    tree = new Tree();//群组列表
+    contactstree = new Tree();//群组列表
+    $(function() {
+	    $("#smsContentSend").panel({
+	        href : "sms_send_turn.do",
+	        queryParams : myparams
+	    });
+	    niceScroll(".panel-body .easyui-panel");
+
+	    tree.checkbox = true;
+	    tree.url = "sms_houseowner_tree.do";
+	    tree.onClick = treeClick;
+	    tree.initTree("mytree");
+	    function treeClick(node) {
+		    if (!node.checked) {
+			    $('#mytree').tree('check', node.target);
+		    } else {
+			    $('#mytree').tree('uncheck', node.target);
+		    }
+	    }
+    });
+
+    //自定义联系人
+    $(function() {
+	    contactstree.url = "sms_contact_tree.do";
+	    contactstree.checkbox = true;
+	    contactstree.initTree("contactstree");
+	    contactstree.onClick = treeClick;
+	    function treeClick(node) {
+		    if (!node.checked) {
+			    $('#contactstree').tree('check', node.target);
+		    } else {
+			    //$('#contactstree').tree('uncheck', node.target);
+			    //var names=$("#names").val();
+			    //names = names.replace(new RegExp(node.name+",",'g'), "");
+			    //$("#names").val(names);
+		    }
+	    }
+    });
+</script>
+</head>
+<body class="easyui-layout" style="overflow-y: hidden">
+ <div region="west" split="true" minWidth="240" maxWidth="240" title="选择业主" style="overflow: hidden; border-bottom: none">
+  <div class="easyui-layout" fit="true" style="overflow-y: hidden; border: none">
+   <div region="north" style="overflow-y: hidden; height: 260px; border-top: none; border-left: none; border-right: none;">
+    <div id="layout1" class="easyui-layout" fit="true" style="border: none; overflow-y: hidden;">
+<!-- 
+     <div region="north" style="border-top: none; border-left: none; border-right: none; height: 28px;">
+      <div class="datagrid-toolbar" style="border: none; overflow-y: hidden; height: 25px;">
+      
+
+      </div>
+     </div> -->
+     <div region="center" style="border: none; overflow-y: hidden;">
+      <ul id="mytree" class="ztree" style="padding: 5px; height: 95%;"></ul>
+     </div>
+    </div>
+   </div>
+   <div region="center" style="border-left: none; border-right: none; border-bottom: none;">
+
+    <div id="houseinfo" fit="true" class="easyui-tabs" border="false">
+     <div fit="true" title="自定义联系人" style="border: none;">
+      <ul id="contactstree" class="ztree"></ul>
+     </div>
+    </div>
+   </div>
+  </div>
+ </div>
+ <div region="center" id="smsContentSend" style="padding: 0px; overflow: hidden; border: none"></div>
+</body>
+</html>

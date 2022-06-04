@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<@p.resource types="Jquery,Easyui,Tree,NiceScroll,AnyDataGrid"/>
+<script type="text/javascript">
+
+	var myparams = {
+		userId : top.userId,
+	};
+	function noImage() {
+		var img = event.srcElement;
+		img.src = "../../res/nbxy/image/noone.png";
+		img.onerror = null;
+	}
+</script>
+</head>
+<body class="easyui-layout" style="overflow-y: hidden">
+	<!-- 中央 -->
+	<div region="center" split="true" title="用户管理" href="list_user_turn.do?roleId=${roleId}&&userType=${userType}" style="border:none;overflow: hidden;"></div>
+</body>
+</html>

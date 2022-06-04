@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll,EasyUI,webuploader,ueditor"/>
+</head>
+<body>
+	<@p.valid id="push" action="push_edit_sub.do" class="layui-form" layui=true>
+	<input type="hidden" name="pushId" value="${push.pushId}" />
+	<input type="hidden" name="oldStatus" value="${push.status}" />
+	<div class="layui-form-item">
+		<div class="layui-inline"><@p.layinput label="推送标题" value="${push.pushTitle}" id="pushTitle" width="513" name="pushTitle"
+			datarule="推送标题:required;length[1~50]" placeholder="请输入推送标题" remark="长度1-50"/></div>
+	</div>
+	<div class="layui-form-item">
+		<div class="layui-inline">
+			<label class="layui-form-label"><b>推送类型：</b></label>
+			<div class="layui-input-inline">
+				<select class="layui-input-block" style="width: 120px; height: 25px;" id="pushType" name="pushType">
+					<option value="All" <#if push.pushType=='All'>selected</#if>>全部</option>
+					<option value="SHIPPER" <#if push.pushType=='SHIPPER'>selected</#if>>货主端</option>
+					<option value="DRIVER" <#if push.pushType=='DRIVER'>selected</#if>>司机端</option>
+				</select>
+			</div>
+		</div>
+	</div>
+	<div class="layui-form-item">
+		<div class="layui-inline"><@p.layinput label="url" id="pushTitle" width="513" name="pushUrl" value="${push.pushUrl}" placeholder="请输入url"/></div>
+	</div>
+	<div class="layui-form-item">
+		<div class="layui-inline"><@p.switch label="立即推送" value="0" value="${push.status}" name="status" text="是|否"/></div>
+	</div>
+	<div class="layui-form-item"><@p.ueditor label="内容" id="container" value="${push.pushContent}" name="pushContent" /></div>
+	</@p.valid>
+	<script type="text/javascript">
+		$(function() {
+			var ue = new Ue("container");
+			ue.init();
+		});
+	</script>
+</body>

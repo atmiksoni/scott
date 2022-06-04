@@ -1,0 +1,376 @@
+* {
+	font-size: 9pt;
+}
+
+body {
+	margin: 0px;
+	padding: 0px;
+	font-family: "Helvetica Neue", Helvetica, Tahoma, Arial, 'Microsoft Yahei', 'Hiragino Sans GB', 'WenQuanYi Micro Hei', sans-serif;
+}
+/*表单*/
+/*form*/
+input {
+	margin: 0;
+	vertical-align: middle;
+	color: #114477;
+}
+
+input.inputText {
+	color: #336699;
+	background: url(../framework/images/text_bg.gif) #F7FAFC repeat-x left top;
+	border: 1px solid #6688AA;
+	border-color: #9ab #cde #cde #abc;
+	padding: 3px 2px 2px;
+	vertical-align: middle;
+}
+
+.ztree {
+	padding: 8px;
+	height: 95%;
+}
+
+.p-top {
+	padding: 8px;
+}
+
+input[type="radio"] {
+	vertical-align: middle;
+	margin-top: -2px;
+	margin-bottom: 1px;
+}
+
+.checkbox {
+	vertical-align: middle;
+	margin-top: -2px;
+	margin-bottom: 1px;
+}
+
+.radio {
+	vertical-align: middle;
+	margin-top: -2px;
+	margin-bottom: 1px;
+}
+
+.select {
+	width: 150px;
+	margin: 0;
+	padding: 0;
+	outline: none;
+	height: 25px;
+	line-height: 25px;
+	border: rgb(191, 204, 220) 1px solid;
+	border-radius: 3px;
+	display: inline-block;
+	font: normal 12px/25px "微软雅黑", "SimSun", "宋体", "Arial";
+	background-size: 5px 5px, 5px 5px, 25px 25px, 1px 25px;
+	background-color: #fff;
+}
+
+.z-legend {
+	background: url(../images/legend_bg.png) no-repeat left center;
+	_background: url(../images/legend_bg.gif) no-repeat left center;
+	height: 30px;
+	padding-left: 10px;
+	color: #1a214d;
+	line-height: 30px;
+	margin: 2px 0;
+}
+
+.tbformtop {
+	border-collapse: collapse;
+	padding: 3px;
+	width: 100%;
+	font-family: 微软雅黑, 宋体, Arial, Helvetica, Verdana, sans-serif;
+}
+
+.tbform {
+	border-collapse: collapse;
+	padding: 5px;
+	width: 100%;
+	margin-top: 5px;
+	font-family: 微软雅黑, 宋体, Arial, Helvetica, Verdana, sans-serif;
+}
+
+.tbform .tdl {
+	text-align: right;
+	height: 32px;
+	width: 120px;
+	font-size: 12px;
+	font-weight: bold;
+	font-family: 微软雅黑;
+	color: #232e12;
+}
+
+.tbform .tds {
+	padding: 15px;
+	text-align: right;
+	height: 35px;
+	font-size: 12px;
+}
+
+a:link {
+	text-decoration: none;
+}
+
+a:visited {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+a:active {
+	text-decoration: none;
+}
+
+.txtInput {
+	padding: 0 3px 0 3px;
+	height: 20px;
+	width: 150px;
+	line-height: 20px;
+	background: #fff;
+	border: 1px solid #ccc;
+	vertical-align: middle;
+	font-size: 12px;
+	font-family: '微软雅黑';
+}
+
+.txtInput_l {
+	padding: 0 3px 0 3px;
+	height: 20px;
+	line-height: 20px;
+	background: #fff;
+	width: 270px;
+	border: 1px solid #ccc;
+	vertical-align: middle;
+	font-size: 12px;
+	font-family: '微软雅黑';
+}
+
+.pannel_search {
+	padding: 7px;
+	overflow: hidden;
+}
+
+.cztable {
+	padding: 0px 0;
+}
+
+.cztable table {
+	border-collapse: collapse;
+	border-spacing: 0;
+	width: 100%;
+}
+
+.cztable td {
+	border: #cfe1f9 solid 1px;
+	padding: 2px 3px;
+	height: 25px;
+}
+
+.tdc {
+	text-align: center;
+}
+
+.money {
+	color: red;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.spanfont {
+	padding-left: 20px;
+}
+
+.red {
+	color: red;
+}
+
+.money_12 {
+	color: red;
+	font-size: 12px;
+}
+
+.moneylabel {
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.rolebuttonNo {
+	margin: 5px;
+	width: auto;
+	border: solid 3px #ccc;
+	height: 40px;
+	background: #F7F7F7;
+	float: left;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.rolebuttonOk {
+	margin: 5px;
+	width: auto;
+	border: solid 3px #6699cc;
+	height: 40px;
+	background: #F7F7F7;
+	float: left;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.roletext {
+	float: left;
+	width: auto;
+	padding-left: 8px;
+	line-height: 40px;
+	text-align: center;
+}
+
+.roletext img {
+	vertical-align: middle;
+	padding-right: 3px;
+	padding-bottom: 3px;
+}
+
+.rolebuttonNo .triangleNo {
+	display: block;
+	height: 0px;
+	width: 0px;
+	border: 12.5px solid #ccc;
+	border-color: #F7F7F7 #F7F7F7 transparent transparent;
+	border-style: solid solid dashed dashed;
+	line-height: 0px;
+	float: right;
+}
+
+.rolebuttonOk .triangleOk {
+	display: block;
+	height: 25px;
+	width: 25px;
+	float: right;
+	background: url('../images/form/checkicon.png');
+}
+
+#checkAllOff {
+	padding-left: 20px;
+	background: url(../images/checkAllOff.gif) no-repeat scroll 4px 2px;
+	cursor: pointer;
+}
+
+#checkAllOn {
+	padding-left: 20px;
+	background: url(../images/checkAllOn.gif) no-repeat scroll 4px 2px;
+	cursor: pointer;
+}
+
+::-webkit-scrollbar {
+	width: 12px;
+	height: 12px;
+}
+
+::-webkit-scrollbar-button {
+	width: 10px;
+}
+/*滚动条大小*/
+::-webkit-scrollbar-thumb {
+	background-clip: padding-box;
+	background-color: #ccc;
+	min-height: 28px;
+	border-radius: 6px;
+} /*滚动条默认显示样式*/
+::-webkit-scrollbar-thumb:hover {
+	background-color: #ea5449;
+} /*鼠标移动到滚动条显示样式*/
+::-webkit-scrollbar-thumb:active {
+	background-color: #dd453a;
+} /*鼠标点击滚动条显示样式*/
+::-webkit-scrollbar-track:vertical, ::-webkit-scrollbar-track:horizontal {
+	background-color: transparent;
+} /*滚动条滚动轨迹横向纵向背景*/
+::-webkit-scrollbar-track:vertical, ::-webkit-scrollbar-track:horizontal, ::-webkit-scrollbar-thumb:vertical, ::-webkit-scrollbar-thumb:horizontal {
+	border-width: 0;
+	border-style: solid;
+	border-color: transparent;
+}
+/*去除滚动条及其滚动轨迹的边框,小觉个人认为这儿应该可以简化成border: 0 solidtransparent*/
+/*表格样式*/
+/*表格样式*/
+.prade_table1, .prade_table2 {
+	border-collapse: collapse;
+	width: 99%;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.prade_table1 th {
+	height: 30px;
+	background: #f7f7f7;
+	border: 1px solid #bdbdbd;
+	color: #333;
+	font-size: 14px
+}
+
+.prade_table1 td {
+	border: 1px solid #bdbdbd;
+	text-align: left;
+	padding: 5px;
+	color: #585858;
+	height: 30px;
+	color: #585858;
+}
+
+.prade_table1 .tdl {
+	border: 1px solid #bdbdbd;
+	text-align: center;
+	padding: 5px;
+	width: 100px;
+	color: #585858;
+	font-weight: bold;
+	height: 30px
+}
+
+.prade_table1 .prade_title {
+	color: #333
+}
+
+.prade_table1 .prade_false {
+	background: #ffedeb
+}
+
+.prade_table2 {
+	border: 1px solid #ddd
+}
+
+.prade_table2 th, .prade_table2 td {
+	height: 38px;
+	border-right: 1px solid #ddd
+}
+
+.prade_table2 th {
+	width: 16%;
+	background: #ebeced;
+	color: #333;
+	font-size: 16px
+}
+
+.prade_table2 td {
+	text-align: center;
+	color: #585858
+}
+
+.prade_table2 .pt_even {
+	background: #f9f9f9
+}
+
+.prade_table2 .pt_yellow {
+	background: #fffdf5
+}
+
+.prade_table2 .pt_even .pt_yellow {
+	background: #f6f3e2
+}

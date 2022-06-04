@@ -1,0 +1,63 @@
+.weui_tab {margin: 48px 0 0;}
+.weui_tab_bd {margin: 0.75rem;}
+.privilegeInfo .top>img {width: 100%;}
+.privilegeInfo, .privilegeInfo_used, .privilegeInfo_past {margin-bottom: 0.75rem;width:100%;color: #fff;}
+.privilegeList .top {overflow: hidden;height:4.8rem;background-color: #fff;background: url(../img/usercenter/images/yhq_bg.png) no-repeat;background-size: 100% 100%;}
+.privilegeInfo_used .top, .privilegeInfo_past .top {overflow: hidden;height:4.8rem;background-color: #fff;background: url(../img/usercenter/images/yhq_bg-_hui-.png) no-repeat;background-size: 100% 100%;}
+.privilegeList .left {float: left;border-right: 1px dashed #fff;width: 67%;height: 4.8rem;text-indent: 0.8rem;}
+.privilegeList .left h4 {font-weight: bold;font-size: 0.75rem;line-height: 2.4rem;padding-top: 0.4rem;}
+.privilegeList .left p {font-size: 0.55rem;}
+.privilegeList .right {float: left;text-indent: 1.1rem;}
+.privilegeList .right h2 .rmb {font-size: 1rem;}
+.privilegeList .right h2 .num {font-size: 1.8rem;}
+.privilegeList .right p {font-size: 0.55rem;line-height: 1.6rem;}
+.privilegeList .right p img {width: 0.8rem;vertical-align: middle;transition: all 0.5s;}
+.privilegeInfo_used .right, .privilegeInfo_past .right {position: relative;}
+.privilegeInfo_used .right>img, .privilegeInfo_past .right>img {position: absolute;top: 0.6rem;left: 0.6rem;width: 100%;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.bottom {font-size: 0.7rem;padding: 0 0.75rem;color: #666;}
+.bottom {display: none;}
+.bottom h3 {padding: 0.3rem 0;}
+
+
+
+
+

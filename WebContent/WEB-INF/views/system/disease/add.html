@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll,webuploader"/>
+</head>
+<body>
+<@p.valid id="disease" action="disease_add_sub.do" class="layui-form" layui=true>
+ <@p.legend text="提示信息"/> 
+ <input type="hidden" value="2" name="level" />
+ <input type="hidden"  value="${parent.diseaseId}"  name="parentId" />
+         <div class="layui-form-item">
+		   <@p.layinput label="所属分类"  datarule="required;"  value="${parent.diseaseName}" readonly="readonly"/>
+	     </div>
+	     <div class="layui-form-item"><@p.layinput label="疾病名称" datarule="required;" name="diseaseName" /></div>
+	     <@p.legend text="图标" btnId="pre"/>
+	<div class="layui-form-item">
+		<div class="layui-inline" style="padding-left: 20px;"><@p.upload id="prePic" name="prePic" /></div>
+		<input id="goodsHead" name="icon" type="hidden" class="layui-input">
+	</div>
+         <div class="layui-form-item">
+		   <@p.layinput label="排序"  datarule="required;range[~100]" name="indexs" />
+	     </div>
+         <div class="layui-form-item">
+		   <@p.layinput label="备注"  datarule="required;" name="remark" />
+	     </div>
+</@p.valid>
+<script>
+		$(function() {
+			var imgs = [];
+			var pre = new Upload({
+				filePicker : "pre",
+				fileList : "prePic",
+				num : 1,
+				params : {
+					businessKey : "30",
+					subClassName : "disease"
+				},
+				server : "${base}/admin/disease/disease_image_upload.do"
+			});
+			pre.uploadSuccess = function(file, data) {
+				$('#goodsHead').val(data.filePath);
+			};
+			
+		});
+		</script>
+</body>
+
+</html>

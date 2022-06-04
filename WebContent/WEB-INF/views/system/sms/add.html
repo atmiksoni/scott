@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>添加信息</title> 
+<@p.resource types="Jquery,Form,NiceScroll,EasyUI"/>
+</head>
+<body>
+	<@p.form id="smsSGroup" action="add_smsSGroup_save.do" btnSubmit=true dialog=true>
+	<input type="hidden" id="btn_sub" class="btn_sub" />
+	<table class="tbformtop">
+		<tr>
+			<td>
+				<table class="tbform">
+					<tr>
+						<td colspan="4">
+							<div class="z-legend">
+								<b>短信信息</b>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td class="tdl" width="20%">收信群组：</td>
+						<td width="40%">
+							<input type="hidden" id="groupId" name="groupId"/>
+							<input type="text" width="135px" disabled id="groupName" datatype="*" name="groupName" />
+							<a href="javascript:;" class="choose"><span id="choose">选择群组</span></a>
+						</td>
+						<td width="40%"><div class="Validform_checktip">请选收信群组</div></td>
+					</tr>
+					
+					<tr>
+						<td class="tdl">短信内容：</td>
+						<td><input type="text" class="txtInput" name="message" style="width:300px;height:100px" /></td>
+						
+					</tr>
+					<tr>
+					<td width="40%"><div class="Validform_checktip">超过60字的短信会被分割成多次发送</div></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	</@p.form>
+	<script type="text/javascript">
+	$(function() {
+		niceScroll("body");
+		var api = frameElement.api, W = api.opener;
+		api.button({
+			name : '确定',
+			callback : function() {
+				iframe = this.iframe.contentWindow;
+				$('#btn_sub', iframe.document).click();
+				return false;
+			},
+			focus : true
+		});
+		
+		//选择房间
+		$('.choose').linkbutton({
+			iconCls : 'icon-edit',
+			onClick : function() {
+				top.Dg.open({
+					id : "",
+					namespace:"",
+					width : 500,
+					url : 'choose__turn.do',
+					title : '选择房间',
+					params : {"type":"houseOwner"}
+				});
+			}
+		});
+	});
+	</script>
+</body>
+</html>

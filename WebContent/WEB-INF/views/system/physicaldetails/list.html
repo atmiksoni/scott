@@ -1,0 +1,120 @@
+<body style="overflow: hidden">
+ <script type="text/javascript">
+      var physicaldetails;
+    $(function() {
+      physicaldetails = new Dd("physicaldetails");
+      physicaldetails.url = "physicaldetails_list_data.do";
+      physicaldetails.title = "体检明细信息";
+      physicaldetails.colM = [ [ {
+        title : "主键",
+        field : "physicalDetailsId",
+        alias : "p",
+        hidden:true
+      } ,{
+        title : "体检主表",
+        field : "physicalId",
+        alias : "p",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "明细标题",
+        field : "physicalDetailsTitle",
+        alias : "p",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "明细内容",
+        field : "physicalDetailsValue",
+        alias : "p",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "参考内容",
+        field : "reference",
+        alias : "p",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "备注",
+        field : "remark",
+        alias : "p",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "创建时间",
+        field : "createDate",
+        alias : "p",
+        width : 100,
+        align : "center"
+      } ] ];
+
+      physicaldetails.toolbar = [ /* {
+        id : "physicaldetails_add",
+        text : "添加",
+        iconCls : "icon-add",
+        handler : function() {
+          physicaldetails.open2({
+            title : "添加体检明细",
+            h : "70%",
+			w : "45%",
+            url : "physicaldetails_add_turn.do",
+            params : myparams
+          });
+        }
+      }, {
+        id : "physicaldetails_edit",
+        text : "修改",
+        iconCls : "icon-edit",
+        disabled : true,
+        handler : function() {
+          physicaldetails.updata2({
+            title : "修改体检明细",
+            h : "70%",
+			w : "45%",
+            url : "physicaldetails_edit_turn.do",
+            params : {
+                physicaldetailsId : physicaldetails.rowKey
+            }
+		  });
+        }
+      }, {
+        id : "physicaldetails_del",
+        text : "删除体检明细",
+        iconCls : "icon-remove",
+        disabled : true,
+        handler : function() {
+          physicaldetails.remove({
+             url : "physicaldetails_del_sub.do",
+             params : {
+                physicaldetailsId : physicaldetails.rowKey
+             }
+		  });
+        }
+      } */ ];
+      physicaldetails.param = myparams;
+      physicaldetails.onClickRow = function(rowIndex, rowData) {
+       $("#physicaldetails_edit,#physicaldetails_del").linkbutton("enable");
+      }
+      physicaldetails.onLoadSuccess = function(data) {
+       $("#physicaldetails_edit,#physicaldetails_del").linkbutton("disable");
+      };
+      physicaldetails.LoadDataGrid();
+      $('#search').linkbutton({
+        iconCls : 'icon-search',
+        onClick : function() {
+          physicaldetails.search(myparams);
+        }
+      });
+    });
+  </script>
+ <div fit="true" class="easyui-layout">
+  <div region="north" title="查询条件" style="height: 70px;">
+   <div class="pannel_search">
+       <a href="javascript:;" id="searchd">查询</a>
+   </div>
+  </div>
+  <div region="center" style="overflow: hidden;border: none;">
+   <table fit="true" namespace="physicaldetails" id="physicaldetails" class="datagrid"></table>
+  </div>
+ </div>
+</body>

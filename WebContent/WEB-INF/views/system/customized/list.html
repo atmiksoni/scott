@@ -1,0 +1,113 @@
+<body style="overflow: hidden">
+	<script type="text/javascript">
+		var customized;
+		$(function() {
+			customized = new Dd("customized");
+			customized.url = "customized_list_data.do";
+			customized.title = "信息";
+			customized.colM = [ [ {
+				title : "主键",
+				field : "customizedId",
+				alias : "c",
+				hidden : true
+			}, {
+				title : "申请人",
+				field : "userName",
+				alias : "accountInfo",
+				width : 100,
+				align : "center"
+			}, {
+				title : "姓名",
+				field : "name",
+				alias : "c",
+				width : 100,
+				align : "center"
+			}, {
+				title : "电话",
+				field : "mobile",
+				alias : "c",
+				width : 100,
+				align : "center"
+			}, {
+				title : "医院名称",
+				field : "hospitalName",
+				alias : "c",
+				width : 100,
+				align : "center"
+			}, {
+				title : "地址",
+				field : "hospitalAddress",
+				alias : "c",
+				width : 100,
+				align : "center"
+			}, {
+				title : "设备名称",
+				field : "title",
+				alias : "equipment",
+				width : 100,
+				align : "center"
+			}, {
+				title : "设备图片",
+				field : "img",
+				alias : "equipment",
+				width : 100,
+				align : "center",
+				formatter : function(value, row, index) {
+					return '<img width="71px;" align="center" height="40px;" src="../../' + row.img
+							+ '" />';
+				}
+			}, {
+				title : "设备类型",
+				field : "equipmentTypeName",
+				alias : "equipmentType",
+				width : 100,
+				align : "center"
+			}, {
+				title : "使用时间",
+				field : "useDate",
+				alias : "c",
+				width : 100,
+				align : "center"
+			}, {
+				title : "请求时间",
+				field : "createDate",
+				alias : "c",
+				width : 100,
+				align : "center"
+			} ] ];
+
+			customized.toolbar = [ ];
+			myparams.unionId = "${unionId}";
+			customized.param = myparams;
+			customized.onClickRow = function(rowIndex, rowData) {
+				$("#customized_edit,#customized_del").linkbutton("enable");
+			}
+			customized.onLoadSuccess = function(data) {
+				$("#customized_edit,#customized_del").linkbutton("disable");
+			};
+			customized.LoadDataGrid();
+			$('#search').linkbutton({
+				iconCls : 'icon-search',
+				onClick : function() {
+					myparams.userName = $("#userName").val();
+					myparams.name = $("#name").val();
+					myparams.mobile = $("#mobile").val();
+					customized.search(myparams);
+				}
+			});
+		});
+	</script>
+	<div fit="true" class="easyui-layout">
+		<div region="north" title="查询条件" style="height: 70px;">
+			<div class="pannel_search">
+				申请人：<input type="text" class="easyui-textbox" id="userName" /> 
+				姓名：<input type="text" class="easyui-textbox" id="name" /> 
+				手机号：<input type="text" class="easyui-textbox" id="mobile" /> 
+				<a href="javascript:;" id="search">查询</a>
+			</div>
+		</div>
+		<div region="center" style="overflow: hidden; border: none;">
+			<table fit="true" namespace="customized" id="customized" class="datagrid"></table>
+		</div>
+	</div>
+</body>

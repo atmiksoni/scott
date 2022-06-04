@@ -1,0 +1,98 @@
+<body style="overflow: hidden">
+	<script type="text/javascript">
+		var msg;
+		$(function() {
+			msg = new Dd("msg");
+			msg.url = "msg_list_data.do";
+			msg.title = "信息";
+			msg.colM = [ [ {
+				title : "主键",
+				field : "msgId",
+				alias : "m",
+				hidden : true,
+				width : 100,
+				align : "center"
+			}, {
+				title : "消息开头",
+				field : "title",
+				alias : "m",
+				width : 100,
+				align : "center"
+			}, {
+				title : "失效时间",
+				field : "disableDate",
+				alias : "m",
+				width : 100,
+				align : "center"
+			}, {
+				title : "消息来源",
+				field : "source",
+				alias : "m",
+				width : 100,
+				align : "center"
+			}, {
+				title : "创建日期",
+				field : "createDate",
+				alias : "m",
+				width : 100,
+				align : "center"
+			} ] ];
+
+			msg.toolbar = [ {
+				id : "msg_add",
+				text : "添加",
+				iconCls : "icon-add",
+				handler : function() {
+					msg.open2({
+						title : "添加",
+						h : "90%",
+						w : "70%",
+						url : "msg_add_turn.do"
+					});
+				}
+			}, {
+				id : "msg_edit",
+				text : "修改",
+				iconCls : "icon-edit",
+				disabled : true,
+				handler : function() {
+					msg.updata2({
+						title : "修改",
+						h : "90%",
+						w : "70%",
+						url : "msg_edit_turn.do",
+						params : {
+							messageId : msg.rowKey
+						}
+					});
+				}
+			} ];
+			msg.param = myparams;
+			msg.onClickRow = function(rowIndex, rowData) {
+				$("#msg_edit,#msg_del").linkbutton("enable");
+			}
+			msg.onLoadSuccess = function(data) {
+				$("#msg_edit,#msg_del").linkbutton("disable");
+			};
+			msg.LoadDataGrid();
+			$('#search').linkbutton({
+				iconCls : 'icon-search',
+				onClick : function() {
+					myparams.title = $("#title").val();
+					myparams.msgType = $("#msgType").val();
+					msg.search(myparams);
+				}
+			});
+		});
+	</script>
+	<div fit="true" class="easyui-layout">
+		<div region="north" title="查询条件" style="height: 70px;">
+			<div class="pannel_search">
+				消息标题: <input type="text" class="easyui-textbox" id="title" name="title" /> 
+			</div>
+		</div>
+		<div region="center" style="overflow: hidden; border: none;">
+			<table fit="true" namespace="msg" id="msg" class="datagrid"></table>
+		</div>
+	</div>
+</body>

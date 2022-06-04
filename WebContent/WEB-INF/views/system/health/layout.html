@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<@p.resource types="Jquery,Easyui,AnyDataGrid,Tree,NiceScroll"/>
+<script type="text/javascript">
+  var myparams = {
+ 
+  };
+  function type_click(node) {
+	  $("#health_add").linkbutton("enable");
+	  myparams.healthTypeId = node.id;
+	  health.search(myparams);
+		
+}
+</script>
+</head>
+<body class="easyui-layout" style="overflow-y: hidden">
+<div region="west" split="true" href="${base}/admin/componet/healthtype_tree_turn.do" minWidth="230" maxWidth="230" title="分类选择" style="overflow: hidden; border-bottom: none">
+</div>
+ <div region="center" href="health_list_turn.do" style="padding: 0px; overflow: hidden; border: none"></div>
+</body>
+</html>

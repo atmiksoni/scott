@@ -1,0 +1,76 @@
+<body style="overflow: hidden">
+	<script type="text/javascript">
+		var balancelog;
+		$(function() {
+			balancelog = new Dd("balancelog");
+			balancelog.url = "../balancelog/balancelog_list_data.do";
+			balancelog.colM = [ [ {
+				field : "ck",
+				checkbox : true,
+				hidden : true,
+				align : "center"
+			}, {
+				title : "主键",
+				field : "balancelogId",
+				alias : "b",
+				hidden : true,
+				width : 100,
+				align : "center"
+			}, {
+				title : "账户",
+				field : "balanceId",
+				alias : "b",
+				hidden : true,
+				width : 100,
+				align : "center"
+			}, {
+				title : "描述",
+				field : "title",
+				alias : "b",
+				width : 100,
+				align : "center"
+			}, {
+				title : "充值描述",
+				field : "body",
+				alias : "b",
+				hidden : true,
+				width : 100,
+				align : "center"
+			}, {
+				title : "金额",
+				field : "amount",
+				alias : "b",
+				width : 70,
+				align : "center"
+			}, {
+				title : "类型",
+				field : "type",
+				alias : "b",
+				width : 50,
+				align : "center",
+				formatter : function(value, row, index) {
+					return Fm.formatter({
+						"1" : "充值",
+						"2" : "消费",
+						"3" : "提现",
+						"4" : "奖励"
+					}, value);
+				}
+			}, {
+				title : "交易时间",
+				field : "createDate",
+				alias : "b",
+				width : 110,
+				align : "center"
+			} ] ];
+			myparams.accountInfoId = "${accountInfoId}";
+			balancelog.param = myparams;
+			balancelog.LoadDataGrid();
+		});
+	</script>
+	<div fit="true" class="easyui-layout">
+		<div region="center" style="overflow: hidden; border: none;">
+			<table fit="true" namespace="balancelog" id="balancelog" class="datagrid"></table>
+		</div>
+	</div>
+</body>

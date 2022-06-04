@@ -1,0 +1,143 @@
+<body style="overflow: hidden">
+	<script type="text/javascript">
+      var profit;
+    $(function() {
+      profit = new Dd("profit");
+      profit.url = "platform_totalprofit_list_data.do";
+      profit.title = "${(languaged !='')?string('calculate',' 总利润分析 ')}";
+      profit.colM = [ [/*  {
+        field : "ck",
+        checkbox : true,
+        align : "center"
+      }, */ {
+        title : "主键",
+        field : "profitId",
+        alias : "p",
+        hidden:true
+      },{
+          title : "${(languaged !='')?string('Customer','客户名称')}",
+          field : "companyName",
+          alias : "firm",
+          width : 100,
+          align : "center"
+        },{
+            title : "${(languaged !='')?string('Repair Company','维修公司')}",
+            field : "cm",
+            width : 100,
+            align : "center"
+          } ,{
+            title : "${(languaged !='')?string('General Work ID','总工单号')}",
+            field : "totalWorkOrderNo",
+            width : 100,
+            alias : "p",
+            align : "center"
+          },{
+        title : "${(languaged !='')?string('Labour cost','总劳动力成本')}",
+        field : "totalManpower",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "${(languaged !='')?string('parts cost','总零件成本')}",
+        field : "totalPartCost",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "${(languaged !='')?string('total cost','总成本')}",
+        field : "tTotalCost",
+        width : 100,
+        align : "center"
+      }  ,{
+          title : "${(languaged !='')?string('parts profits','零件总利润')}",
+          field : "totalPartsProfits",
+          width : 100,
+          align : "center"	
+        },{
+        title : "${(languaged !='')?string('total profits','总利润')}",
+        field : "totalProfits",
+        width : 100,
+        align : "center"
+      } ,{
+          title : "${(languaged !='')?string('invoice amount','报价总金额')}",
+          field : "totalAmountDue",
+          width : 100,
+          align : "center"
+        } ,{
+            title : "${(languaged !='')?string('Invoice Parts price','零件报价总金额')}",
+            field : "totalPartQuotation",
+            width : 100,
+            align : "center"
+          },{
+              title : "${(languaged !='')?string('GST','销售税')}",
+              field : "totalGST",
+              width : 100,
+              align : "center"
+            }/* ,{
+					title : "${(languaged !='')?string('Whether to generate  invoices','是否生成发票')}",
+					field : "status",
+					alias : "p",
+					width : 100,
+					align : "center",
+					formatter : function(value, rows, index) {
+						return Fm
+								.formatter(
+										{
+											"0" : "${(languaged !='')?string('No','否')}",
+											"2" : "${(languaged !='')?string('Yes','是')}",
+										}, value);
+					}
+				} */,{
+        title : "${(languaged !='')?string('createDate','创建时间')}",
+        field : "createDate",
+        alias : "p",
+        width : 100,
+        align : "center"
+      } ] ];
+
+      profit.toolbar = [];
+      profit.param = myparams;
+      profit.onClickRow = function(rowIndex, rowData) {
+       $("#profit_edit,#profit_del,#profit_detail").linkbutton("enable");
+      }
+      profit.onLoadSuccess = function(data) {
+       $("#profit_edit,#profit_del,#profit_detail").linkbutton("disable");
+      };
+      profit.LoadDataGrid();
+      $('#search').linkbutton({
+        iconCls : 'icon-search',
+        onClick : function() {
+        	nameSearch();
+          profit.search(myparams);
+        }
+      });
+      $('#export').linkbutton({
+          iconCls : 'icon-export',
+          onClick : function() {
+          	nameSearch();
+          	window.location.href = top.Dg.initUrl("profit_export.do", myparams);
+          }
+        });
+    });
+    function nameSearch(){
+   		myparams.searchContent = $("#searchContent").val();
+   		myparams.repairCompany = $("#repairCompany").val();
+   	}
+  </script>
+	<div fit="true" class="easyui-layout">
+		<div region="north" title="查询条件" style="height: 70px;">
+			<div class="pannel_search">
+				${(languaged !='')?string('client Name',' 客户名称')}：<input type="text"
+					class="easyui-textbox"
+					data-options="prompt:'${(languaged !='')?string('client Name',' 客户名称')}'"
+					id="searchContent" /> 
+					${(languaged !='')?string('repairCompany',' 维修公司 ')}：<input type="text" class="easyui-textbox" data-options="prompt:'${(languaged !='')?string('repairCompany',' 检维修公司')}'" id="repairCompany"/>
+					<!--  ${(languaged!='')?string('selectDate','日期选择')}：<input type="text" class="easyui-datetimebox" id="startDate"name="startDate" />-
+					 <input type="text" class="easyui-datetimebox"id="endDate" name="endDate" />  -->
+					<a href="javascript:;" id="search">${(languaged!='')?string('search','查询')}</a>&nbsp;
+					<!-- <a href="javascript:;" id="export">${(languaged!='')?string('export','导出')}</a> -->
+			</div>
+		</div>
+		<div region="center" style="overflow: hidden; border: none;">
+			<table fit="true" namespace="profit" id="profit" class="datagrid"></table>
+		</div>
+	</div>
+</body>

@@ -1,0 +1,82 @@
+*{padding:0; margin:0;}
+ul,li{ list-style: none;}
+.clearfloat:after{display:block;clear:both;content:"";visibility:hidden;height:0} 
+.clearfloat{zoom:1} 
+.container{ width: 100%; margin: 0 auto;}
+.marginTb{ margin: 5px 0;}
+.container li{display: block; width: 6.25%; float: left;}
+.container li i{display: block; width: 100%; height: 88px; cursor: pointer; background-size: contain; }
+.img001{ background: url(../img/up/top1_tooth_01.png) center bottom no-repeat;}
+.img001-elect{ background: url(../img/up/top_tooth_01.png) center bottom no-repeat;}
+.img002{ background: url(../img/up/top1_tooth_02.png) center bottom no-repeat;}
+.img002-elect{ background: url(../img/up/top_tooth_02.png) center bottom no-repeat;}
+.img003{ background: url(../img/up/top1_tooth_03.png) center bottom no-repeat;}
+.img003-elect{ background: url(../img/up/top_tooth_03.png) center bottom no-repeat;}
+.img004{ background: url(../img/up/top1_tooth_04.png) center bottom no-repeat;}
+.img004-elect{ background: url(../img/up/top_tooth_04.png) center bottom no-repeat;}
+.img005{ background: url(../img/up/top1_tooth_05.png) center bottom no-repeat;}
+.img005-elect{ background: url(../img/up/top_tooth_05.png) center bottom no-repeat;}
+.img006{ background: url(../img/up/top1_tooth_06.png) center bottom no-repeat;}
+.img006-elect{ background: url(../img/up/top_tooth_06.png) center bottom no-repeat;}
+.img007{ background: url(../img/up/top1_tooth_07.png) center bottom no-repeat;}
+.img007-elect{ background: url(../img/up/top_tooth_07.png) center bottom no-repeat;}
+.img008{ background: url(../img/up/top1_tooth_08.png) center bottom no-repeat;}
+.img008-elect{ background: url(../img/up/top_tooth_08.png) center bottom no-repeat;}
+.img009{ background: url(../img/up/top1_tooth_09.png) center bottom no-repeat;}
+.img009-elect{ background: url(../img/up/top_tooth_09.png) center bottom no-repeat;}
+.img010{ background: url(../img/up/top1_tooth_10.png) center bottom no-repeat;}
+.img010-elect{ background: url(../img/up/top_tooth_10.png) center bottom no-repeat;}
+.img011{ background: url(../img/up/top1_tooth_11.png) center bottom no-repeat;}
+.img011-elect{ background: url(../img/up/top_tooth_11.png) center bottom no-repeat;}
+.img012{ background: url(../img/up/top1_tooth_12.png) center bottom no-repeat;}
+.img012-elect{ background: url(../img/up/top_tooth_12.png) center bottom no-repeat;}
+.img013{ background: url(../img/up/top1_tooth_13.png) center bottom no-repeat;}
+.img013-elect{ background: url(../img/up/top_tooth_13.png) center bottom no-repeat;}
+.img014{ background: url(../img/up/top1_tooth_14.png) center bottom no-repeat;}
+.img014-elect{ background: url(../img/up/top_tooth_14.png) center bottom no-repeat;}
+.img015{ background: url(../img/up/top1_tooth_15.png) center bottom no-repeat;}
+.img015-elect{ background: url(../img/up/top_tooth_15.png) center bottom no-repeat;}
+.img016{ background: url(../img/up/top1_tooth_16.png) center bottom no-repeat;}
+.img016-elect{ background: url(../img/up/top_tooth_16.png) bottom center no-repeat;}
+
+
+
+.img01{ background: url(../img/down/bottom1_tooth_01.png) center top no-repeat;}
+.img01-elect{ background: url(../img/down/bottom_tooth_01.png) center top no-repeat;}
+.img02{ background: url(../img/down/bottom1_tooth_02.png) center top no-repeat;}
+.img02-elect{ background: url(../img/down/bottom_tooth_02.png) center top no-repeat;}
+.img03{ background: url(../img/down/bottom1_tooth_03.png) center top no-repeat;}
+.img03-elect{ background: url(../img/down/bottom_tooth_03.png) center top no-repeat;}
+.img04{ background: url(../img/down/bottom1_tooth_04.png) center top no-repeat;}
+.img04-elect{ background: url(../img/down/bottom_tooth_04.png) center top no-repeat;}
+.img05{ background: url(../img/down/bottom1_tooth_05.png) center top no-repeat;}
+.img05-elect{ background: url(../img/down/bottom_tooth_05.png) center top no-repeat;}
+.img06{ background: url(../img/down/bottom1_tooth_06.png) center top no-repeat;}
+.img06-elect{ background: url(../img/down/bottom_tooth_06.png) center top no-repeat;}
+.img07{ background: url(../img/down/bottom1_tooth_07.png) center top no-repeat;}
+.img07-elect{ background: url(../img/down/bottom_tooth_07.png) center top no-repeat;}
+.img08{ background: url(../img/down/bottom1_tooth_08.png) center top no-repeat;}
+.img08-elect{ background: url(../img/down/bottom_tooth_08.png) center top no-repeat;}
+.img09{ background: url(../img/down/bottom1_tooth_09.png) center top no-repeat;}
+.img09-elect{ background: url(../img/down/bottom_tooth_09.png) center top no-repeat;}
+.img10{ background: url(../img/down/bottom1_tooth_10.png) center top no-repeat;}
+.img10-elect{ background: url(../img/down/bottom_tooth_10.png) center top no-repeat;}
+.img11{ background: url(../img/down/bottom1_tooth_11.png) center top no-repeat;}
+.img11-elect{ background: url(../img/down/bottom_tooth_11.png) center top no-repeat;}
+.img12{ background: url(../img/down/bottom1_tooth_12.png) center top no-repeat;}
+.img12-elect{ background: url(../img/down/bottom_tooth_12.png) center top no-repeat;}
+.img13{ background: url(../img/down/bottom1_tooth_13.png) center top no-repeat;}
+.img13-elect{ background: url(../img/down/bottom_tooth_13.png) center top no-repeat;}
+.img14{ background: url(../img/down/bottom1_tooth_14.png) center top no-repeat;}
+.img14-elect{ background: url(../img/down/bottom_tooth_14.png) center top no-repeat;}
+.img15{ background: url(../img/down/bottom1_tooth_15.png) center top no-repeat;}
+.img15-elect{ background: url(../img/down/bottom_tooth_15.png) center top no-repeat;}
+.img16{ background: url(../img/down/bottom1_tooth_16.png) center top no-repeat;}
+.img16-elect{ background: url(../img/down/bottom_tooth_16.png) center top no-repeat;}
+
+
+
+.box{ width:70%; margin: 10px auto; height: 30px; border-top: 1px solid #ddd; border-left: 1px solid #ddd;}
+.box td{ height: 15px; width: 32%; border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; cursor: pointer;}
+.box-elect{ background-color: #ff9900;}
+.box-reset{ background-color: #FFFFFF;}

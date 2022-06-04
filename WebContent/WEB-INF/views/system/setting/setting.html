@@ -1,0 +1,65 @@
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,EasyUI"/>
+<script type="text/javascript">
+  $(function() {
+    $("#settinggroup").propertygrid({
+      url : '../setting/setting_community_data.do',
+      showGroup : true,
+      iconCls:"icon-grid",
+      showHeader : false,
+      toolbar : "#hdtb",
+      title : "系统设置",
+      scrollbarSize : 0,
+      onEndEdit : function(index, row, changes) {
+        $("#btn_sub").linkbutton("enable");
+      },
+      onLoadSuccess : function(data) {
+        $('#settinggroup').propertygrid('collapseGroup');
+        $('#settinggroup').propertygrid('expandGroup', 0);
+      }
+    });
+
+    $("#btn_sub").linkbutton({
+      iconCls : 'icon-save',
+      plain : true,
+      disabled : true,
+      onClick : function() {
+        var result = getChanges();
+        if (result) {
+          var myparams = {
+            result : result
+          };
+          top.Dg.z.ajax("setting/setting_update_sub.do", myparams);
+        }
+      }
+    });
+
+  })
+
+  function getChanges() {
+    var s = '';
+    var rows = $('#settinggroup').propertygrid('getChanges');
+    for (var i = 0; i < rows.length; i++) {
+      s += rows[i].settingId + ':' + rows[i].value + ',';
+    }
+    return s;
+  }
+</script>
+</head>
+<body style="overflow: hidden">
+ <div fit="true" class="easyui-layout" style="border: none; overflow-y: hidden;">
+  <div region="center" style="border: none;">
+   <table id="settinggroup" fit="true"></table>
+
+
+   <div id="hdtb" style="border-bottom: none; height: 28px; width: 100%; padding: 1px 2px;">
+    <div style="float: left">
+     <a id="btn_sub">保存设置</a>
+    </div>
+   </div>
+  </div>
+ </div>
+</body>
+</html>

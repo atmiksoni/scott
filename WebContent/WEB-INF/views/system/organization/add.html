@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery"/>
+</head>
+<body>
+	<@p.valid id="organization" action="organization_add_sub.do" class="layui-form" layui=true>
+	<input type="hidden" name="area.areaId" value="${area.areaId}" /> <@p.legend text="所属区域:${area.areaName}"/>
+	<div class="layui-form-item">
+		<div class="layui-inline"><@p.layinput label="公司名称" datarule="required;" name="organizationName" /></div>
+	</div>
+	<div class="layui-form-item">
+		<div class="layui-inline"><@p.layinput label="联系人" datarule="required;" name="linkMan" /></div>
+	</div>
+	<div class="layui-form-item">
+		<div class="layui-inline"><@p.layinput label="联系方式" datarule="required;" name="organTel" /></div>
+	</div>
+	<div class="layui-form-item">
+		<div class="layui-inline"><@p.layinput label="公司地址" datarule="required;" name="address" /></div>
+	</div>
+	</@p.valid>
+</body>
+</html>

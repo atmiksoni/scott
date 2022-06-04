@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll"/>
+</head>
+<body>
+<@p.valid id="joinapply" action="joinapply_edit_sub.do" class="layui-form" layui=true>
+ <@p.legend text="提示信息"/> 
+ <input type="hidden" name="joinapplyId" value="${joinapply.joinapplyId}" />
+         <div class="layui-form-item">
+		    <@p.layinput label="区域ID"  datarule="required;" name="areaId" value="${joinapply.areaId}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="地址"  datarule="required;" name="address" value="${joinapply.address}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="店名"  datarule="required;" name="storeName" value="${joinapply.storeName}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="面积"  datarule="required;" name="acreage" value="${joinapply.acreage}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="固定电话"  datarule="required;" name="telephone" value="${joinapply.telephone}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="联系人"  datarule="required;" name="linkman" value="${joinapply.linkman}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="手机号"  datarule="required;" name="mobile" value="${joinapply.mobile}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="邮编"  datarule="required;" name="postcode" value="${joinapply.postcode}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="场所"  datarule="required;" name="place" value="${joinapply.place}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="椅位"  datarule="required;" name="chaircount" value="${joinapply.chaircount}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="医生数"  datarule="required;" name="doctorcount" value="${joinapply.doctorcount}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="护士数"  datarule="required;" name="nursecount" value="${joinapply.nursecount}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="其他人员"  datarule="required;" name="othercount" value="${joinapply.othercount}"/>
+	     </div>
+</@p.valid>
+</body>
+</html>

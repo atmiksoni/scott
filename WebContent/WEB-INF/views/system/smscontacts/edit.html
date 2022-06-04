@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll,EasyUI"/>
+</head>
+<body>
+ <@p.form id="smscontacts" action="edit_smscontacts_update.do" js="flyme_form2" btnSubmit=true dialog=true>
+ <input type="hidden"  id="contactsId" name="contactsId" value="${contacts.contactsId}" />
+<input type="hidden"  id="communityId" name="communityId" value="${contacts.communityId}" />
+ <table class="tbformtop">
+  <tr>
+   <td>
+    <table class="tbform">
+     <tr>
+      <td colspan="2">
+       <div class="z-legend">
+        <b>基本信息</b>
+       </div>
+      </td>
+     </tr>
+     <tr>
+		<td class="tdl" width="20%">姓名：</td>
+		<td width="50%"><input type="text" class="txtInput" id="name" name="name" datatype="*1-50" value="${contacts.name}"/></td>
+		<td width="40%"><span class="Validform_checktip">示例</span></td>
+     </tr>
+     <tr>
+		<td class="tdl" width="20%">手机号：</td>
+		<td width="50%"><input type="text" class="txtInput" id="mobile" name="mobile" datatype="m"  value="${contacts.mobile}" errormsg="手机号码不正确"/></td>
+		<td width="40%"><span class="Validform_checktip"></span></td>
+     </tr> 
+    </table>
+   </td>
+  </tr>
+ </table>
+ </@p.form>
+<script type="text/javascript">
+		$(function() {
+			niceScroll("body");
+			
+		});
+	</script>
+</body>
+</html>

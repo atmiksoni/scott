@@ -1,0 +1,134 @@
+<body style="overflow: hidden">
+ <script type="text/javascript">
+      var prescription;
+    $(function() {
+      prescription = new Dd("prescription");
+      prescription.url = "prescription_list_data.do";
+      prescription.title = "名方阁信息";
+      prescription.colM = [ [  {
+        title : "主键",
+        field : "prescriptionId",
+        alias : "p",
+        hidden:true
+      } ,{
+        title : "处方名称",
+        field : "prescriptionName",
+        alias : "p",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "处方内容",
+        field : "prescriptionContent",
+        alias : "p",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "付数",
+        field : "prescriptionCount",
+        alias : "p",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "用法",
+        field : "prescriptionUsage",
+        alias : "p",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "诊断",
+        field : "diagnosis",
+        alias : "p",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "治则 ",
+        field : "treatment",
+        alias : "p",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "组成",
+        field : "constitute",
+        alias : "p",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "创建日期",
+        field : "createDate",
+        alias : "p",
+        width : 100,
+        align : "center"
+      } ] ];
+
+      prescription.toolbar = [ {
+        id : "prescription_add",
+        text : "添加",
+        iconCls : "icon-add",
+        handler : function() {
+          prescription.open2({
+            title : "添加名方阁",
+            h : "70%",
+			w : "45%",
+            url : "prescription_add_turn.do",
+            params : myparams
+          });
+        }
+      }, {
+        id : "prescription_edit",
+        text : "修改",
+        iconCls : "icon-edit",
+        disabled : true,
+        handler : function() {
+          prescription.updata2({
+            title : "修改名方阁",
+            h : "70%",
+			w : "45%",
+            url : "prescription_edit_turn.do",
+            params : {
+                prescriptionId : prescription.rowKey
+            }
+		  });
+        }
+      }, {
+        id : "prescription_del",
+        text : "删除名方阁",
+        iconCls : "icon-remove",
+        disabled : true,
+        handler : function() {
+          prescription.remove({
+             url : "prescription_del_sub.do",
+             params : {
+                prescriptionId : prescription.rowKey
+             }
+		  });
+        }
+      } ];
+      prescription.param = myparams;
+      prescription.onClickRow = function(rowIndex, rowData) {
+       $("#prescription_edit,#prescription_del").linkbutton("enable");
+      }
+      prescription.onLoadSuccess = function(data) {
+       $("#prescription_edit,#prescription_del").linkbutton("disable");
+      };
+      prescription.LoadDataGrid();
+      $('#search').linkbutton({
+        iconCls : 'icon-search',
+        onClick : function() {
+        	myparams.prescriptionName=$("#prescriptionName").val();
+          prescription.search(myparams);
+        }
+      });
+    });
+  </script>
+ <div fit="true" class="easyui-layout">
+  <div region="north" title="查询条件" style="height: 70px;">
+   <div class="pannel_search">
+    	处方名称：<input type="text" class="easyui-textbox" id="prescriptionName" /> 
+       <a href="javascript:;" id="search">查询</a>
+   </div>
+  </div>
+  <div region="center" style="overflow: hidden;border: none;">
+   <table fit="true" namespace="prescription" id="prescription" class="datagrid"></table>
+  </div>
+ </div>
+</body>

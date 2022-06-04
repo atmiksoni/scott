@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<@p.resource types="Jquery,Easyui,Tree,NiceScroll,AnyDataGrid"/>
+<script type="text/javascript">
+
+	var myparams = {
+		userId : top.userId,
+	};
+	function noImage() {
+		var img = event.srcElement;
+		img.src = "../../res/nbxy/image/noone.png";
+		img.onerror = null;
+	}
+	function store_click(node){
+		myparams.storeId = node.id;
+		accountinfo.search(myparams);
+	}
+</script>
+</head>
+<body class="easyui-layout" style="overflow-y: hidden">
+	 <div region="west" split="true" href="${base}/admin/component/store_tree_turn.do" minWidth="230" maxWidth="230" title="区域列表" style="overflow: hidden; border-bottom: none">
+	 </div> 
+	<!-- 中央 -->
+	<div region="center" split="true" title="搜索" href="delivery_list_turn.do?orderId=${orderId}&&status=${status}" style="border:none;overflow: hidden;"></div>
+</body>
+</html>

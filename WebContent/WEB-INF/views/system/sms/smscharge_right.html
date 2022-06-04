@@ -1,0 +1,71 @@
+<body style="overflow: hidden">
+	<@p.resource types="AnyDataGrid,ComBo,Lodop"/>
+	<script type="text/javascript">
+		$(function() {
+			smscharge = new Dd("smscharge");
+			smscharge.colM = [ [ {
+				title : "主键",
+				alias : "sc",
+				field : "smschargeId",
+				width : 10,
+				align : "center",
+				hidden : true
+			}, {
+				title : "消费日期",
+				alias : "sc",
+				field : "feeBeginDate",
+				width : 80,
+				align : "center"
+			}, {
+				title : "消费详情",
+				alias : "sc",
+				field : "feeEndDate",
+				width : 80,
+				align : "center"
+			} ] ];
+
+			smscharge.url = "sms_charge_data.do";
+			smscharge.toolbar = '#smschargetb';
+			smscharge.param = myparams;
+			smscharge.LoadDataGrid();
+
+			
+			$("#smssearchall").linkbutton({
+				iconCls : "icon-add",
+				disabled : true,
+				onClick : function() {
+					smscharge.search(myparams);
+				}
+			});
+			
+			$("#smssearch").linkbutton({
+				iconCls : "icon-add",
+				disabled : true,
+				onClick : function() {
+					myparams.searchtime = initType.value;
+					myparams.searchgroupId = groupId;
+					smscharge.search(myparams);
+				}
+			});
+		});
+	</script>
+
+
+	<div fit="true" class="easyui-layout">
+		<div region="center" title="消费详情" style="border-top: none; height: 238px">
+			<table fit="true" border="false" namespace="pmreading" id="smscharge"
+				class="datagrid"></table>
+			<div id="smschargetb" style="height: 30px; width: 100%;">
+				<div style="float: left; padding: 3px;">
+					<span id="search1"> 查询时间：<select id="initType" >
+							<option value="0">最近一月</option>
+							<option value="1">最近三月</option>
+							<option value="2">最近半年</option>
+							<option value="4">最近一年</option>
+							<option value="5">全部记录</option>
+					</select>  <a href="javascript:;" id="smssearch" plain="true">查询 <a href="javascript:;" id="smssearchall" plain="true">查询全部发送情况 
+				</div>
+			</div>
+		</div>
+	</div>
+</body>

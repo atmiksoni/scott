@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll"/>
+</head>
+<body>
+	<@p.valid id="checkorder" action="" class="layui-form" layui=true> 
+	
+	<@p.legend text="${(languaged !='')?string('Basic informatiosn','基本信息')}"/>
+	<!-- <div class="layui-form-item" style="margin-left: 40px;">
+		<img width="100px;"
+			onclick="top.Dg.imageview('${base}/'+'${checkorder.imgs}')"
+			align="center" style="margin-left: 20px; margin-right: 40px;"
+			height="100px;" src="${base}/${checkorder.imgs}" onerror="noImage();" />
+	</div>  -->
+
+	<div class="layui-form-item" style="margin-left: 40px;">
+		<@p.text label="${(languaged !='')?string('Repair engineer','工程师')}" width=300  value="${workorder.engineerName}"/>
+		<@p.text label="${(languaged !='')?string('Client name','客户姓名')}" width=300  value="${workorder.companyName}"/>
+	</div>
+	<div class="layui-form-item" style="margin-left: 40px;">
+		<@p.text label="${(languaged !='')?string('job number','工作单号')}" width=300  value="${workorder.workOrderNo}"/>
+		<@p.text label="${(languaged !='')?string('Device type','设备类型')}" width=300  value="${workorder.equipmentTypeName}"/>       
+	</div>
+	<@p.legend text="${(languaged !='')?string('Company name','客户信息')}"/>
+
+	<div class="layui-form-item" style="margin-left: 40px;">
+		<@p.text label="${(languaged !='')?string('Postal code','邮政编码')}" width=300  value="${workorder.postcodes}"/>
+		<@p.text label="${(languaged !='')?string('Physical address','客户地址')}" width=300  value="${workorder.Address}"/> 
+	</div>	
+		
+	<div class="layui-form-item" style="margin-left: 40px;">
+		<@p.text label="${(languaged !='')?string('Phone number','联系电话')}" width=300  value="${workorder.Linkphone}"/>
+		<@p.text label="${(languaged !='')?string('Company number','客户电话')}" width=300  value="${workorder.mobile}"/> 
+	</div>
+	<div class="layui-form-item" style="margin-left: 40px;">
+		<@p.text label="${(languaged !='')?string('Email','电子邮箱')}" width=300  value="${workorder.compEmail}"/>
+		<@p.text label="${(languaged !='')?string('Contact','联系人')}" width=300  value="${workorder.linkman}"/> 
+	</div>	
+
+		
+	<@p.legend text="${(languaged !='')?string('Device  informatiosn','设备信息')}"/>
+	
+	<div class="layui-form-item" style="margin-left: 40px;">
+		<@p.text label="${(languaged !='')?string('Device ID','设备编号')}" width=300  value="${workorder.equipmentNo}"/>
+		<@p.text label="${(languaged !='')?string('Device address','设备地址')}" width=300  value="${workorder.equipmentAddress}"/> 
+		</div>
+		
+		<div class="layui-form-item" style="margin-left: 40px;">
+		<!-- <@p.text label="${(languaged !='')?string('brand','品牌')}" width=300  value="${workorder.brand}"/> -->
+		<@p.text label="${(languaged !='')?string('Manufacturer','制造商')}" width=300  value="${workorder.manufacturer}"/> 
+		</div>
+		
+		<div class="layui-form-item" style="margin-left: 40px;">
+		<@p.text label="${(languaged !='')?string('Conditions','情况说明')}" width=300  value="${workorder.situationInfo}"/>
+		<@p.text label="${(languaged !='')?string('repair','处理措施')}" width=300  value="${workorder.repairContent}"/> 
+		</div>
+			
+		
+		<@p.legend text="${(languaged !='')?string('picture of the scene','现场图片')}"/>
+	<div class="layui-form-item" style="margin-left: 40px;">
+		<#list imgs as img>
+			<img width="100px;"  align="center" style="margin-left: 20px; margin-right: 40px;"
+				height="100px;" src="${base}/${img}" />
+		</#list>
+	</div>
+	</@p.valid>
+	
+	
+	
+	
+</body>
+</html>

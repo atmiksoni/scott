@@ -1,0 +1,19 @@
+.weui_tab {margin:25px 0;font-size: 0.75rem;color: #666;}
+.weui_navbar_item {color: #666;border-right: 0px solid #DCDCDC;padding-top:8px;border-bottom:none;}
+.weui_navbar_item.weui_bar_item_on {color: #E63C2D;border-bottom: 2px solid #E63C2D;}
+.myorder .tab {width: 100%;height:2.25rem;overflow: hidden;position: fixed;border-right:none;top:40px;left: 0;z-index:100;background-color: white;}
+.weui_tab_bd>div>ul>li {margin: 0.20rem 0;background-color: #fff;}
+.weui_tab_bd>div>ul>li>ol {margin: 0 0.75rem;}
+.weui_tab_bd>div>ul>li .top {padding: 0.5rem 0;border-bottom: 1px solid #D9D9D9;}
+.weui_tab_bd>div>ul>li .pic_info {overflow: hidden;border-bottom: 1px solid #D9D9D9;}
+.weui_tab_bd>div>ul>li .bottom {height: 2.5rem;}
+.weui_tab_bd>div>ul>li .bottom a.weui_btn_default, .orders .bottom a.weui_btn_primary {float: right;margin-top: 0.5rem;font-size: 0.7rem;color: #333;}
+.weui_btn.weui_btn_mini {line-height: 2.3;}
+.alert ul li {float:left;width: 49.5%;height: 50px;line-height: 50px;border-top: 1px solid #DCDCDC;color: #E63C2D;}
+.alert ul li:first-child {border-right: 1px solid #DCDCDC;}
+.footer {width: 100%;height: 48px;position: fixed;bottom: 0;left: 0;background-color: white;}
+.footer .weui_grid:nth-child(2) p {color: #E63C2D;}
+.load img {width: 100%;float: left;}
+.load p {font-size: 0.55rem;text-align: center;}
+.load .top {margin: 0.75rem auto 0.25rem;width: 2.75rem;overflow: hidden;}
+.load p {margin-bottom: 0.5rem;}

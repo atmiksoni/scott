@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<@p.resource types="Jquery,Easyui,Tree,NiceScroll"/>
+<script type="text/javascript">
+	var myparams = {};
+    $(function() {
+	    var tree = new Tree();
+	    tree.url = "list_buildingunit_treedata.do";
+	    tree.initTree("mytree");
+	    tree.onClick = onClick;
+    });
+    
+    function onClick(node) {
+	    if (node.pojoName == "Community") {
+		    myparams.communityId = node.id
+		    $("#houseTypeAdd").linkbutton("enable");
+		    housetype.search(myparams);
+	    }
+    }
+</script>
+</head>
+<body class="easyui-layout" style="overflow-y: hidden">
+ <div region="west" split="true" minWidth="170" maxWidth="170" title="小区楼宇" style="overflow: hidden; border-bottom: none">
+  <ul id="mytree" class="ztree"></ul>
+ </div>
+ <div region="center" href="list_housetype_turn.do" style="padding: 0px; overflow: hidden; border: none"></div>
+</body>
+</html>

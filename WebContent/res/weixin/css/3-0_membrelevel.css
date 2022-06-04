@@ -1,0 +1,55 @@
+.head a {position:absolute;top:0;right:0.75rem;line-height:48px;color: white;font-size: 0.6rem;}
+.head a img {width: 0.65rem;}
+.membrelevel .bg {margin: 48px 0 0;background-color: #c14f45;}
+.card {width: 24%;padding: 2rem 38% 0;}
+.card img {width: 100%;}
+h2, .add {text-align: center;color: white;}
+.add {font-size: 0.6rem;}
+.next {color: white;font-size: 0.6rem;text-indent: 2%;padding-bottom: 0.6rem;}
+img.grade {width: 96%;margin: 2%;}
+.content {font-size: 0.8rem;color: #666;}
+ {text-indent: 2%;}
+ul {background-color: white;}
+h3, ul li {width: 94%;margin: 3%;padding: 2% 0;}
+ul li span {float: right;}
+ul li:first-child {padding: 2% 0 0;}
+ul li:last-child {padding: 0 0 2%;}
+ul li:last-child em {border: 1px solid #b1b1b1;padding: 0.2rem;font-size: 0.6rem;}
+ul li:last-child span {font-size: 0.8rem;}
+ul li:first-child span {color: #999;font-size: 0.6rem;}
+.level-box {width: 90%;height: 3rem;overflow: hidden;position: relative;margin: 0.5rem auto;}
+.level-bg {display: block;width: 90%;height: 0.1rem;background-color: #DCDCDC;position: absolute;left: 5%;top: 0.9rem;z-index: 0;}
+.level {display: inline-block;width: 1.6rem;height: 1.8rem;position: absolute;top: 0;text-align: center;}
+.level1 {background: url(../img/usercenter/images/huiyuan_logo01.png) no-repeat;background-size: 100% 100%;left: 0;}
+.level2 {background: url(../img/usercenter/images/huiyuan_logo02.png) no-repeat;background-size: 100% 100%;left: 50%;margin-left: -0.9rem;}
+.level3 {background: url(../img/usercenter/images/huiyuan_logo03.png) no-repeat;background-size: 100% 100%;right: 0;}
+.level span {color: #DCDCDC;display:inline-block;padding-top: 2rem;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**/
+
+
+
+

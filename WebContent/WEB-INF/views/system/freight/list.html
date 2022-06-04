@@ -1,0 +1,131 @@
+<body style="overflow: hidden">
+	<script type="text/javascript">
+		var freight;
+		$(function() {
+			freight = new Dd("freight");
+			freight.url = "freight_list_data.do";
+			freight.title = "信息";
+			freight.colM = [ [
+					{
+						title : "主键",
+						field : "freightId",
+						alias : "f",
+						hidden : true
+					},
+					{
+						title : "运费模版名称",
+						field : "freightName",
+						alias : "f",
+						width : 100,
+						align : "center"
+					},
+					{
+						title : "单价(件/元)",
+						field : "price",
+						alias : "f",
+						width : 100,
+						align : "center"
+					},
+					{
+						title : "创建日期",
+						field : "createDate",
+						alias : "f",
+						width : 100,
+						align : "center"
+					},
+					{
+						field : "opt",
+						title : '操作',
+						formatter : function(value, freight, index) {
+							if (value == "" || value == null) {
+							}
+							var href = "";
+							href += "[<a href='javascript:;' onclick=setArea('" + freight.freightId + "','"
+									+ freight.freightName + "');return flase;>区域设置</a>]";
+							return href;
+						}
+					} ] ];
+
+			freight.toolbar = [ {
+				id : "freight_add",
+				text : "添加",
+				iconCls : "icon-add",
+				handler : function() {
+					freight.open2({
+						title : "添加",
+						h : "70%",
+						w : "45%",
+						url : "freight_add_turn.do",
+						params : myparams
+					});
+				}
+			}, {
+				id : "freight_edit",
+				text : "修改",
+				iconCls : "icon-edit",
+				disabled : true,
+				handler : function() {
+					freight.updata2({
+						title : "修改",
+						h : "70%",
+						w : "45%",
+						url : "freight_edit_turn.do",
+						params : {
+							freightId : freight.rowKey
+						}
+					});
+				}
+			}, {
+				id : "freight_del",
+				text : "删除",
+				iconCls : "icon-remove",
+				disabled : true,
+				handler : function() {
+					freight.remove({
+						url : "freight_del_sub.do",
+						params : {
+							freightId : freight.rowKey
+						}
+					});
+				}
+			} ];
+			freight.param = myparams;
+			freight.onClickRow = function(rowIndex, rowData) {
+				$("#freight_edit,#freight_del").linkbutton("enable");
+			}
+			freight.onLoadSuccess = function(data) {
+				$("#freight_edit,#freight_del").linkbutton("disable");
+			};
+			freight.LoadDataGrid();
+			$('#search').linkbutton({
+				iconCls : 'icon-search',
+				onClick : function() {
+					myparams.freightName=$("#freightName").val();
+					freight.search(myparams);
+				}
+			});
+		});
+		
+		function setArea(freightId, freightName) {
+			$("#function-panel").panel({
+				title : "区域设置(<span style=\"color:red\">" + freightName + "</span>)",
+				href : "allot_freight_turn.do",
+				queryParams : {
+					freightId : freightId
+				}
+			});
+		}
+		
+	</script>
+	<div fit="true" class="easyui-layout">
+		<div region="north" title="查询条件" style="height: 70px;">
+			<div class="pannel_search">
+				模板名称：<input type="text" class="easyui-textbox" id="freightName" name="freightName" />
+				<a href="javascript:;" id="search">查询</a>
+			</div>
+		</div>
+		<div region="center" style="overflow: hidden; border: none;">
+			<table fit="true" namespace="freight" id="freight" class="datagrid"></table>
+		</div>
+	</div>
+</body>

@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll,webuploader"/>
+</head>
+<body>
+	<@p.valid id="version" action="version_add_sub.do" class="layui-form" layui=true> <@p.legend text="版本更新"/>
+	<div class="layui-form-item"><@p.layinput label="版本号" datarule="required;" name="versionNo" /></div>
+	<div class="layui-form-item"><@p.layinput label="版本名称" datarule="required;" name="name" /></div>
+	<div class="layui-form-item"><@p.layinput label="版本标题" datarule="required;" name="title" /></div>
+	<div class="layui-form-item"><@p.textare label="<text style='font-weight:bold'>更新内容</text>"  name="content" width=300/></div>
+	<div class="layui-form-item">
+		<label class="layui-form-label">是否强制升级:</label>
+		<div class="layui-input-block">
+			<input type="radio" name="force" value="1" title="是" checked="checked"> 
+			<input type="radio" name="force" value="0" title="否">
+		</div>
+	</div>
+	<div class="layui-form-item">
+		<label class="layui-form-label"><b>APP类别：</b></label>
+		<div class="layui-input-inline">
+			<select id="osType" name="osType" lay-filter="os" >
+				<option value="Android">安卓</option>
+				<option value="IOS">苹果</option>
+			</select>
+		</div>
+	</div>
+	
+	<div id="upload">
+	<@p.legend text="上传APK" btnId="file"/>
+	<div class="layui-form-item">
+		<div class="layui-inline" style="padding-left: 20px;"><@p.upload id="url" name="url" /></div>
+	</div>
+	</div>
+	</@p.valid>
+	<script type="text/javascript">
+		$(function() {
+			
+			form.on('select(os)', function(data) {
+				if (data.value == "Android") {
+					$("#upload").show();
+				} else {
+					$("#upload").hide();
+				}
+				console.log(data.value == 1);
+			})
+			
+			/**上传文件*/
+			var file = new Upload({
+				filePicker : "file",
+				accept : "app",
+				fileVal : "url_file",
+				fileList : "url",
+				server : "${base}/admin/version/version_file_upload.do"
+			});
+			file.uploadSuccess = function(file, data) {
+				$('#urlHidden').val(data.filePath);
+			}
+		});
+		
+	</script>
+</body>
+</html>

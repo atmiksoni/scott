@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll,zui,EasyUI"/>
+</head>
+<body>
+ <@p.valid id="note" action="note_edit_sub.do">
+    <input type="hidden" name="noteId" value="${note.noteId}" />
+    <table align="center" class="table table-form">
+          	 <tr>
+           <th class="w-80px">发票抬头：</th>
+            <td><input type="text" name="noteTitle" value="${note.noteTitle}" class="form-control input-sm w-p50" data-rule="required;"/></td>
+          	</tr>
+          	 <tr>
+           <th class="w-80px">联系手机：</th>
+            <td><input type="text" name="mobile" value="${note.mobile}" class="form-control input-sm w-p50" data-rule="required;"/></td>
+          	</tr>
+          	 <tr>
+           <th class="w-80px">所在地区：</th>
+            <td><input type="text" name="address" value="${note.address}" class="form-control input-sm w-p50" data-rule="required;"/></td>
+          	</tr>
+          	 <tr>
+           <th class="w-80px">详细地址：</th>
+            <td><input type="text" name="addressDetails" value="${note.addressDetails}" class="form-control input-sm w-p50" data-rule="required;"/></td>
+          	</tr>
+          	 <tr>
+           <th class="w-80px">邮政编码：</th>
+            <td><input type="text" name="postalCode" value="${note.postalCode}" class="form-control input-sm w-p50" data-rule="required;"/></td>
+          	</tr>
+          	 <tr>
+           <th class="w-80px">用户：</th>
+            <td><input type="text" name="accountInfoId" value="${note.accountInfoId}" class="form-control input-sm w-p50" data-rule="required;"/></td>
+          	</tr>
+    </table>
+ </@p.valid> 
+</body>
+</html>

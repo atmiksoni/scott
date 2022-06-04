@@ -1,0 +1,154 @@
+<body style="overflow: hidden">
+	<script type="text/javascript">
+		var notice;
+		$(function() {
+			notice = new Dd("notice");
+			notice.url = "notice_list_data.do";
+			notice.title = "通知公告";
+			notice.colM = [ [
+					{
+						title : "主键",
+						field : "noticeId",
+						alias : "n",
+						hidden : true,
+						width : 100,
+						align : "center"
+					},
+					{
+						title : "标题",
+						field : "title",
+						alias : "n",
+						width : 100,
+						align : "center"
+					},
+					{
+						title : "发布人",
+						field : "userName",
+						alias : "account",
+						width : 100,
+						align : "center"
+					},
+					{
+						title : "发布日期",
+						field : "createDate",
+						alias : "n",
+						sortable : true,
+						width : 100,
+						align : "center"
+					},
+					{
+						title : "是否发布",
+						field : "sendStatus",
+						alias : "n",
+						width : 100,
+						align : "center",
+						formatter : function(value, rows, index) {
+							var href = "";
+							href += "<input style='width:50px;height:18px' class='ccc1' data-id='"+rows.noticeId+"' value='"+rows.sendStatus+"'>";
+							return href;
+						}
+					},
+					{
+						title : "是否首页显示",
+						field : "sendIndexSta",
+						alias : "n",
+						width : 100,
+						hidden : true,
+						align : "center",
+						formatter : function(value, rows, index) {
+							var href = "";
+							href += "<input style='width:50px;height:18px' class='ccc1' id='sendIndexSta' data-id='"+rows.noticeId+"' value='"+rows.sendIndexSta+"'>";
+							return href;
+						}
+					} ] ];
+
+			notice.toolbar = [ {
+				id : "notice_add",
+				text : "添加",
+				iconCls : "icon-add",
+				handler : function() {
+					notice.open2({
+						title : "添加",
+						h : "90%",
+						w : "70%",
+						url : "notice_add_turn.do",
+						params : myparams
+					});
+				}
+			}, {
+				id : "notice_edit",
+				text : "修改",
+				iconCls : "icon-edit",
+				disabled : true,
+				handler : function() {
+					notice.updata2({
+						title : "修改",
+						h : "90%",
+						w : "70%",
+						url : "notice_edit_turn.do",
+						params : {
+							noticeId : notice.rowKey
+						}
+					});
+				}
+			} ];
+			notice.param = myparams;
+			notice.onClickRow = function(rowIndex, rowData) {
+				$("#notice_edit,#notice_del").linkbutton("enable");
+			}
+			notice.onLoadSuccess = function(data) {
+				$(".ccc1").each(function(i, item) {
+					var noticeId = $(item).attr("data-id");
+					$(item).switchbutton({
+						checked : Boolean(Number(item.value)),
+						onText : '是',
+						offText : '否',
+						onChange : function(checked) {
+							Fm.ajax("${base}/admin/notice/sendStatus_edit_sub.do", {
+								sendStatus1 : checked,
+								noticeId : noticeId
+							});
+						}
+					})
+				});
+				
+				$("#sendIndexSta").each(function(i, item) {
+					var noticeId = $(item).attr("data-id");
+					$(item).switchbutton({
+						checked : Boolean(Number(item.value)),
+						onText : '是',
+						offText : '否',
+						onChange : function(checked) {
+							Fm.ajax("${base}/admin/notice/sendIndexSta_edit_sub.do", {
+								sendIndexSta2 : checked,
+								noticeId : noticeId
+							});
+						}
+					})
+				});
+				
+				$("#notice_edit,#notice_del").linkbutton("disable");
+			};
+			notice.LoadDataGrid();
+			$('#search').linkbutton({
+				iconCls : 'icon-search',
+				onClick : function() {
+					myparams.title = $("#title").val();
+					myparams.userName = $("#userName").val();
+					notice.search(myparams);
+				}
+			});
+		});
+	</script>
+	<div fit="true" class="easyui-layout">
+		<div region="north" title="查询条件" style="height: 70px;">
+			<div class="pannel_search">
+				标题：<input type="text" class="easyui-textbox" id="title" /> 发布人：<input type="text" class="easyui-textbox" id="userName" /> <a href="javascript:;"
+					id="search">查询</a>
+			</div>
+		</div>
+		<div region="center" style="overflow: hidden; border: none;">
+			<table fit="true" namespace="notice" id="notice" class="datagrid"></table>
+		</div>
+	</div>
+</body>

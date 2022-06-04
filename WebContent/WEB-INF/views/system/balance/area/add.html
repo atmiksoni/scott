@@ -1,0 +1,19 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll,zui,EasyUI"/>
+</head>
+<body>
+	<@p.valid id="area" action="area_add_sub.do" class="layui-form" layui=true>
+	<@p.legend text="区域添加   编码建议'(${(area.areaId)!})'开头"/>
+	<input type="hidden" name="parentId" value="${(area.areaId)!}">
+	<div class="layui-form-item">
+		<div class="layui-inline"><@p.layinput datarule="required;" label="区域编码" name="areaCode" /></div>
+	</div>
+	<div class="layui-form-item">
+		<div class="layui-inline"><@p.layinput datarule="required;" label="区域名称" name="areaName" /></div>
+	</div>
+	</@p.valid>
+</body>
+</html>

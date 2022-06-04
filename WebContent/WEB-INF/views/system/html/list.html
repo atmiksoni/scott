@@ -1,0 +1,125 @@
+<body style="overflow: hidden">
+	<script type="text/javascript">
+		var html;
+		$(function() {
+			html = new Dd("html");
+			html.url = "html_list_data.do";
+			html.title = "帮助中心";
+			html.colM = [ [ {
+				title : "主键",
+				field : "htmlId",
+				alias : "h",
+				hidden : true,
+				width : 100,
+				align : "center"
+			}, {
+				title : "标题",
+				field : "title",
+				alias : "h",
+				width : 100,
+				align : "center"
+			}, {
+				title : "编码",
+				field : "htmlKey",
+				alias : "h",
+				width : 100,
+				align : "center"
+			}, {
+				title : "操作人",
+				field : "userName",
+				alias : "accountInfo",
+				width : 100,
+				align : "center"
+			}, {
+				title : "创建时间",
+				field : "createDate",
+				alias : "h",
+				width : 100,
+				align : "center"
+			}, {
+				title : "是否系统预设",
+				field : "isSys",
+				alias : "h",
+				width : 100,
+				align : "center",
+				formatter : function(value, row, index) {
+					return Fm.formatter({
+						"0" : "否",
+						"1" : "是",
+					}, value);
+				}
+			}, {
+				title : "排序",
+				field : "htmlsort",
+				alias : "h",
+				width : 100,
+				align : "center"
+			} ] ];
+
+			html.toolbar = [ {
+		        id : "unit_add",
+		        text : "添加",
+		        iconCls : "icon-add",
+		        handler : function() {
+		        	html.open2({
+		            title : "添加",
+		            h : "70%",
+					w : "50%",
+		            url : "html_add_turn.do"
+		          });
+		        }
+		      }, {
+				id : "html_edit",
+				text : "修改",
+				iconCls : "icon-edit",
+				disabled : true,
+				handler : function() {
+					html.updata2({
+						title : "修改",
+						h : "70%",
+						w : "50%",
+						url : "html_edit_turn.do",
+						params : {
+							htmlId : html.rowKey
+						}
+					});
+				}
+			}, {
+				id : "html_del",
+				text : "删除",
+				iconCls : "icon-remove",
+				disabled : true,
+				handler : function() {
+					html.remove({
+						url : "html_del_sub.do",
+						params : {
+							htmlId : html.rowKey
+						}
+					});
+				}
+			} ];
+			html.param = myparams;
+			html.onClickRow = function(rowIndex, rowData) {
+				$("#html_edit,#html_del").linkbutton("enable");
+				if(rowData.isSys=="1"){
+					$("#html_del").linkbutton("disable");
+				}
+			}
+			html.onLoadSuccess = function(data) {
+				$("#html_edit,#html_del").linkbutton("disable");
+			};
+			html.LoadDataGrid();
+			$('#search').linkbutton({
+				iconCls : 'icon-save',
+				onClick : function() {
+					html.search(myparams);
+				}
+			});
+		});
+	</script>
+	<div fit="true" class="easyui-layout">
+		<div region="center" style="overflow: hidden; border: none;">
+			<table fit="true" namespace="html" id="html" class="datagrid"></table>
+		</div>
+	</div>
+</body>

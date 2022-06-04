@@ -1,0 +1,175 @@
+<body style="overflow: hidden; border: none">
+	<script src="/plug-in/viewer/js/viewer.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="/plug-in/viewer/css/viewer.min.css" />
+	<script type="text/javascript">
+      var accountinfo;
+    $(function() {
+      accountinfo = new Dd("accountinfo");
+      accountinfo.url = "delivery_list_data.do";
+      accountinfo.title = "取送员列表";
+      accountinfo.colM = [ [
+	{
+	    title : "主键",
+	    field : "accountInfoId",
+	    alias : "u",
+	    hidden:true,
+	    width : 100,
+	    align : "center"
+	  } ,{
+	    title : "账户",
+	    field : "accountId",
+	    alias : "u",
+	    hidden:true,
+	    width : 100,
+	    align : "center"
+	  } ,{
+	      title : "头像",
+	      field : "userhead",
+	      alias : "u",
+	      width : 80,
+	      align : "center",
+	      formatter : function(value, row, index) {
+				return '<img onclick="show()"  width="38px;" align="center" height="38px;" src="../../'+row.userhead+'" />';
+			}
+	    } ,{						
+	     title : "姓名",
+	     field : "userName",
+	     alias : "u",
+	     hidden:true,
+	     width : 80,
+	     align : "center"
+	   }, {
+	     title : "昵称",
+	     field : "nickName",
+	     alias : "u",
+	     width : 110,
+	     align : "center"
+	   } ,{
+         title : "性别",
+         field : "sex",
+         alias : "u",
+         hidden:true,
+         width : 50,
+         align : "center",
+         formatter : function(value, row, index) {
+ 			return Fm.formatter({
+ 				"0" : "女",
+ 				"1" : "男",
+ 			}, value);
+  		}
+      },{
+          title : "年龄",
+          field : "age",
+          alias : "u",
+          width : 50,
+          hidden:true,
+          align : "center"
+      },{
+          title : "手机号",
+          field : "telephone",
+          alias : "u",
+          width : 100,
+          align : "center"
+      },{
+         title : "邮箱",
+         field : "email",
+         alias : "u",
+         hidden:true,
+         width : 130,
+         align : "center"
+     },{
+        title : "QQ",
+        field : "qq",
+        alias : "u",
+        hidden:true,
+        width : 100,
+        align : "center"
+      },{
+          title : "区域",
+          field : "strArea",
+          hidden:true,
+          width : 150,
+          align : "center"
+      },{
+          title : "区域",
+          field : "areaId",
+          width : 150,
+          alias : "u",
+          hidden:true,
+          align : "center"
+      },{
+        title : "签名",
+        field : "motto",
+        alias : "u",
+        hidden:true,
+        width : 200,
+        align : "center"
+      } ,{
+        title : "生日",
+        field : "birthday",
+        alias : "u",
+        hidden:true,
+        width : 100,
+        align : "center"
+      } ,{
+        title : "创建日期",
+        field : "createDate",
+        alias : "u",
+        width : 120,
+        align : "center"
+      } ] ];
+      accountinfo.toolbar = [
+        {
+            id : "accountinfo_select",
+            text : "确认选择",
+            disabled : true,
+            iconCls : "icon-ok",
+            handler : function() {
+            	accountinfo.confirmajax({
+                title : "后台派单",
+                content : "确认分配给该取送员?",
+                url : "delivery_select_sub.do",
+                params:{
+              	  accountInfoId : accountinfo.rowKey,
+              	  orderId : "${orderId}",
+              	  status : "${status}"
+                },
+                success:function(){
+                }
+              });
+            }
+          }];
+      accountinfo.param = myparams; 
+      accountinfo.onClickRow = function(rowIndex, rowData) {
+       $("#accountinfo_select").linkbutton("enable");
+      }
+      accountinfo.onLoadSuccess = function(data) {
+       $("#accountinfo_reset").linkbutton("disable");
+      };
+      accountinfo.LoadDataGrid();
+      $('#accountinfo_search').linkbutton({
+        iconCls : 'icon-search',
+        onClick : function() {
+          accountinfo.search(myparams);
+        }
+      });
+    });
+   	function search(myparams){
+ 		accountinfo.search(myparams);
+ 	}
+   	function nameSearch(){
+   		myparams.mobile = $("#mobile").val();
+   	}
+  </script>
+	<div fit="true" class="easyui-layout" style="border: none">
+		<div region="north" style="height: 40px;">
+			<div class="pannel_search">
+				手机号：<input type="text" class="easyui-textbox" id="mobile" /> 
+				<a href="javascript:;" id="accountinfo_search" onClick="nameSearch()";>查询&nbsp;</a>
+			</div>
+		</div>
+		<div id="imgdiv" region="center" style="overflow: hidden; border: none;">
+			<table fit="true" namespace="user" id="accountinfo" class="datagrid"></table>
+		</div>
+	</div>
+</body>

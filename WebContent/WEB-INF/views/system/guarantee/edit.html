@@ -1,0 +1,26 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll,ueditor,EasyUI,webuploader"/>
+</head>
+<body>
+	<@p.valid id="guarantee" action="guarantee_edit_sub.do" class="layui-form" layui=true> <@p.legend text="提示信息"/>
+	<input type="hidden" name="guaranteeId" value="${guarantee.guaranteeId}" />
+	<div class="layui-form-item"><@p.layinput label="标题" datarule="required;" name="title" value="${guarantee.title}"/></div>
+	<div class="layui-form-item"><@p.ueditor label="详细介绍" id="container" name="content" value="${guarantee.content}"/></div>
+	<div class="layui-form-item"><@p.layinput label="备注" datarule="required;" name="remark" value="${guarantee.remark}"/></div>
+	</@p.valid>
+	<script type="text/javascript">
+		$(function() {
+			/**下面是图片上传*/
+			niceScroll("body");
+			var ue = new Ue("container");
+			ue.params = {
+				"folder" : "message"
+			};
+			ue.init();
+		});
+	</script>
+</body>
+</html>

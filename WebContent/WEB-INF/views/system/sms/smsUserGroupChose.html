@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<@p.resource types="Jquery,Easyui,Tree,NiceScroll,AnyDataGrid"/>
+
+<script type="text/javascript">
+	var myparams = {};
+	myparams.type="${type}";
+	var tree;
+	$(function() {
+		niceScroll(".panel-body");
+		var tree = new Tree();
+		tree.url = "list_smsusergroup_treedata.do";
+		tree.initTree("mytree");
+		tree.onClick =  function(rowIndex, rowData) {
+			var groupId = rowData.groupId;
+			$("#groupId",api.get("groupId").document).val(groupId);
+			var groupName = rowData.groupName;
+			$("#groupName",api.get("groupName").document).val(groupName);
+			api.close();
+		}
+		tree.LoadDataGrid();
+		var p = tree.getPager();
+		p.pagination({
+	        displayMsg: ''
+	    }); 
+		
+	});
+</script>
+
+</head>
+<body>
+<div region="center" split="true" title="业主群组" style="overflow: hidden; border-bottom: none">
+		<ul id="mytree" class="ztree"></ul>
+	</div>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<body style="overflow: hidden">
+	<script type="text/javascript">
+		var consult;
+		$(function() {
+			consult = new Dd("consult");
+			consult.url = "consult_list_data.do";
+			consult.title = "用户问题反馈信息";
+			consult.colM = [ [ {
+				field : "ck",
+				checkbox : true,
+				align : "center",
+				hidden : true,
+			}, {
+				title : "主键",
+				field : "consultId",
+				alias : "c",
+				hidden : true,
+				width : 100,
+				align : "center"
+			}, {
+				title : "反馈人",
+				field : "userName",
+				alias : "accountInfo",
+				width : 100,
+				align : "center"
+			}, {
+				title : "内容",
+				field : "content",
+				alias : "c",
+				width : 100,
+				align : "center"
+			}, {
+				title : "反馈日期",
+				field : "createDate",
+				alias : "c",
+				width : 100,
+				align : "center"
+			} ] ];
+
+			consult.toolbar = [ {
+				id : "consult_del",
+				text : "删除用户问题反馈",
+				iconCls : "icon-remove",
+				disabled : true,
+				handler : function() {
+					consult.remove({
+						url : "consult_del_sub.do",
+						params : {
+							consultId : consult.rowKey
+						}
+					});
+				}
+			} ];
+			consult.param = myparams;
+			consult.onClickRow = function(rowIndex, rowData) {
+				$("#consult_edit,#consult_del,#consult_details").linkbutton("enable");
+			}
+			consult.onLoadSuccess = function(data) {
+				$("#consult_edit,#consult_del,#consult_details").linkbutton("disable");
+			};
+			consult.LoadDataGrid();
+			$('#search').linkbutton({
+				iconCls : 'icon-search',
+				onClick : function() {
+					var uName = $("#uName").val();
+					myparams.uName = uName;
+					consult.search(myparams);
+				}
+			});
+		});
+	</script>
+	<div fit="true" class="easyui-layout">
+		<div region="north" title="查询条件" style="height: 70px;">
+			<div class="pannel_search">
+				反馈人：<input type="text" class="easyui-textbox" name="uName" value="${uName}" id="uName" />&nbsp;&nbsp; <a href="javascript:;" id="search">查询</a>
+			</div>
+		</div>
+		<div region="center" style="overflow: hidden; border: none;">
+			<table fit="true" namespace="consult" id="consult" class="datagrid"></table>
+		</div>
+	</div>
+</body>

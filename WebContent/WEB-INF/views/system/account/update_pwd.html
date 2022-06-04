@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,EasyUI"/>
+</head>
+<body>
+	<@p.valid id="account" action="account_pwd_sub.do" class="layui-form" layui=true> <@p.legend text="请妥善保存您的登录密码"/>
+	<div class="layui-form-item">
+		<div class="layui-inline"><@p.layinput label="新密码" type="password" datarule="新密码: required;password;" name="password" /></div>
+	</div>
+	<div class="layui-form-item">
+		<div class="layui-inline"><@p.layinput label="确认密码" type="password" name="repassword" datarule="确认密码: required;match(password);"/></div>
+	</div>
+	</@p.valid>
+</body>
+<script type="text/javascript">
+	VF.callbackBefore = function(data) {
+		var index = parent.layer.getFrameIndex(window.name);
+		top.Dg.z.msg(data)
+		if (data.close == true) {
+			parent.layer.close(index);
+		}
+	}
+</script>
+</html>

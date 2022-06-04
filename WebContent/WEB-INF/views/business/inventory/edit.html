@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll"/>
+</head>
+<body>
+<@p.valid id="inventory" action="inventory_edit_sub.do" class="layui-form" layui=true>
+ <@p.legend text="${(languaged !='')?string('Hint information','提示信息')}"/> 
+ <input type="hidden" name="inventoryId" value="${inventory.inventoryId}" />
+         <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('invoice','发票')}"  datarule="required;" datamsgrequired="${(required)!''}" name="invoice" value="${inventory.invoice}"/>    
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('firmId','目标Id')}"  datarule="required;" datamsgrequired="${(required)!''}" name="firmId" value="${inventory.firmId}"/>    
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('totalWorkOrderNo','总工单号')}"  datarule="required;" datamsgrequired="${(required)!''}" name="totalWorkOrderNo" value="${inventory.totalWorkOrderNo}"/>    
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('englisInvoice','发票')}"  datarule="required;" datamsgrequired="${(required)!''}" name="englisInvoice" value="${inventory.englisInvoice}"/>    
+	     </div>
+</@p.valid>
+</body>
+</html>

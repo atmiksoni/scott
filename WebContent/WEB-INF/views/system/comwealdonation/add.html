@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll"/>
+</head>
+<body>
+<@p.valid id="comwealdonation" action="comwealdonation_add_sub.do" class="layui-form" layui=true>
+ <@p.legend text="提示信息"/> 
+         <div class="layui-form-item">
+		   <@p.layinput label="项目ID"  datarule="required;" name="commonwealId" />
+	     </div>
+         <div class="layui-form-item">
+		   <@p.layinput label="单位"  datarule="required;" name="department" />
+	     </div>
+         <div class="layui-form-item">
+		   <@p.layinput label="联系人"  datarule="required;" name="linkman" />
+	     </div>
+         <div class="layui-form-item">
+		   <@p.layinput label="职务"  datarule="required;" name="duty" />
+	     </div>
+         <div class="layui-form-item">
+		   <@p.layinput label="捐款金额"  datarule="required;" name="amount" />
+	     </div>
+         <div class="layui-form-item">
+		   <@p.layinput label="币种(0:人民币1：美元)"  datarule="required;" name="moneytype" />
+	     </div>
+         <div class="layui-form-item">
+		   <@p.layinput label="联系电话"  datarule="required;" name="mobile" />
+	     </div>
+         <div class="layui-form-item">
+		   <@p.layinput label="邮箱"  datarule="required;" name="email" />
+	     </div>
+         <div class="layui-form-item">
+		   <@p.layinput label="邮寄地址"  datarule="required;" name="address" />
+	     </div>
+         <div class="layui-form-item">
+		   <@p.layinput label="邮编"  datarule="required;" name="postcode" />
+	     </div>
+         <div class="layui-form-item">
+		   <@p.layinput label="捐款意向"  datarule="required;" name="purpose" />
+	     </div>
+         <div class="layui-form-item">
+		   <@p.layinput label="捐款类型（0：单位1：个人）"  datarule="required;" name="type" />
+	     </div>
+</@p.valid>
+</body>
+</html>

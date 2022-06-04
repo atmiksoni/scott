@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll"/>
+</head>
+<body>
+	<@p.valid id="checkorder" action="" class="layui-form" layui=true> 
+	
+	<@p.legend text="${(languaged !='')?string('Basic informatiosn','基本信息')}"/>
+
+	<div class="layui-form-item" style="margin-left: 40px;">
+		<!-- < <@p.text label="检查人员" width=300 value="${checkorder.engineerName}"/>  
+		<@p.text label="客户姓名" width=300 value="${checkorder.companyName}"/> -->
+		<@p.text label="${(languaged !='')?string('inspector','检查人员')}" width=300  value="${checkorder.engineerName}"/>
+		<@p.text label="${(languaged !='')?string('Client name','客户姓名')}" width=300  value="${checkorder.companyName}"/>      
+	</div>
+
+	<div class="layui-form-item" style="margin-left: 40px;">
+	<!-- 	<@p.text label="工作编号" width=300 value="${checkorder.checkOrderNo}"/> 
+		<@p.text label="维修日期" width=300 value="${checkorder.maintainDate}"/> -->
+		<@p.text label="${(languaged !='')?string('inspection ID','检测编号')}" width=300  value="${checkorder.checkOrderNo}"/>
+		<@p.text label="${(languaged !='')?string('Repair time','维修日期')}" width=300  value="${checkorder.maintainDate}"/> 	
+	</div>
+	
+	<div class="layui-form-item" style="margin-left: 40px;">
+		<@p.text label="${(languaged !='')?string('Device type','设备类型')}" width=300 value="${checkorder.equipmentTypeName}"/> 	
+	</div>
+
+	<@p.legend text="${(languaged !='')?string('company information ','客户信息')}"/>
+
+	<div class="layui-form-item" style="margin-left: 40px;">
+	<!-- <@p.text label="邮政编码" width=300 value="${checkorder.postcodes}"/> 
+	<@p.text label="公司地址" width=300 value="${checkorder.Address}"/> -->
+		<@p.text label="${(languaged !='')?string('Postal code','邮政编码')}" width=300  value="${checkorder.postcodes}"/>
+		<@p.text label="${(languaged !='')?string('Physical address','客户地址')}" width=300  value="${checkorder.Address}"/> 
+	</div>
+		
+	<div class="layui-form-item" style="margin-left: 40px;">
+	<!-- 	<@p.text label="联系电话" width=300 value="${checkorder.Linkphone}"/> 
+		<@p.text label="公司电话" width=300 value="${checkorder.mobile}"/> -->
+		<@p.text label="${(languaged !='')?string('Phone bumber','联系电话')}" width=300  value="${checkorder.Linkphone}"/>
+		<@p.text label="${(languaged !='')?string('Customer calls','客户电话')}" width=300  value="${checkorder.mobile}"/> 
+		</div>
+
+	<div class="layui-form-item" style="margin-left: 40px;">
+		<!-- <@p.text label="联系邮箱" width=300 value="${checkorder.compEmail}"/>
+		 <@p.text label="联系人" width=300 value="${checkorder.linkman}"/> -->
+		 <@p.text label="${(languaged !='')?string('Email','联系邮箱')}" width=300  value="${checkorder.compEmail}"/>
+		<@p.text label="${(languaged !='')?string('Contact ','联系人')}" width=300  value="${checkorder.linkman}"/> 
+		</div> 
+		
+		
+	<@p.legend text="${(languaged !='')?string('Device information','设备信息')}"/>
+	
+	<div class="layui-form-item" style="margin-left: 40px;">
+		<!-- <@p.text label="设备编号" width=300 value="${checkorder.equipmentNo}"/> 
+		<@p.text label="设备地址" width=300 value="${checkorder.equipmentAddress}"/> -->
+		<@p.text label="${(languaged !='')?string('Device ID','设备编号')}" width=300  value="${checkorder.equipmentNo}"/>
+		<@p.text label="${(languaged !='')?string('Device address','设备地址')}" width=300  value="${checkorder.equipmentAddress}"/>
+	</div>	
+		
+		<div class="layui-form-item" style="margin-left: 40px;">
+		<!-- <@p.text label="品牌" width=300 value="${checkorder.brand}"/> 
+		<@p.text label="制造商" width=300 value="${checkorder.manufacturer}"/> -->
+		<!-- <@p.text label="${(languaged !='')?string('Manufacturer','品牌')}" width=300  value="${checkorder.brand}"/> -->
+		<@p.text label="${(languaged !='')?string('manufacturer','制造商')}" width=300  value="${checkorder.manufacturer}"/>
+		</div>
+		
+		<@p.legend text="${(languaged !='')?string('Result ','检查结果')}"/>
+			<div class="layui-form-item" style="margin-left:20px;">
+			<#list equipmentcheckresult as equipmentcheck>
+			
+			<@p.text label="${(languaged !='')?string('Result','检查结果')}" width=300 value="${equipmentcheck.checkResultName}"/>
+			<@p.text label="${(languaged !='')?string('Device condition','设备状况')}" width=300  value="${equipmentcheck.equipmentStatusName}"/>
+			<div class="layui-form-item" style="margin-left: 40px;">
+			<@p.text label="${(languaged !='')?string('remark','备注')}" width=300 value="${equipmentcheck.remark}"/>
+			</div>
+				<!-- <#if (hospitalDepartment.childs)??> 
+					<#list hospitalDepartment.childs as department>
+						<button class="layui-btn layui-btn-primary" disabled="disabled">${department.departmentName}</button>
+					</#list>
+				</#if> -->
+			</#list>
+	</div>
+		
+		
+		
+		<!-- 
+		<div class="layui-form-item" style="margin-left: 40px;">
+		<@p.text label="${(languaged !='')?string('Result','检查结果')}" width=300 value="${equipmentcheckresult.checkResultName}"/>
+		<@p.text label="${(languaged !='')?string('Device condition','设备状况')}" width=300  value="${equipmentcheckresult.equipmentStatusName}"/>
+		</div>
+		
+		<div class="layui-form-item" style="margin-left: 40px;">
+		<@p.text label="${(languaged !='')?string('remark','备注')}" width=300 value="${equipmentcheckresult.remark}"/>
+		</div> -->
+		
+	
+	</@p.valid>
+	
+</body>
+</html>

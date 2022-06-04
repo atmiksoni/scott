@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll,EasyUI"/>
+</head>
+<body>
+ <@p.form id="smsTemplate" action="add_SmsTemplate_save.do" js="flyme_form2" btnSubmit=true dialog=true>
+
+    <table class="tbform">
+     <tr>
+      <td colspan="2">
+       <div class="z-legend">
+        <b>基本信息</b>
+       </div>
+      </td>
+     </tr>
+     <tr>
+		<td class="tdl" width="20%">模版简称：</td>
+		<td width="50%"><input type="text" class="txtInput" id="templateName" name="templateName" datatype="*1-50" /></td>
+		<td width="30%"><span class="Validform_checktip">示例(春节祝福）</span></td>
+     </tr>
+     <tr>
+		<td class="tdl">模版类型：</td>
+		<td >
+			<select name="templateType" id="templateType" class="easyui-combobox">
+				<option value="1">祝福 </option>
+				<option value="2">催费</option>
+				<option value="3">公告</option>
+				<option value="6">自定义催费</option>
+			</select>
+		</td>
+		<td ><span class="Validform_checktip"></span></td>
+     </tr>
+     <tr>
+		<td class="tdl">模版内容：</td>
+		<td><textarea rows="6" cols="30" id="templateContent" name="templateContent"  datatype="*1-400" ></textarea></td>
+		<td><span class="Validform_checktip"></span></td>
+     </tr>
+ 
+    </table>
+ </@p.form>
+<script type="text/javascript">
+		$(function() {
+			niceScroll("body");
+			
+		});
+	</script>
+</body>
+</html>

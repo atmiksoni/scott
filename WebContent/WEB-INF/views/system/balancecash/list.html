@@ -1,0 +1,166 @@
+<body style="overflow: hidden">
+ <script type="text/javascript">
+      var balancecash;
+    $(function() {
+      balancecash = new Dd("balancecash");
+      balancecash.url = "balancecash_list_data.do";
+      balancecash.title = "提现列表信息";
+      balancecash.colM = [ [ /* {
+        field : "ck",
+        checkbox : true,
+        align : "center"
+      }, */ {
+        title : "主键",
+        field : "balanceCashId",
+        alias : "b",
+        hidden:true
+      } ,{
+        title : "申请账户",
+        field : "userName",
+        alias : "accountInfo",
+        width : 50,
+        align : "center"
+      } ,{
+        title : "提现金额",
+        field : "amount",
+        alias : "b",
+        width : 50,
+        align : "center"
+      } ,{
+        title : "手续费",
+        field : "serviceCharge",
+        alias : "b",
+        width : 50,
+        align : "center"
+      } ,{
+        title : "提现日期",
+        field : "createDate",
+        alias : "b",
+        width : 150,
+        align : "center"
+      } ,{
+        title : "卡号银行",
+        field : "bankName",
+        alias : "bank",
+        width : 50,
+        align : "center"
+      },{
+        title : "卡号",
+        field : "cardNo",
+        alias : "bankCard",
+        width : 150,
+        align : "center"
+      },{
+        title : "持卡人",
+        field : "cardHolderName",
+        alias : "bankCard",
+        width : 50,
+        align : "center"
+      },{
+        title : "是否处理",
+        field : "isHandle",
+        alias : "b",
+        width : 50,
+        align : "center",
+		formatter : function(value, row, index) {
+			return Fm.formatter({
+				"1" : "已提现",
+				"-1" : "驳回提现",
+				"0" : "未处理"
+			}, value);
+		}
+      },{
+        title : "处理人",
+        field : "handleUserName",
+        width : 50,
+        align : "center"
+      } ,{
+        title : "备注",
+        field : "remark",
+        alias : "b",
+        width : 100,
+        align : "center"
+      }  ,{
+        title : "处理日期",
+        field : "handleDate",
+        alias : "b",
+        width : 150,
+        align : "center"
+      } ] ];
+
+      balancecash.toolbar = [/*  {
+        id : "balancecash_add",
+        text : "添加",
+        iconCls : "icon-add",
+        handler : function() {
+          balancecash.open2({
+            title : "添加",
+            h : "70%",
+			w : "45%",
+            url : "balancecash_add_turn.do",
+            params : myparams
+          });
+        }
+      }, */ {
+        id : "balancecash_edit",
+        text : "处理",
+        iconCls : "icon-edit",
+        disabled : true,
+        handler : function() {
+          balancecash.updata2({
+            title : "处理",
+            h : "70%",
+			w : "45%",
+            url : "balancecash_edit_turn.do",
+            params : {
+                balancecashId : balancecash.rowKey
+            }
+		  });
+        }
+      }/* , {
+        id : "balancecash_del",
+        text : "删除",
+        iconCls : "icon-remove",
+        disabled : true,
+        handler : function() {
+          balancecash.remove({
+             url : "balancecash_del_sub.do",
+             params : {
+                balancecashId : balancecash.rowKey
+             }
+		  });
+        }
+      }  */];
+      balancecash.param = myparams;
+      balancecash.onClickRow = function(rowIndex, rowData) {
+       if(rowData.isHandle == 0){
+       $("#balancecash_edit,#balancecash_del").linkbutton("enable");
+       }else{
+       $("#balancecash_edit,#balancecash_del").linkbutton("disable");  
+       }
+      }
+      balancecash.onLoadSuccess = function(data) {
+       $("#balancecash_edit,#balancecash_del").linkbutton("disable");
+      };
+      balancecash.LoadDataGrid();
+      $('#search').linkbutton({
+        iconCls : 'icon-search',
+        onClick : function() {
+          myparams.user_name = $("#user_name").val();
+          balancecash.search(myparams);
+        }
+      });
+    });
+  </script>
+ <div fit="true" class="easyui-layout">
+  <div region="north" title="查询条件" style="height: 70px;">
+   <div class="pannel_search">
+       申请账户:<input type="text" class="easyui-textbox" id="user_name" name=""user_name"" />
+       <a href="javascript:;" id="search">查询</a>
+   </div>
+  </div>
+  <div region="center" style="overflow: hidden;border: none;">
+   <table fit="true" namespace="balancecash" id="balancecash" class="datagrid"></table>
+  </div>
+ </div>
+</body>

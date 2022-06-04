@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,EasyUI,ueditor"/>
+</head>
+<body>
+ <@p.valid id="html" action="html_edit_sub.do" class="layui-form" layui=true>
+    <input type="hidden" name="htmlId" value="${html.htmlId}" />
+          	<div class="layui-form-item"><@p.layinput label="标题" datarule="required;" name="title" value="${html.title}"/></div>
+	<div class="layui-form-item">
+	<#if html.isSys=='1'> 
+		<@p.layinput label="代码" datarule="required;" name="htmlKey" value="${html.htmlKey}" readonly="readonly" />
+	</#if>
+	<#if html.isSys=='0'> 
+		<@p.layinput label="代码" datarule="required;" name="htmlKey" value="${html.htmlKey}" />
+	</#if>
+	</div>
+	<div class="layui-form-item"><@p.layinput label="排序号" datarule="required;number;" name="htmlsort" value="${html.htmlsort}"/></div>
+
+	<div class="layui-form-item">
+		<div class="layui-inline"><@p.ueditor label="内容" id="container" name="content" value="${(html.content)!}" /></div>
+	</div>
+ </@p.valid> 
+ 	<script type="text/javascript">
+		$(function() {
+			var ue = new Ue("container");
+			ue.init();
+		});
+	</script>
+</body>
+</html>

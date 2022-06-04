@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll"/>
+</head>
+<body>
+<@p.valid id="equipmentcheckresult" action="equipmentcheckresult_add_sub.do" class="layui-form" layui=true>
+ <@p.legend text="${(languaged !='')?string('Hint information','提示信息')}"/> 
+         <div class="layui-form-item"> 
+           <@p.layinput label="${(languaged !='')?string('equipmentId','设备Id')}"  datarule="required;" datamsgrequired="${(required)!''}" name="equipmentId" />
+	     </div>
+         <div class="layui-form-item"> 
+           <@p.layinput label="${(languaged !='')?string('checkItemId','所属检查项目Id')}"  datarule="required;" datamsgrequired="${(required)!''}" name="checkItemId" />
+	     </div>
+         <div class="layui-form-item"> 
+           <@p.layinput label="${(languaged !='')?string('checkResultId','检查结果Id')}"  datarule="required;" datamsgrequired="${(required)!''}" name="checkResultId" />
+	     </div>
+         <div class="layui-form-item"> 
+           <@p.layinput label="${(languaged !='')?string('equipmentStatusId','设备状况Id')}"  datarule="required;" datamsgrequired="${(required)!''}" name="equipmentStatusId" />
+	     </div>
+         <div class="layui-form-item"> 
+           <@p.layinput label="${(languaged !='')?string('remark','备注')}"  datarule="required;" datamsgrequired="${(required)!''}" name="remark" />
+	     </div>
+         <div class="layui-form-item"> 
+           <@p.layinput label="${(languaged !='')?string('imgs','检查图片')}"  datarule="required;" datamsgrequired="${(required)!''}" name="imgs" />
+	     </div>
+</@p.valid>
+</body>
+</html>

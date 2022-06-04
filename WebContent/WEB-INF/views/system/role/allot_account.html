@@ -1,0 +1,44 @@
+<body>
+	<div class="datagrid-toolbar">
+		<a href="javascript:;" id="alltoaccount_btn" class="easyui-linkbutton" plain="true" icon="icon-save">${(languaged !='')?string('preserve','保存')}</a>
+	</div>
+	<script type="text/javascript">
+		var role_account;
+		$(function() {
+			role_account = new Tree();
+			role_account.checkbox = true;
+			role_account.url = "role_allotaccount_tree.do";
+			role_account.queryParams = {
+				roleId : "${roleId}"
+			};
+			role_account.onLoadSuccess = function(node, data) {
+				role_account.expandAll();
+				var options = role_account.getOptions();
+				$(options.checkeds).each(function(i, value) {
+					var node = $('#role_account').tree('find', value);
+					if (role_account.isLeaf(node)) {
+						role_account.checkNode(node);
+					}
+				});
+			}
+
+			role_account.initTree("role_account");
+			$("#alltoaccount_btn").on("click", save);
+
+		});
+
+		function save() {
+			var options = $("#role_account").tree("options");
+			var accountIds = role_account.getCheckedIds();
+			var myparams = {
+				roleId : "${roleId}",
+				accountIds : accountIds.join(",")
+			};
+			top.Dg.z.ajax("role/role_allotaccount_sub.do", myparams, function(data) {
+				options.checkeds = accountIds;
+				role.search(myparams);
+			});
+		}
+	</script>
+	<ul id="role_account"></ul>
+</body>

@@ -1,0 +1,47 @@
+<body>
+	<div class="datagrid-toolbar">
+		<a href="javascript:;" id="userbtn_${isExpert}_save" class="easyui-linkbutton" plain="true" icon="icon-save">保存</a>
+	</div>
+	<script type="text/javascript">
+		var userRole_${isExpert};
+		$(function() {
+			userRole_${isExpert} = new Tree();
+			userRole_${isExpert}.checkbox = true;
+			userRole_${isExpert}.url = "user_allotrole_tree.do";
+			userRole_${isExpert}.queryParams = {
+				accountInfoId : "${accountInfoId}"
+			};
+			userRole_${isExpert}.onLoadSuccess = function(node, data) {
+				userRole_${isExpert}.expandAll();
+				var options = userRole_${isExpert}.getOptions();
+				$(options.checkeds).each(function(i, value) {
+					var node = $('#userRole_${isExpert}').tree('find', value);
+					if (userRole_${isExpert}.isLeaf(node)) {
+						userRole_${isExpert}.checkNode(node);
+					}
+				});
+			}
+			userRole_${isExpert}.initTree("userRole_${isExpert}");
+			$("#userbtn_${isExpert}_save").on("click", save);
+
+		});
+
+		function save() {
+			var options = $("#userRole_${isExpert}").tree("options");
+			var roleIds = userRole_${isExpert}.getCheckedIds();
+			var roleNames = encodeURI(userRole_${isExpert}.getCheckedNames());
+			var roleCodes = userRole_${isExpert}.getCodes();
+			var myparams = {
+				accountInfoId : "${accountInfoId}",
+				roleIds : roleIds.join(","),
+				roleNames : roleNames,
+				roleCodes : roleCodes
+			};
+			top.Dg.z.ajax("user/user_allotrole_sub.do", myparams, function(data) {
+				options.checkeds = roleIds;
+				accountinfo_${isExpert}.search(myparams);
+			});
+		}
+	</script>
+	<ul id="userRole_${isExpert}"></ul>
+</body>

@@ -1,0 +1,106 @@
+<body style="overflow: hidden">
+	<script type="text/javascript">
+		var points;
+		$(function() {
+			points = new Dd("points");
+			points.url = "points_list_data.do";
+			points.title = "积分信息";
+			points.colM = [ [ {
+				title : "主键",
+				field : "pointsId",
+				alias : "p",
+				hidden : true,
+				width : 100,
+				align : "center"
+			}, {
+				title : "姓名",
+				field : "userName",
+				alias : "u",
+				sortable : true,
+				width : 100,
+				align : "center"
+			}, {
+				title : "手机",
+				field : "mobile",
+				alias : "u",
+				width : 100,
+				align : "center"
+			}, {
+				title : "单位",
+				field : "compName",
+				alias : "c",
+				width : 100,
+				align : "center"
+			}, {
+				title : "部门",
+				field : "deptName",
+				alias : "u",
+				width : 100,
+				align : "center"
+			}, {
+				title : "积分",
+				field : "total",
+				alias : "p",
+				sortable : true,
+				width : 100,
+				align : "center"
+			}, {
+				title : "创建日期",
+				field : "createDate",
+				alias : "p",
+				sortable : true,
+				width : 100,
+				align : "center"
+			} ] ];
+
+			points.toolbar = [];
+			points.param = myparams;
+			points.onClickRow = function(rowIndex, rowData) {
+				$("#points_edit,#points_del").linkbutton("enable");
+			}
+			points.onLoadSuccess = function(data) {
+				$("#points_edit,#points_del").linkbutton("disable");
+			};
+			points.LoadDataGrid();
+			$('#search').linkbutton({
+				iconCls : 'icon-search',
+				onClick : function() {
+					setParams();
+					points.search(myparams);
+				}
+			});
+			$('#reset').linkbutton({
+				iconCls : 'icon-renew',
+				onClick : function() {
+					$("input[class^='easyui']").textbox('setValue', "");
+					setParams();
+					points.search(myparams);
+				}
+			});
+			$('#export').linkbutton({
+				iconCls : 'icon-export',
+				onClick : function() {
+					setParams();
+					var urlStr = top.Dg.initUrl("points_export.do", myparams);
+					window.location.href = urlStr;
+				}
+			});
+			function setParams() {
+				myparams.userName = $("#userName").val();
+				myparams.mobile = $("#mobile").val();
+				myparams.compName = $("#compName").val();
+				myparams.deptName = $("#deptName").val();
+			}
+		});
+	</script>
+	<div fit="true" class="easyui-layout">
+		<div region="north" title="查询条件" style="height: 70px;">
+			<div class="pannel_search">
+				姓名：<input type="text" class="easyui-textbox" id="userName" name="userName" /> 手机：<input type="text" class="easyui-textbox" id="mobile" name="mobile" /> 单位：<input type="text" class="easyui-textbox" id="compName" name="compName" /> 部门：<input type="text" class="easyui-textbox" id="deptName" name="deptName" /> <a href="javascript:;" id="search">查询</a> <a href="javascript:;" id="reset">重置</a> <a href="javascript:;" id="export">导出</a>
+			</div>
+		</div>
+		<div region="center" style="overflow: hidden; border: none;">
+			<table fit="true" namespace="points" id="points" class="datagrid"></table>
+		</div>
+	</div>
+</body>

@@ -1,0 +1,48 @@
+.choose_cartype {margin-bottom:55px;}
+.choose_cartype>ul>li {margin: 0.6rem 0;background-color: white;}
+.car_info>div {float: left;}
+.car_info {overflow: hidden;position: relative;}
+.car_info .top {position: relative;top: 0.3rem;right: 0;font-size: 0.9em;}
+.car_info .top a {position: absolute;right: 0.6rem;top: 0.6rem;}
+.car_info>.left {width: 35%;}
+.car_info>.left img {width: 86%; padding: 7%;}
+.car_info .top, .car_info .bottom {width: 65%;}
+.car_info .top {border-bottom: 1px solid #f1f1f1;}
+.weui_btn {
+    font-size: 1em;
+    line-height: 1.8;
+    width: 35%;
+}
+.car_info .top  p {font-size: 0.6rem;color: #666; padding-top: 0.3rem;}
+.car_info .bottom .left span {color: #E63C2D;}
+.car_info .bottom span em {font-size: 1.2rem;}
+.car_info .bottom {font-size: 0.8em;color: #666;position: absolute;right: 0;bottom: 0.3rem;}
+.car_info .bottom .left, .car_info .bottom .right span {font-size: 0.5rem;}
+.car_info .bottom .right {position: absolute;top: 0.3rem;right: 0.6rem;}
+.car_info .bottom .right img:first-child {vertical-align: middle;width: 0.85rem;}
+.car_info .bottom .right img:last-child {vertical-align: middle;width: 0.65rem;}
+.car_info .bottom .right {cursor: pointer;}
+.sort {position: fixed;bottom: 0;left: 0;width: 100%;height: 48px;text-align: center;background-color: rgba(0, 0, 0, 0.8);border-top: 1px solid #DCDCDC;line-height: 48px;}
+.sort ul {overflow: hidden;width: 100%;}
+.sort ul li {float: left;color: white;font-size: 0.7rem;}
+.sort ul li:first-child {width: 60%;border-right: 1px solid #DCDCDC;}
+.sort ul li:last-child {width:39.5%}
+.sort img {vertical-align: middle;width: 1rem;}
+.pri_cl .calender li {float: left;width: 13.9%;text-align: center;}
+.pri_cl ul {overflow: hidden;}
+.pri_cl dl dt {background-color: #fff1f0;border: 1px solid #ffd9d6;}
+.pri_cl dl dd li {border-bottom: 1px solid #ebebeb;border-right: 1px solid #ebebeb;}
+.calender dt li {height: 1.4rem;font-size: 0.6rem;line-height: 1.4rem;}
+.calender dd li {height: 2rem;}
+.calender dd ul {margin: 0 auto;}
+.calender dd:first-child  {background-color: #fed9d6;}
+.calender dd li div {height: 1rem;font-size: 0.6rem;}
+.calender dd li .bottom {color: #999;}
+.pri_cl>.bottom {overflow: hidden;width: 99.5s%;height: 2rem;background-color: #fff1f0;line-height: 2rem;text-align: center;font-size: 0.7rem;border: 1px solid #ffd9d6;}
+.pri_cl>.bottom li:first-child {float: left;width: 50%;}
+.pri_cl>.bottom li:last-child {float: right;width: 50%;}
+.pri_cl>.bottom li span {color: #E63C2D;}
+.pri_cl {display: none;}
+
+.pri_cl .color1{background-color: #fff1f0;border: 1px solid #E63C2E;}
+.pri_cl .color1{border-bottom: 1px solid #E63C2E;border-right: 1px solid #E63C2E;}

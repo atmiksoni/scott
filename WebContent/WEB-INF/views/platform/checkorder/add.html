@@ -1,0 +1,116 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<script src="${base}/plug-in/webui/layui/layui.js" charset="utf-8"></script>
+<script src="${base}/plug-in/webui/layui/layui.all.js" charset="utf-8"></script>
+<@p.resource types="Jquery,NiceScroll,EasyUI"/>
+</head>
+<body>
+<@p.valid id="checkorder" action="checkorder_add_sub.do" class="layui-form" layui=true>
+ <@p.legend text="${(languaged !='')?string('Hint information','添加服务检测信息')}"/>
+    <div class="layui-form-item"> 
+           <@p.layinput label="${(languaged !='')?string('Device address','设备地址')}"  datarule="required;" datamsgrequired="${(required)!''}" name="equipmentAddress" />
+	     </div>
+         <div class="layui-form-item"> 
+		    <@p.layselect label="${(languaged !='')?string('Device type','设备类型')}" list=equipmenttypeList valueField="id"  textField="name" width="190"  defVal="${(languaged !='')?string('selection classify ','选择分类')}" name="equipmentTypeId" />
+	     
+	     <div class="layui-inline">
+      <label class="layui-form-label" style="margin-left: -13px;" ><b>${(languaged !='')?string('Repair time','维修时间')}:</b></label>
+      <div class="layui-input-inline" style=" width:190px;">
+        <input type="text" class="layui-input" style="margin-left: 10px;" id="test1" placeholder="${(languaged !='')?string('Repair time','维修时间')}" name="maintainDate">
+      </div>
+	     
+	     </div>
+	       
+    </div>
+	     <div class="layui-form-item accept" >
+				<label class="layui-form-label" >${(languaged !='')?string('engineer','工程师')}：</label><!-- style="font-weight: bold;" -->
+				<div class="layui-input-inline">
+					<input  id="engineerName"  class="layui-input">
+					<input  type="hidden" id="engineerId" name="engineerId"   class="layui-input">
+					<span style="font-size: xx-small;"></span>
+				</div>
+				
+				<label class="layui-form-label"  style="padding-left: 78px;">${(languaged !='')?string('Client name','客户')}：</label><!-- style="font-weight: bold;" -->
+				<div class="layui-input-inline">
+					<input  id="companyName"  class="layui-input">
+					<input  type="hidden" id="firmId" name="firmId"   class="layui-input">
+					<span style="font-size: xx-small;"></span>
+				</div>
+		</div>
+		
+		  <div class="layui-form-item accept" >
+		</div>
+			
+		
+			
+			
+</@p.valid>
+
+
+	<script>
+	layui.use('laydate', function(){
+		  var laydate = layui.laydate;
+		  
+		  //执行一个laydate实例
+		  laydate.render({
+		    elem: '#test1' //指定元素
+		    ,format: 'yyyy-MM-dd HH:mm:ss'
+		    ,type: 'datetime', lang: 'en'
+		  });
+		});
+	  	$(function(){
+			$('#engineerName').textbox({
+				width : "190px",
+				height : "30px",
+				prompt : '${(languaged !='')?string('select  engineer','选择工程师')}',
+				icons : [ {
+					iconCls : 'icon-search',
+					handler : function(e) {
+						 top.Dg.select({
+							title : "${(languaged !='')?string('engineer','工程师')}",
+							center : "engineer",
+							setTextBox : function(rowData) {
+								$('#engineerId').val(rowData.engineerId);
+								$('#engineerName').textbox('setText', rowData.engineerName);
+								$('#mobile').textbox('setText', rowData.mobile);
+// 								$('#leaderExpertMobile').attr("value",rowData.telephone);
+								
+							}
+						}); 
+					}
+				} ],
+				onChange : function(newValue, oldValue) {
+				}
+			});
+	  	});
+	  	
+	 	$(function(){
+			$('#companyName').textbox({
+				width : "190px",
+				height : "30px",
+				prompt : '${(languaged !='')?string('select   client ','选择客户')}',
+				icons : [ {
+					iconCls : 'icon-search',
+					handler : function(f) {
+						 top.Dg.select({
+							title : "${(languaged !='')?string(' client ','客户')}",
+							center : "firm",
+							setTextBox : function(rowData) {
+								$('#firmId').val(rowData.firmId);
+								$('#companyName').textbox('setText', rowData.companyName);
+// 								$('#leaderExpertMobile').attr("value",rowData.telephone);
+								
+							}
+						}); 
+					}
+				} ],
+				onChange : function(newValue, oldValue) {
+				}
+			});
+	  	});
+	  </script>
+
+</body>
+</html>

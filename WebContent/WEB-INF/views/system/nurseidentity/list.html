@@ -1,0 +1,173 @@
+<body style="overflow: hidden">
+ <script type="text/javascript">
+      var nurseidentity;
+    $(function() {
+      nurseidentity = new Dd("nurseidentity");
+      nurseidentity.url = "nurseidentity_list_data.do";
+      nurseidentity.title = "信息";
+      nurseidentity.colM = [ [  {
+        title : "主键",
+        field : "nurseIdentityId",
+        alias : "n",
+        hidden:true
+      },{
+        title : "用户名",
+        field : "userName",
+        alias : "a",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "护士等级",
+        field : "nurseLevel",
+        alias : "n",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "医院名称",
+        field : "hospitalName",
+        alias : "n",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "科室",
+        field : "departmentName",
+        alias : "d",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "资格证",
+        field : "qualificationCertificate",
+        alias : "n",
+        width : 100,
+        align : "center",
+        formatter : function(value, row, index) {
+			return '<img width="71px;" align="center" height="60px;" src="../../' + row.qualificationCertificate
+					+ '" />';
+		}
+      } ,{
+        title : "资格证编号",
+        field : "qualificationCertificateNo",
+        alias : "n",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "执业证",
+        field : "practiceCertificate",
+        alias : "n",
+        width : 100,
+        align : "center",
+        formatter : function(value, row, index) {
+			return '<img width="71px;" align="center" height="60px;" src="../../' + row.practiceCertificate
+					+ '" />';
+		}
+      } ,{
+        title : "执业证编号",
+        field : "practiceCertificateNo",
+        alias : "n",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "是否通过",
+        field : "isPass",
+        alias : "n",
+        width : 100,
+        align : "center",
+        formatter : function(value, row, index) {
+			return Fm.formatter({
+				"-1" : "未通过",
+				"0" : "待审核",
+				"1" : "已通过"
+			}, value);
+		}
+      } ,{
+        title : "创建时间",
+        field : "createDate",
+        alias : "n",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "失败原因",
+        field : "reason",
+        alias : "n",
+        width : 100,
+        align : "center"
+      } ] ];
+
+      nurseidentity.toolbar = [/*  {
+        id : "nurseidentity_add",
+        text : "添加",
+        iconCls : "icon-add",
+        handler : function() {
+          nurseidentity.open2({
+            title : "添加",
+            h : "70%",
+			w : "45%",
+            url : "nurseidentity_add_turn.do",
+            params : myparams
+          });
+        }
+      }, */ {
+        id : "nurseidentity_edit",
+        text : "审核",
+        iconCls : "icon-edit",
+        disabled : true,
+        handler : function() {
+          nurseidentity.updata2({
+            title : "审核",
+            h : "70%",
+			w : "45%",
+            url : "nurseidentity_edit_turn.do",
+            params : {
+            	nurseIdentityId : nurseidentity.rowKey
+            }
+		  });
+        }
+      }/* , {
+        id : "nurseidentity_del",
+        text : "删除",
+        iconCls : "icon-remove",
+        disabled : true,
+        handler : function() {
+          nurseidentity.remove({
+             url : "nurseidentity_del_sub.do",
+             params : {
+                nurseidentityId : nurseidentity.rowKey
+             }
+		  });
+        }
+      } */ ];
+      nurseidentity.param = myparams;
+      nurseidentity.onClickRow = function(rowIndex, rowData) {
+       if(rowData.isPass == 0){
+        $("#nurseidentity_edit").linkbutton("enable");
+       }else{
+        $("#nurseidentity_edit").linkbutton("disable");  
+       }
+      }
+      nurseidentity.onLoadSuccess = function(data) {
+       $("#nurseidentity_edit,#nurseidentity_del").linkbutton("disable");
+      };
+      nurseidentity.LoadDataGrid();
+      $('#search').linkbutton({
+        iconCls : 'icon-search',
+        onClick : function() {
+        	myparams.name=$("#name").val();
+			myparams.isPass=$("#isPass").combobox('getValue');
+          nurseidentity.search(myparams);
+        }
+      });
+    });
+  </script>
+ <div fit="true" class="easyui-layout">
+  <div region="north" title="查询条件" style="height: 70px;">
+   <div class="pannel_search">
+   	名称：<input type="text" class="easyui-textbox" id="name" />
+	类型：<@p.select class="easyui-combobox" id="isPass" list={"0":"未通过","1":"通过"} width="150" defVal="全部"/>
+       <a href="javascript:;" id="search">查询</a>
+   </div>
+  </div>
+  <div region="center" style="overflow: hidden;border: none;">
+   <table fit="true" namespace="nurseidentity" id="nurseidentity" class="datagrid"></table>
+  </div>
+ </div>
+</body>

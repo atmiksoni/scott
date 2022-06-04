@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll"/>
+</head>
+<body>
+<@p.valid id="comwealdonation" action="comwealdonation_edit_sub.do" class="layui-form" layui=true>
+ <@p.legend text="提示信息"/> 
+ <input type="hidden" name="comwealdonationId" value="${comwealdonation.comwealdonationId}" />
+         <div class="layui-form-item">
+		    <@p.layinput label="项目ID"  datarule="required;" name="commonwealId" value="${comwealdonation.commonwealId}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="单位"  datarule="required;" name="department" value="${comwealdonation.department}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="联系人"  datarule="required;" name="linkman" value="${comwealdonation.linkman}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="职务"  datarule="required;" name="duty" value="${comwealdonation.duty}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="捐款金额"  datarule="required;" name="amount" value="${comwealdonation.amount}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="币种(0:人民币1：美元)"  datarule="required;" name="moneytype" value="${comwealdonation.moneytype}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="联系电话"  datarule="required;" name="mobile" value="${comwealdonation.mobile}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="邮箱"  datarule="required;" name="email" value="${comwealdonation.email}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="邮寄地址"  datarule="required;" name="address" value="${comwealdonation.address}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="邮编"  datarule="required;" name="postcode" value="${comwealdonation.postcode}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="捐款意向"  datarule="required;" name="purpose" value="${comwealdonation.purpose}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="捐款类型（0：单位1：个人）"  datarule="required;" name="type" value="${comwealdonation.type}"/>
+	     </div>
+</@p.valid>
+</body>
+</html>

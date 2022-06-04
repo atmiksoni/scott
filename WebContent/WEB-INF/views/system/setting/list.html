@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<title>用户管理</title>
+<@p.resource types="Jquery,PqGrid"/>
+<script type="text/javascript">
+	$(function() {
+		var colM = [ {
+			title : "主键",
+			dataIndx : "id",
+			align : "left",
+			hidden : true
+		}, {
+			title : "参数名称",
+			dataIndx : "name",
+			width :100,
+			align : "center"
+		},{
+			title : "参数值",
+			dataIndx : "value",
+			width :100,
+			align : "center"
+		},{
+			title : "参数代码",
+			dataIndx : "code",
+			width :100,
+			align : "center"
+		}
+		];
+		var url = "list_data.do";
+    	Pq.id = "setting";
+    	Pq.title="列表";
+    	Pq.freezeCols=1;
+    	Pq.url =url;
+    	Pq.colM=colM;
+		Pq.LoadPqGrid();
+		
+	});
+	function PqGridSearch()
+	{
+		Pq.LoadPqGrid();
+	}
+	function add()
+	{
+		top.Dg.url='setting/add_turn.do';
+		top.Dg.title='管理-添加';
+		top.Dg.openDialog();
+	}
+	function edit()
+	{
+		top.Dg.title='管理-修改';
+		if(Pq.checkObj(Pq.rowKey))
+		{
+		   top.Dg.url='setting/edit_turn.do?id='+Pq.rowKey;
+		   top.Dg.openDialog();
+		}
+	}
+	function del()
+	{
+		 if(Pq.checkObj(Pq.rowKey))
+	     {
+			 top.Dg.url='setting/delete_sub.do';
+             top.Dg.deleteRow(Pq.rowKey,Pq.id);
+         }
+	}
+	function detail()
+	{
+		top.Dg.title='管理-详细信息';
+		if(Pq.checkObj(Pq.rowKey))
+		{
+		   top.Dg.url='setting/detail_turn.do?id='+Pq.rowKey;
+		   top.Dg.openDialog();
+		}
+	}
+</script>
+</head>
+<body style="overflow: hidden">
+  <form method="post" action="list_data.do" id="form">
+    <div class="tools_bar">
+      <div class="tools_separator"></div>
+      <a onclick="add();" class="tools_btn"><span><b class="add">新增</b></span></a>
+      <a onclick="edit();" class="tools_btn"><span><b class="edit">编辑</b></span></a>
+      <a onclick="del();" class="tools_btn"><span><b class="delete">删除</b></span></a>
+      <a onclick="detail();" class="tools_btn"><span><b class="details">详细</b></span></a>
+      <div class="tools_separator"></div>
+      <a onclick="Pq.z.refreshIframe(top.Current_iframeID());" class="tools_btn"><span><b class="refresh">刷新</b></span></a>
+      <a onclick="Pq.z.closeTab();" class="tools_btn"><span><b class="close">关闭</b></span></a>
+      <div class="tools_separator"></div>
+    </div>
+    <div class="btnbarcontetn">
+      <div>
+        <table border="0" class="frm-find" style="height: 45px;">
+          <tr>
+            <th>查询条件：</th>
+            <td>
+            <select name="searchField" id="searchField" class="select" style="width: 70px">
+            	<option value="name">参数名称</option>
+            	<option value="value">参数值</option>
+            	<option value="code">参数代码</option>
+            </select>
+            
+            </td>
+            <th>关键字：</th>
+            <td><input name="searchString" type="text" id="searchString" class="txtInput" style="width: 200px" /></td>
+            <td>
+            <a class="fmbtn" id="btn_sub" href="javascript:;" onclick="PqGridSearch();" ><span class="fmbtn-icon save"> </span>查询</a>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div id="settingGrid"></div>
+  </form>
+</body>
+</html>

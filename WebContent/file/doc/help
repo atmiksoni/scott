@@ -1,0 +1,35 @@
+//树形刷新GRID
+top.$('#' + top.Dg.z.Current_iframeID())[0].contentWindow[1].Pq.refresh('organization');
+window.parent.frames["target_right"].frames["dsfy"].PqGridSearch(node.id);
+window.parent.frames["target_right"].Dd.param.feeItemTypeId=id;
+window.parent.frames["target_right"].Dd.LoadDataGrid();
+//LAYOUT布局
+<body class="easyui-layout" style="overflow-y: hidden">
+  <div region="west" split="true" minWidth="150" maxWidth="150" title="社区楼宇" style="overflow: hidden;border-bottom:none">
+  <iframe id="target_left" name="target_left" src="list_left.do"  width="100%" height="100%"></iframe>
+  </div>
+  <div region="center" style="padding: 0px; overflow: hidden;border:none">
+    <iframe id="target_right" name="target_right" src="list_right.do"  width="100%" height="100%"></iframe>
+  </div>
+</body>
+niceScroll(".panel-body");
+BUG
+
+	/*@Cacheable(value = "sysCache", key = "'getDataSource_'+#key")*/
+1,菜单地址为空启动时异常
+
+
+, {
+				text : "刷新",
+				iconCls : "icon-edit",
+				handler : function() {
+					organization.refresh();
+				}
+			}, {
+				text : "关闭",
+				iconCls : "icon-remove",
+				handler : function() {
+					organization.close();
+				}
+			}
+表单验证插件passwordStrength.js 注释自身所带提示（24-28行）

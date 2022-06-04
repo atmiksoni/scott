@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,Form,EasyUI"/>
+</head>
+<body>
+	<@p.form id="sms" action="sms_create_save.do" js="flyme_form2">
+				<table class="tbform">
+					<tr>
+						<td colspan="4">
+							<div class="z-legend">
+								<b>短信信息</b>
+							</div>
+						</td>
+					</tr>
+				
+					<tr>
+						<td class="tdl" width="20%">收信人：</td>
+						<td ><input type="text" id="messageRecName" name="messageRecName" value="${messageRecName}" style="width: 180px"/></td>
+					</tr>
+						<tr>
+						<td class="tdl">手机：</td>
+						<td ><input type="text" id="phoneNumber" name="phoneNumber" value="${phoneNumber}" style="width: 180px"/></td>
+					</tr>
+					<tr>
+						<td class="tdl">短信内容：</td>
+						<td><textarea rows="4" cols="19" maxlength="100" id="messageContent" name="messageContent" style="width: 300px" datatype="*">${messageContent}</textarea></td>
+					</tr>
+					<tr>
+						<td class="tdl"></td>
+						<td><div class="Validform_checktip">超过60字的短信会被分割成多次发送</div></td>
+					</tr>
+				</table>
+	</@p.form>
+</body>
+</html>

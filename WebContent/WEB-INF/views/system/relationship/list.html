@@ -1,0 +1,78 @@
+<body style="overflow: hidden">
+	<script type="text/javascript">
+		var relationship;
+		$(function() {
+			relationship = new Dd("relationship");
+			relationship.url = "relationship_list_data.do";
+			relationship.title = "信息";
+			relationship.colM = [ [ {
+				title : "主键",
+				field : "relationshipId",
+				alias : "r",
+				hidden : true
+			}, {
+				title : "关系名称",
+				field : "relationshipName",
+				alias : "r",
+				width : 100,
+				align : "center"
+			}, {
+				title : "关系键",
+				field : "relationshipKey",
+				alias : "r",
+				width : 100,
+				align : "center"
+			} ] ];
+
+			relationship.toolbar = [ {
+				id : "relationship_add",
+				text : "添加",
+				iconCls : "icon-add",
+				handler : function() {
+					relationship.open2({
+						title : "添加",
+						h : "70%",
+						w : "45%",
+						url : "relationship_add_turn.do",
+						params : myparams
+					});
+				}
+			}, {
+				id : "relationship_edit",
+				text : "修改",
+				iconCls : "icon-edit",
+				disabled : true,
+				handler : function() {
+					relationship.updata2({
+						title : "修改",
+						h : "70%",
+						w : "45%",
+						url : "relationship_edit_turn.do",
+						params : {
+							relationshipId : relationship.rowKey
+						}
+					});
+				}
+			} ];
+			relationship.param = myparams;
+			relationship.onClickRow = function(rowIndex, rowData) {
+				$("#relationship_edit,#relationship_del").linkbutton("enable");
+			}
+			relationship.onLoadSuccess = function(data) {
+				$("#relationship_edit,#relationship_del").linkbutton("disable");
+			};
+			relationship.LoadDataGrid();
+			$('#search').linkbutton({
+				iconCls : 'icon-search',
+				onClick : function() {
+					relationship.search(myparams);
+				}
+			});
+		});
+	</script>
+	<div fit="true" class="easyui-layout">
+		<div region="center" style="overflow: hidden; border: none;">
+			<table fit="true" namespace="relationship" id="relationship" class="datagrid"></table>
+		</div>
+	</div>
+</body>

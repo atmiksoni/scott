@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll,EasyUI,webuploader"/>
+</head>
+<body>
+<@p.valid id="accountinfo" action="accountinfo_add_sub.do" class="layui-form" layui=true>
+        <fieldset class="layui-elem-field layui-field-title">
+			<legend>添加数据管理员</legend>
+		</fieldset>
+				
+		         <div class="layui-form-item">
+				    <div class="layui-inline">
+				    	<label class="layui-form-label">姓名:</label>
+						<div class="layui-input-inline">
+							<input id="userName" name="userName" type="text" data-rule="required;length[2~10]" class="layui-input">
+						</div>
+				    </div>
+			     </div>
+				  
+				  <div class="layui-form-item">
+    				<label class="layui-form-label">性别:</label>
+					    <div class="layui-input-block">
+						      <input type="radio" name="sex" value="1" title="男" checked="checked">
+						      <input type="radio" name="sex" value="0" title="女" >
+					    </div>
+			     </div>
+			     
+			     <div class="layui-form-item">
+				    <label class="layui-form-label">年龄:</label>
+				    <div class="layui-input-inline">
+				      <input id="age" name="age" type="text" data-rule="required;length[0~3]" class="layui-input">
+				    </div>
+				  </div>
+		         <div class="layui-form-item">
+				    <div class="layui-inline">
+				    	<label class="layui-form-label">手机:</label>
+						<div class="layui-input-inline">
+							<input id="telephone" name="telephone" type="text" data-rule="required;mobile;remote[${base}/admin/user/user_check_sub.do]" class="layui-input">
+						</div>
+				    </div>
+			     </div>
+				  
+  </@p.valid>
+</body>
+</html>

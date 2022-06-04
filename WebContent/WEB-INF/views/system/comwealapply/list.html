@@ -1,0 +1,216 @@
+<body style="overflow: hidden">
+	<script type="text/javascript">
+		var comwealapply;
+		$(function() {
+			comwealapply = new Dd("comwealapply");
+			comwealapply.url = "comwealapply_list_data.do";
+			comwealapply.title = "公益帮助申请信息";
+			comwealapply.colM = [ [ {
+				title : "主键",
+				field : "comwealapplyId",
+				alias : "c",
+				hidden : true
+			}, {
+				title : "姓名",
+				field : "name",
+				alias : "c",
+				width : 100,
+				align : "center"
+			}, {
+				title : "性别",
+				field : "sex",
+				alias : "c",
+				width : 100,
+				align : "center",
+				formatter : function(value, row, index) {
+					return Fm.formatter({
+						"0" : "女",
+						"1" : "男"
+					}, value);
+				}
+			}, {
+				title : "出生日期",
+				field : "birthdate",
+				alias : "c",
+				width : 100,
+				align : "center"
+			}, {
+				title : "籍贯",
+				field : "birthplace",
+				alias : "c",
+				width : 100,
+				align : "center"
+			}, {
+				title : "民族",
+				field : "nation",
+				alias : "c",
+				width : 100,
+				align : "center"
+			}, {
+				title : "身份证号",
+				field : "identitycard",
+				alias : "c",
+				width : 100,
+				align : "center"
+			}, {
+				title : "学校",
+				field : "school",
+				alias : "c",
+				width : 100,
+				align : "center"
+			}, {
+				title : "专业",
+				field : "domain",
+				alias : "c",
+				width : 100,
+				align : "center"
+			}, {
+				title : "年级",
+				field : "grade",
+				alias : "c",
+				width : 100,
+				align : "center"
+			}, {
+				title : "邮箱",
+				field : "email",
+				alias : "c",
+				width : 100,
+				align : "center"
+			}, {
+				title : "手机号",
+				field : "mobile",
+				alias : "c",
+				width : 100,
+				align : "center"
+			}, {
+				title : "省份",
+				field : "provinceName",
+				width : 100,
+				align : "center"
+			}, {
+				title : "地市",
+				field : "cityName",
+				width : 100,
+				align : "center"
+			}, {
+				title : "区县",
+				field : "districtName",
+				width : 100,
+				align : "center"
+			}, {
+				title : "详细地址",
+				field : "addressdetails",
+				alias : "c",
+				width : 100,
+				align : "center"
+			}, {
+				title : "家庭户口",
+				field : "household",
+				alias : "c",
+				width : 100,
+				align : "center"
+			}, {
+				title : "家庭年收入",
+				field : "income",
+				alias : "c",
+				width : 100,
+				align : "center"
+			}, {
+				title : "家庭总人数",
+				field : "peoplecount",
+				alias : "c",
+				width : 100,
+				align : "center"
+			}, {
+				title : "收入来源",
+				field : "incomesource",
+				alias : "c",
+				width : 100,
+				align : "center"
+			}, {
+				title : "申请理由",
+				field : "reason",
+				alias : "c",
+				width : 100,
+				align : "center"
+			}, {
+				title : "学习规划",
+				field : "studyplan",
+				alias : "c",
+				width : 100,
+				align : "center"
+			}, {
+				title : "职业规划",
+				field : "careerplan",
+				alias : "c",
+				width : 100,
+				align : "center"
+			}, {
+				title : "创建日期",
+				field : "createdate",
+				alias : "c",
+				width : 100,
+				align : "center"
+			} ] ];
+
+			comwealapply.toolbar = [ {
+				id : "comwealapply_edit",
+				text : "修改",
+				iconCls : "icon-edit",
+				disabled : true,
+				handler : function() {
+					comwealapply.updata2({
+						title : "修改",
+						h : "70%",
+						w : "45%",
+						url : "comwealapply_edit_turn.do",
+						params : {
+							comwealapplyId : comwealapply.rowKey
+						}
+					});
+				}
+			}, {
+				id : "comwealapply_del",
+				text : "删除",
+				iconCls : "icon-remove",
+				disabled : true,
+				handler : function() {
+					comwealapply.remove({
+						url : "comwealapply_del_sub.do",
+						params : {
+							comwealapplyId : comwealapply.rowKey
+						}
+					});
+				}
+			} ];
+			comwealapply.param = myparams;
+			comwealapply.onClickRow = function(rowIndex, rowData) {
+				$("#comwealapply_edit,#comwealapply_del").linkbutton("enable");
+			}
+			comwealapply.onLoadSuccess = function(data) {
+				$("#comwealapply_edit,#comwealapply_del").linkbutton("disable");
+			};
+			comwealapply.LoadDataGrid();
+			$('#search').linkbutton({
+				iconCls : 'icon-search',
+				onClick : function() {
+					myparams.name=$("#name").val();
+					myparams.sex=$("#sex").combobox('getValue');
+					comwealapply.search(myparams);
+				}
+			});
+		});
+	</script>
+	<div fit="true" class="easyui-layout">
+		<div region="north" title="查询条件" style="height: 70px;">
+			<div class="pannel_search">
+				姓名：<input type="text" class="easyui-textbox" id="name" /> 
+				性别：<@p.select class="easyui-combobox" id="sex" list={"0":"女","1":"男"} width="150" defVal="全部"/>
+				<a href="javascript:;" id="search">查询</a>
+			</div>
+		</div>
+		<div region="center" style="overflow: hidden; border: none;">
+			<table fit="true" namespace="comwealapply" id="comwealapply" class="datagrid"></table>
+		</div>
+	</div>
+</body>

@@ -1,0 +1,111 @@
+<body style="overflow: hidden">
+ <script type="text/javascript">
+      var county;
+    $(function() {
+      county = new Dd("county");
+      county.url = "county_list_data.do";
+      county.title = "${(languaged !='')?string('englishName',' 测试国家信息 ')}";
+      county.colM = [ [ {
+        field : "ck",
+        checkbox : true,
+        align : "center"
+      }, {
+        title : "主键",
+        field : "countyId",
+        alias : "c",
+        hidden:true
+      } ,{
+        title : "${(languaged !='')?string('countyName','国家名称/countyName')}",
+        field : "countyName",
+        alias : "c",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "${(languaged !='')?string('indexs','排序/indexs')}",
+        field : "indexs",
+        alias : "c",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "${(languaged !='')?string('createDate','创建日期/createDate')}",
+        field : "createDate",
+        alias : "c",
+        width : 100,
+        align : "center"
+      } ] ];
+
+      county.toolbar = [ {
+        id : "county_add",
+        text : "${(languaged !='')?string('add',' 添加 ')}",
+        iconCls : "icon-add",
+        handler : function() {
+          county.open2({
+            title : "${(languaged !='')?string('add',' 添加 测试国家')}",
+            h : "70%",
+			w : "45%",
+			btn:["${(languaged !='')?string('confirm',' 确认 ')}","${(languaged !='')?string('close',' 关闭 ')}"],
+            url : "county_add_turn.do",
+            params : myparams
+          });
+        }
+      }, {
+        id : "county_edit",
+        text : "${(languaged !='')?string('edit',' 修改')}",
+        iconCls : "icon-edit",
+        disabled : true,
+        handler : function() {
+          county.updata2({
+            title : "${(languaged !='')?string('edit',' 修改 测试国家')}",
+            h : "70%",
+			w : "45%",
+            url : "county_edit_turn.do",
+            btn:["${(languaged !='')?string('confirm',' 确认 ')}","${(languaged !='')?string('close',' 关闭 ')}"],
+            params : {
+                countyId : county.rowKey
+            }
+		  });
+        }
+      }, {
+        id : "county_del",
+        text : "${(languaged !='')?string('delete',' 删除')}",
+        iconCls : "icon-remove",
+        disabled : true,
+        handler : function() {
+          county.remove({
+             url : "county_del_sub.do",
+             params : {
+                countyId : county.rowKey
+             },
+             title:"${(languaged !='')?string('are you delete?','')}",
+             content:"${(languaged !='')?string('delete content','确定要删除所选记录吗?')}",
+              btn:["${(languaged !='')?string('confirm',' 确认 ')}","${(languaged !='')?string('close',' 关闭 ')}"]
+		  });
+        }
+      } ];
+      county.param = myparams;
+      county.onClickRow = function(rowIndex, rowData) {
+       $("#county_edit,#county_del").linkbutton("enable");
+      }
+      county.onLoadSuccess = function(data) {
+       $("#county_edit,#county_del").linkbutton("disable");
+      };
+      county.LoadDataGrid();
+      $('#search').linkbutton({
+        iconCls : 'icon-search',
+        onClick : function() {
+          county.search(myparams);
+        }
+      });
+    });
+  </script>
+ <div fit="true" class="easyui-layout">
+  <div region="north" title="查询条件" style="height: 70px;">
+   <div class="pannel_search">
+       <a href="javascript:;" id="search">${(languaged !='')?string('search','查询')}</a>
+   </div>
+  </div>
+  <div region="center" style="overflow: hidden;border: none;">
+   <table fit="true" namespace="county" id="county" class="datagrid"></table>
+  </div>
+ </div>
+</body>

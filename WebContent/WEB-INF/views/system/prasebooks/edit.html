@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<title>修改信息</title>
+<@p.resource types="Jquery,Form,NiceScroll,EasyUI,ComBo"/>
+</head>
+<body>
+<@p.form id="prasebooks" action="edit_prasebooks_update.do" js="flyme_form2" btnSubmit=true dialog=true>
+	<input type="hidden" id="btn_sub" class="btn_sub" />
+	<input type="hidden" name="prasebooksId" value="${prasebooks.prasebooksId}" />
+	<table class="tbformtop">
+		<tr>
+			<td>
+				<table class="tbform">
+					<tr>
+						<td colspan='2'>
+							<div class="z-legend">
+								<b>基本信息</b>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td class="tdl" width="20%">用户名：</td>
+						<td width="80%">${prasebooks.user.userName}</td>
+					</tr>
+					<tr>
+						<td class="tdl">备注：</td>
+						<td><input type="text" name="praseContent" value="${prasebooks.praseContent}"/></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	</@p.form>
+	<script type="text/javascript">
+		$(function() {
+			niceScroll("body");
+			
+		});
+	</script>
+</body>
+</html>

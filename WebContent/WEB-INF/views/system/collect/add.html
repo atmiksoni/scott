@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll,EasyUI"/>
+</head>
+<body>
+<@p.valid id="collect" action="collect_add_sub.do" msgClass="n-right">
+<table align="center" class="table table-form">
+
+         <tr>
+            <th class="w-80px">用户ID：</th>
+            <td><input type="text" name="accountInfoId" class="form-control input-sm w-p50" data-rule="required;"/></td>
+          </tr>
+         <tr>
+            <th class="w-80px">链接：</th>
+            <td><input type="text" name="link" class="form-control input-sm w-p50" data-rule="required;"/></td>
+          </tr>
+         <tr>
+            <th class="w-80px">图片：</th>
+            <td><input type="text" name="image" class="form-control input-sm w-p50" data-rule="required;"/></td>
+          </tr>
+         <tr>
+            <th class="w-80px">类型1:课件2:提问3:专家Id：</th>
+            <td><input type="text" name="type" class="form-control input-sm w-p50" data-rule="required;"/></td>
+          </tr>
+
+  </table>
+  </@p.valid>
+</body>
+</html>

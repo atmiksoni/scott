@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll,EasyUI,webuploader"/>
+</head>
+<body>
+<@p.valid id="bank" action="bank_edit_sub.do" class="layui-form" layui=true>
+ <@p.legend text="提示信息"/> 
+ <input type="hidden" name="bankId" value="${bank.bankId}" />
+         <div class="layui-form-item">
+		    <@p.layinput label="银行名称"  datarule="required;" name="bankName" value="${bank.bankName}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="排序号"  datarule="required;" name="indexs" value="${bank.indexs}"/>
+	     </div>
+	     <@p.legend text="银行卡背景图" btnId="pre"/>
+	     <div class="layui-form-item">
+			<div class="layui-inline" style="padding-left: 20px;"><@p.upload id="prePic" name="prePic"  delurl="bank_image_del.do" value="${bank.iconUrl}"/></div>
+			<input id="iconUrl" name="iconUrl" type="hidden" class="layui-input" value="${bank.iconUrl}">
+		</div>
+</@p.valid>
+<script>
+		$(function() {
+			var pre = new Upload({
+				filePicker : "pre",
+				fileList : "prePic",
+				num : 1,
+				params : {
+					businessKey : "30",
+					filePath:"doctor"
+				},
+				server : "${base}/admin/bank/bank_image_upload.do"
+			});
+			pre.uploadSuccess = function(file, data) {
+				$('#iconUrl').val(data.filePath);
+			};
+		});
+</script>
+</body>
+</html>

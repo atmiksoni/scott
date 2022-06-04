@@ -1,0 +1,139 @@
+<body style="overflow: hidden">
+ <script type="text/javascript">
+      var coupon;
+    $(function() {
+      coupon = new Dd("coupon");
+      coupon.url = "coupon_list_data.do";
+      coupon.title = "优惠券信息";
+      coupon.colM = [ [/*  {
+        field : "ck",
+        checkbox : true,
+        align : "center"
+      }, */ {
+        title : "主键",
+        field : "couponId",
+        alias : "c",
+        hidden:true
+      } ,{
+        title : "优惠券名称",
+        field : "couponName",
+        alias : "c",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "优惠券金额",
+        field : "couponPrice",
+        alias : "c",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "满N元可用",
+        field : "targetPrice",
+        alias : "c",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "有效期(天)",
+        field : "validity",
+        alias : "c",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "类型",
+        field : "couponType",
+        alias : "c",
+        width : 100,
+        align : "center",
+        
+      } ,{
+        title : "创建时间",
+        field : "createDate",
+        alias : "c",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "状态",
+        field : "status",
+        alias : "c",
+        width : 100,
+        align : "center",
+        formatter : function(value, row, index) {
+			return Fm.formatter({
+				"1" : "开启",
+				"0" : "关闭"
+			}, value);
+		}
+      } ] ];
+
+      coupon.toolbar = [ {
+        id : "coupon_add",
+        text : "添加",
+        iconCls : "icon-add",
+        handler : function() {
+          coupon.open2({
+            title : "添加优惠券",
+            h : "70%",
+			w : "45%",
+            url : "coupon_add_turn.do",
+            params : myparams
+          });
+        }
+      }, {
+        id : "coupon_edit",
+        text : "修改",
+        iconCls : "icon-edit",
+        disabled : true,
+        handler : function() {
+          coupon.updata2({
+            title : "修改优惠券",
+            h : "70%",
+			w : "45%",
+            url : "coupon_edit_turn.do",
+            params : {
+                couponId : coupon.rowKey
+            }
+		  });
+        }
+      }, {
+        id : "coupon_del",
+        text : "删除优惠券",
+        iconCls : "icon-remove",
+        disabled : true,
+        handler : function() {
+          coupon.remove({
+             url : "coupon_del_sub.do",
+             params : {
+                couponId : coupon.rowKey
+             }
+		  });
+        }
+      } ];
+      coupon.param = myparams;
+      coupon.onClickRow = function(rowIndex, rowData) {
+       $("#coupon_edit,#coupon_del").linkbutton("enable");
+      }
+      coupon.onLoadSuccess = function(data) {
+       $("#coupon_edit,#coupon_del").linkbutton("disable");
+      };
+      coupon.LoadDataGrid();
+      $('#searchd').linkbutton({
+        iconCls : 'icon-search',
+        onClick : function() {
+        	myparams.couponName=$("#couponName").val();
+          coupon.search(myparams);
+        }
+      });
+    });
+  </script>
+ <div fit="true" class="easyui-layout">
+  <div region="north" title="查询条件" style="height: 70px;">
+   <div class="pannel_search">
+   		优惠券名称：<input type="text" class="easyui-textbox" id="couponName" />
+       <a href="javascript:;" id="searchd">查询</a>
+   </div>
+  </div>
+  <div region="center" style="overflow: hidden;border: none;">
+   <table fit="true" namespace="coupon" id="coupon" class="datagrid"></table>
+  </div>
+ </div>
+</body>

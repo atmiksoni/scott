@@ -1,0 +1,22 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll"/>
+</head>
+<body>
+<@p.valid id="checkitem" action="checkitem_add_sub.do" class="layui-form" layui=true>
+ <@p.legend text="${(languaged !='')?string('Add Item','添加检查项目')}"/> 
+ 	<input type="hidden" name="equipmentTypeTwoId" value="${equipmentTypeTwoId}"/>
+         <!-- <div class="layui-form-item"> 
+           <@p.layinput label="${(languaged !='')?string('equipmentTypeTwoId','设备类型二Id')}"  datarule="required;" datamsgrequired="${(required)!''}" name="equipmentTypeTwoId" />
+	     </div> -->
+         <div class="layui-form-item"> 
+           <@p.layinput label="${(languaged !='')?string('Items','项目检查名称')}"  datarule="required;" datamsgrequired="${(required)!''}" name="checkItemName" />
+	     </div>
+	      <div class="layui-form-item"> 
+           <@p.layinput label="${(languaged !='')?string('items english','项目检查英文名称')}"  datarule="required;" datamsgrequired="${(required)!''}" name="checkItemEnglishName" />
+	     </div>
+</@p.valid>
+</body>
+</html>

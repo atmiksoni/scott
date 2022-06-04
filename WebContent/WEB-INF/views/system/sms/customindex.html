@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<@p.resource types="Jquery,Easyui,Tree,NiceScroll"/>
+<script type="text/javascript">
+  var myparams = {
+  };
+  var sms;
+  $(function() {
+    $("#smsContentSend").panel({
+      href : "sms_custom_indexs.do",
+      queryParams : myparams
+    });
+    niceScroll(".panel-body .easyui-panel");
+    //群组列表
+      tree = new Tree();
+      tree.url = "sms_contact_tree.do";
+      tree.checkbox = true;
+      tree.initTree("mytree");
+      tree.onClick=treeClick;
+	  function treeClick(node) {
+	      if (!node.checked) {
+	        $('#mytree').tree('check', node.target);
+	        var mobiles=$("#mobiles").val();
+	        mobiles = mobiles.replace(new RegExp(node.mobile+",",'g'), "");
+	        mobiles=node.mobile+","+mobiles;
+	        $("#mobiles").val(mobiles);
+	      } else {
+	        $('#mytree').tree('uncheck', node.target);
+	        var mobiles=$("#mobiles").val();
+	        mobiles = mobiles.replace(new RegExp(node.mobile+",",'g'), "");
+	        $("#mobiles").val(mobiles);
+	      }
+	    }
+	    /*全选*/
+	    $("#selectAll,#removeAll").linkbutton({
+	        iconCls : 'icon-add',
+	        onClick : function() {
+				var nodes=$("#mytree").tree("getChildren");
+				for (var i = 0; i < nodes.length; i++) {
+					tree,treeClick(nodes[i]);
+				}
+	        }
+	    });
+	   
+  });
+</script>
+</head>
+<body class="easyui-layout" style="overflow-y: hidden">
+ <div region="west" class="scroll" split="true" minWidth="220" maxWidth="220" title="选择联系人" style="overflow: hidden; border-bottom: none">
+       <div class="datagrid-toolbar" style="border: none; overflow-y: hidden; height: 25px;">
+       <a href="javascript:;" id="selectAll" plain="true">全选</a>&nbsp; <a href="javascript:;" id="removeAll" plain="true">清空</a>
+      </div>
+  <ul id="mytree" class="ztree" style="height: 200px;"></ul>
+ </div>
+ <div region="center" id="smsContentSend"  style="padding: 0px; overflow: hidden; border: none"></div>
+</body>
+</html>

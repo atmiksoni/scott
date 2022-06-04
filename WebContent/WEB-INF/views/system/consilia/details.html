@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll"/>
+</head>
+<body>
+<@p.valid id="consilia" action="consilia_edit_sub.do" class="layui-form" layui=true>
+ <@p.legend text="提示信息"/> 
+ <input type="hidden" name="consiliaId" value="${consilia.consiliaId}" />
+         <div class="layui-form-item">
+		   <@p.text label="医案名称"  width=250  value="${consilia.consiliaName}"/>
+	     </div>
+         <div class="layui-form-item">
+		   <@p.text label="患者名称"  value="${consilia.patientName}" width=250/>
+		     <@p.text label="就诊时间"  value="${consilia.visitDate}"width=250/>
+	     </div>
+         <div class="layui-form-item">
+		   <@p.text label="年龄" width=250  value="${consilia.age}"/>
+		    <@p.text label="性别" width=250 value="${(consilia.sex==0)?string('男','女')}"/>
+	     </div>
+         <div class="layui-form-item">
+		   <@p.text width=250 label="症状主诉"  value="${consilia.symptom}"/>
+		    <@p.text width=250 label="既往史" value="${consilia.history}"/>
+	     </div>    
+         <div class="layui-form-item">
+		   <@p.text width=250 label="刻下症" value="${engraved}"/>
+		      <@p.text width=250 label="现病史" value="${consilia.hpi}"/>
+	     </div>
+	              <div class="layui-form-item">
+		   <@p.text width=250 label="中医诊断"  value="${consilia.cmDiagnosis}"/>
+		     <@p.text width=250 label="西医诊断"  value="${consilia.wmDiagnosis}"/>
+	     </div>
+	      <@p.legend text="辅助检查图片" btnId="preSlider"/>
+	    
+	     <div class="layui-form-item" style="margin-left: 40px;">
+	       <#list imgs as img>
+		<img width="100px;" onclick="top.Dg.showImg('${base}/'+'${img}')" align="center" style="margin-left: 20px; margin-right: 40px;"
+			height="100px;" src="${base}/${img}" />
+				</#list>
+	</div>
+
+	
+	     <@p.legend text="医药处方"/> 
+         <div class="layui-form-item">
+		   <@p.text label="处方名称" width=250 value="${consilia.prescriptionName}"/>
+		   <@p.text label="付数" width=250 value="${consilia.prescriptionCount}"/>
+	     </div>
+         <div class="layui-form-item">
+		   <@p.text width=250 label="组成"  value="${consilia.constitute}"/>
+		    <@p.text width=250 label="用法" value="${consilia.prescriptionUsage}"/>
+	     </div>
+
+         <div class="layui-form-item">
+		   <@p.text width=250 label="治疗方法" value="${consilia.treatment}"/>
+	     </div>
+</@p.valid>
+</body>
+</html>

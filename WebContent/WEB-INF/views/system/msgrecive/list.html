@@ -1,0 +1,113 @@
+<body style="overflow: hidden">
+ <script type="text/javascript">
+      var msgrecive;
+    $(function() {
+      msgrecive = new Dd("msgrecive");
+      msgrecive.url = "msgrecive_list_data.do";
+      msgrecive.title = "信息";
+      msgrecive.colM = [ [ {
+        field : "ck",
+        checkbox : true,
+        align : "center"
+      }, {
+        title : "主键",
+        field : "msgreciveId",
+        alias : "m",
+        hidden:true,
+        width : 100,
+        align : "center"
+      } ,{
+        title : "消息ID",
+        field : "msgId",
+        alias : "m",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "用户ID",
+        field : "accountInfoId",
+        alias : "m",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "状态0:未读1:已读",
+        field : "isRead",
+        alias : "m",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "创建时间",
+        field : "createDate",
+        alias : "m",
+        width : 100,
+        align : "center"
+      } ] ];
+
+      msgrecive.toolbar = [ {
+        id : "msgrecive_add",
+        text : "添加",
+        iconCls : "icon-add",
+        handler : function() {
+          msgrecive.open2({
+            title : "添加",
+            h : "300px",
+			w : "450px",
+            url : "msgrecive_add_turn.do"
+          });
+        }
+      }, {
+        id : "msgrecive_edit",
+        text : "编辑",
+        iconCls : "icon-edit",
+        disabled : true,
+        handler : function() {
+          msgrecive.updata2({
+            title : "编辑",
+            h : "300px",
+			w : "450px",
+            url : "msgrecive_edit_turn.do",
+            params : {
+                msgreciveId : msgrecive.rowKey
+            }
+		  });
+        }
+      }, {
+        id : "msgrecive_del",
+        text : "删除",
+        iconCls : "icon-remove",
+        disabled : true,
+        handler : function() {
+          msgrecive.remove({
+             url : "msgrecive_del_sub.do",
+             params : {
+                msgreciveId : msgrecive.rowKey
+             }
+		  });
+        }
+      } ];
+      msgrecive.param = myparams;
+      msgrecive.onClickRow = function(rowIndex, rowData) {
+       $("#msgrecive_edit,#msgrecive_del").linkbutton("enable");
+      }
+      msgrecive.onLoadSuccess = function(data) {
+       $("#msgrecive_edit,#msgrecive_del").linkbutton("disable");
+      };
+      msgrecive.LoadDataGrid();
+      $('#search').linkbutton({
+        iconCls : 'icon-save',
+        onClick : function() {
+          msgrecive.search(myparams);
+        }
+      });
+    });
+  </script>
+ <div fit="true" class="easyui-layout">
+  <div region="north" title="查询条件" style="height: 70px;">
+   <div class="pannel_search">
+       <a href="javascript:;" id="search">查询</a>
+   </div>
+  </div>
+  <div region="center" style="overflow: hidden;border: none;">
+   <table fit="true" namespace="msgrecive" id="msgrecive" class="datagrid"></table>
+  </div>
+ </div>
+</body>

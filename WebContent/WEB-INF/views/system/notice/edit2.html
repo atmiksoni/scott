@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll,EasyUI,webuploader,ueditor"/> 
+</head>
+<body>
+	<@p.valid id="notice" action="notice_edit_sub.do" class="layui-form" layui=true>
+	<input type="hidden" name="type" value="2" /> 
+	<@p.legend text="${notice.dataItemDetails.dataItemDetailsVal}"/>
+	<input type="hidden" name="noticeId" value="${notice.noticeId}" /> 
+	<div class="layui-form-item">
+		<div class="layui-inline"><@p.layinput label="标题" id="title" width="513" name="title" value="${notice.title}" datarule="新闻标题:required;length[5~50]" placeholder="请输入标题" remark="长度5-50"/></div>
+	</div>
+    <div class="layui-form-item">
+		<div class="layui-inline"><@p.switch label="发布状态" name="sendStatus" value="${notice.sendStatus}" forhide="#invoiceInfoDiv"/></div>
+		<div class="layui-inline"><@p.switch label="首页显示" name="sendIndexSta" value="${notice.sendIndexSta}" forhide="#invoiceInfoDiv"/></div>
+	</div>
+	<div class="layui-form-item">
+		<@p.ueditor label="内容" id="container" name="content" value="${notice.content}"/>
+	</div>
+	 <@p.legend text="封面预览图(图片尺寸:宽:285px,高:215px)"/>
+	<div class="layui-form-item">
+		<div class="layui-inline" style="padding-left:100px;">
+			<@p.upload  id="imgUrl" btnId="pre" name="imgUrl" value="${notice.imgUrl}" />
+		</div>
+    </div>
+	</@p.valid>
+	 <script type="text/javascript">
+		$(function() {
+			var ue = new Ue("container");
+			ue.init();
+			var pre = new Upload({
+				filePicker : "pre",
+				fileList : "imgUrl",
+				params : {
+				},
+				server : "${base}/admin/notice/notice_img_upload.do"
+
+			});
+			pre.uploadSuccess = function(file, data) {
+				$('#imgUrlHidden').val(data.filePath);
+			}
+		});
+	</script>
+</body>
+</html>

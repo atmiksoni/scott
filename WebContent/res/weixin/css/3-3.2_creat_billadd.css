@@ -1,0 +1,13 @@
+.head a {float: right;margin-right: 0.6rem;line-height: 48px;color: white;font-size: 0.7rem;}
+.create {padding: 48px 0.75rem 0;background-color: white;}
+.weui_cells {margin-top: 0;}
+.create li img {position: absolute;right: 0.5rem;top: 0.5rem;}
+/*.toolbar, .toolbar .title, .weui-picker-modal .picker-item {font-size: .75rem;}*/
+.weui-picker-modal .picker-items-col {padding: 0 0.8rem;}
+.weui_input {font-size: 0.75rem;color: #333;}
+.weui_label {color: #666;}
+.weui_cells .weui_cell {padding: 0.625rem 0;}
+.weui_label {width: 4.25rem;margin-right: 0.75rem;border-right: 1px solid #DCDCDC;}
+.weui_cell_bd i img {height: 1rem;position: absolute;top: 0.625rem;right: 0;}
+.weui-picker-modal .picker-items {text-align: center;}
+

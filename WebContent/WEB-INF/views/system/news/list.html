@@ -1,0 +1,154 @@
+<body style="overflow: hidden">
+	<script src="/plug-in/viewer/js/viewer.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="/plug-in/viewer/css/viewer.min.css" />
+	<script type="text/javascript">
+		var news;
+		$(function() {
+			news = new Dd("news");
+			news.url = "news_list_data.do";
+			news.title = "信息";
+			news.colM = [ [ {
+				title : "主键",
+				field : "newsId",
+				alias : "n",
+				hidden : true
+			}, {
+				title : "标题",
+				field : "title",
+				alias : "n",
+				width : 100,
+				align : "center"
+			}, {
+				title : "简介",
+				field : "synopsis",
+				alias : "n",
+				width : 100,
+				align : "center"
+			}, {
+				title : "图片",
+				field : "img",
+				alias : "n",
+				width : 100,
+				align : "center",
+				formatter : function(value, row, index) {
+					return '<img onclick="show()"  width="80px;" height="50px;" src="../../' + row.img + '" />';
+				}
+			}, {
+				title : "是否显示",
+				field : "status",
+				alias : "n",
+				width : 100,
+				align : "center",
+				formatter : function(value, row, index) {
+					return Fm.formatter({
+						"1" : "是",
+						"0" : "否"
+					}, value);
+				}
+			}, {
+				title : "是否首页显示",
+				field : "isIndex",
+				alias : "n",
+				width : 100,
+				align : "center",
+				formatter : function(value, row, index) {
+					return Fm.formatter({
+						"1" : "是",
+						"0" : "否"
+					}, value);
+				}
+			}, {
+				title : "发布时间",
+				field : "createDate",
+				alias : "n",
+				width : 100,
+				align : "center"
+			} ] ];
+
+			news.toolbar = [ {
+				id : "news_add",
+				text : "添加",
+				iconCls : "icon-add",
+				handler : function() {
+					news.open2({
+						title : "添加",
+						h : "70%",
+						w : "45%",
+						url : "news_add_turn.do",
+						params : myparams
+					});
+				}
+			}, {
+				id : "news_edit",
+				text : "修改",
+				iconCls : "icon-edit",
+				disabled : true,
+				handler : function() {
+					news.updata2({
+						title : "修改",
+						h : "70%",
+						w : "45%",
+						url : "news_edit_turn.do",
+						params : {
+							newsId : news.rowKey
+						}
+					});
+				}
+			}, {
+				id : "news_del",
+				text : "删除",
+				iconCls : "icon-remove",
+				disabled : true,
+				handler : function() {
+					news.remove({
+						url : "news_del_sub.do",
+						params : {
+							newsId : news.rowKey
+						}
+					});
+				}
+			} ];
+			news.param = myparams;
+			news.onClickRow = function(rowIndex, rowData) {
+				$("#news_edit,#news_del").linkbutton("enable");
+			}
+			news.onLoadSuccess = function(data) {
+				$("#news_edit,#news_del").linkbutton("disable");
+			};
+			news.LoadDataGrid();
+			$('#search').linkbutton({
+				iconCls : 'icon-search',
+				onClick : function() {
+					myparams.title=$("#title").val();
+					myparams.status=$("#status").val();
+					news.search(myparams);
+				}
+			});
+		});
+		
+		function show() {
+			var viewer = new Viewer(document.getElementById('imgdiv'), {
+				url : 'data-original'
+			});
+			viewer.show();
+		}
+	</script>
+	<div fit="true" class="easyui-layout">
+		<div region="north" title="查询条件" style="height: 70px;">
+			<div class="pannel_search">
+				标题：<input type="text" class="easyui-textbox" id="title" name="title" /> 
+				是否显示: <select class="layui-input-block"
+					style="width: 120px; height: 30px;" id="status" name="status">
+					<option value="">全部</option>
+					<option value="" style="color: blue;">全部</option>
+					<option value="1" style="color: green;">是</option>
+					<option value="0" style="color: red;">否</option>
+				</select>
+				<a href="javascript:;" id="search">查询</a>
+			</div>
+		</div>
+		<div id="imgdiv" region="center" style="overflow: hidden; border: none;">
+			<table fit="true" namespace="news" id="news" class="datagrid"></table>
+		</div>
+	</div>
+</body>

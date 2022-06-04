@@ -1,0 +1,18 @@
+.head a {float: right;margin-right: 0.6rem;line-height: 48px;color: white;font-size: 0.7rem;}
+.bank {margin: 60px 0 10px;background-color: white;}
+.info {margin: 10px 0;background-color: white;}
+.weui_cells {margin-top: 0;}
+.save {width:100%;position: absolute;bottom: 1rem;left: 0;}
+.savebtn {width: 94%;margin: 0 auto;}
+.weui_cell_primary i {position: absolute;top: 0.5rem;right: 0.5rem;}
+ul li {margin: 0 0.75rem;color: #555;}
+.weui_input {font-size: 0.75rem;color: #333;}
+.weui_label {color: #666;}
+.weui_cells .weui_cell {padding: 0.625rem 0;}
+.weui_label {width: 4.25rem;margin-right: 0.75rem;border-right: 1px solid #DCDCDC;}
+
+
+/*修改密码*/
+.content {margin: 58px 0 0;}
+.weui_cell img {width: 0.9rem;margin-right: 0.5rem;}
+.content .weui_label {width: 3.25rem;margin-right: 0.75rem;border-right: 1px solid #DCDCDC;}

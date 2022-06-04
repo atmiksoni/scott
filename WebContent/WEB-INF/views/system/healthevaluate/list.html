@@ -1,0 +1,121 @@
+<body style="overflow: hidden">
+ <script type="text/javascript">
+      var healthevaluate;
+    $(function() {
+      healthevaluate = new Dd("healthevaluate");
+      healthevaluate.url = "healthevaluate_list_data.do?healthId=${healthId}";
+      healthevaluate.title = "健康咨询评价信息";
+      healthevaluate.colM = [ [ /* {
+        field : "ck",
+        checkbox : true,
+        align : "center"
+      }, */ {
+        title : "主键",
+        field : "healthevaluateId",
+        alias : "h",
+        hidden:true
+      } /* ,{
+        title : "健康咨询ID",
+        field : "healthId",
+        alias : "h",
+        width : 100,
+        align : "center"
+      } */ ,{
+        title : "用户名",
+        field : "userName",
+        alias : "a",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "评价内容",
+        field : "content",
+        alias : "h",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "评价日期",
+        field : "createDate",
+        alias : "h",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "状态",
+        field : "status",
+        alias : "h",
+        width : 100,
+        align : "center",
+        hidden:true
+      } ] ];
+
+      healthevaluate.toolbar = [ /* {
+        id : "healthevaluate_add",
+        text : "添加",
+        iconCls : "icon-add",
+        handler : function() {
+          healthevaluate.open2({
+            title : "添加健康咨询评价",
+            h : "70%",
+			w : "45%",
+            url : "healthevaluate_add_turn.do",
+            params : myparams
+          });
+        }
+      }, {
+        id : "healthevaluate_edit",
+        text : "修改",
+        iconCls : "icon-edit",
+        disabled : true,
+        handler : function() {
+          healthevaluate.updata2({
+            title : "修改健康咨询评价",
+            h : "70%",
+			w : "45%",
+            url : "healthevaluate_edit_turn.do",
+            params : {
+                healthevaluateId : healthevaluate.rowKey
+            }
+		  });
+        }
+      }, */ {
+        id : "healthevaluate_del",
+        text : "删除健康咨询评价",
+        iconCls : "icon-remove",
+        disabled : true,
+        handler : function() {
+          healthevaluate.remove({
+             url : "healthevaluate_del_sub.do",
+             params : {
+                healthevaluateId : healthevaluate.rowKey
+             }
+		  });
+        }
+      } ];
+      healthevaluate.param = myparams;
+      healthevaluate.onClickRow = function(rowIndex, rowData) {
+       $("#healthevaluate_edit,#healthevaluate_del").linkbutton("enable");
+      }
+      healthevaluate.onLoadSuccess = function(data) {
+       $("#healthevaluate_edit,#healthevaluate_del").linkbutton("disable");
+      };
+      healthevaluate.LoadDataGrid();
+      $('#search').linkbutton({
+        iconCls : 'icon-search',
+        onClick : function() {
+        	myparams.userName=$("#userName").val();
+          healthevaluate.search(myparams);
+        }
+      });
+    });
+  </script>
+ <div fit="true" class="easyui-layout">
+  <div region="north" title="查询条件" style="height: 70px;">
+   <div class="pannel_search">
+   	姓名：<input type="text" class="easyui-textbox" id="userName" />
+       <a href="javascript:;" id="search">查询</a>
+   </div>
+  </div>
+  <div region="center" style="overflow: hidden;border: none;">
+   <table fit="true" namespace="healthevaluate" id="healthevaluate" class="datagrid"></table>
+  </div>
+ </div>
+</body>

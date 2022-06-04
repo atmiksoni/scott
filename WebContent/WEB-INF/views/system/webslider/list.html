@@ -1,0 +1,112 @@
+<body style="overflow: hidden">
+	<script src="/plug-in/viewer/js/viewer.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="/plug-in/viewer/css/viewer.min.css" />
+	<script type="text/javascript">
+		var webslider;
+		$(function() {
+			webslider = new Dd("webslider");
+			webslider.url = "webslider_list_data.do";
+			webslider.title = "轮播图信息";
+			webslider.colM = [ [
+					{
+						title : "主键",
+						field : "websliderId",
+						alias : "w",
+						hidden : true
+					},
+					{
+						title : "标题",
+						field : "websliderTitle",
+						alias : "w",
+						width : 100,
+						align : "center"
+					},
+					{
+						title : "图片",
+						field : "websliderImg",
+						alias : "w",
+						width : 100,
+						align : "center",
+						formatter : function(value, row, index) {
+							return '<img onclick="show()"  width="80px;" height="50px;" src="../../' + row.websliderImg + '" />';
+						}
+					}, {
+						title : "创建时间",
+						field : "createDate",
+						alias : "w",
+						width : 100,
+						align : "center"
+					}, {
+						title : "跳转连接",
+						field : "href",
+						alias : "w",
+						width : 100,
+						align : "center"
+					} ] ];
+
+			webslider.toolbar = [ {
+				id : "webslider_add",
+				text : "添加",
+				iconCls : "icon-add",
+				handler : function() {
+					webslider.open2({
+						title : "添加轮播图",
+						h : "70%",
+						w : "45%",
+						url : "webslider_add_turn.do",
+						params : myparams
+					});
+				}
+			}, {
+				id : "webslider_edit",
+				text : "修改",
+				iconCls : "icon-edit",
+				disabled : true,
+				handler : function() {
+					webslider.updata2({
+						title : "修改轮播图",
+						h : "70%",
+						w : "45%",
+						url : "webslider_edit_turn.do",
+						params : {
+							websliderId : webslider.rowKey
+						}
+					});
+				}
+			}, {
+				id : "webslider_del",
+				text : "删除轮播图",
+				iconCls : "icon-remove",
+				disabled : true,
+				handler : function() {
+					webslider.remove({
+						url : "webslider_del_sub.do",
+						params : {
+							websliderId : webslider.rowKey
+						}
+					});
+				}
+			} ];
+			webslider.param = myparams;
+			webslider.onClickRow = function(rowIndex, rowData) {
+				$("#webslider_edit,#webslider_del").linkbutton("enable");
+			}
+			webslider.onLoadSuccess = function(data) {
+				$("#webslider_edit,#webslider_del").linkbutton("disable");
+			};
+			webslider.LoadDataGrid();
+		});
+		
+		function show() {
+			var viewer = new Viewer(document.getElementById('imgdiv'), {
+				url : 'data-original'
+			});
+			viewer.show();
+		}
+	</script>
+	<div fit="true" class="easyui-layout">
+		<div id="imgdiv" region="center" style="overflow: hidden; border: none;">
+			<table fit="true" namespace="webslider" id="webslider" class="datagrid"></table>
+		</div>
+	</div>
+</body>

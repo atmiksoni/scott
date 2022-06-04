@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,Form,NiceScroll,allueditor,EasyUI,ComBo,ueditor"/>
+</head>
+<body>
+	<@p.valid id="sysconfig" action="sysconfig_edit_sub.do" class="layui-form" layui=true>
+	
+			<fieldset class="layui-elem-field layui-field-title">
+				<legend>系统配置详情</legend>
+			</fieldset>
+			 <div class="layui-form-item" style="margin-left:40px;" >
+			    <@p.text label="配置代码"   width=300  value="${sysConfig.configName}"/>
+			    <@p.text label="创建日期"   width=300  value="${sysConfig.createDate}"/>
+		     </div>
+			<div class="layui-form-item" style="margin-left:20px;padding-left:20px;">
+				<@p.ueditor id="container" label="配置内容" name="configVal" value="${sysConfig.configVal}" />
+			</div>
+	</@p.valid>
+	<script>
+  	$(function(){
+  		var ue = new Ue("container");
+		ue.init();
+  	});
+  </script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration 
+		PUBLIC "-//mybatis.org//DTD Config 3.0//EN" 
+		"http://mybatis.org/dtd/mybatis-3-config.dtd"
+>
+<configuration>
+	<settings>
+		<!-- 查询时，关闭关联对象即时加载 -->
+		<setting name="lazyLoadingEnabled" value="true" />
+		<!-- 设置关联对象加载的形态，此处为按需加载字段(加载字段由SQL指 定)，不会加载关联表的所有字段，以提高性能 -->
+		<setting name="aggressiveLazyLoading" value="false" />
+		<!-- sql查询返回null值 -->
+		<setting name="callSettersOnNulls" value="true" />
+		<!--是否启用下划线与驼峰式命名规则的映射 -->
+		<!--<setting name="mapUnderscoreToCamelCase" value="true" /> -->
+		<setting name="autoMappingBehavior" value="FULL" />
+		<!-- 对于批量更新操作缓存SQL以提高性能 -->
+		<setting name="defaultExecutorType" value="BATCH" />
+		<setting name="cacheEnabled" value="true" />
+		<setting name="proxyFactory" value="CGLIB" />
+		<setting name="jdbcTypeForNull" value="OTHER" />
+	</settings>
+	<!-- 配置别名 -->
+	<typeAliases>
+		<typeAlias alias="PagerInfo" type="com.flyme.core.mybatis.alias.PagerInfo"/>
+		<typeAlias alias="CriterionMap" type="com.flyme.common.util.map.CriterionMap"/>
+		<package name="com.flyme.base" />
+		<package name="com.flyme.core" />
+		<package name="com.flyme.business" />
+	</typeAliases>
+	<typeHandlers>
+		<typeHandler handler="com.flyme.core.mybatis.extend.UUIDTypeHandler" javaType="java.util.UUID" jdbcType="VARCHAR" />
+	</typeHandlers>
+	<plugins>
+		<plugin interceptor="com.flyme.core.mybatis.plugins.PaginationInterceptor">
+			<property name="dialect" value="MYSQL" />
+		</plugin>
+	</plugins>
+</configuration>

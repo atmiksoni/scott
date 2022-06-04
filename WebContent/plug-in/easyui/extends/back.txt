@@ -1,0 +1,133 @@
+$.extend($.fn.datagrid.methods, {
+  keyCtr : function(jq, field) {
+    return jq.each(function() {
+      var grid = $(this);
+      grid.datagrid('getPanel').panel('panel').attr('tabindex', 1).bind('keydown', function(e) {
+        switch (e.keyCode) {
+        case 38: // up
+          var selected = grid.datagrid('getSelected');
+          if (selected) {
+            var index = grid.datagrid('getRowIndex', selected);
+            grid.datagrid('selectRow', index - 1).datagrid('editCell', {
+              index : index - 1,
+              field : field
+            });
+            grid.datagrid('endEdit', index - 1);
+            // $("input.datagrid-editable-input").select();
+            // $(e.target).textbox('textbox').focus();
+          } else {
+            var rows = grid.datagrid('getRows');
+            grid.datagrid('selectRow', rows.length - 1);
+          }
+          break;
+        case 40: // down
+          var selected = grid.datagrid('getSelected');
+          if (selected) {
+            var index = grid.datagrid('getRowIndex', selected);
+            grid.datagrid('selectRow', index + 1).datagrid('editCell', {
+              index : index + 1,
+              field : field
+            });
+            grid.datagrid('endEdit', index);
+            // $("input.datagrid-editable-input").select();
+            // $(e.target).textbox('textbox').focus();
+          } else {
+            grid.datagrid('selectRow', 0);
+          }
+          break;
+        case 13: // »Ø³µ
+          var selected = grid.datagrid('getSelected');
+          if (selected) {
+            var index = grid.datagrid('getRowIndex', selected);
+            grid.datagrid('selectRow', index + 1).datagrid('editCell', {
+              index : index + 1,
+              field : field
+            });
+            grid.datagrid('endEdit', index);
+            $("input.datagrid-editable-input").select();
+          } else {
+            grid.datagrid('selectRow', 0);
+          }
+          break;
+        }
+      });
+    });
+  },
+
+  addEditor : function(jq, param) {
+    if (param instanceof Array) {
+      $.each(param, function(index, item) {
+        var e = $(jq).datagrid('getColumnOption', item.field);
+        e.editor = item.editor;
+      });
+    } else {
+      var e = $(jq).datagrid('getColumnOption', param.field);
+      e.editor = param.editor;
+    }
+  },
+  removeEditor : function(jq, param) {
+    if (param instanceof Array) {
+      $.each(param, function(index, item) {
+        var e = $(jq).datagrid('getColumnOption', item);
+        e.editor = {};
+      });
+    } else {
+      var e = $(jq).datagrid('getColumnOption', param);
+      e.editor = {};
+    }
+  },
+
+  editCell : function(jq, param) {
+    return jq.each(function() {
+      var opts = $(this).datagrid('options');
+      var fields = $(this).datagrid('getColumnFields', true).concat($(this).datagrid('getColumnFields'));
+      for (var i = 0; i < fields.length; i++) {
+        var col = $(this).datagrid('getColumnOption', fields[i]);
+        col.editor1 = col.editor;
+        if (fields[i] != param.field) {
+          col.editor = null;
+        }
+      }
+      $(this).datagrid('beginEdit', param.index);
+      var ed = $(this).datagrid('getEditor', param);
+      if (ed) {
+        if ($(ed.target).hasClass('textbox-f')) {
+          $(ed.target).textbox('textbox').select();
+          $(ed.target).textbox('textbox').focus();
+        } else {
+          $(ed.target).focus();
+          $(ed.target).select();
+        }
+      }
+      for (var i = 0; i < fields.length; i++) {
+        var col = $(this).datagrid('getColumnOption', fields[i]);
+        col.editor = col.editor1;
+      }
+    });
+  },
+  enableCellEditing : function(jq) {
+    return jq.each(function() {
+      var dg = $(this);
+      var opts = dg.datagrid('options');
+      opts.oldOnClickCell = opts.onClickCell;
+
+      opts.onClickCell = function(index, field) {
+
+        if (opts.editIndex != undefined) {
+          if (dg.datagrid('validateRow', opts.editIndex)) {
+            dg.datagrid('endEdit', opts.editIndex);
+            opts.editIndex = undefined;
+          } else {
+            return;
+          }
+        }
+        dg.datagrid('selectRow', index).datagrid('editCell', {
+          index : index,
+          field : field
+        });
+        opts.editIndex = index;
+        opts.oldOnClickCell.call(this, index, field);
+      }
+    });
+  }
+});

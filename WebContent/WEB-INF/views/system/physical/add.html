@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll"/>
+</head>
+<body>
+<@p.valid id="physical" action="physical_add_sub.do" class="layui-form" layui=true>
+ <@p.legend text="提示信息"/> 
+         <div class="layui-form-item">
+		   <@p.layinput label="体检标题"  datarule="required;" name="physicalTitle" />
+	     </div>
+         <div class="layui-form-item">
+		   <@p.layinput label="用户ID"  datarule="required;" name="accountInfoId" />
+	     </div>
+         <div class="layui-form-item">
+		   <@p.layinput label="体检编号"  datarule="required;" name="physicalNo" />
+	     </div>
+         <div class="layui-form-item">
+		   <@p.layinput label="医院ID"  datarule="required;" name="hospitalId" />
+	     </div>
+         <div class="layui-form-item">
+		   <@p.layinput label="体检原件扫描图片"  datarule="required;" name="imgs" />
+	     </div>
+</@p.valid>
+</body>
+</html>

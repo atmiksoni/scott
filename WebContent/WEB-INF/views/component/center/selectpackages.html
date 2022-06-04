@@ -1,0 +1,155 @@
+<body style="overflow: hidden">
+<script src="/plug-in/viewer/js/viewer.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="/plug-in/viewer/css/viewer.min.css" />
+ <script type="text/javascript">
+      var packages;
+    $(function() {
+      packages = new Dd("packages");
+      packages.url = "select_packages_data.do";
+      packages.title = "套餐信息";
+      packages.colM = [ [ {
+        title : "主键",
+        field : "packagesId",
+        alias : "p",
+        hidden:true
+      } ,{
+        title : "服务ID",
+        field : "medicalServiceId",
+        alias : "p",
+        width : 100,
+        align : "center",
+        hidden:true
+      } ,{
+        title : "护理ID",
+        field : "nursingServiceId",
+        alias : "p",
+        width : 100,
+        align : "center",
+        hidden:true
+      } ,{
+        title : "医生等级",
+        field : "doctorLevel",
+        alias : "p",
+        width : 100,
+        align : "center",
+        hidden:true
+      } ,{
+        title : "护士等级",
+        field : "nurseLevel",
+        alias : "p",
+        width : 100,
+        align : "center",
+        hidden:true
+      } ,{
+        title : "套餐名称",
+        field : "packagesName",
+        alias : "p",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "原价",
+        field : "originalPrice",
+        alias : "p",
+        width : 100,
+        align : "center"
+      } ,{
+          title : "总金额",
+          field : "amount",
+          alias : "p",
+          width : 100,
+          align : "center"
+        } ,{
+        title : "数量",
+        field : "count",
+        alias : "p",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "示意图",
+        field : "img",
+        alias : "p",
+        width : 100,
+        align : "center",
+        formatter : function(value, row, index) {
+			return '<img onclick="show()" width="71px;" align="center" height="40px;" src="../../' + row.img
+			+ '" />';
+		}
+      } ,{
+        title : "详细介绍",
+        field : "content",
+        alias : "p",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "适用人群",
+        field : "allAdults",
+        alias : "p",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "注意事项",
+        field : "beCareful",
+        alias : "p",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "排序",
+        field : "indexs",
+        alias : "p",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "备注",
+        field : "remark",
+        alias : "p",
+        width : 100,
+        align : "center"
+      } ] ];
+
+      packages.toolbar = [  ];
+      packages.param = myparams;
+      packages.onClickRow = function(rowIndex, rowData) {
+       $("#packages_edit,#packages_del").linkbutton("enable");
+      }
+      packages.onLoadSuccess = function(data) {
+       $("#packages_edit,#packages_del").linkbutton("disable");
+      };
+      packages.LoadDataGrid();
+      $('#search').linkbutton({
+        iconCls : 'icon-search',
+        onClick : function() {
+        	myparams.packagesName=$("#packagesName").val();
+          packages.search(myparams);
+        }
+      });
+      
+      $('#sub').linkbutton({
+			iconCls : 'icon-save',
+			onClick : function() {
+				func.setTextBox(packages.getSelectedRow());
+				var index = parent.layer.getFrameIndex(window.name); //获取窗口索引  
+				parent.layer.close(index);//关闭弹出的子页面窗口 
+			}
+		});
+      
+    });
+    function show() {
+		var viewer = new Viewer(document.getElementById('imgdiv'), {
+			url : 'data-original'
+		});
+		viewer.show();
+	}
+  </script>
+ <div fit="true" class="easyui-layout">
+  <div region="north" title="查询条件" style="height: 70px;">
+   <div class="pannel_search">
+    套餐名称：<input type="text" class="easyui-textbox" id="packagesName" /> 
+       <a href="javascript:;" id="search">查询</a>
+        <a href="javascript:;" id="sub">确认</a>
+   </div>
+  </div>
+  <div region="center" id="imgdiv" style="overflow: hidden;border: none;">
+   <table fit="true" namespace="packages" id="packages" class="datagrid"></table>
+  </div>
+ </div>
+</body>

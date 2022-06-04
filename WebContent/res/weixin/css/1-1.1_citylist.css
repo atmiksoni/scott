@@ -1,0 +1,14 @@
+.city {font-size: 0.7rem;color: #666;}
+.search {margin: 48px 0 0;}
+h3 {font-size: 0.55rem;text-indent: 0.6rem;margin: 0.2rem 0;}
+.pre_city {width: 100%;padding: 0.4rem 0.6rem;background-color: white;}
+.pre_city img {width:0.75rem;vertical-align: middle;margin-top: -0.2rem;}
+.his_city, .hot_city {background-color: white;overflow: hidden;width: 96%;padding: 0.3rem 2%;}
+.his_city li, .hot_city li {float: left;width: 28%;margin: 0.2rem 2%;text-align: center;border: 1px solid #EBEBEB;line-height: 1.4rem;border-radius: 3px;}
+.list dl {background-color: white;}
+.list dl dt {font-size: 0.55rem;text-indent: 0.6rem;margin: 0;background-color: #F1F1F1}
+.list dl dd {border-bottom: 1px solid #EBEBEB;padding: 0.3rem;margin: 0 0.6rem;}
+.list dl dd:last-child {border-bottom: 0px none;}
+.broadside {position: fixed;bottom: 2rem;right: 0;width: 0.8rem;}
+.broadside ul {overflow: hidden;font-size: 0.5rem;line-height: 0.6rem;margin: 0 0.2rem 0 0;}
+.broadside ul li {margin: 0.3rem 0;}

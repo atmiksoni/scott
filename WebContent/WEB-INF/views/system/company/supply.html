@@ -1,0 +1,136 @@
+<body style="overflow: hidden">
+	<script src="/plug-in/viewer/js/viewer.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="/plug-in/viewer/css/viewer.min.css" />
+	<script type="text/javascript">
+		var supply;
+		$(function() {
+			supply = new Dd("supply");
+			supply.url = "supply_detial_data.do?companyId=${companyId}";
+			supply.title = "产品信息";
+			supply.colM = [ [ {
+				title : "主键",
+				field : "supplyId",
+				alias : "s",
+				hidden : true,
+				width : 100,
+				align : "center"
+			}, {
+				title : "产品图片",
+				field : "supplyPic",
+				alias : "s",
+				width : 100,
+				align : "center",
+				formatter:function(value, row, index){
+					return '<img onclick="show()"  width="100px;" height="50px;" src="../../'+row.supplyPic+'" />';
+				}
+			}, {
+				title : "产品名称",
+				field : "title",
+				alias : "s",
+				width : 100,
+				sortable : true,
+				align : "center"
+			}, {
+				title : "批发价格",
+				field : "tradePrice",
+				sortable : true,
+				alias : "s",
+				width : 60,
+				align : "center"
+			}, {
+				title : "零售价格",
+				field : "retailPrice",
+				sortable : true,
+				alias : "s",
+				width : 60,
+				align : "center"
+			}, {
+				title : "产品数量",
+				field : "supplyNum",
+				sortable : true,
+				alias : "s",
+				width : 60,
+				align : "center"
+			}, {
+				title : "发布人",
+				field : "userName",
+				alias : "accountInfo",
+				width : 60,
+				align : "center"
+			}, {
+				title : "截止时间",
+				field : "expiryDate",
+				alias : "s",
+				sortable : true,
+				width : 100,
+				align : "center"
+			}, {
+				title : "产品描述",
+				field : "supplyDescribe",
+				alias : "s",
+				width : 150,
+				align : "center"
+			}] ];
+			supply.toolbar = [{
+				id : "supply_edit",
+				text : "编辑",
+				iconCls : "icon-edit",
+				disabled : true,
+				handler : function() {
+					supply.updata2({
+						title : "编辑供货信息",
+						h : "70%",
+						w : "40%",
+						url : "supply_edit_turn.do",
+						params : {
+							supplyId : supply.rowKey
+						}
+					});
+				}
+			},{
+				id : "supply_del",
+				text : "删除",
+				iconCls : "icon-remove",
+				disabled : true,
+				handler : function() {
+					supply.remove({
+						url : "supply_del_sub.do",
+						params : {
+							supplyId : supply.rowKey
+						}
+					});
+				}
+			}];
+			supply.param = myparams;
+			supply.onClickRow = function(rowIndex, rowData) {
+			  $("#supply_edit,#supply_del").linkbutton("enable");
+			}
+			supply.onLoadSuccess = function(data) {
+		      $("#supply_edit,#supply_del").linkbutton("disable");
+		    };
+		    supply.LoadDataGrid();
+		    $('#search').linkbutton({
+		      iconCls : 'icon-search',
+		      onClick : function() {
+		    	supply.search(myparams);
+		      }
+		    });
+		});
+		function show() {
+			var viewer = new Viewer(document.getElementById('imgdiv'), {
+				url : 'data-original'
+			});
+			viewer.show();
+		}
+	</script>
+	<div fit="true" class="easyui-layout">
+		<!-- <div region="north" title="查询条件" style="height: 70px;">
+			<div class="pannel_search">
+				单位名称：<input type="text" class="easyui-textbox" id="compName" name="compName" /> <a href="javascript:;" id="search">查询</a> <a href="javascript:;" id="export">导出</a>
+			</div>
+		</div> -->
+		<div  id="imgdiv" region="center" style="overflow: hidden; border: none;">
+			<table fit="true" namespace="supply" id="supply" class="datagrid"></table>
+		</div>
+	</div>
+</body>

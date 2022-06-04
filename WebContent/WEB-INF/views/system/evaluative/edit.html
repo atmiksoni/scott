@@ -1,0 +1,19 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll"/>
+</head>
+<body>
+<@p.valid id="evaluative" action="evaluative_edit_sub.do" class="layui-form" layui=true>
+ <@p.legend text="提示信息"/> 
+ <input type="hidden" name="evaluativeId" value="${evaluative.evaluativeId}" />
+         <div class="layui-form-item">
+		    <@p.layinput label="评价名字"  datarule="required;" name="evaluativeName" value="${evaluative.evaluativeName}"/>
+	     </div>
+         <div class="layui-form-item">
+         <@p.layselect label="评价类型" list={"Doctor":"医生","Nurse":"护士"} name="evaluativeType" value="${evaluative.evaluativeType}"/>
+	     </div>
+</@p.valid>
+</body>
+</html>

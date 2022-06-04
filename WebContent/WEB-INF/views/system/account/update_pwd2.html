@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,EasyUI"/>
+</head>
+<body>
+	<@p.valid id="account" action="account_pwd2_sub.do" class="layui-form" layui=true> <@p.legend text="${(keeppassword)!'请妥善保存您的登录密码'}"/>
+	<div class="layui-form-item">
+		<div class="layui-inline"><@p.layinput label="${(OldPassword)!'原密码'}" type="password" datarule="${(OldPassword)!'请填写原密码'}: required;" datamsgrequired="${(required)!''}" name="oldpwd" /></div>
+	</div>
+	<div class="layui-form-item">
+		<div class="layui-inline"><@p.layinput label="${(newpassword)!'新密码'}" type="password" datarule="${(newpassword)!'请填写新密码'}: required;password;"datamsgrequired="${(required)!''}" name="password" /></div>
+	</div>
+	<div class="layui-form-item">
+		<div class="layui-inline"><@p.layinput label="${(confirmPassword)!'确认密码'}" type="password" name="repassword" datarule="${(confirmPassword)!'请填写确认密码'}: required;match(password); "datamsgrequired="${(required)!''}"/></div>
+	</div>
+	</@p.valid>
+</body>
+<script type="text/javascript">
+	VF.callbackBefore = function(data) {
+		var index = parent.layer.getFrameIndex(window.name);
+		top.Dg.z.msg(data)
+		if (data.close == true) {
+			parent.layer.close(index);
+		}
+	}
+</script>
+</html>

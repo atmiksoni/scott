@@ -1,0 +1,43 @@
+ 弹出添加对象窗口:
+ 表格对象.open({
+                title : "添加对象",
+                url : "add_buildingunit_turn.do",
+                params : myparam
+		   });
+		            
+弹出更新对象窗口
+表格对象.update({
+                title : "更新对象",
+                height : 250,
+                url : "edit_buildingunit_turn.do"
+		     });
+		     
+弹出删除对象窗口
+表格对象.remove({
+			    url : "delete_buildingunit_sub.do"
+		    });
+		    
+		    
+		    //选择房间
+		$('.choose').linkbutton({
+			iconCls : 'icon-edit',
+			 plain:true,
+			onClick : function() {
+				top.Dg.open({
+					id : "house",
+					namespace:"house",
+					width : 500,
+					url : 'choose_house_turn.do',
+					title : '选择房间',
+					params : {"type":"all"}
+				});
+			}
+		});
+		<tr>
+						<td class="tdl" width="20%">房号：</td>
+						<td width="20%"><input type="hidden" id="houseId" name="house.houseId" /> 
+                        <input type="text" disabled id="houseNumber" class="txtInput" name="houseNumber" /></td>
+						<td width="20%"><a href="#" class="choose"><span id="choose">选择房间</span></a></td>
+						<td width="40%"><div class="Validform_checktip"></div></td>
+					</tr>
+

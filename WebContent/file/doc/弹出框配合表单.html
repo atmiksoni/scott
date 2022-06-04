@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,Form,NiceScroll,EasyUI,ComBo"/>
+</head>
+<body>
+	<@p.form id="bills" action="bills_invalid_sub.do">
+	<input type="hidden" name="billsId" value="${bills.billsId}" />
+	<input type="hidden" name="billsNo" value="${bills.billsNo}" />
+	<table class="tbformtop">
+		<tr>
+			<td>
+				<table class="tbform">
+					<tr>
+						<td colspan="3">
+							<div class="z-legend">
+								<b>业主:<span class="money">${bills.houseOwnerName}</span> 票号:<span class="money">${bills.billsNo}</span></b>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td class="tdl" width="20%">作废原因：</td>
+						<td width="80%"><textarea class="txtInput" style="height: 60px; width: 350px; overflow: hidden" id="remark" name="remark"></textarea></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	</@p.form>
+	<script type="text/javascript">
+		$(function() {
+			var api = frameElement.api, W = api.opener;
+			api.button({
+				name : '确定',
+				callback : function() {
+					iframe = this.iframe.contentWindow;
+					$('#btn_sub', iframe.document).click();
+					return false;
+				},
+				focus : true
+			});
+			VF.callback = function(data) {
+				if (data.status == "y") {
+					top.Current_iframe().contentWindow.refreshTab('欠费明细');
+				}
+			}
+		});
+	</script>
+</body>
+</html>

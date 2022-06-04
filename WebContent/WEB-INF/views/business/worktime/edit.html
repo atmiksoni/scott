@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll"/>
+</head>
+<body>
+<@p.valid id="worktime" action="worktime_edit_sub.do" class="layui-form" layui=true>
+ <@p.legend text="${(languaged !='')?string('Hint information','提示信息')}"/> 
+ <input type="hidden" name="worktimeId" value="${worktime.worktimeId}" />
+         <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('workTime','正常工作时间')}"  datarule="required;" datamsgrequired="${(required)!''}" name="workTime" value="${worktime.workTime}"/>    
+		    <@p.layinput label="${(languaged !='')?string('roadTime',' 路上工作时间')}"  datarule="required;" datamsgrequired="${(required)!''}" name="roadTime" value="${worktime.roadTime}"/>    
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('overTime','加班工作时间')}"  datarule="required;" datamsgrequired="${(required)!''}" name="overTime" value="${worktime.overTime}"/>    
+		    <@p.layinput label="${(languaged !='')?string('doubleTime','双倍工作时间')}"  datarule="required;" datamsgrequired="${(required)!''}" name="doubleTime" value="${worktime.doubleTime}"/>    
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('workTimeStart','正常工作开始时间')}"  datarule="required;" datamsgrequired="${(required)!''}" name="workTimeStart" value="${worktime.workTimeStart}"/>    
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('workTimeEnd','正常工作结束时间')}"  datarule="required;" datamsgrequired="${(required)!''}" name="workTimeEnd" value="${worktime.workTimeEnd}"/>    
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('roadTimeStart','路上开始时间')}"  datarule="required;" datamsgrequired="${(required)!''}" name="roadTimeStart" value="${worktime.roadTimeStart}"/>    
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('roadTimeStart','路上结束时间')}"  datarule="required;" datamsgrequired="${(required)!''}" name="roadTimeEnd" value="${worktime.roadTimeEnd}"/>    
+	     </div>
+	     
+	     <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('roadTimeStart','1.5倍加班开始时间')}"  datarule="required;" datamsgrequired="${(required)!''}" name="overTimeStart" value="${worktime.overTimeStart}"/>    
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('roadTimeStart','1.5倍结束时间')}"  datarule="required;" datamsgrequired="${(required)!''}" name="overTimeEnd" value="${worktime.overTimeEnd}"/>    
+	     </div>
+	     
+	     <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('roadTimeStart','双倍加班开始时间')}"  datarule="required;" datamsgrequired="${(required)!''}" name="doubleTimeStart" value="${worktime.doubleTimeStart}"/>    
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('roadTimeStart','双倍结束时间')}"  datarule="required;" datamsgrequired="${(required)!''}" name="doubleTimeEnd" value="${worktime.doubleTimeEnd}"/>    
+	     </div>
+	     
+         <div class="layui-form-item">
+	     </div>
+         <div class="layui-form-item">
+	     </div>
+</@p.valid>
+</body>
+</html>

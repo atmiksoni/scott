@@ -1,0 +1,132 @@
+<body style="overflow: hidden">
+	<script src="/plug-in/viewer/js/viewer.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="/plug-in/viewer/css/viewer.min.css" />
+	<script type="text/javascript">
+		var doctor;
+		$(function() {
+			doctor = new Dd("doctor");
+			doctor.url = "select_doctor_data.do";
+			doctor.title = "医生信息";
+			doctor.colM = [ [
+					{
+						title : "主键",
+						field : "doctorId",
+						alias : "d",
+						hidden : true
+					},
+					{
+						title : "所属科室",
+						field : "department",
+						alias : "d",
+						width : 100,
+						align : "center"
+					},
+					{
+						title : "头像",
+						field : "doctorHead",
+						alias : "d",
+						width : 100,
+						align : "center",
+						formatter : function(value, row, index) {
+							return '<img width="71px;" align="center" height="40px;" src="../../' + row.doctorHead
+									+ '" />';
+						}
+					},
+					{
+						title : "医生姓名",
+						field : "doctorName",
+						alias : "d",
+						width : 100,
+						align : "center"
+					},
+					{
+						title : "医生等级",
+						field : "level",
+						alias : "d",
+						width : 100,
+						align : "center"
+					},
+					{
+						title : "医生保障",
+						field : "isGuarantee",
+						alias : "d",
+						width : 100,
+						align : "center",
+						formatter : function(value, rows, index) {
+							return Fm.formatter({
+								"0" : "是",
+								"1" : "否"
+							}, value);
+						}
+					},
+					{
+						title : "擅长描述",
+						field : "doctorAdept",
+						alias : "d",
+						width : 100,
+						align : "center"
+					},
+					{
+						title : "详细介绍",
+						field : "content",
+						alias : "d",
+						width : 100,
+						hidden : true,
+						align : "center"
+					},
+					{
+						title : "医生状态",
+						field : "status",
+						alias : "d",
+						width : 100,
+						align : "center",
+						formatter : function(value, rows, index) {
+							return Fm.formatter({
+								"0" : "禁用",
+								"1" : "启用"
+							}, value);
+						}
+					}, {
+						title : "备注",
+						field : "remark",
+						alias : "d",
+						width : 100,
+						align : "center"
+					} ] ];
+
+			doctor.toolbar = [];
+			doctor.param = myparams;
+			doctor.onClickRow = function(rowIndex, rowData) {
+			}
+			doctor.onLoadSuccess = function(data) {
+			};
+			doctor.LoadDataGrid();
+			$('#search').linkbutton({
+				iconCls : 'icon-search',
+				onClick : function() {
+					myparams.title = $("#doctorName").val();
+					doctor.search(myparams);
+				}
+			});
+
+			$('#sub').linkbutton({
+				iconCls : 'icon-save',
+				onClick : function() {
+					func.setTextBox(doctor.getSelectedRow());
+					var index = parent.layer.getFrameIndex(window.name); //获取窗口索引  
+					parent.layer.close(index);//关闭弹出的子页面窗口 
+				}
+			});
+		});
+	</script>
+	<div fit="true" class="easyui-layout">
+		<div region="north" title="查询条件" style="height: 70px;">
+			<div class="pannel_search">
+				保险名称：<input type="text" class="easyui-textbox" id="doctorName" /> <a href="javascript:;" id="search">查询</a> <a href="javascript:;" id="sub">确认</a>
+			</div>
+		</div>
+		<div region="center" style="overflow: hidden; border: none;">
+			<table fit="true" namespace="doctor" id="doctor" class="datagrid"></table>
+		</div>
+	</div>
+</body>

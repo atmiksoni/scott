@@ -1,0 +1,10 @@
+.content {font-size: 0.7rem;margin: 50px 0 1rem;background-color: white;padding: 0 0.6rem;}
+.content>ul>li {border-bottom: 1px solid #DCDCDC;padding: 0.5rem;}
+.content .top {text-align: center;font-size: 0.9rem;line-height: 1rem;color: #48a357;}
+.top img {width: 1rem;vertical-align: middle;}
+.content .tips {font-size: 0.7rem;}
+.content .tips span:last-child {float:right;color: #E63C2D;}
+.content .info p {color: #666;}
+.should span, .already span {color: #E63C2D;}
+.total span {text-decoration: line-through;}
+.close {width: 0.95rem;}

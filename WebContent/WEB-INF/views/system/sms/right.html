@@ -1,0 +1,341 @@
+<body style="overflow: hidden">
+ <script src="${base}/res/bfpms/js/SMSKeyWords.js"></script>
+ <@p.resource types="NiceScroll,AnyDataGrid,ComBo"/>
+ <input type="hidden" id="mobiles" name="mobiles" maxlength="value" />
+ <div class="easyui-layout" fit="true" style="overflow-y: hidden; border: none">
+  <div region="east" split="true" minWidth="260" maxWidth="260" title="收费项" style="overflow: hidden; border-bottom: none">
+   <ul id="feeitem" class="ztree" style="height: 500px;"></ul>
+  </div>
+  <div region="center" style="border: none">
+   <div class="easyui-layout" fit="true" style="overflow: hidden; border: none">
+    <div region="north" title="生成短信<span class='money'>[单条短信最长70汉字(包含后缀和括号)，超出部分另外计费]</span>" style="overflow: hidden; border-top: none; height: 290px">
+     <div class="cztable" style="border-left: none;">
+      <div id="smscontenttb" style="height: 15px; width: 100%;">
+       <div style="float: left; padding: 3px;">
+        <a href="javascript:;" id="smsCreate">生成短信</a>
+       </div>
+       <div style="float: right; padding: 5px;">
+     接收范围:(手机<input type="radio" name="sendType" class="radio" checked="checked" value="1"> 电话 <input type="radio" name="sendType" class="radio" value="2"> 租户手机<input type="radio" name="sendType" class="radio"  value="3"> 租户电话<input type="radio" name="sendType" class="radio"  value="4">全部 <input type="radio" name="sendType" class="radio" value="5">)
+       </div>
+      </div>
+      <table>
+
+       <tr>
+        <td width="20%" style="border-left: none;" class="tdc">短信分类：</td>
+        <td width="15%"><select name="smsTemplateId" id="smsTemplateId"></select></td>
+        <td rowspan="4" valign="top" width="40%" style="border-right: none; border-left: #E6E6E6 solid 1px; line-height: 25px; color: #FF6600; padding-left: 8px; padding-top: 3px;">
+         <div id="blessing" style="display: none">
+          <a href="javascript:;" id="smsTotal">短信统计</a> <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 条数&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 手机数&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 总条数 <br> 移动：<input type="text" id="cmbt" size="1" value="0" disabled> x <input type="text" id="cmbs" size="4" value="0" disabled> = <input type="text" id="cmba" size="4" value="0" disabled> <br> 联通：<input type="text" id="cunt" size="1" value="0" disabled> x <input type="text" id="cuns" size="4" value="0" disabled> = <input type="text" id="cuna" size="4" value="0" disabled> <br> 电信：<input type="text" id="ctt" size="1"
+           value="0" disabled> x <input type="text" id="cts" size="4" value="0" disabled> = <input type="text" id="cta" size="4" value="0" disabled> <br> 合计：<input type="text" id="sumt" size="1" value="0" disabled> x <input type="text" id="sums" size="4" value="0" disabled> = <input type="text" id="suma" size="4" value="0" disabled>
+         </div>
+        </td>
+       </tr>
+
+       <tr>
+        <td width="15%" style="border-left: none;" class="tdc">短信模板：</td>
+        <td width="15%"><textarea name="content" id="content" hiddenval="" style="overflow: hidden; width: 480px; height: 45px;" class="txtInput" readonly></textarea><br /> <font color="red"><span id="lengthTips"></span></font></td>
+       </tr>
+       <tr id="noticeDiv" style="display: none">
+        <td width="15%" style="border-left: none;" class="tdc">通知内容：</td>
+        <td width="15%"><textarea style="overflow: hidden; width: 480px; height: 50px;" class="txtInput" style="overflow-y: hidden" cols="50" id="noticeContent" name="noticeContent" datatype="*1-200" onBlur="countChar('noticeContent','${signSize}');" onkeydown="countChar('noticeContent','${signSize}');" onkeyup="countChar('noticeContent','${signSize}');" rows="5" valid="required"></textarea></td>
+       </tr>
+       <tr id="smsCount" style="display: none">
+        <td width="15%" style="border-left: none;" class="tdc"></td>
+        <td width="15%"><span id="message"> 内容：<font color="red" id="counter_input">0</font> 字符+签名<font color="red" id="mark">0</font> 个字符=<font style="color: red;" id="counter_sum">0</font> 字符,还剩<font color="red" id="counter_follow">500</font> ,移动/联通/电信每条 <font style="color: red;" id="counter_code">70</font> ,内容限制:<font color="red" id="counter_all">500</font></span></td>
+       </tr>
+       <tr id="dateDiv" style="display: none">
+        <td class="tdc" style="border-left: none;" width="15%">欠费日期：</td>
+        <td width="15%"><input style="width: 100px" type="text" value="${beginDate}" class="easyui-datebox" id="beginDate" name="beginDate" />&nbsp;至： <input style="width: 100px" type="text" value="${endDate}" class="easyui-datebox" id="endDate" name="endDate" /> &nbsp;</td>
+       </tr>
+       <tr id="paymentDeadlineDiv" style="display: none">
+        <td width="15%" style="border-left: none;" class="tdc">截止日期：</td>
+        <td width="15%"><input style="width: 100px" type="text" class="easyui-datebox" id="paymentDeadline" name="paymentDeadline" /></td>
+
+       </tr>
+      </table>
+     </div>
+    </div>
+    <div region="center" style="border: none" style="border-bottom:none;">
+     <div class="easyui-layout" fit="true" style="border: none">
+      <div region="center" style="border-bottom: none; border-left: none; border-right: none; border-top: none;">
+       <table fit=true namespace="smscontent" id="smscontent" class="datagrid"></table>
+       <div id="smsContenttb" style="height: 30px; width: 100%;">
+        <div style="float: left; padding: 3px;">
+         <a href="javascript:;" id="smsSend" plain="true">发送短信</a> <a href="javascript:;" id="smsDiscard" plain="true">删除</a>
+        </div>
+        <div id="delmm" style="width: 100px;">
+         <div data-options="iconCls:'icon-del'">全部删除</div>
+        </div>
+
+        <div style="float: right; padding: 3px;">
+         短信状态：<select class="easyui-combobox" name="status" id="status"> <#list statusEnum as item>
+          <option value="${item.getIndex()}"<#if item.getIndex()==0> selected</#if> >${item.getName()}</option> </#list>
+         </select> &nbsp;
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+ </div>
+ <script type="text/javascript">
+		var smscontent;
+        var feeitem;
+        $(function() {
+	        feeitem = new Tree();
+	        feeitem.url = "smsTemplate_feeitem_tree.do";
+	        feeitem.checkbox = true;
+	        feeitem.initTree("feeitem");
+	        var smstemplate = new Cb("smsTemplateId");
+	        smstemplate.url = "smsTemplate_treedata.do";
+	        smstemplate.textField = "templateName";
+	        smstemplate.valueField = "smsTemplateId";
+	        smstemplate.templateContent = "templateContent";
+	        smstemplate.onSelect = function(node) {
+		        $("#content").val(node.templateContent);
+		        $("#content").attr("hiddenval", node.templateContent);
+		        $("#noticeDiv,#dateDiv,#paymentDeadlineDiv,#notice").hide();
+		        if (node.templateType == 3) {
+			        $("#noticeDiv").show();
+			        $("#blessing").show();
+			        $("#smsCount").show();
+		        }
+		        if (node.templateType==6) {
+			        $("#noticeDiv").show();
+			        $("#blessing").show();
+			        $("#smsCount").show();
+			        $("#dateDiv,#paymentDeadlineDiv").show();
+		        }
+		        if (node.templateType == 2) {
+			        $("#dateDiv,#paymentDeadlineDiv").show();
+			        $("#smsCount").hide();
+		        }
+		        myparams.templateType = node.templateType;
+	        }
+	        $("#noticeContent").keyup(function() {
+		        var tmp = $("#content").attr("hiddenval");
+		        $("#content").val(tmp.replace("#[通知内容]", $(this).text()));
+	        });
+	        niceScroll(".scroll");
+	        smstemplate.LoadCombo();
+	        smscontent = new Dd("smscontent");
+	        smscontent.title = "短信列表(本小区可用短信条数:<span class='money'>${smsNu}</span> 所属物业可用短信条数:<span class='money'>${orgsmsNu}</span> )";
+	        smscontent.colM = [ [ {
+	            field : "ck",
+	            checkbox : true,
+	            align : "center"
+	        }, {
+	            title : "主键",
+	            alias : "sms",
+	            field : "smsId",
+	            width : 10,
+	            align : "center",
+	            hidden : true
+	        }, {
+	            title : "接收人",
+	            alias : "sms",
+	            field : "messageRecname",
+	            width : 15,
+	            align : "center"
+	        }, {
+	            title : "短信类型",
+	            field : "SmsTypeName",
+	            width : 10,
+	            align : "center"
+	        }, {
+	            title : "手机号码",
+	            alias : "sms",
+	            field : "phoneNumber",
+	            width : 20,
+	            align : "center"
+	        }, {
+	            title : "创建日期",
+	            alias : "sms",
+	            field : "massageCreateTime",
+	            width : 20,
+	            align : "center"
+	        }, {
+	            title : "发送日期",
+	            alias : "sms",
+	            field : "massageSendTime",
+	            width : 20,
+	            align : "center"
+	        }, {
+	            title : "短信状态值",
+	            alias : "sms",
+	            field : "status",
+	            width : 20,
+	            align : "center",
+	            hidden : true
+	        }, {
+	            title : "短信内容",
+	            alias : "sms",
+	            field : "messageContent",
+	            width : 20,
+	            align : "center",
+	            hidden : true
+	        }, {
+	            title : "短信内容",
+	            field : "shortSmsContent",
+	            alias : "sms",
+	            width : 30,
+	            align : "center",
+	            formatter : function(value, smscontent, index) {
+		            var href = "";
+		            href += "<a href='#' title='"+smscontent.messageContent+"'>" + smscontent.shortSmsContent + "</a>";
+		            return href;
+	            }
+	        }, {
+	            title : "计费条数",
+	            alias : "sms",
+	            field : "messageNum",
+	            width : 10,
+	            align : "center",
+	        }, {
+	            title : "短信状态",
+	            alias : "sms",
+	            field : "statusName",
+	            width : 10,
+	            align : "center"
+	        } ] ];
+	        smscontent.singleSelect = false;
+	        smscontent.url = "list_smscontent_data.do";
+	        smscontent.toolbar = '#smsContenttb';
+	        smscontent.param = myparams;
+	        smscontent.LoadDataGrid();
+	        $("#status").combobox({
+		        onSelect : function() {
+			        var statustmp = $("#status").combobox('getValue', '');
+			        myparams.status = statustmp;
+			        smscontent.search(myparams);
+			        $("#smsSend").linkbutton("disable");
+			        $("#smsDiscard").splitbutton('disable');
+			        if (statustmp == 0) {
+				        $("#smsSend").linkbutton("enable");
+				        $("#smsDiscard").splitbutton('enable');
+			        }
+			        if (statustmp == 1) {
+				        $("#smsDiscard").splitbutton('disable');
+				        $("#smsSend").linkbutton("disable");
+			        }
+			        if (statustmp == 2) {
+				        $("#smsDiscard").splitbutton('enable');
+				        $("#smsSend").linkbutton("disable");
+			        }
+			        if (statustmp == 3) {
+				        $("#smsSend").linkbutton("disable");
+				        $("#smsDiscard").splitbutton('enable');
+			        }
+		        }
+	        });
+	        $("#smsCreate").linkbutton({
+	            disabled : false,
+	            plain : true,
+	            iconCls : "icon-smsadd",
+	            onClick : function() {
+		            var sendType = $("input[name='sendType']:checked").val();
+		            var hourseOwnerIds = tree.getCodes();
+		            var contactsMobileIds = contactstree.getCodes();//自定义联系人
+		            var smsTemplateId = smstemplate.getValue();//获取模版ID
+		            var contactsNames = contactstree.getCheckedNames();//自定义联系人名字     getCheckedNames
+		            var blessContent = $("#blessContent").val();//获取自定义祝福语字段
+		            var noticeContent = $("#noticeContent").val();//获取自定义通知字段
+		            var feeItemIds = feeitem.getChildChecked().join(",");
+		            myparams.feeitemIds = feeItemIds;
+		            myparams.contactsMobileIds = contactsMobileIds;
+		            myparams.contactsNames = contactsNames;
+		            myparams.blessContent = blessContent;
+		            myparams.sendType = sendType;
+		            myparams.noticeContent = noticeContent;
+		            myparams.beginDate = $('#beginDate').datebox('getValue');
+		            myparams.endDate = $('#endDate').datebox('getValue');
+		            myparams.paymentDeadline = $('#paymentDeadline').datebox('getValue');//获取缴费截止日期
+		            if (smscontent.z.checkObj(smsTemplateId, "请选择短信类型")) {
+			            if (smscontent.z.checkObj(hourseOwnerIds, "请选择短信接收人或者自定义联系人") || smscontent.z.checkObj(contactsMobileIds, "请选择短信接收人或者自定义联系人")) {
+
+				            if (myparams.templateType == 2) {//催费项验证
+					            if (!smscontent.z.checkObj(myparams.feeitemIds, "请选择收费项") || !smscontent.z.checkObj(myparams.paymentDeadline, "请选择缴费截止日期") || !smscontent.z.checkObj(myparams.beginDate, "请选择开始日期") || !smscontent.z.checkObj(myparams.endDate, "请选择结束日期")) {
+						            return false;
+					            }
+
+				            }
+				            if (myparams.templateType == 3) {//通知验证
+					            if (!smscontent.z.checkObj(myparams.noticeContent, "请填写通知内容")) {
+						            return false;
+					            }
+					            var tips = CheckSMSKeyWords(noticeContent);
+					            if (tips != "OK") {
+						            smscontent.z.tip(tips, 4000, 300, "error");
+						            return false;
+					            }
+				            }
+				            myparams.hourseOwnerIds = hourseOwnerIds.join(",");
+				            myparams.contactsMobileIds = contactsMobileIds.join(",");
+				            myparams.contactsNames = contactsNames.join(",");
+				            myparams.smsTemplateId = smsTemplateId;
+				            smscontent.z.ajax("sms/create_smscontent.do", myparams, function(data) {
+					            smscontent.refresh();
+				            });
+			            }
+		            }
+	            }
+	        });
+
+	        smscontent.onClickRow = function(rowIndex, rowData) {
+		        myparams.status = status;
+		        myparams.smsId = smscontent.rowKey;
+	        }
+
+	        $("#smsDiscard").splitbutton({
+	            iconCls : "icon-remove",
+	            menu : '#delmm',
+	            onClick : function() {
+		            var ids = smscontent.getSelections('smsId');
+		            var params = {
+			            ids : ids
+		            }
+
+		            if (smscontent.isNN(ids)) {
+			            top.Dg.confirm("确认删除所选短信吗?", function() {
+				            smscontent.z.ajax("sms/del_smscontent.do", params, function(data) {
+					            myparams.ids = "";
+					            smscontent.refresh();
+				            });
+			            });
+		            }
+	            }
+	        });
+	        $('#delmm').menu({
+		        onClick : function(item) {
+			        var ids = smscontent.getSelections('smsId');
+			        var statustmp = $("#status").combobox('getValue', '');
+			        myparams.statustmp = statustmp;
+			        top.Dg.confirm("确认删除所有短信吗?", function() {
+				        smscontent.z.ajax("sms/del_all_smscontent.do", myparams, function(data) {
+					        smscontent.z.tip(data.msg, 4000, 300, "success");
+					        if (data.status == "y") {
+					        }
+					        smscontent.refresh();
+				        });
+			        });
+		        }
+	        });
+
+	        $("#smsSend").linkbutton({
+	            iconCls : "icon-sms",
+	            onClick : function() {
+		            var ids = smscontent.getSelections('smsId');
+		            var params = {
+			            ids : ids
+		            }
+		            if (smscontent.isNN(ids)) {
+			            smscontent.z.ajax("sms/send_smscontent.do", params, function(data) {
+				            smscontent.refresh();
+			            });
+		            }
+	            }
+	        });
+        });
+	</script>
+</body>

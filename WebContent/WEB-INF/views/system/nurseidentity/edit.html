@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll"/>
+</head>
+<body>
+<@p.valid id="nurseidentity" action="nurseidentity_edit_sub.do" class="layui-form" layui=true>
+ <@p.legend text="提示信息"/> 
+ <input type="hidden" name="nurseIdentityId" value="${nurseidentity.nurseIdentityId}" />
+ <input type="hidden" name="accountInfoId" value="${nurseidentity.accountInfoId}" />
+ <input type="hidden" name="departmentId" value="${nurseidentity.departmentId}" />
+ <input type="hidden" name="linkPhone" value="${nurseidentity.linkPhone}" />
+ <input type="hidden" name="nurseLevel" value="${nurseidentity.nurseLevel}" />
+ <input type="hidden" name="hospitalName" value="${nurseidentity.hospitalName}" />
+         <div class="layui-form-item">
+		    <@p.text label="用户名"   value="${accountInfo.userName}"/>
+		       <@p.text label="工作电话"   value="${nurseidentity.linkPhone}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.text label="护士等级"   value="${nurseidentity.nurseLevel}"/>
+		     <@p.text label="医院名称" value="${nurseidentity.hospitalName}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.text label="科室"   value="${departmentName}"/>
+	     </div>
+	     <fieldset class="layui-elem-field layui-field-title">
+			<legend>资格证</legend>
+		</fieldset>
+		<div class="layui-form-item">
+			<div class="layui-inline">
+				<img class="go" style="cursor: pointer; padding-left: 40px;" height="70%" width="70%" src="../../${nurseidentity.qualificationCertificate}">
+			</div>
+		</div>
+         <div class="layui-form-item">
+		    <@p.text label="资格证编号"   value="${nurseidentity.qualificationCertificateNo}"/>
+	     </div>
+	     
+	     <!-- <div class="layui-form-item">
+		    <@p.text label="资格证编号"  value="${doctorIdentity.qualificationCertificateNo}"/>
+	     </div> -->
+	     
+	     <fieldset class="layui-elem-field layui-field-title">
+			<legend>执业证</legend>
+		</fieldset>
+		<div class="layui-form-item">
+			<div class="layui-inline">
+				<img class="go" style="cursor: pointer; padding-left: 40px;" height="70%" width="70%" src="../../${nurseidentity.practiceCertificate}">
+			</div>
+		</div>
+         <div class="layui-form-item">
+		    <@p.text label="执业证编号" value="${nurseidentity.practiceCertificateNo}"/>
+	     </div>
+         <div class="layui-form-item">
+          <@p.switch label="是否通过"  name="isPass" value="${nurseidentity.isPass}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="审核说明"  datarule="required;" name="reason" value="${nurseidentity.reason}"/>
+	     </div>
+</@p.valid>
+</body>
+</html>

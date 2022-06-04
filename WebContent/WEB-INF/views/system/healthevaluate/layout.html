@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<@p.resource types="Jquery,Easyui,AnyDataGrid,Tree,NiceScroll"/>
+<script type="text/javascript">
+  var myparams = {
+ 
+  };
+  $(function() {
+    niceScroll(".panel-body");
+    var tree = new Tree();
+    tree.queryParams = myparams;
+    tree.url = "healthevaluate_tree_data.do";
+    tree.initTree("mytree");
+    tree.onClick = onClick;
+  });
+  function onClick(node) {
+    healthevaluate.search(myparams);
+  }
+</script>
+</head>
+<body class="easyui-layout" style="overflow-y: hidden">
+<!--  <div region="west" split="true" minWidth="230" maxWidth="230" title="树形列表" style="overflow: hidden; border-bottom: none">
+  <ul id="mytree" class="ztree"></ul>
+ </div> -->
+ <div region="center" href="healthevaluate_list_turn.do?healthId=${healthId}" style="padding: 0px; overflow: hidden; border: none"></div>
+</body>
+</html>

@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll,EasyUI"/>
+</head>
+<body>
+ <@p.valid id="company" action="company_edit_sub.do"  class="layui-form" layui=true>
+ <input  name="companyId" type="hidden" value="${company.companyId}">
+    <@p.legend text="所属区域:${(company.area.areaName)!}"/>
+	<div class="layui-form-item">
+		<div class="layui-inline"><@p.layinput label="单位名称" datarule="required;" name="compName" value="${company.compName}"/></div>
+	</div>
+	<div class="layui-form-item">
+		<div class="layui-inline"><@p.layinput label="详细地址" datarule="required;" name="address" value="${company.address}"/></div>
+	</div>
+	<div class="layui-form-item">
+		<div class="layui-inline"><@p.layinput label="单位电话" datarule="required;" name="compTel" value="${company.compTel}"/></div>
+	</div>
+	<div class="layui-form-item">
+		<div class="layui-inline"><@p.layinput label="联系人" datarule="required;" name="linkMan" value="${company.linkMan}"/></div>
+	</div>
+	<div class="layui-form-item">
+		<div class="layui-inline"><@p.layinput label="项目经理" datarule="required;" name="proMan" value="${company.proMan}"/></div>
+	</div>
+ </@p.valid>
+</body>
+</html>

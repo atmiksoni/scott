@@ -1,0 +1,146 @@
+<body style="overflow: hidden">
+<script src="/plug-in/viewer/js/viewer.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="/plug-in/viewer/css/viewer.min.css" />
+ <script type="text/javascript">
+      var disease;
+    $(function() {
+      disease = new Dd("disease");
+      disease.url = "disease_list_data.do";
+      disease.title = "疾病类型信息";
+      disease.colM = [ [ /* {
+        field : "ck",
+        checkbox : true,
+        align : "center"
+      }, */ {
+        title : "主键",
+        field : "diseaseId",
+        alias : "d",
+        hidden:true
+      } ,{
+        title : "疾病名称",
+        field : "diseaseName",
+        alias : "d",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "图标",
+        field : "icon",
+        alias : "d",
+        width : 100,
+        align : "center",
+        formatter : function(value, row, index) {
+			return '<img onclick="show()"  width="80px;" height="50px;" src="../../' + row.icon + '" />';
+		}
+      } ,{
+        title : "排序",
+        field : "indexs",
+        alias : "d",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "备注",
+        field : "remark",
+        alias : "d",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "创建日期",
+        field : "createDate",
+        alias : "d",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "上级Id",
+        field : "parentId",
+        alias : "d",
+        width : 100,
+        align : "center",
+        hidden:true
+      } ,{
+        title : "级别",
+        field : "level",
+        alias : "d",
+        width : 100,
+        align : "center", 
+        hidden:true
+      } ] ];
+
+      disease.toolbar = [ {
+        id : "disease_add",
+        text : "添加",
+        iconCls : "icon-add",
+        disabled : true,
+        handler : function() {
+          disease.open2({
+            title : "添加疾病类型",
+            h : "70%",
+			w : "45%",
+            url : "disease_add_turn.do",
+            params : myparams
+          });
+        }
+      }, {
+        id : "disease_edit",
+        text : "修改",
+        iconCls : "icon-edit",
+        disabled : true,
+        handler : function() {
+          disease.updata2({
+            title : "修改疾病类型",
+            h : "70%",
+			w : "45%",
+            url : "disease_edit_turn.do",
+            params : {
+                diseaseId : disease.rowKey
+            }
+		  });
+        }
+      }, {
+        id : "disease_del",
+        text : "删除疾病类型",
+        iconCls : "icon-remove",
+        disabled : true,
+        handler : function() {
+          disease.remove({
+             url : "disease_del_sub.do",
+             params : {
+                diseaseId : disease.rowKey
+             }
+		  });
+        }
+      } ];
+      disease.param = myparams;
+      disease.onClickRow = function(rowIndex, rowData) {
+       $("#disease_edit,#disease_del").linkbutton("enable");
+      }
+      disease.onLoadSuccess = function(data) {
+       $("#disease_edit,#disease_del").linkbutton("disable");
+      };
+      disease.LoadDataGrid();
+      $('#search').linkbutton({
+        iconCls : 'icon-search',
+        onClick : function() {
+        	myparams.diseaseName=$("#diseaseName").val();
+          disease.search(myparams);
+        }
+      });
+    });
+    function show() {
+		var viewer = new Viewer(document.getElementById('imgdiv'), {
+			url : 'data-original'
+		});
+		viewer.show();
+	}
+  </script>
+ <div fit="true" class="easyui-layout">
+  <div region="north" title="查询条件" style="height: 70px;">
+   <div class="pannel_search">
+   名称：<input type="text" class="easyui-textbox" id="diseaseName" />
+       <a href="javascript:;" id="search">查询</a>
+   </div>
+  </div>
+  <div id="imgdiv" region="center" style="overflow: hidden;border: none;">
+   <table fit="true" namespace="disease" id="disease" class="datagrid"></table>
+  </div>
+ </div>
+</body>

@@ -1,0 +1,19 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll"/>
+</head>
+<body>
+<@p.valid id="county" action="county_edit_sub.do" class="layui-form" layui=true>
+ <@p.legend text="${(languaged !='')?string('Hint information','提示信息')}"/> 
+ <input type="hidden" name="countyId" value="${county.countyId}" />
+         <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('countyName','国家名称/countyName')}"  datarule="required;" datamsgrequired="${(required)!''}" name="countyName" value="${county.countyName}"/>    
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('indexs','排序/indexs')}"  datarule="required;" datamsgrequired="${(required)!''}" name="indexs" value="${county.indexs}"/>    
+	     </div>
+</@p.valid>
+</body>
+</html>

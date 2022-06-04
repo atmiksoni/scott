@@ -1,0 +1,138 @@
+<body style="overflow: hidden">
+	<script type="text/javascript">
+		var push;
+		$(function() {
+			push = new Dd("push");
+			push.url = "push_list_data.do";
+			push.title = "信息";
+			push.colM = [ [ {
+				title : "主键",
+				field : "pushId",
+				alias : "p",
+				hidden : true,
+				width : 100,
+				align : "center"
+			}, {
+				title : "推送标题",
+				field : "pushTitle",
+				alias : "p",
+				width : 100,
+				align : "center"
+			}, {
+				title : "推送链接",
+				field : "pushUrl",
+				alias : "p",
+				width : 100,
+				align : "center"
+			}, {
+				title : "创建人",
+				field : "userName",
+				alias : "accountInfo",
+				width : 100,
+				align : "center"
+			}, {
+				title : "推送时间",
+				field : "pushDate",
+				alias : "p",
+				width : 100,
+				align : "center"
+			}, {
+				title : "状态",
+				field : "status",
+				alias : "p",
+				width : 100,
+				align : "center",
+				formatter : function(value, row, index) {
+					return Fm.formatter({
+						"1" : "已推送",
+						"0" : "未推送"
+					}, value);
+				}
+			} ] ];
+
+			push.toolbar = [ {
+				id : "push_add",
+				text : "添加",
+				iconCls : "icon-add",
+				handler : function() {
+					push.open2({
+						title : "添加",
+						h : "90%",
+						w : "70%",
+						url : "push_add_turn.do"
+					});
+				}
+			}, {
+				id : "push_edit",
+				text : "修改",
+				iconCls : "icon-edit",
+				disabled : true,
+				handler : function() {
+					push.updata2({
+						title : "修改",
+						h : "90%",
+						w : "70%",
+						url : "push_edit_turn.do",
+						params : {
+							pushId : push.rowKey
+						}
+					});
+				}
+			}, {
+				id : "push_send",
+				text : "推送",
+				iconCls : "icon-edit",
+				disabled : true,
+				handler : function() {
+					push.confirmajax({
+						url : "push_send_sub.do",
+						content : "确认推送?",
+						params : {
+							pushId : push.rowKey,
+							sendStatus : 1
+						}
+					});
+				}
+			} ];
+			push.param = myparams;
+			push.onClickRow = function(rowIndex, rowData) {
+				$("#push_del").linkbutton("enable");
+				if (rowData.status == 0) {
+					$("#push_edit,#push_del,#push_send").linkbutton("enable");
+				} else {
+					$("#push_send,#push_del").linkbutton("disable");
+				}
+			}
+			push.onLoadSuccess = function(data) {
+				$("#push_del").linkbutton("disable");
+			};
+			push.LoadDataGrid();
+			$('#search').linkbutton({
+				iconCls : 'icon-search',
+				onClick : function() {
+					var push_title = $("#push_title").val();
+					myparams.push_title = push_title;
+					push.search(myparams);
+				}
+			});
+			document.onkeydown = function(event) {
+				var e = event || window.event || arguments.callee.caller.arguments[0];
+				if (e && e.keyCode == 13) { // enter 键
+					var push_title = $("#push_title").val();
+					myparams.push_title = push_title;
+					push.search(myparams);
+				}
+			};
+		});
+	</script>
+	<div fit="true" class="easyui-layout">
+		<div region="north" title="查询条件" style="height: 70px;">
+			<div class="pannel_search">
+				推送标题: <input type="text" class="easyui-textbox" id="push_title" name="push_title" /> <a href="javascript:;" id="search">查询</a>
+			</div>
+		</div>
+		<div region="center" style="overflow: hidden; border: none;">
+			<table fit="true" namespace="push" id="push" class="datagrid"></table>
+		</div>
+	</div>
+</body>

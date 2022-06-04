@@ -1,0 +1,50 @@
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,EasyUI"/>
+<script type="text/javascript">
+	$(function() {
+		$("#settinggroup").propertygrid({
+			url : '../settinggroup/list_settinggroup_data.do',
+			showGroup : true,
+			showHeader:false,
+			scrollbarSize : 0
+		});
+
+		$("#btn_sub").linkbutton({
+			iconCls : 'icon-save',
+			onClick : function() {
+				var nameStr=getChanges();
+				$.ajax({
+				    type : "POST",
+				    url : "../settinggroup/edit_settinggroup_update.do",
+				    data : "nameStr="+nameStr,
+				    success : function(data) {
+				    	var j =data;
+				    	alert(j.info);
+				    }
+				});
+			}
+		});
+	})
+	function getChanges() {
+		var s = '';
+		var rows = $('#settinggroup').propertygrid('getChanges');
+		for (var i = 0; i < rows.length; i++) {
+			s += rows[i].name + ':' + rows[i].value + ',';
+		}
+		return s;
+	}
+</script>
+</head>
+<body style="overflow: hidden">
+	<div fit="true" class="easyui-layout">
+		<div region="center" style="border: none;">
+			<table id="settinggroup" style="width: 300px"></table>
+			<div style="margin: 20px 0;" align="right">
+				<a id="btn_sub">修改</a>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

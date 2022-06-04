@@ -1,0 +1,22 @@
+ <@p.resource types="Jquery,Easyui,AnyDataGrid,Tree,NiceScroll"/>
+<body class="easyui-layout" style="margin-top: 1px; overflow-y: hidden">
+	<div region="west" split="true" minWidth="180" maxWidth="180" title="服务分类列表" style="overflow: hidden;">
+		<ul id="type" class="ztree"></ul>
+	</div>
+	<script type="text/javascript">
+	var tree;
+	var myparams = {
+		    userId : top.userId
+		  };
+	$(function() {
+		niceScroll(".panel-body");
+		tree = new Tree();
+		tree.queryParams = myparams;
+		tree.url = "${base}/admin/component/grouptype_tree_data.do";
+		tree.initTree("type");
+		tree.onClick = function(node) {
+			type_click(node);
+		};
+	});
+</script>
+</body>

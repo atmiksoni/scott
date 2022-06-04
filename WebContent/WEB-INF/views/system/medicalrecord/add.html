@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll"/>
+</head>
+<body>
+<@p.valid id="medicalrecord" action="medicalrecord_add_sub.do" class="layui-form" layui=true>
+ <@p.legend text="提示信息"/> 
+         <div class="layui-form-item">
+		   <@p.layinput label="关联的服务ID"  datarule="required;" name="doctorMedicalServiceId" />
+	     </div>
+         <div class="layui-form-item">
+		   <@p.layinput label="用户ID"  datarule="required;" name="accountInfoId" />
+	     </div>
+         <div class="layui-form-item">
+		   <@p.layinput label="现病史"  datarule="required;" name="hpi" />
+	     </div>
+         <div class="layui-form-item">
+		   <@p.layinput label="症状"  datarule="required;" name="symptom" />
+	     </div>
+         <div class="layui-form-item">
+		   <@p.layinput label="检查"  datarule="required;" name="inspect" />
+	     </div>
+         <div class="layui-form-item">
+		   <@p.layinput label="诊断"  datarule="required;" name="diagnosis" />
+	     </div>
+         <div class="layui-form-item">
+		   <@p.layinput label="治疗计划"  datarule="required;" name="treatmentPlanning" />
+	     </div>
+         <div class="layui-form-item">
+		   <@p.layinput label="治疗过程"  datarule="required;" name="treatmenProcess" />
+	     </div>
+         <div class="layui-form-item">
+		   <@p.layinput label="或往史"  datarule="required;" name="history" />
+	     </div>
+         <div class="layui-form-item">
+		   <@p.layinput label="个人史"  datarule="required;" name="personalHistory" />
+	     </div>
+         <div class="layui-form-item">
+		   <@p.layinput label="家族史"  datarule="required;" name="familyHistory" />
+	     </div>
+</@p.valid>
+</body>
+</html>

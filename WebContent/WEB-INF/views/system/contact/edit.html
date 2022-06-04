@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll"/>
+</head>
+<body>
+<@p.valid id="contact" action="contact_edit_sub.do" class="layui-form" layui=true>
+ <@p.legend text="提示信息"/> 
+ <input type="hidden" name="contactId" value="${contact.contactId}" />
+         <div class="layui-form-item">
+		    <@p.layinput label="联系人"  datarule="required;" name="name" value="${contact.name}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="电话"  datarule="required;" name="telephone" value="${contact.telephone}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="内容"  datarule="required;" name="content" value="${contact.content}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="状态"  datarule="required;" name="status" value="${contact.status}"/>
+	     </div>
+</@p.valid>
+</body>
+</html>

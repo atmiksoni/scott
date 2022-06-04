@@ -1,0 +1,143 @@
+<body style="overflow: hidden">
+ <script type="text/javascript">
+      var rechargepackage;
+    $(function() {
+      rechargepackage = new Dd("rechargepackage");
+      rechargepackage.url = "rechargepackage_list_data.do";
+      rechargepackage.title = "充值套餐信息";
+      rechargepackage.colM = [ [ /* {
+        field : "ck",
+        checkbox : true,
+        align : "center"
+      }, */ {
+        title : "主键",
+        field : "rechargepackageId",
+        alias : "r",
+        hidden:true
+      } ,{
+        title : "充值活动名称",
+        field : "rechargePackageName",
+        alias : "r",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "开始金额",
+        field : "startAmount",
+        alias : "r",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "结束金额",
+        field : "endAmount",
+        alias : "r",
+        width : 100,
+        align : "center"
+      },{
+        title : "创建时间",
+        field : "createDate",
+        alias : "r",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "活动状态",
+        field : "status",
+        alias : "r",
+        width : 100,
+        align : "center",
+        formatter : function(value, row, index) {
+			return Fm.formatter({
+				"1" : "开启",
+				"0" : "关闭"
+			}, value);
+		}
+      } ] ];
+
+      rechargepackage.toolbar = [ {
+        id : "rechargepackage_add",
+        text : "添加",
+        iconCls : "icon-add",
+        handler : function() {
+          rechargepackage.open2({
+            title : "添加充值套餐",
+            h : "70%",
+			w : "45%",
+            url : "rechargepackage_add_turn.do",
+            params : myparams
+          });
+        }
+      }, {
+        id : "rechargepackage_edit",
+        text : "修改",
+        iconCls : "icon-edit",
+        disabled : true,
+        handler : function() {
+          rechargepackage.updata2({
+            title : "修改充值套餐",
+            h : "70%",
+			w : "45%",
+            url : "rechargepackage_edit_turn.do",
+            params : {
+                rechargepackageId : rechargepackage.rowKey
+            }
+		  });
+        }
+      }, {
+        id : "rechargepackage_del",
+        text : "删除充值套餐",
+        iconCls : "icon-remove",
+        disabled : true,
+        handler : function() {
+          rechargepackage.remove({
+             url : "rechargepackage_del_sub.do",
+             params : {
+                rechargepackageId : rechargepackage.rowKey
+             }
+		  });
+        }
+      }, {
+          id : "coupon_add",
+          text : "查看套餐优惠券",
+          iconCls : "icon-add",
+          disabled : true,
+          handler : function() {
+            rechargepackage.updata2({
+              title : "添加套餐优惠券",
+              h : "80%",
+  			w : "80%",
+              url : "../coupon/coupon_index.do",
+              params : {
+                  rechargepackageId : rechargepackage.rowKey
+              }
+  		  });
+          }
+        } ];
+      rechargepackage.param = myparams;
+      rechargepackage.onClickRow = function(rowIndex, rowData) {
+       $("#rechargepackage_edit,#rechargepackage_del,#coupon_add").linkbutton("enable");
+      }
+      rechargepackage.onLoadSuccess = function(data) {
+       $("#rechargepackage_edit,#rechargepackage_del,#coupon_add").linkbutton("disable");
+      };
+      rechargepackage.LoadDataGrid();
+      $('#search').linkbutton({
+        iconCls : 'icon-search',
+        onClick : function() {
+        	myparams.rechargePackageName=$("#rechargePackageName").val();
+          rechargepackage.search(myparams);
+        }
+      });
+    });
+  </script>
+ <div fit="true" class="easyui-layout">
+  <div region="north" title="查询条件" style="height: 70px;">
+   <div class="pannel_search">
+   	名称：<input type="text" class="easyui-textbox" id="rechargePackageName" />
+       <a href="javascript:;" id="search">查询</a>
+   </div>
+  </div>
+  <div region="center" style="overflow: hidden;border: none;">
+   <table fit="true" namespace="rechargepackage" id="rechargepackage" class="datagrid"></table>
+  </div>
+
+ </div>
+</body>

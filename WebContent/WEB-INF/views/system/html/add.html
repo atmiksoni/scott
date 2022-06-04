@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,EasyUI,ueditor"/>
+</head>
+<body>
+	<@p.valid id="html" action="html_add_sub.do" class="layui-form" layui=true> <@p.legend text="帮助中心"/>
+	<input type="hidden" name="isSys" value="0" />
+	<div class="layui-form-item"><@p.layinput label="标题" datarule="required;" name="title" /></div>
+	<div class="layui-form-item"><@p.layinput label="代码" datarule="required;" name="htmlKey" /></div>
+	<div class="layui-form-item"><@p.layinput label="排序号" datarule="required;number;" name="htmlsort" /></div>
+
+	<div class="layui-form-item">
+		<div class="layui-inline"><@p.ueditor label="内容" id="container" name="content" value="${(htmls.content)!}" /></div>
+	</div>
+	</@p.valid>
+	<script type="text/javascript">
+		$(function() {
+			var ue = new Ue("container");
+			ue.init();
+		});
+	</script>
+</body>
+</html>

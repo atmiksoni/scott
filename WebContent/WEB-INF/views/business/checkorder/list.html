@@ -1,0 +1,219 @@
+<body style="overflow: hidden">
+ <script type="text/javascript">
+      var checkorder;
+    $(function() {
+      checkorder = new Dd("checkorder");
+      checkorder.url = "checkorder_list_data.do";
+      checkorder.title = "${(languaged !='')?string('inspection report',' 检查工单信息 ')}";
+      checkorder.colM = [ [ /* {
+        field : "ck",
+        checkbox : true,
+        align : "center"
+      }, */ {
+        title : "主键",
+        field : "checkorderId",
+        alias : "c",
+        hidden:true
+      },{
+          title : "${(languaged !='')?string('Technician','工程师')}",
+          field : "engineerName",
+          alias : "engineer",
+          width : 100,
+          align : "center"
+        } ,{
+            title : "${(languaged !='')?string('job number','工作编号')}",
+            field : "checkOrderNo",
+            alias : "c",
+            width : 100,
+            align : "center"
+          },{
+        title : "${(languaged !='')?string('Equipment Number','设备编号')}",
+        field : "equipmentNo",
+        alias : "equipment",
+        width : 100,
+        align : "center"
+      }  ,{
+          title : "${(languaged !='')?string('Equipment Location','设备地址')}",
+          field : "equipmentAddress",
+          alias : "equipment",
+          width : 100,
+          align : "center"
+        }/*  ,{
+          title : "${(languaged !='')?string('equipmentTypeId','设备类型ID')}",
+          field : "equipmentTypeId",
+          alias : "c",
+          width : 100,
+          align : "center"
+        } */ ,{
+        title : "${(languaged !='')?string('Customer','客户名称')}",
+        field : "companyName",
+        alias : "firm",
+        width : 100,
+        align : "center"
+      }   ,{
+          title : "${(languaged !='')?string('Site Address','客户地址')}",
+          field : "Address",
+          alias : "firm",
+          width : 100,
+          align : "center"
+        }  ,{
+        title : "${(languaged !='')?string('pdfImg','报表')}",
+        field : "englishPdf",
+        alias : "c",
+        width : 100,
+        align : "center",
+        hidden:true
+      } /* ,{
+          title : "${(languaged !='')?string('signature','签名')}",
+          field : "signature",
+          alias : "c",
+          width : 100,
+          align : "center"
+        } */ /* ,{
+            title : "${(languaged !='')?string('equipmentTypeRemarkId','设备类型备注一Id')}",
+            field : "equipmentTypeRemarkId",
+            alias : "c",
+            width : 100,
+            align : "center"
+          }
+        ,{
+            title : "${(languaged !='')?string('equipmentTypeRemarkTwoId','设备类型备注二Id')}",
+            field : "equipmentTypeRemarkTwoId",
+            alias : "c",
+            width : 100,
+            align : "center"
+          } */,{
+        title : "${(languaged !='')?string('Delete(Y/N)','是否删除')}",
+        field : "IsDel",
+        alias : "c",
+        width : 100,
+        align : "center",
+        formatter : function(value, rows, index) {
+            return Fm.formatter({
+                "0" : "${(languaged !='')?string('No','未删除')}",
+                "1" : "${(languaged !='')?string('Yes','已删除')}",
+            }, value);
+        }
+      } ,{
+          title : "${(languaged !='')?string('Inspection Date','维修时间')}",
+          field : "maintainDate",
+          alias : "c",
+          width : 100,
+          align : "center"
+        },{
+        title : "${(languaged !='')?string('creation time','创建时间')}",
+        field : "createDate",
+        alias : "c",
+        width : 100,
+        align : "center"
+      } ] ];
+
+      checkorder.toolbar = [ 
+          <#if firm =="">                   
+                             {
+        id : "checkorder_add",
+        text : "${(languaged !='')?string('add',' 添加 ')}",
+        iconCls : "icon-add",
+        handler : function() {
+          checkorder.open2({
+            title : "${(languaged !='')?string('add','添加服务检测')}",
+            h : "70%",
+			w : "45%",
+			btn:["${(languaged !='')?string('confirm',' 确认 ')}","${(languaged !='')?string('close',' 关闭 ')}"],
+            url : "checkorder_add_turn.do",
+            params : myparams
+          });
+        }
+      },
+      </#if>
+      /* {
+        id : "checkorder_edit",
+        text : "${(languaged !='')?string('edit',' 修改')}",
+        iconCls : "icon-edit",
+        disabled : true,
+        handler : function() {
+          checkorder.updata2({
+            title : "${(languaged !='')?string('edit','修改 检查工单')}",
+            h : "70%",
+			w : "45%",
+            url : "checkorder_edit_turn.do",
+            btn:["${(languaged !='')?string('confirm',' 确认 ')}","${(languaged !='')?string('close',' 关闭 ')}"],
+            params : {
+                checkorderId : checkorder.rowKey
+            }
+		  });
+        }
+      }, */ {
+          id : "checkorder_detail",
+          text : "${(languaged !='')?string('detail',' 详情 ')}",
+          iconCls : "icon-edit",
+          handler : function() {
+            checkorder.open2({
+              title : "${(languaged !='')?string('detail','详情')}",
+              	h : "90%",
+  				w : "70%",
+              url : "checkorder_details_turn.do",
+  			   btn:"",
+              params : {
+                  checkorderId : checkorder.rowKey
+               },
+            });
+          }
+        }
+      <#if firm =="">        
+      , {
+            id : "checkorder_del",
+            text : "${(languaged !='')?string('delete',' 删除')}",
+            iconCls : "icon-remove",
+            disabled : true,
+            handler : function() {
+              checkorder.remove({
+                 url : "checkorder_del_sub.do",
+                 params : {
+                    checkorderId : checkorder.rowKey
+                 },
+                 title:"${(languaged !='')?string('are you delete?','')}",
+                 content:"${(languaged !='')?string('delete content','确定要删除所选记录吗?')}",
+                  btn:["${(languaged !='')?string('confirm',' 确认 ')}","${(languaged !='')?string('close',' 关闭 ')}"]
+    		  });
+            }
+          }
+      </#if>
+      ];
+      checkorder.param = myparams;
+      checkorder.onClickRow = function(rowIndex, rowData) {
+    	  if(rowData.englishPdf !=""){
+    		  $("#checkorder_detail").linkbutton("enable");
+    	  }else{
+    		  $("#checkorder_detail").linkbutton("disable");
+    	  }
+       $("#checkorder_edit,#checkorder_del").linkbutton("enable");
+      }
+      checkorder.onLoadSuccess = function(data) {
+       $("#checkorder_edit,#checkorder_del,#checkorder_detail").linkbutton("disable");
+     
+      };
+      checkorder.LoadDataGrid();
+      $('#search').linkbutton({
+        iconCls : 'icon-search',
+        onClick : function() {
+          checkorder.search(myparams);
+        }
+      });
+    });
+    function nameSearch(){
+   		myparams.searchContent = $("#searchContent").val();
+   	}
+  </script>
+ <div fit="true" class="easyui-layout">
+    <div region="north" title="	${(languaged !='')?string('search',' 查询条件 ')}" style="height: 70px;">
+   <div class="pannel_search">
+   	${(languaged !='')?string('inspector',' 检测人员 ')}：<input type="text" class="easyui-textbox" data-options="prompt:'${(languaged !='')?string('inspector',' 检测人员 ')}'" id="searchContent"/> 
+       <a href="javascript:;" id="search" onClick="nameSearch()";>${(languaged !='')?string('search','查询')}</a>
+   </div>
+  </div>
+  <div region="center" style="overflow: hidden;border: none;">
+    <table fit="true" namespace="checkorder" id="checkorder" class="datagrid"></table>
+  </div>
+ </div>
+</body>

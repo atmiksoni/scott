@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,EasyUI,ueditor"/>
+</head>
+<body>
+	<@p.valid id="msg" action="msg_add_sub.do" class="layui-form" layui=true> <@p.legend text="消息推送"/>
+	<div class="layui-form-item">
+		<div class="layui-inline"><@p.layinput label="消息开头" name="title" datarule="开头:required;" placeholder="请输入开头"/></div>
+	</div>
+	<div class="layui-form-item">
+		<div class="layui-inline"><@p.layinput label="失效时间" datarule="required;" name="disableDate" id="disableDate"/></div>
+	</div>
+	<div class="layui-form-item">
+		<div class="layui-inline"><@p.layinput label="消息来源" name="source" datarule="来源:required;" placeholder="请输入来源"/></div>
+	</div>
+	<@p.legend text="消息内容"/>
+	<div class="layui-form-item"><@p.ueditor label="" id="container" name="content" /></div>
+	</@p.valid>
+	<script type="text/javascript">
+	//layui  日期
+	layui.use('laydate', function() {
+		var laydate = layui.laydate;
+		laydate.render({
+			type : 'datetime',
+			elem : '#disableDate' //指定元素
+		});
+	});
+		$(function() {
+			var ue = new Ue("container");
+			ue.params = {
+				"folder" : "message"
+			};
+			ue.init();
+		});
+	</script>
+</body>
+
+</html>

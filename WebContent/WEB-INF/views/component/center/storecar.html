@@ -1,0 +1,75 @@
+<body style="overflow: hidden">
+	<script type="text/javascript">
+		var store;
+		$(function() {
+			store = new Dd("store");
+			store.url = "select_storecar_data.do";
+			store.colM = [ [ {
+				title : "主键",
+				field : "storeCarId",
+				alias : "sc",
+				hidden : true,
+				width : 100,
+				align : "center"
+			}, {
+				title : "车牌号",
+				field : "carLicNo",
+				alias : "sc",
+				width : 100,
+				align : "center"
+			}, {
+				title : "品牌",
+				field : "carBand_carBandName",
+				alias : "carBand",
+				width : 100,
+				align : "center"
+			}, {
+				title : "子品牌",
+				field : "carBandSub_carBandSubName",
+				alias : "carBandSub",
+				width : 100,
+				align : "center"
+			}, {
+				title : "车辆颜色",
+				field : "carColor",
+				alias : "sc",
+				width : 100,
+				align : "center"
+			} ] ];
+			store.param = myparams;
+			store.onClickRow = function(rowIndex, rowData) {
+				setTextBox(rowData);
+			}
+			store.onLoadSuccess = function(data) {
+
+			};
+			store.LoadDataGrid();
+			$('#search').linkbutton({
+				iconCls : 'icon-save',
+				onClick : function() {
+					store.search(myparams);
+				}
+			});
+		});
+		/*区域点击事件*/
+		function tree_click(node) {
+			myparams.areaCode = node.code;
+			store.search(myparams);
+		}
+		/*传值给父页面*/
+		function setTextBox(rowData) {
+			if (iframeWin) {
+				iframeWin.setValue(rowData);
+			} else {
+				top.getIframe().setValue(rowData);
+			}
+
+		}
+	</script>
+	<div fit="true" class="easyui-layout">
+		
+		<div region="center" style="overflow: hidden; border: none;">
+			<table fit="true" namespace="componet" id="store" class="datagrid"></table>
+		</div>
+	</div>
+</body>

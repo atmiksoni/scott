@@ -1,0 +1,114 @@
+<body style="overflow: hidden">
+	<script type="text/javascript">
+		var appointment;
+		var appointmentId = "";
+		$(function() {
+			appointment = new Dd("appointment");
+			appointment.url = "select_appointment_data.do";
+			appointment.title = "预约信息";
+			appointment.colM = [ [ {
+				title : "主键",
+				field : "appointmentId",
+				alias : "a",
+				hidden : true
+			}, {
+				title : "预约号",
+				field : "appointmentNo",
+				alias : "a",
+			}, {
+				title : "用户",
+				field : "userName",
+				alias : "ac",
+				width : 100,
+				align : "center"
+			}, {
+				title : "家属",
+				field : "relationName",
+				alias : "r",
+				width : 100,
+				align : "center"
+			}, {
+				title : "家属手机号",
+				field : "mobile",
+				alias : "r",
+				width : 100,
+				align : "center"
+			}, {
+				title : "预约状态",
+				field : "status",
+				alias : "a",
+				width : 100,
+				align : "center",
+				formatter : function(value, row, index) {
+					return Fm.formatter({
+						"98" : "已爽约",
+						"99" : "已删除",
+						"-1" : "已取消",
+						"0" : "待确认",
+						"1" : "待上门",
+						"2" : "进行中",
+						"3" : "待支付",
+						"11" : "退款中",
+						"12" : "已退款",
+						"20" : "已完成"
+					}, value);
+				}
+			}, {
+				title : "创建时间",
+				field : "createDate",
+				alias : "a",
+				width : 100,
+				align : "center"
+			}, {
+				title : "备注",
+				field : "remark",
+				alias : "a",
+				width : 100,
+				align : "center"
+			} ] ];
+
+			myparams.status = "appointment";
+			appointment.param = myparams;
+			appointment.onClickRow = function(rowIndex, rowData) {
+				myparams.appointmentId = rowData.appointmentId;
+				$("#appointment_edit,#appointment_del").linkbutton("enable");
+			}
+			appointment.onLoadSuccess = function(data) {
+				if (myparams.appointmentId == null || myparams.appointmentId == "") {
+					$("#appointment_edit,#appointment_del").linkbutton("disable");
+				}
+			};
+			appointment.LoadDataGrid();
+			$('#appointmentsearch').linkbutton({
+				iconCls : 'icon-search',
+				onClick : function() {
+					myparams.relationName = $("#userName").val();
+					myparams.mobile = $("#mobile").val();
+					myparams.beginDate = $("#beginDate").datebox('getValue');
+					myparams.endDate = $("#endDate").datebox('getValue');
+					appointment.search(myparams);
+				}
+			});
+			
+			$('#sub').linkbutton({
+				iconCls : 'icon-save',
+				onClick : function() {
+					func.setTextBox(appointment.getSelectedRow());
+					var index = parent.layer.getFrameIndex(window.name); //获取窗口索引  
+					parent.layer.close(index);//关闭弹出的子页面窗口 
+				}
+			});
+		});
+	</script>
+	<div fit="true" class="easyui-layout">
+		<div region="north" title="查询条件" style="height: 70px;">
+			<div class="pannel_search">
+				家属：<input type="text" class="easyui-textbox" id="userName" /> 家属手机号：<input type="text" class="easyui-textbox" id="mobile" /> <a
+					href="javascript:;" id="appointmentsearch">查询</a>&nbsp;<a href="javascript:;" id="sub">确认</a>
+			</div>
+		</div>
+		<div region="center" style="overflow: hidden; border: none;">
+			<table fit="true" namespace="appointment" id="appointment" class="datagrid"></table>
+		</div>
+	</div>
+</body>

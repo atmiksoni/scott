@@ -1,0 +1,20 @@
+<body class="easyui-layout" style="margin-top: 1px; overflow-y: hidden">
+<div class="easyui-panel" title="门店选择" style="border:none">
+<ul id="areastore" class="ztree"></ul></div>
+	<script type="text/javascript">
+	var areastore;
+	var myparams = {
+		    userId : top.userId
+		  };
+	$(function() {
+		niceScroll(".panel-body");
+		areastore = new Tree();
+		areastore.queryParams = myparams;
+		areastore.url = "${base}/admin/component/areastore_tree_data.do";
+		areastore.initTree("areastore");
+		areastore.onClick = function(node) {
+			areastore_click(node);
+		};
+	});
+</script>
+</body>

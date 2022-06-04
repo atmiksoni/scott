@@ -1,0 +1,152 @@
+<body style="overflow: hidden">
+ <script type="text/javascript">
+      var nursingservice;
+    $(function() {
+      nursingservice = new Dd("nursingservice");
+      nursingservice.url = "select_nursingservice_data.do";
+      nursingservice.title = "护理服务信息";
+      nursingservice.colM = [ [ {
+        title : "主键",
+        field : "nursingserviceId",
+        alias : "n",
+        hidden:true
+      } ,{
+        title : "特色服务分类ID",
+        field : "specialTypeId",
+        alias : "n",
+        width : 100,
+        align : "center",
+        hidden:true
+      } ,{
+        title : "服务名称",
+        field : "nursingServiceName",
+        alias : "n",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "图标",
+        field : "icon",
+        alias : "n",
+        width : 100,
+        align : "center",
+        formatter : function(value, row, index) {
+			return '<img onclick="show()" width="71px;" align="center" height="40px;" src="../../' + row.icon
+			+ '" />';
+			}
+      } ,{
+        title : "图片",
+        field : "imgs",
+        alias : "n",
+        width : 100,
+        align : "center",
+        formatter : function(value, row, index) {
+			return '<img onclick="show()" width="71px;" align="center" height="40px;" src="../../' + row.imgs
+			+ '" />';
+		}
+      } /* ,{
+        title : "详细介绍",
+        field : "content",
+        alias : "n",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "适用人群",
+        field : "allAdults",
+        alias : "n",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "注意事项",
+        field : "beCareful",
+        alias : "n",
+        width : 100,
+        align : "center"
+      }  */,{
+        title : "初级护士价格",
+        field : "graduationPrice",
+        alias : "n",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "初级护师价格",
+        field : "primaryPrice",
+        alias : "n",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "中级价格",
+        field : "intermediatePrice",
+        alias : "n",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "副高级价格",
+        field : "deputySeniorPrice",
+        alias : "n",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "正高级价格",
+        field : "positiveAdvancedPrice",
+        alias : "n",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "备注",
+        field : "remark",
+        alias : "n",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "创建日期",
+        field : "createDate",
+        alias : "n",
+        width : 100,
+        align : "center"
+      } ] ];
+
+      nursingservice.toolbar = [  ];
+      nursingservice.param = myparams;
+      nursingservice.onClickRow = function(rowIndex, rowData) {
+       $("#nursingservice_edit,#nursingservice_del").linkbutton("enable");
+      }
+      nursingservice.onLoadSuccess = function(data) {
+       $("#nursingservice_edit,#nursingservice_del").linkbutton("disable");
+      };
+      nursingservice.LoadDataGrid();
+      $('#search').linkbutton({
+        iconCls : 'icon-search',
+        onClick : function() {
+        	myparams.serviceName=$("#serviceName").val();
+          nursingservice.search(myparams);
+        }
+      });
+      $('#sub').linkbutton({
+			iconCls : 'icon-save',
+			onClick : function() {
+				func.setTextBox(nursingservice.getSelectedRow());
+				var index = parent.layer.getFrameIndex(window.name); //获取窗口索引  
+				parent.layer.close(index);//关闭弹出的子页面窗口 
+			}
+		});
+    });
+    function show() {
+		var viewer = new Viewer(document.getElementById('imgdiv'), {
+			url : 'data-original'
+		});
+		viewer.show();
+	}
+  </script>
+ <div fit="true" class="easyui-layout">
+  <div region="north" title="查询条件" style="height: 70px;">
+   <div class="pannel_search">
+      服务名称：<input type="text" class="easyui-textbox" id="serviceName" />
+       <a href="javascript:;" id="search">查询</a>
+        <a href="javascript:;" id="sub">确认</a>
+   </div>
+  </div>
+  <div region="center" id="imgdiv" style="overflow: hidden;border: none;">
+   <table fit="true" namespace="nursingservice" id="nursingservice" class="datagrid"></table>
+  </div>
+ </div>
+</body>

@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,EasyUI,ueditor"/>
+</head>
+<body>
+ <@p.valid id="about" action="about_edit_sub.do"  class="layui-form" layui=true>
+    <fieldset class="layui-elem-field layui-field-title">
+		<legend>修改关于信息</legend>
+	</fieldset>
+    <input type="hidden" name="aboutId" value="${about.aboutId}" />
+	<div class="layui-form-item" style="margin-left:5px;"><@p.layinput label="标题" name="title" value="${about.title}" width=250/></div>
+	<div class="layui-form-item"><@p.layinput label="排序号"  datarule="required;number;" name="indexs" value="${about.indexs}"/></div>
+	<div class="layui-form-item"><@p.ueditor label="内容" id="container" name="content"  value="${about.content}"/></div>
+ </@p.valid>
+ <script type="text/javascript">
+ $(function() {
+		$(function() {
+			var ue = new Ue("container");
+			ue.params = {
+				"folder" : "message"
+			};
+			ue.init();
+		});
+	});
+</script> 
+</body>
+</html>

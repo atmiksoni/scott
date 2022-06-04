@@ -1,0 +1,12 @@
+.cartype_search .headright {width: 0.8rem;position: absolute;top: 0.8rem;right: 0.75rem;cursor: pointer;}
+.search_class {position:fixed;margin:0px 0 0;width: 100%;background-color: white;}
+.search_class ul li {font-size: 0.7rem;float: left;width: 29%;text-align: center;margin:1%;border-right: 1px solid #DCDCDC;}
+.search_class ul {overflow: hidden;border-bottom: 1px solid #DCDCDC;}
+.cartype_search>ul>li {float: left;background-color: white;width:100%;border: 1px solid #ececec;}
+
+.cartype_search>ul>li {margin: 2% 0% 0% 0%;}
+.cartype_search>ul {overflow: hidden;width: 100%;padding-top:22px;}
+.cartype_search>ul>li .top {float:left;padding-left:3px;width:30%;text-align: center;border-bottom: 1xp solid #f1f1f1;}
+.cartype_search>ul>li .top img {padding-top:5px;width: 100%;}
+.cartype_search>ul>li .bottom {width:60%;padding-top:20px;font-size: 0.6rem;text-indent: 0.3rem;float:left;}
+.cartype_search>ul>li .bottom p {color: #666;}

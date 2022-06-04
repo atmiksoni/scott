@@ -1,0 +1,42 @@
+.credit_cardlist {font-size: 0.7rem;}
+.cardlist {margin: 4px 0 0;}
+.cardlist ul li {margin: 0.375rem 0;padding: 0.75rem;background-color: white;position: relative;}
+.cardlist ul li p, .cardlist ul li h3 span {color: #666;}
+.cardlist ul li p {width: 80%;overflow : hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 1;-webkit-box-orient: vertical;}
+.create {position: fixed;bottom: 1rem;left: 0;width: 100%;}
+.create .btn {width: 92%;padding: 0 4%;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**/

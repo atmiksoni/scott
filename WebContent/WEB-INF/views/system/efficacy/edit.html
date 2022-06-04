@@ -1,0 +1,19 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll"/>
+</head>
+<body>
+<@p.valid id="efficacy" action="efficacy_edit_sub.do" class="layui-form" layui=true>
+ <@p.legend text="提示信息"/> 
+ <input type="hidden" name="efficacyId" value="${efficacy.efficacyId}" />
+         <div class="layui-form-item">
+		    <@p.layinput label="功效名称"  datarule="required;" name="efficacyName" value="${efficacy.efficacyName}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="排序"  datarule="required;" name="indexs" value="${efficacy.indexs}"/>
+	     </div>
+</@p.valid>
+</body>
+</html>

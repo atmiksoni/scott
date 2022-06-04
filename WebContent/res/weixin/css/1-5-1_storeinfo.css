@@ -1,0 +1,15 @@
+.storeinfo .text_r {position: absolute;top: 0.7rem;right: 0.75rem;font-size: 0.75rem;}
+.content {margin: 60px 0.6rem 0.6rem 0.6rem;padding: 0;background-color: white;border: 1px solid #DCDCDC;box-shadow: 1px 1px 1px 1px #D9D9D9;font-size: 0.7rem;color: #666;}
+.content ul>li {border-bottom: 1px solid #EBEBEB;padding: 0.6rem;}
+.content ul>li:first-child {font-size: 0.8rem;color: #333;}
+ol li {float: left;width: 30%;margin: 0 3% 0 0;text-align: center;}
+ol {overflow: hidden;width: 100%;}
+ol li img {width: 100%;}
+.figure, .star {width: 0.9rem;vertical-align: middle;}
+.icon {width: 0.9rem;}
+.content ul li:nth-child(2) , .content ul li:nth-child(n+4) {height: 2rem;position: relative;}
+.content ul li:nth-child(2) .left, .content ul li:nth-child(n+4) .left {width: 1.2rem;height: 2rem;}
+.content ul li:nth-child(2) .left, .content ul li:nth-child(n+4) .left {position: absolute;top: 0.55rem;left: 0.75rem;}
+.content ul>li:nth-child(2), .content>ul>li:nth-child(n+5) {line-height: 2rem;}
+.content ul li:nth-child(2) .right, .content ul li:nth-child(n+4) .right {position: absolute;top: 0.55rem;left: 2rem;}
+.content ul li:nth-child(2) .left img, .content ul li:nth-child(n+4) .left img {position: absolute;top: 0.5rem;left: 0;}

@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll"/>
+</head>
+<body>
+<@p.valid id="physicaldetails" action="physicaldetails_edit_sub.do" class="layui-form" layui=true>
+ <@p.legend text="提示信息"/> 
+ <input type="hidden" name="physicaldetailsId" value="${physicaldetails.physicaldetailsId}" />
+         <div class="layui-form-item">
+		    <@p.layinput label="体检主表"  datarule="required;" name="physicalId" value="${physicaldetails.physicalId}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="明细标题"  datarule="required;" name="physicalDetailsTitle" value="${physicaldetails.physicalDetailsTitle}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="明细内容"  datarule="required;" name="physicalDetailsValue" value="${physicaldetails.physicalDetailsValue}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="参考内容"  datarule="required;" name="reference" value="${physicaldetails.reference}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="备注"  datarule="required;" name="remark" value="${physicaldetails.remark}"/>
+	     </div>
+</@p.valid>
+</body>
+</html>

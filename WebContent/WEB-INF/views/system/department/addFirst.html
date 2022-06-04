@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll"/>
+</head>
+<body>
+	<@p.valid id="department" action="department_add_sub.do" class="layui-form" layui=true> 
+	<@p.legend text="提示信息"/>
+	<input type="hidden" value="1" name="level" />
+	<div class="layui-form-item"><@p.layinput label="类型名称" datarule="required;" name="departmentName" /></div>
+	<div class="layui-form-item"><@p.layinput label="排序号" datarule="required;range[~100]" name="indexs" /></div>
+	<!-- <div class="layui-form-item"><@p.switch label="状态" name="status" value="1" text="启用|禁用" /></div> -->
+	<!-- <div class="layui-form-item"><@p.layinput label="备注" datarule="required;" name="remark" /></div> -->
+	</@p.valid>
+	<script>
+	$(function() {
+	VF.callbackBefore = function(data) {
+				top.frames['iframe105104'].location.reload();
+				var index = parent.layer.getFrameIndex(window.name);
+				top.Dg.z.msg(data)
+				top.frames['iframe105104'].location.reload();
+				if (data.close == true) {
+					parent.layer.close(index);
+				}
+			}
+	});
+	</script>
+</body>
+</html>

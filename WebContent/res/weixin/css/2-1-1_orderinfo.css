@@ -1,0 +1,22 @@
+.orderinfo {font-size: 0.7rem;color: #666;}
+.orderinfo .intro {margin: 60px 0 0;}
+.orderinfo>ul {background-color: white;margin: 0.7rem 0;}
+.intro li {line-height: 2.2rem;margin: 0 0.7rem;}
+.intro li:nth-child(-n+3) {border-bottom: 1px solid #EBEBEB;}
+.intro li:last-child {position: relative;height: 2rem;font-size: 0.6rem;color: #666;}
+.intro li:last-child a {float: right;}
+.info>li {width: 92%;background-color: white;margin: 0 4%;border-bottom: 1px solid #EBEBEB;padding: 0.6rem 0;}
+.info>li:nth-child(n+4) {text-indent: 0.6rem;}
+.info>li:last-child {border-bottom: 0px solid #EBEBEB;}
+.cost_info {margin: 0 0.75rem;color: #333;}
+.cost li {margin: 0 0.75rem;line-height: 2.2rem;border-bottom: 1px solid #DCDCDC;}
+.cost li:last-child {border-bottom: 1px solid #EBEBEB;}
+.cost li:first-child {font-size: 0.55rem;}
+.cost li:first-child em {font-size: 0.7rem;}
+.intro li .weui_btn {margin-top: 0.3rem;}
+li .weui_btn_warn {
+	font-size: 0.7rem;
+	line-height: 1.8;
+}
+.alert ul li {float:left;width: 49.5%;height: 50px;line-height: 50px;border-top: 1px solid #DCDCDC;color: #E63C2D;}
+.alert ul li:first-child {border-right: 1px solid #DCDCDC;}

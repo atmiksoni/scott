@@ -1,0 +1,206 @@
+<body style="overflow: hidden; border: none">
+	<script src="/plug-in/viewer/js/viewer.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="/plug-in/viewer/css/viewer.min.css" />
+	<script type="text/javascript">
+      var accountinfo;
+    $(function() {
+      accountinfo = new Dd("accountinfo");
+      accountinfo.url = "accountinfo_app_list_data.do";
+      accountinfo.title = "${userType}列表";
+      accountinfo.colM = [ [
+	{
+	    title : "主键",
+	    field : "accountInfoId",
+	    alias : "u",
+	    hidden:true,
+	    width : 100,
+	    align : "center"
+	  } ,{
+	    title : "账户",
+	    field : "accountId",
+	    alias : "u",
+	    hidden:true,
+	    width : 100,
+	    align : "center"
+	  } ,{
+	      title : "头像",
+	      field : "userhead",
+	      alias : "u",
+	      width : 80,
+	      align : "center",
+	      formatter : function(value, row, index) {
+				return '<img onclick="show()"  width="38px;" align="center" height="38px;" src="../../'+row.userhead+'" />';
+			}
+	    } ,{						
+	     title : "姓名",
+	     field : "userName",
+	     alias : "u",
+	     hidden:true,
+	     width : 80,
+	     align : "center"
+	   }, {
+	     title : "昵称",
+	     field : "nickName",
+	     alias : "u",
+	     width : 110,
+	     align : "center"
+	   } ,{
+         title : "性别",
+         field : "sex",
+         alias : "u",
+         hidden:true,
+         width : 50,
+         align : "center",
+         formatter : function(value, row, index) {
+ 			return Fm.formatter({
+ 				"0" : "女",
+ 				"1" : "男",
+ 			}, value);
+  		}
+      },{
+          title : "年龄",
+          field : "age",
+          alias : "u",
+          width : 50,
+          hidden:true,
+          align : "center"
+      },{
+          title : "手机号",
+          field : "telephone",
+          alias : "u",
+          width : 100,
+          align : "center"
+      },{
+         title : "分点ID",
+         field : "store_storeId",
+         alias : "store",
+         hidden:true,
+         width : 100,
+         align : "center"
+     },{
+         title : "所属分点",
+         field : "store_storeName",
+         alias : "store",
+         width : 100,
+         align : "center"
+     },{
+         title : "邮箱",
+         field : "email",
+         alias : "u",
+         hidden:true,
+         width : 130,
+         align : "center"
+     },{
+        title : "QQ",
+        field : "qq",
+        alias : "u",
+        hidden:true,
+        width : 100,
+        align : "center"
+      },{
+          title : "区域",
+          field : "strArea",
+          hidden:true,
+          width : 150,
+          align : "center"
+      },{
+          title : "区域",
+          field : "areaId",
+          width : 150,
+          alias : "u",
+          hidden:true,
+          align : "center"
+      },{
+        title : "签名",
+        field : "motto",
+        alias : "u",
+        hidden:true,
+        width : 200,
+        align : "center"
+      } ,{
+        title : "生日",
+        field : "birthday",
+        alias : "u",
+        hidden:true,
+        width : 100,
+        align : "center"
+      } ,{
+        title : "创建日期",
+        field : "createDate",
+        alias : "u",
+        width : 120,
+        align : "center"
+      } ] ];
+       accountinfo.toolbar = [
+        {
+            id : "user_dispatch_sub",
+            text : "分配到分点",
+            disabled : true,
+            iconCls : "icon-export",
+            handler : function() {
+            	accountinfo.open2({
+                title : "填写物流信息",
+                h : "77%",
+    		    w : "50%",
+    		    btn : "",
+                url : "../store/dispatch_store_index.do",
+                params : {
+              	  accountInfoId : accountinfo.rowKey
+                }
+              });
+            }
+          }];
+      myparams.roleId = "${roleId}";
+      accountinfo.param = myparams; 
+      accountinfo.onClickRow = function(rowIndex, rowData) {
+       $("#user_dispatch_sub").linkbutton("enable");
+      }
+      accountinfo.onLoadSuccess = function(data) {
+       $("#user_dispatch_sub").hide();
+       if("${isSuper}" == 'YES'){
+       $("#user_dispatch_sub").show();
+       }
+      };
+      accountinfo.LoadDataGrid();
+      $('#accountinfo_search').linkbutton({
+        iconCls : 'icon-search',
+        onClick : function() {
+          accountinfo.search(myparams);
+        }
+      });
+    });
+   	function search(myparams){
+ 		accountinfo.search(myparams);
+ 	}
+   	function nameSearch(){
+   		myparams.mobile = $("#mobile").val();
+   		myparams.storeId = $("#storeId").val();
+   	}
+   	function show() {
+		var viewer = new Viewer(document.getElementById('imgdiv'), {
+			url : 'data-original'
+		});
+		viewer.show();
+	}
+  </script>
+	<div fit="true" class="easyui-layout" style="border: none">
+		<div region="north" style="height: 40px;">
+			<div class="pannel_search">
+			 	<#if roleId == 3>
+			 		<select id="storeId" name="storeId" style="width:140px;height:23px">
+				             <option value="" selected="selected">所有分点</option>
+				             <option value="NONE" >未分配</option>
+				      	  	<#list stores as store>
+							 <option value="${store.storeId}">${store.storeName}</option>
+							</#list>
+				     </select>
+			 	</#if>
+				手机号：<input type="text" class="easyui-textbox" id="mobile" /> 
+				<a href="javascript:;" id="accountinfo_search" onClick="nameSearch()";>查询&nbsp;</a>
+			</div>
+		</div>
+		<div id="imgdiv" region="center" style="overflow: hidden; border: none;">
+			<table fit="true" namespace="user" id="accountinfo" class="datagrid"></table>
+		</div>
+	</div>
+</body>

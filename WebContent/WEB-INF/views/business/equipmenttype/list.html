@@ -1,0 +1,129 @@
+<body style="overflow: hidden">
+ <script type="text/javascript">
+      var equipmenttype;
+    $(function() {
+      equipmenttype = new Dd("equipmenttype");
+      equipmenttype.url = "equipmenttype_list_data.do";
+      equipmenttype.title = "${(languaged !='')?string('Device type',' 设备类型')}";
+      equipmenttype.colM = [ [ /* {
+        field : "ck",
+        checkbox : true,
+        align : "center"
+      },  */{
+        title : "主键",
+        field : "equipmenttypeId",
+        alias : "e",
+        hidden:true
+      } ,{
+        title : "${(languaged !='')?string('Type english name','设备类型英文名称')}",
+        field : "equipmentTypeEnglishName",
+        alias : "e",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "${(languaged !='')?string('Type name','设备类型名称')}",
+        field : "equipmentTypeName",
+        alias : "e",
+        width : 100,
+        align : "center"
+      } /* ,{
+        title : "${(languaged !='')?string('equipmentTypeRemarkId','设备类型备注一Id')}",
+        field : "equipmentTypeRemarkId",
+        alias : "e",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "${(languaged !='')?string('equipmentTypeRemarkTwoId','设备类型备注二Id')}",
+        field : "equipmentTypeRemarkTwoId",
+        alias : "e",
+        width : 100,
+        align : "center"
+      } */ ,{
+        title : "${(languaged !='')?string('sequence','排序')}",
+        field : "Indexs",
+        alias : "e",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "${(languaged !='')?string('creation time','创建时间')}",
+        field : "createDate",
+        alias : "e",
+        width : 100,
+        align : "center"
+      } ] ];
+
+      equipmenttype.toolbar = [ {
+        id : "equipmenttype_add",
+        text : "${(languaged !='')?string('add','添加')}",
+        iconCls : "icon-add",
+        handler : function() {
+          equipmenttype.open2({
+            title : "${(languaged !='')?string('add','添加设备类型')}",
+            h : "70%",
+			w : "45%",
+			btn:["${(languaged !='')?string('confirm',' 确认 ')}","${(languaged !='')?string('close',' 关闭 ')}"],
+            url : "equipmenttype_add_turn.do",
+            params : myparams
+          });
+        }
+      }, {
+        id : "equipmenttype_edit",
+        text : "${(languaged !='')?string('edit',' 修改')}",
+        iconCls : "icon-edit",
+        disabled : true,
+        handler : function() {
+          equipmenttype.updata2({
+            title : "${(languaged !='')?string('edit','修改 设备类型')}",
+            h : "70%",
+			w : "45%",
+            url : "equipmenttype_edit_turn.do",
+            btn:["${(languaged !='')?string('confirm',' 确认 ')}","${(languaged !='')?string('close',' 关闭 ')}"],
+            params : {
+                equipmenttypeId : equipmenttype.rowKey
+            }
+		  });
+        }
+      }/* , {
+        id : "equipmenttype_del",
+        text : "${(languaged !='')?string('delete',' 删除')}",
+        iconCls : "icon-remove",
+        disabled : true,
+        handler : function() {
+          equipmenttype.remove({
+             url : "equipmenttype_del_sub.do",
+             params : {
+                equipmenttypeId : equipmenttype.rowKey
+             },
+             title:"${(languaged !='')?string('are you delete?','')}",
+             content:"${(languaged !='')?string('delete content','确定要删除所选记录吗?')}",
+              btn:["${(languaged !='')?string('confirm',' 确认 ')}","${(languaged !='')?string('close',' 关闭 ')}"]
+		  });
+        }
+      }  */];
+      equipmenttype.param = myparams;
+      equipmenttype.onClickRow = function(rowIndex, rowData) {
+       $("#equipmenttype_edit,#equipmenttype_del").linkbutton("enable");
+      }
+      equipmenttype.onLoadSuccess = function(data) {
+       $("#equipmenttype_edit,#equipmenttype_del").linkbutton("disable");
+      };
+      equipmenttype.LoadDataGrid();
+      $('#search').linkbutton({
+        iconCls : 'icon-search',
+        onClick : function() {
+          equipmenttype.search(myparams);
+        }
+      });
+    });
+  </script>
+ <div fit="true" class="easyui-layout">
+<!--   <div region="north" title="查询条件" style="height: 70px;">
+   <div class="pannel_search">
+       <a href="javascript:;" id="search">${(languaged !='')?string('search','查询')}</a>
+   </div>
+  </div> -->
+  <div region="center" style="overflow: hidden;border: none;">
+   <table fit="true" namespace="equipmenttype" id="equipmenttype" class="datagrid"></table>
+  </div>
+ </div>
+</body>

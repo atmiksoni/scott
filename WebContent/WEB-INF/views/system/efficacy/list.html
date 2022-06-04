@@ -1,0 +1,102 @@
+<body style="overflow: hidden">
+	<script type="text/javascript">
+		var efficacy;
+		$(function() {
+			efficacy = new Dd("efficacy");
+			efficacy.url = "efficacy_list_data.do";
+			efficacy.title = "信息";
+			efficacy.colM = [ [ {
+				title : "主键",
+				field : "efficacyId",
+				alias : "e",
+				hidden : true
+			}, {
+				title : "功效名称",
+				field : "efficacyName",
+				alias : "e",
+				width : 100,
+				align : "center"
+			}, {
+				title : "排序",
+				field : "indexs",
+				alias : "e",
+				width : 100,
+				align : "center"
+			}, {
+				title : "创建时间",
+				field : "createDate",
+				alias : "e",
+				width : 100,
+				align : "center"
+			} ] ];
+
+			efficacy.toolbar = [ {
+				id : "efficacy_add",
+				text : "添加",
+				iconCls : "icon-add",
+				handler : function() {
+					efficacy.open2({
+						title : "添加",
+						h : "70%",
+						w : "45%",
+						url : "efficacy_add_turn.do",
+						params : myparams
+					});
+				}
+			}, {
+				id : "efficacy_edit",
+				text : "修改",
+				iconCls : "icon-edit",
+				disabled : true,
+				handler : function() {
+					efficacy.updata2({
+						title : "修改",
+						h : "70%",
+						w : "45%",
+						url : "efficacy_edit_turn.do",
+						params : {
+							efficacyId : efficacy.rowKey
+						}
+					});
+				}
+			}, {
+				id : "efficacy_del",
+				text : "删除",
+				iconCls : "icon-remove",
+				disabled : true,
+				handler : function() {
+					efficacy.remove({
+						url : "efficacy_del_sub.do",
+						params : {
+							efficacyId : efficacy.rowKey
+						}
+					});
+				}
+			} ];
+			efficacy.param = myparams;
+			efficacy.onClickRow = function(rowIndex, rowData) {
+				$("#efficacy_edit,#efficacy_del").linkbutton("enable");
+			}
+			efficacy.onLoadSuccess = function(data) {
+				$("#efficacy_edit,#efficacy_del").linkbutton("disable");
+			};
+			efficacy.LoadDataGrid();
+			$('#search').linkbutton({
+				iconCls : 'icon-search',
+				onClick : function() {
+					efficacy.search(myparams);
+				}
+			});
+		});
+	</script>
+	<div fit="true" class="easyui-layout">
+		<div region="north" title="查询条件" style="height: 70px;">
+			<div class="pannel_search">
+				<a href="javascript:;" id="search">查询</a>
+			</div>
+		</div>
+		<div region="center" style="overflow: hidden; border: none;">
+			<table fit="true" namespace="efficacy" id="efficacy" class="datagrid"></table>
+		</div>
+	</div>
+</body>

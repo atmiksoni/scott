@@ -1,0 +1,58 @@
+<body>
+	<div class="datagrid-toolbar">
+		<a href="javascript:;" id="userbtn_save">${(languaged !='')?string('preserve',' 保存 ')}</a>
+	</div>
+	<script type="text/javascript">
+		var userRole;
+		$(function() {
+			$('#userbtn_save').linkbutton({
+			    iconCls: 'icon-save',
+			    plain:true,
+			    disabled:true,
+			    onClick:function(){
+			    	var options = $("#userRole").tree("options");
+					var roleIds = userRole.getCheckedIds();
+					var roleNames = encodeURI(userRole.getCheckedNames());
+					var roleCodes = userRole.getCodes();
+					var myparams = {
+						accountId : "${accountId}",
+						roleIds : roleIds.join(","),
+						roleNames : roleNames,
+						roleCodes : roleCodes
+					};
+					top.Dg.z.ajax("account/account_allotrole_sub.do", myparams, function(data) {
+						options.checkeds = roleIds;
+						account.search(myparams);
+					});
+			    }
+			});
+			userRole = new Tree();
+			userRole.checkbox = true;
+			userRole.url = "account_allotrole_tree.do";
+			userRole.queryParams = {
+				accountId : "${accountId}"
+			};
+			userRole.onLoadSuccess = function(node, data) {
+				userRole.expandAll();
+				var options = userRole.getOptions();
+				$(options.checkeds).each(function(i, value) {
+					var node = $('#userRole').tree('find', value);
+					if (userRole.isLeaf(node)) {
+						userRole.checkNode(node);
+					}
+				});
+			};
+			userRole.onClick= function(node){
+				$('#userbtn_save').linkbutton("enable");
+			}
+			userRole.onCheck= function(node){
+				$('#userbtn_save').linkbutton("enable");
+			}
+			userRole.initTree("userRole");
+			
+
+		});
+
+	</script>
+	<ul id="userRole"></ul>
+</body>

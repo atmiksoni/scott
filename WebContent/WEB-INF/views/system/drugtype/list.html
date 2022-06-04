@@ -1,0 +1,145 @@
+<body style="overflow: hidden">
+<script src="/plug-in/viewer/js/viewer.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="/plug-in/viewer/css/viewer.min.css" />
+ <script type="text/javascript">
+      var drugtype;
+    $(function() {
+      drugtype = new Dd("drugtype");
+      drugtype.url = "drugtype_list_data.do";
+      drugtype.title = "药品类型信息";
+      drugtype.colM = [ [/*  {
+        field : "ck",
+        checkbox : true,
+        align : "center"
+      }, */ {
+        title : "主键",
+        field : "drugtypeId",
+        alias : "d",
+        hidden:true
+      } ,{
+        title : "类型名称",
+        field : "drugTypeName",
+        alias : "d",
+        width : 100,
+        align : "center"
+      },{
+			title : "图片",
+			field : "icon",
+			alias : "d",
+			width : 100,
+			align : "center",
+			formatter : function(value, row, index) {
+				return '<img onclick="show()"  width="80px;" height="50px;" src="../../' + row.icon + '" />';
+			}
+		} ,{
+			title : "是否首页显示",
+			field : "isTop",
+			alias : "d",
+			width : 100,
+			align : "center",
+			formatter : function(value, row, index) {
+				return Fm.formatter({
+					"1" : "是",
+					"0" : "否"
+				}, value);
+			}
+		} ,{
+        title : "排序",
+        field : "indexs",
+        alias : "d",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "备注",
+        field : "remark",
+        alias : "d",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "创建日期",
+        field : "createDate",
+        alias : "d",
+        width : 100,
+        align : "center"
+      } ] ];
+
+      drugtype.toolbar = [ {
+        id : "drugtype_add",
+        text : "添加",
+        iconCls : "icon-add",
+        handler : function() {
+          drugtype.open2({
+            title : "添加药品类型",
+            h : "70%",
+			w : "45%",
+            url : "drugtype_add_turn.do",
+            params : myparams
+          });
+        }
+      }, {
+        id : "drugtype_edit",
+        text : "修改",
+        iconCls : "icon-edit",
+        disabled : true,
+        handler : function() {
+          drugtype.updata2({
+            title : "修改药品类型",
+            h : "70%",
+			w : "45%",
+            url : "drugtype_edit_turn.do",
+            params : {
+                drugtypeId : drugtype.rowKey
+            }
+		  });
+        }
+      }, {
+        id : "drugtype_del",
+        text : "删除药品类型",
+        iconCls : "icon-remove",
+        disabled : true,
+        handler : function() {
+          drugtype.remove({
+             url : "drugtype_del_sub.do",
+             params : {
+                drugtypeId : drugtype.rowKey
+             }
+		  });
+        }
+      } ];
+      drugtype.param = myparams;
+      drugtype.onClickRow = function(rowIndex, rowData) {
+       $("#drugtype_edit,#drugtype_del").linkbutton("enable");
+      }
+      drugtype.onLoadSuccess = function(data) {
+       $("#drugtype_edit,#drugtype_del").linkbutton("disable");
+      };
+      drugtype.LoadDataGrid();
+      $('#search').linkbutton({
+        iconCls : 'icon-search',
+        onClick : function() {
+        	myparams.drugTypeName=$("#drugTypeName").val();
+			myparams.isTop=$("#isTop").combobox('getValue');
+          drugtype.search(myparams);
+        }
+      });
+    });
+    function show() {
+		var viewer = new Viewer(document.getElementById('imgdiv'), {
+			url : 'data-original'
+		});
+		viewer.show();
+	}
+  </script>
+ <div fit="true" class="easyui-layout">
+  <div region="north" title="查询条件" style="height: 70px;">
+   <div class="pannel_search">
+    	名称：<input type="text" class="easyui-textbox" id="drugTypeName" />
+				是否首页显示：<@p.select class="easyui-combobox" id="isTop" list={"0":"否","1":"是"} width="150" defVal="全部"/>
+       <a href="javascript:;" id="search">查询</a>
+   </div>
+  </div>
+  <div region="center" id="imgdiv" style="overflow: hidden;border: none;">
+   <table fit="true" namespace="drugtype" id="drugtype" class="datagrid"></table>
+  </div>
+ </div>
+</body>

@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll"/>
+</head>
+<body>
+<@p.valid id="balancecash" action="balancecash_add_sub.do" class="layui-form" layui=true>
+ <@p.legend text="提示信息"/> 
+         <div class="layui-form-item">
+		   <@p.layinput label=""  datarule="required;" name="balanceCashId" />
+	     </div>
+         <div class="layui-form-item">
+		   <@p.layinput label="账户主键"  datarule="required;" name="balanceId" />
+	     </div>
+         <div class="layui-form-item">
+		   <@p.layinput label="提现金额"  datarule="required;" name="amount" />
+	     </div>
+         <div class="layui-form-item">
+		   <@p.layinput label="是否处理"  datarule="required;" name="isHandle" />
+	     </div>
+         <div class="layui-form-item">
+		   <@p.layinput label="备注"  datarule="required;" name="remark" />
+	     </div>
+         <div class="layui-form-item">
+		   <@p.layinput label="处理人"  datarule="required;" name="handleUserId" />
+	     </div>
+         <div class="layui-form-item">
+		   <@p.layinput label="处理日期"  datarule="required;" name="handleDate" />
+	     </div>
+</@p.valid>
+</body>
+</html>

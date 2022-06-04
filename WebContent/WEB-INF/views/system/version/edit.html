@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll,webuploader"/>
+</head>
+<body>
+	<@p.valid id="version" action="version_edit_sub.do" class="layui-form" layui=true> <@p.legend text="提示信息"/>
+	<input type="hidden" name="versionId" value="${vers.versionId}" />
+	<div class="layui-form-item"><@p.layinput label="版本号" datarule="required;" name="versionNo" value="${vers.versionNo}"/></div>
+	<div class="layui-form-item"><@p.layinput label="版本名称" datarule="required;" name="name" value="${vers.name}"/></div>
+	<div class="layui-form-item"><@p.layinput label="版本标题" datarule="required;" name="title" value="${vers.title}"/></div>
+	<div class="layui-form-item"><@p.textare label="<text style='font-weight:bold'>更新内容</text>"  value="${vers.content}" name="content" width=300/></div>
+	
+	<div class="layui-form-item">
+		<div class="layui-inline"><label class="layui-form-label"><b>App类别：</b></label>
+			<div class="layui-form-mid" style="padding-top:9px;width:90px;">
+				<#if vers.osType=='IOS'>苹果</#if>
+				<#if vers.osType=='Android'>安卓</#if>
+			</div>
+		</div>
+	</div>
+	<#if vers.osType=='Android'>
+	<@p.legend text="上传APK" btnId="file"/>
+	<div class="layui-form-item">
+		<div class="layui-inline" style="padding-left: 20px;"><@p.upload id="url" delurl="version_file_del.do" name="url" value="${vers.url}"/></div>
+	</div>
+	</#if>
+	</@p.valid>
+	<script type="text/javascript">
+		$(function() {
+			/**上传文件*/
+			var file = new Upload({
+				filePicker : "file",
+				accept : "app",
+				fileVal : "url_file",
+				fileList : "url",
+				server : "${base}/admin/version/version_file_upload.do"
+			});
+			file.uploadSuccess = function(file, data) {
+				$('#urlHidden').val(data.filePath);
+			}
+		});
+	</script>
+</body>
+</html>

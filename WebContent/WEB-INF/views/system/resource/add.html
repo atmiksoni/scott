@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>添加信息</title>
+<@p.resource types="Jquery,Form,NiceScroll,EasyUI"/>
+</head>
+<body>
+<@p.form id="resource" action="add_save.do" >
+<input type="hidden" id="btn_sub" class="btn_sub"/>
+ <table class="tbformtop">
+    <tr>
+      <td>
+       <table class="tbform">
+          <tr>
+            <td colspan="2">
+              <div class="z-legend">
+                <b>基本信息</b>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="tdl" width="20%">资源名称：</td>
+            <td width="80%"><input type="text" name="resName"/></td>
+          </tr>
+          <tr>
+            <td class="tdl">资源地址：</td>
+            <td><input type="text" name="resUrl"/></td>
+          </tr>
+          <tr>
+            <td class="tdl">所属上级：</td>
+            <td><input type="text" name="resPid"/></td>
+          </tr>
+          <tr>
+            <td class="tdl">优先级：</td>
+            <td><input type="text" name="resPriority"/></td>
+          </tr>
+          <tr>
+            <td class="tdl">类型：</td>
+            <td><input type="text" name="resType"/></td>
+          </tr>
+          <tr>
+            <td class="tdl">编码：</td>
+            <td><input type="text" name="resCode"/></td>
+          </tr>
+          <tr>
+            <td class="tdl">是否允许编辑：</td>
+            <td><input type="text" name="allowEdit"/></td>
+          </tr>
+          <tr>
+            <td class="tdl">是否允许删除：</td>
+            <td><input type="text" name="allowDelete"/></td>
+          </tr>
+          <tr>
+            <td class="tdl">备注：</td>
+            <td><input type="text" name="remark"/></td>
+          </tr>
+          <tr>
+            <td class="tdl">图标：</td>
+            <td><input type="text" name="icon"/></td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+  </@p.form>
+   <script type="text/javascript">
+			$(function() {
+				niceScroll("body");
+				var api = frameElement.api, W = api.opener;
+				api.button({
+					name : '确定',
+					callback : function() {
+						iframe = this.iframe.contentWindow;
+						$('#btn_sub', iframe.document).click();
+						return false;
+					},
+					focus : true
+				}, {
+					name : '关闭',
+					callback : function() {
+						this.close();
+						return false;
+					}
+				});
+			});
+		</script>
+</body>
+</html>

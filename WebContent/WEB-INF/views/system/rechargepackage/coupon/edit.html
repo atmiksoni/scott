@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll"/>
+</head>
+<body>
+<@p.valid id="coupon" action="coupon_edit_sub.do" class="layui-form" layui=true>
+ <@p.legend text="提示信息"/> 
+ <input type="hidden" name="couponId" value="${coupon.couponId}" />
+  <div class="layui-form-item"style="margin-left:40px;">
+         <@p.layselect list=couponTypes label="优惠券类型" valueField="index" textField="value" name="couponType" value="${coupon.couponType}"/>
+	     </div>
+         <div class="layui-form-item"style="margin-left:40px;">
+		    <@p.layinput label="优惠券名称"  datarule="required;" name="couponName" value="${coupon.couponName}"/>
+	     </div>
+         <div class="layui-form-item"style="margin-left:40px;">
+		    <@p.layinput label="优惠券金额"  datarule="required;" name="couponPrice" value="${coupon.couponPrice}"/>
+	     </div>
+         <div class="layui-form-item"style="margin-left:40px;">
+		    <@p.layinput label="满N元可用"  datarule="required;" name="targetPrice" value="${coupon.targetPrice}"/>
+	     </div>
+         <div class="layui-form-item"style="margin-left:40px;">
+		    <@p.layinput label="有效期(天)"  datarule="required;" name="validity" value="${coupon.validity}"/>
+	     </div>
+         <div class="layui-form-item" style="margin-left:40px;">
+          <@p.switch label="状态" name="status"  value="${coupon.status}" text="开启|关闭" /></div>
+	     </div>
+</@p.valid>
+</body>
+</html>

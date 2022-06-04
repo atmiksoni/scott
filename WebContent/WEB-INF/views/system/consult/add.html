@@ -1,0 +1,20 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll,EasyUI"/>
+</head>
+<body>
+	<@p.valid id="consult" action="consult_add_sub.do" class="layui-form" layui=true>
+	<div class="layui-form-item">
+		<div class="layui-inline"><@p.layinput label="反馈人" id="userName" datarule="required;" name="userInfoId" /></div>
+	</div>
+	<div class="layui-form-item">
+		<div class="layui-inline"><@p.layinput label="标题" id="userName" datarule="required;" name="title" /></div>
+	</div>
+	<div class="layui-form-item">
+		<div class="layui-inline"><@p.layinput label="内容" id="userName" datarule="required;" name="content" /></div>
+	</div>
+	</@p.valid>
+</body>
+</html>

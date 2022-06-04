@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<@p.resource types="Jquery,Easyui,AnyDataGrid,Tree,NiceScroll"/>
+<script type="text/javascript">
+  var myparams = {
+ 
+  };
+ /*  $(function() {
+    niceScroll(".panel-body");
+    var tree = new Tree();
+    tree.queryParams = myparams;
+    tree.url = "checkitem_tree_data.do";
+    tree.initTree("mytree");
+    tree.onClick = onClick;
+  });
+  function onClick(node) {
+    checkitem.search(myparams);
+  } */
+  function group_click(node) {
+		myparams.equipmentTypeTwoId = node.id;
+		$("#checkitem_add").linkbutton("enable");
+		checkitem.search(myparams);
+	  }
+</script>
+</head>
+<body class="easyui-layout" style="overflow-y: hidden">
+<div region="west" split="true" href="${base}/admin/equipmenttypetwo/equipmenttypetwo_tree_turn.do" minWidth="230" maxWidth="230" title="${(languaged !='')?string('Device type two',' 设备类型二')}" style="overflow: hidden; border-bottom: none">
+ </div>
+ <div region="center" href="checkitem_list_turn.do" style="padding: 0px; overflow: hidden; border: none"></div>
+</body>
+</html>

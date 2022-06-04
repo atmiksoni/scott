@@ -1,0 +1,19 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll"/>
+</head>
+<body>
+<@p.valid id="quotedprice" action="quotedprice_edit_sub.do" class="layui-form" layui=true>
+ <@p.legend text="${(languaged !='')?string('edit','修改货物信息')}"/> 
+ <input type="hidden" name="quotedpriceId" value="${quotedprice.quotedpriceId}" />
+         <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('commodity','货物名')}"  datarule="required;" datamsgrequired="${(required)!''}" name="commodity" value="${quotedprice.commodity}"/>    
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('price','价格')}"  datarule="required;" datamsgrequired="${(required)!''}" name="price" value="${quotedprice.price}"/>    
+	     </div>
+</@p.valid>
+</body>
+</html>

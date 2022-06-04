@@ -1,0 +1,36 @@
+/*详情*/
+.news_view{ width:92%; display:block; margin:0 auto; font-family:"微软雅黑";}
+.news_view h1{ font-size:1.2em; padding-top:0.5em; font-weight: normal;}
+.news_view .time{ border-bottom:1px solid #d7d7d7; font-size:0.75em; color:#999; padding:0.5em 0 0.75em 0;}
+.news_view .news_con{ display:block; padding:1em 0; line-height:25px;font-size: 14px; color: #333333;}
+.news_view .news_con img{ display: block; margin:10px 0; width: 100%;}
+/*货找车*/
+.top-box{ width: 100%; padding: 20px 0; background: url(../img/top-bg.jpg) center center no-repeat; background-size: cover;}
+.top-box .top-img{ width: 3.65em; height: 3.65em; margin: 0 auto; padding: 0.2em; background: rgba(255,255,255,0.25); border-radius: 2em;}
+.top-box .top-img img{ display: block; width: 3.65em; height: 3.65em; border-radius: 3.65em;}
+.top-box p{ display: block; text-align: center; padding-top: 5px; color: #FFFFFF;}
+.home-list{ width: 100%; display: block; overflow: hidden;}
+.home-list li{ width: 100%; background: #FFFFFF; padding: 12px; display: block; margin-bottom: 10px;}
+.home-list li .p1{ font-size: 1em;vertical-align: top;}
+.home-list li .icon{ display: inline-block; width: 15px; height: 15px; background: url(../img/add-icon.png) center center no-repeat; background-size: 15px; margin: 0 10px; }
+.home-list li .p2{ font-size: 14px; color: #1A87F6; padding-top: 10px;}
+.home-list li .p3{ font-size: 12px; color: #999999;padding-top: 10px;}
+.more{ width: 100%; height: 40px; background: #FF9933; text-align: center; line-height: 40px; display: block; color: #FFFFFF; font-size: 14px;}
+/*电子运单*/
+.yundan{ display: block; padding: 12px; overflow: hidden; position: relative;}
+.yundan .yd-text span{ display: block; line-height: 25px; font-size: 14px;}
+.yd-icon{ position: absolute; right: 15px; top: 15px;}
+.yd-icon img{ display: block; width: 70px; height: 70px;}
+.table-tit{ color: #000000; padding: 5px 0; line-height: 25px; font-size: 14px;}
+.yd-table{ width:100%; border-left: 1px solid #EEEEEE;border-top: 1px solid #EEEEEE;}
+.yd-table td{ width: 25%; padding-left: 10px; font-family: "微软雅黑"; height: 40px; font-size: 14px; border-right: 1px solid #EEEEEE;border-bottom: 1px solid #EEEEEE; box-sizing: border-box;}
+.yd-table .c6{ color: #999999; text-align: center; padding-left: 0;}
+.yd-table .t1{ width: 25%;}
+.yd-table .t2{ width: 75%;}
+.table-text{ font-size: 14px; line-height: 25px;}
+/*下载页面*/
+.wuliu-bg{ width: 100%; background: url(../img/home-bg.jpg) center bottom no-repeat; background-size: cover;}
+.btn-01{ display: block; width: 220px; margin: 50% auto 0; height: 48px; background: #6BC629; border-radius: 45px;}
+.btn-01 a{ display: block; text-align: center; line-height: 48px; color: #FFFFFF;}
+.btn-02{ display: block; width: 220px; margin: 0.8em auto 0; height: 48px; background: #FF6622; border-radius: 45px;}
+.btn-02 a{ display: block; text-align: center; line-height: 48px; color: #FFFFFF;}

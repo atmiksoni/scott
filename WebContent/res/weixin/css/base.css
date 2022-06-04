@@ -1,0 +1,169 @@
+/*author wangmeng 2014-07-21*/
+@charset "utf-8";
+html {color:#000;background:#f6f6f6;overflow-y:scroll;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%}
+html * {outline:0;-webkit-text-size-adjust:none;-webkit-tap-highlight-color:rgba(0,0,0,0)}
+html,body {font-family:sans-serif;}
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td,hr,button,article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section {margin:0;padding:0}
+ul, ol {list-style: none;}
+input,select,textarea {font-size:100%}
+table {border-collapse:collapse;border-spacing:0}
+fieldset,img {border:0}
+abbr,acronym {border:0;font-variant:normal}
+del {text-decoration:line-through}
+address,caption,cite,code,dfn,em,th,var {font-style:normal;font-weight:500}
+ol,ul {list-style:none}
+caption,th {text-align:left}
+h1,h2,h3,h4,h5,h6 {font-size: 1em;font-weight: 400}
+q:before,q:after {content:''}
+sub,sup {font-size:75%;line-height:0;position:relative;vertical-align:baseline}
+sup {top:-.5em}
+sub {bottom:-.25em}
+a {color: #333;text-decoration: none}
+a:hover {text-decoration: none}
+ins {text-decoration:none}
+i, em {font-style: normal;}
+body {color: #333;font-size: 62.5%;font-family: "\5FAE\8F6F\96C5\9ED1", helvetica, arial, sans-serif}
+th,td {text-align: left;vertical-align: top}
+li {list-style: none}
+input,label,select,option,textarea,button,fieldset,legend {font-size: 0.75rem;font-family: inherit}
+input[type=text],textarea {-webkit-appearance: none;-webkit-border-radius: 0;outline: 0}
+input.text {color: #444;border-color: #9f9f9f #dcdcdc #dcdcdc #9f9f9f;border-style: solid;border-width: 1px;padding: 3px 2px;height: 14px}
+input.radio,input.checkbox {margin-right: 2px;vertical-align: -2px}
+input.radio,input.checkbox {margin-left: -2px}
+label.radio,label.checkbox {margin-right: 5px}
+textarea {border-color: #9f9f9f #dcdcdc #dcdcdc #9f9f9f;border-style: solid;border-width: 1px;padding: 1px;resize: none}
+input::-ms-clear {display: none}
+.fix:after {content: ".";display: block;height: 0;clear: both;visibility: hidden}
+.fix {display: inline-block;*display: inline;*zoom: 1;min-height: 1%}
+*html .fix {zoom: 1}
+.fix {display: block}
+.clearleft {clear: left}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*头部固定样式*/
+.head {width: 100%;height: 48px;background-color: #E63C2D;color: white;position: fixed;top: 0;left: 0;z-index: 100;text-align: center;font-size: 0.9rem !important;}
+.head span {line-height: 48px;}
+.head .goback {width:0.5rem;position: absolute;top: 0.7rem;left: 0.75rem;}
+.head .phone, .head .close {position: absolute;top: 0.7rem;right: 0.75rem;}
+.head a.headright {font-size: 0.7rem;position: absolute;top: 0.55rem;right: 0.75rem;color: white;}
+
+/*提交和取消按钮样式*/
+
+.weui_cells .weui_cell {padding: 0.75rem 0 0.75rem 0.75rem;}
+
+.weui_btn_warn {background-color: #E63C2D !important;}
+/*.weui_btn::after {background-color: #bf3326;}*/
+.weui_btn.weui_btn_mini {line-height: "" !important;}
+.btn .weui_btn {line-height: 2 !important;font-size: 0.9rem;}
+.weui_btn_primary {background-color: #E63C2D !important;color: white !important;padding: 0 0.9rem !important;margin-left: 0.5rem !important;}
+li .weui_btn + .weui_btn {margin-top: 0;}
+li .weui_btn_warn {margin-left: 0.5rem;}
+
+.weui_media_box.weui_media_appmsg .weui_media_hd {width: 22% !important;}
+.weui_media_box {padding: 8% !important;}
+
+.weui_grids::before {border: 0px solid #d9d9d9 !important;}
+.weui_grid {padding: 0 !important;}
+.weui_grids .weui_grid_icon + .weui_grid_label {margin-top: 0;font-size: 0.65rem;color: #666;}
+.weui_grids .weui_grid_icon {height: 27px;margin-top: 0.2rem;}
+
+
+
+/*tab切换效果*/
+.weui_navbar a {border-bottom: 1px solid #DCDCDC;}
+/*.weui_navbar a:nth-child(-n+2) {border-right: 1px solid #DCDCDC;}*/
+.weui_navbar_item.weui_bar_item_on {background-color: #fff;color: #E63C2D;border-bottom: 4px solid #E63C2E;}
+.weui_navbar_item {color: #666;}
+
+/*头部客服电话模块儿*/
+.head .phone {display:block;width:0.9rem;height:0.95rem;position: absolute;top: 0.75rem;right: 0.75rem;cursor: pointer;overflow: hidden;}
+.head .phone img {width: 100%;height: 100%;position: absolute;top: 0;left: 0;}
+
+/*颜色/左右浮动/居中效果*/
+.fl_r {float: right;}
+.fl_l {float: left;}
+.col_r {color: #E63C2D;}
+.center {text-align: center;}
+
+/*订单/车型详情展示页面  图文演示*/
+.pic_info {overflow: hidden;/*width: 100%;*//*border-bottom: 1px solid #D9D9D9;*/}
+.pic_info li {float: left;}
+.pic_info .left {width:30%;}
+.pic_info .right {width: 70%;}
+.pic_info .left img {float:left;width: 80%;}
+.pic_info .right h3 {font-size: 0.75rem;color: #212121;padding-top: 1.3rem;}
+.pic_info .right p {font-size: 0.7rem;color: #666;}
+
+/*取还车时段样式*/
+.duration li {width: 33%;height:4.3rem;float: left;position: relative;}
+.duration {overflow: hidden;padding: 0 15px;}
+.duration {background-color: white;}
+.duration li input {width: 90%;border: 0px solid #DCDCDC;}
+.duration li p {font-size: 0.7rem;}
+.duration li:last-child, .duration li:last-child input {text-align: right;}
+.duration li:nth-child(2) img {display:block;height: 2.5rem;margin: 0.9rem auto;}
+.duration li:nth-child(2) p {position: absolute;left: 50%; top: 0.8rem;margin-left: -0.3rem;}
+.duration li:nth-child(2) p span {color: #E63C2D;font-size: 1rem;}
+#pickupdate, #returndate {line-height:2rem;/*font-size: 26px !important;*/color: #333;font-size: 1.4rem;}
+#pickuptime, #returntime {color: #666;}
+.duration p {color: #666;}
+
+/*底部提交按钮样式*/
+.bottombtn {width:100%;position: absolute;bottom: 1rem;left: 0;}
+.submit_btn {margin: 0.6rem 0;}
+.btn {width: 94%;margin: 0 auto;}
+.footer {width: 100%;height: 48px;position: fixed;bottom: 0;left: 0;background-color: white;}
+
+/*取消订单的弹窗*/
+.alert {display: none;width:100%;height:100%;background-color:rgba(0, 0, 0, 0.5);position: fixed;z-index:500;top: 0;left: 0;}
+.alert .main {position: absolute;top: 50%;left: 8%;width: 84%;height: 180px;margin-top: -100px;background-color: white;border-radius: 5px;text-align: center;}
+.alert .main ul {position: absolute;bottom: 0;left: 0;overflow: hidden;width: 100%;}
+/*.alert ul li {float:left;width: 49.5%;height: 50px;line-height: 50px;border-top: 1px solid #DCDCDC;color: #E63C2D;}
+.alert ul li:first-child {border-right: 1px solid #DCDCDC;}*/
+.alert h3 {font-size: 1rem;margin: 1.2rem 0 0.6rem;}
+.alert p {padding: 0 1.85rem;color: #666;font-size: 0.72rem;}
+
+/*底部弹窗样式*/
+.bot_alert {display:none;position: fixed;z-index:500;bottom: 0;left: 0;width: 100%;height: 100%;background-color: rgba(0, 0, 0, 0.5);font-size: 0.75rem;} 
+.bot_alert ul {position: absolute;left: 0;bottom: 0;width: 100%;height: 17.5rem;background-color: white;}
+.bot_alert ul li {height: 2.5rem;line-height:2.5rem;border-bottom: 1px solid #DCDCDC;padding: 0 0.75rem;}
+.bot_alert ul li img {float: right;width: 1rem;margin-top: 0.75rem;}
+.bot_alert ul li:last-child {position: absolute;left: 0;bottom: 0;width: 100%;border-top: 1px solid #DCDCDC;text-align: center;line-height: 2.5rem;color: #666;}
+
+/*近半个月的价格日历*/
+.pri_cl .calender li {float: left;width: 13.9%;text-align: center;}
+.pri_cl ul {overflow: hidden;}
+.pri_cl dl dt {background-color: #fff1f0;border: 1px solid #ffd9d6;}
+.pri_cl dl dd li {border-bottom: 1px solid #ebebeb;border-right: 1px solid #ebebeb;}
+.calender dt li {height: 1.4rem;font-size: 0.6rem;line-height: 1.4rem;}
+.calender dd li {height: 2rem;}
+.calender dd ul {margin: 0 auto;}
+.calender dd:first-child  {background-color: #fed9d6;}
+.calender dd li div {height: 1rem;font-size: 0.6rem;}
+.calender dd li .bottom {color: #999;}
+.pri_cl>.bottom {overflow: hidden;width: 99.5s%;height: 2rem;background-color: #fff1f0;line-height: 2rem;text-align: center;font-size: 0.7rem;border: 1px solid #ffd9d6;}
+.pri_cl>.bottom li:first-child {float: left;width: 50%;}
+.pri_cl>.bottom li:last-child {float: right;width: 50%;}
+.pri_cl>.bottom li span {color: #E63C2D;}
+.pri_cl {display: none;}
+
+
+
+
+
+
+
+
+
+

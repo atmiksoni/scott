@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,Form,NiceScroll"/>
+<link rel="stylesheet" href="${base}/res/bfpms/css/desktop/style.css" />
+</head>
+<body>
+	<@p.form id="user" action="allot_rolesave.do">
+	<input type="hidden" id="btn_sub" class="btn_sub" />
+	<input type="hidden" name="userId" value="${user.userId}" />
+	<input type="hidden" id="ids" name="ids" value="" />
+	<input type="hidden" id="names" name="names" value="" />
+	<table class="tbformtop">
+		<tr>
+			<td>
+				<table class="tbform">
+					<tr>
+						<td>
+							<div class="z-legend">
+								<b>${user.userName}</b>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td width="80%"><@fm fun="getUserRole" userId="${user.userId}">${tag_bean}</@fm></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	</@p.form>
+	<script type="text/javascript">
+		VF.beforeCheck = function() {
+			var itemids = [];
+			var itemnames = [];
+			$("#RoleList div").find(".checkbuttonOk").each(function() {
+				itemids.push($(this).find(".checktext").attr("id"));
+				itemnames.push($(this).find(".checktext").attr("name"));
+			});
+			$("#ids").val(itemids.join(","));
+			$("#names").val(itemnames.join(","));
+		}
+		$(function() {
+			niceScroll("body");
+			var api = frameElement.api, W = api.opener;
+			api.button({
+				name : '确定',
+				callback : function() {
+					iframe = this.iframe.contentWindow;
+					$('#btn_sub', iframe.document).click();
+					return false;
+				},
+				focus : true
+			}, {
+				name : '关闭',
+				callback : function() {
+					this.close();
+					return false;
+				}
+			});
+			$(".panelcheck").click(function() {
+				if (!$(this).hasClass('checkbuttonOk')) {
+					$(this).attr('class', 'checkbuttonOk panelcheck');
+					$(this).find('.triangleNo').attr('class', 'triangleOk');
+				} else {
+					$(this).attr('class', 'checkbuttonNo panelcheck');
+					$(this).find('.triangleOk').attr('class', 'triangleNo');
+				}
+			});
+		});
+	</script>
+</body>
+</html>

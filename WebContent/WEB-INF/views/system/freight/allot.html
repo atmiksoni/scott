@@ -1,0 +1,42 @@
+<body>
+ <@p.resource types="Tree,NiceScroll"/>
+ <div class="datagrid-toolbar">
+  <a href="javascript:;" id="btn_save" class="easyui-linkbutton" plain="true" icon="icon-save">保存</a>
+ </div>
+ <script type="text/javascript">
+		var areaTree;
+        $(function() {
+	        areaTree = new Tree();
+	        areaTree.checkbox = true;
+	        areaTree.url = "allot_freight_treedata.do?freightId=${freight.freightId}";
+	        areaTree.onLoadSuccess = function(node, data) {
+		       areaTree.expandAll();
+		        var options = areaTree.getOptions();
+		        $(options.checkeds).each(function(i, value) {
+			        var node = $('#areaTree').tree('find', value);
+			        if (areaTree.isLeaf(node)) {
+				        areaTree.checkNode(node);
+			        }
+		        });
+	        }
+	        areaTree.initTree("areaTree");
+	        $("#btn_save").on("click", save);
+        });
+
+        function save() {
+	        var options = $("#areaTree").tree("options");
+	        var newchecked = areaTree.getCheckedIds();
+	        var result = top.Dg.z.checkHas(options.checkeds, newchecked);
+	        if (result.length > 0) {
+		        var pram = {
+		            freightId : "${freight.freightId}",
+		            result : JSON.stringify(result)
+		        };
+		        Fm.ajax("allot_freight_save.do", pram, function(data) {
+			        options.checkeds = newchecked;
+		        });
+	        }
+        }
+	</script>
+ <ul id="areaTree"></ul>
+</body>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+	<@p.resource types="Jquery"/>
+</head>
+<body>
+<@p.valid id="account" action="role_add_save.do" class="layui-form" layui=true>
+<div class="layui-tab layui-tab-brief" style="padding-left: 10px;">
+	<div class="layui-tab-content">
+		<div class="layui-tab-item layui-show">
+			<div class="layui-form-item"><@p.layinput label="${(languaged !='')?string('Character name','角色名')}" datarule="required;remote[${base}/admin/role/role_check_sub.do]" name="roleName" /></div>
+			<div class="layui-form-item"><@p.layinput label="${(languaged !='')?string('English Name of Roles','角色英文名')}" datarule="required;remote[${base}/admin/role/role_check_sub.do]" name="roleEnglishName" /></div>
+			<div class="layui-form-item"><@p.layinput label="${(languaged !='')?string('remark','备注')}" name="remark"/></div>
+		</div>
+	</div>
+</div>
+</@p.valid>
+</body>
+</html>

@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Engineer">
+	<!-- Result Map 必须声明主键字段-->
+	<resultMap type="Engineer" id="BaseResultMap">
+		<result column="engineerId" property="engineerId" />
+	</resultMap>
+	<!--全部结果集 -->
+	<resultMap type="Engineer" id="ResultMap" extends="BaseResultMap">
+	</resultMap>
+	<!--分页结果集 -->
+	<resultMap type="Engineer" id="PagerResultMap" extends="BaseResultMap">
+	</resultMap>
+	<!--字段定义 -->
+	<sql id="Base_Column_List">
+		e.*
+    </sql>
+    <!-- 表名 -->
+	<sql id="t_name">t_b_Engineer</sql>
+	<!-- 别名 -->
+	<sql id="t_alias"> t_b_Engineer as e</sql>
+	<!--tree字段-->
+	<sql id="Tree_Column_List">
+		e.engineerId
+	</sql>
+	<!-- 查询条件 -->
+	<sql id="andOther">
+		<trim prefix="where" prefixOverrides="and | or ">
+				<if test="engineerId != null and engineerId !='' "> and e.engineerId = #{engineerId} </if>
+				<if test="accountInfoId != null and accountInfoId !='' "> and e.accountInfoId = #{accountInfoId} </if>
+				<if test="engineerName != null and engineerName !='' "> and e.engineerName = #{engineerName} </if>
+				<if test="departmentName != null and departmentName !='' "> and e.departmentName = #{departmentName} </if>
+				<if test="mobile != null and mobile !='' "> and e.mobile = #{mobile} </if>
+				<if test="lastLng != null and lastLng !='' "> and e.lastLng = #{lastLng} </if>
+				<if test="lastLat != null and lastLat !='' "> and e.lastLat = #{lastLat} </if>
+				<if test="wage != null and wage !='' "> and e.wage = #{wage} </if>
+				<if test="head != null and head !='' "> and e.head = #{head} </if>
+				<if test="engineerSignature != null and engineerSignature !='' "> and e.engineerSignature = #{engineerSignature} </if>
+				<if test="createDate != null and createDate !='' "> and e.createDate = #{createDate} </if>
+				<if test="repairCompanyId != null and repairCompanyId !='' "> and e.repairCompanyId = #{repairCompanyId} </if>
+		</trim>
+	</sql>
+	<sql id="limit">
+		<if test="limit != null"> limit 0,#{limit}</if>
+	</sql>
+	
+	<!--定义外键表join -->
+	<sql id="join">
+	<if test="aliasMap.accountInfo != null">
+			<![CDATA[left join t_u_accountinfo ${aliasMap.accountInfo} on ${aliasMap.accountInfo}.accountInfoId = e.accountInfoId]]>
+		</if>
+		<if test="aliasMap.repaircompany != null">
+			<![CDATA[left join t_b_repaircompany ${aliasMap.repaircompany} on ${aliasMap.repaircompany}.repairCompanyId = e.repairCompanyId]]>
+		</if>
+	</sql>
+	
+	<!-- 保存对象 -->
+	<insert id="insert" parameterType="Engineer">
+		insert into
+		<include refid="t_name" />
+		(
+			engineerId,
+			accountInfoId,
+			engineerName,
+			departmentName,
+			mobile,
+			lastLng,
+			lastLat,wage,
+			head,
+			engineerSignature,
+			createDate,repairCompanyId
+		)
+		values(
+			#{engineerId,jdbcType=VARCHAR},
+			#{accountInfoId,jdbcType=VARCHAR},
+			#{engineerName,jdbcType=VARCHAR},
+			#{departmentName,jdbcType=VARCHAR},
+			#{mobile,jdbcType=VARCHAR},
+			#{lastLng,jdbcType=DECIMAL},
+			#{lastLat,jdbcType=DECIMAL},
+			#{wage,jdbcType=DECIMAL},
+			#{head,jdbcType=VARCHAR},
+			#{engineerSignature,jdbcType=VARCHAR},
+			#{createDate,jdbcType=VARCHAR},
+			#{repairCompanyId,jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	<!-- 批量插入-->
+	<insert id="batchInsert" parameterType="list">
+		insert into
+		<include refid="t_name" />
+		(
+			engineerId,
+			accountInfoId,
+			engineerName,
+			departmentName,
+			mobile,
+			lastLng,
+			lastLat,wage,
+			head,
+			engineerSignature,
+			createDate,repairCompanyId
+		)
+		values
+		<foreach collection="list" item="item" index="index" separator=",">
+		(
+			#{item.engineerId,jdbcType=VARCHAR},
+			#{item.accountInfoId,jdbcType=VARCHAR},
+			#{item.engineerName,jdbcType=VARCHAR},
+			#{item.departmentName,jdbcType=VARCHAR},
+			#{item.mobile,jdbcType=VARCHAR},
+			#{item.lastLng,jdbcType=DECIMAL},
+			#{item.lastLat,jdbcType=DECIMAL},
+			#{item.wage,jdbcType=DECIMAL},
+			#{item.head,jdbcType=VARCHAR},
+			#{item.engineerSignature,jdbcType=VARCHAR},
+			#{item.createDate,jdbcType=VARCHAR},
+			#{item.repairCompanyId,jdbcType=VARCHAR}
+		)
+		</foreach>
+	</insert>
+	
+	<!--更新对象 -->
+	<update id="update" parameterType="Engineer">
+		update
+		<include refid="t_name" />
+		<trim prefix="set" suffixOverrides=",">
+			<if test="accountInfoId != null">accountInfoId = #{accountInfoId}, </if>
+			<if test="engineerName != null">engineerName = #{engineerName}, </if>
+			<if test="departmentName != null">departmentName = #{departmentName}, </if>
+			<if test="mobile != null">mobile = #{mobile}, </if>
+			<if test="lastLng != null">lastLng = #{lastLng}, </if>
+			<if test="lastLat != null">lastLat = #{lastLat}, </if>
+			<if test="wage != null">wage = #{wage}, </if>
+			<if test="head != null">head = #{head}, </if>
+			<if test="engineerSignature != null">engineerSignature = #{engineerSignature}, </if>
+			<if test="repairCompanyId != null">repairCompanyId = #{repairCompanyId} </if>
+		</trim>
+		<where>engineerId = #{engineerId}</where>
+	</update>
+	
+	<!-- 批量更新 -->
+	<update id="batchUpdate" parameterType="list">
+		<foreach collection="list" item="item" index="index" separator=";">
+			update 
+			<include refid="t_name" />
+			<trim prefix="set" suffixOverrides=",">
+				<if test="item.engineerId != null">engineerId = #{item.engineerId}, </if>
+				<if test="item.accountInfoId != null">accountInfoId = #{item.accountInfoId}, </if>
+				<if test="item.engineerName != null">engineerName = #{item.engineerName}, </if>
+				<if test="item.departmentName != null">departmentName = #{item.departmentName}, </if>
+				<if test="item.mobile != null">mobile = #{item.mobile}, </if>
+				<if test="item.lastLng != null">lastLng = #{item.lastLng}, </if>
+				<if test="item.lastLat != null">lastLat = #{item.lastLat}, </if>
+				<if test="item.wage != null">wage = #{item.wage}, </if>
+				<if test="item.head != null">head = #{item.head}, </if>
+				<if test="item.engineerSignature != null">engineerSignature = #{item.engineerSignature}, </if>
+				<if test="item.repairCompanyId != null">repairCompanyId = #{item.repairCompanyId}, </if>
+				<if test="item.createDate != null">createDate = #{item.createDate} </if>
+			</trim>
+			<where>engineerId = #{item.engineerId}</where>
+		</foreach>
+	</update>
+	
+	<!--根据主键查找对象 -->
+	<select id="findById" resultMap="ResultMap" parameterType="map">
+		select * 
+		from
+		<include refid="t_name" />
+		<where>engineerId = #{engineerId}</where>
+	</select>
+	<!--查找对象 -->
+	<select id="findMapById" resultType="CriterionMap" parameterType="Map">
+		select * from
+		<include refid="t_alias" />
+		<include refid="andOther" />
+	</select>
+	<!--查找对象 -->
+	<select id="findMapByMap" resultType="CriterionMap" parameterType="Map">
+		select * from
+		<include refid="t_alias" />
+		<include refid="andOther" />
+	</select>
+	<!--查找对象 -->
+	<select id="findByMap" resultMap="ResultMap" parameterType="Map">
+		select * from
+		<include refid="t_alias" />
+		<include refid="andOther" />
+	</select>
+		<!--查询对象是否存在 -->
+	<select id="countById" resultType="Int" >
+		select count(engineerId)
+		from
+		<include refid="t_name" />
+		<where>engineerId = #{engineerId}</where>
+	</select>
+	<!--查找对象 -->
+	<select id="findByCq" resultMap="ResultMap" parameterType="CriterionMap">
+		select
+		*
+		from
+		<include refid="t_alias" />
+		<include refid="join" />
+	</select>
+	<!--批量删除 -->
+	<delete id="deleteByIds" parameterType="list">
+		delete
+		from
+		<include refid="t_name" />
+		where engineerId  in
+		<foreach collection="list" item="model" open="(" separator="," close=")">
+			#{model}
+		</foreach>
+	</delete>
+
+	<!--根据主键删除 -->
+	<delete id="delete" parameterType="String">
+		delete
+		from
+		<include refid="t_name" />
+		<where>engineerId = #{engineerId}</where>
+	</delete>
+	<!--根据主键删除 -->
+	<delete id="deleteByMap" parameterType="map">
+		delete e.*
+		from
+		<include refid="t_alias" />
+		<include refid="andOther" />
+	</delete>
+	<!--统计数量 -->
+	<select id="count" resultType="Integer" parameterType="map">
+		select count(*)
+		from
+		<include refid="t_alias" />
+		<include refid="andOther" />
+	</select>
+	<!-- 返回类型为BaseResultMap的结果集 - -->
+	<select id="selectByMap" parameterType="Map" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from
+		<include refid="t_alias" />
+		<include refid="andOther" />
+		<include refid="limit" />
+	</select>
+	<!--查找主键集合 -->
+	<select id="selectIdsByMap" resultType="String" parameterType="Map">
+		select engineerId from
+		<include refid="t_alias" />
+		<include refid="andOther" />
+	</select>
+	<!-- 返回类型为CriterionMap的结果集 -->
+	<select id="selectMapResult" parameterType="Map" resultType="CriterionMap">
+		select
+		<include refid="Base_Column_List" />
+		from
+		<include refid="t_alias" />
+		<include refid="andOther" />
+		<include refid="limit" />
+	</select>
+	<!--加载全部数据-->
+	<select id="loadAll" resultMap="BaseResultMap">
+		select 
+		<include refid="Base_Column_List" />
+		from 
+		<include refid="t_alias"/>
+	</select>
+	
+	<!--Tree加载数据 -->
+	<select id="treeData" resultMap="BaseResultMap">
+		select
+		<include refid="Tree_Column_List" />
+		from
+		<include refid="t_name"/>
+		<include refid="andOther" />
+	</select>
+	<!--根据cq查找对象 -->
+	<select id="selectMap" resultType="CriterionMap" parameterType="PagerInfo">
+		select
+		${sqlfields}
+		from
+		<include refid="t_alias" />
+		<include refid="join" />
+	</select>
+	<!-- 分页列表 -->
+	<select id="pagerList" parameterType="PagerInfo" resultMap="PagerResultMap">
+		select
+		${sqlfields}
+		from
+		<include refid="t_alias" />
+		<include refid="join" />
+	</select>
+	<!-- 统计列表 -->
+	<select id="totalMap" parameterType="PagerInfo" resultMap="PagerResultMap">
+		select
+		${totalSqlField}
+		from
+		<include refid="t_alias" />
+		<include refid="join" />
+	</select>
+	<!-- 分页列表 -->
+	<select id="pagerMap" parameterType="PagerInfo" resultType="CriterionMap">
+		select
+		${sqlfields}
+		from
+		<include refid="t_alias" />
+		<include refid="join" />
+	</select>
+</mapper>

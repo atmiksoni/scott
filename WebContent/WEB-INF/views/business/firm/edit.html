@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll,webuploader"/>
+</head>
+<body>
+<@p.valid id="firm" action="firm_edit_sub.do" class="layui-form" layui=true>
+ <@p.legend text="${(languaged !='')?string('client information','修改客户信息')}"/> 
+ <input type="hidden" name="firmId" value="${firm.firmId}" />
+         <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('company name','客户名称')}"  datarule="required;" datamsgrequired="${(required)!''}" name="companyName" value="${firm.companyName}"/>    
+		    <@p.layinput label="${(languaged !='')?string('company address','所属地址')}"  datarule="required;" datamsgrequired="${(required)!''}" name="address" value="${firm.address}"/>    
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('contact number','客户电话')}"  datarule="required;" datamsgrequired="${(required)!''}" name="mobile" value="${firm.mobile}"/>    
+		    <@p.layinput label="${(languaged !='')?string('Contact','联系人')}"  datarule="required;" datamsgrequired="${(required)!''}" name="linkman" value="${firm.linkman}"/>    
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('Phone number','联系电话')}"  datarule="required;" datamsgrequired="${(required)!''}" name="linkphone" value="${firm.linkphone}"/>    
+		    <@p.layinput label="${(languaged !='')?string('Email','联系邮箱')}"  datarule="required;" datamsgrequired="${(required)!''}" name="compEmail" value="${firm.compEmail}"/>    
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('Postal code','邮政编码')}"  datarule="required;" datamsgrequired="${(required)!''}" name="postcodes" value="${firm.postcodes}"/>    
+	      <div class="layui-inline">
+      <label class="layui-form-label" style="margin-left: -13px;" ><b>${(languaged !='')?string('reminderDate','提醒日期')}:</b></label>
+      <div class="layui-input-inline" style=" width:190px;">
+        <input type="text" class="layui-input" style="margin-left: 10px;" id="test1" placeholder="${(languaged !='')?string('next service maintenance date','提醒日期')}" name="reminderDate" value="${firm.reminderDate}">
+      </div>
+	     </div>
+	     </div>
+	     <div class="layui-form-item">
+	    <@p.layinput label="${(languaged !='')?string('Normal hour labour rate','每小时收费')}"  datarule="required;" datamsgrequired="${(required)!''}" name="hourlyFee" value="${firm.hourlyFee}"/>
+	     <@p.layinput label="${(languaged !='')?string('overtime hourly rate','加班时薪')}"  datarule="required;" datamsgrequired="${(required)!''}" name="overTimeFee" value="${firm.overTimeFee}"/>
+	     </div>
+	      <div class="layui-form-item">
+	    <@p.layinput label="${(languaged !='')?string('Double time hourly rate','双倍时薪')}"  datarule="required;" datamsgrequired="${(required)!''}" name="doubleTimeFee" value="${firm.doubleTimeFee}"/>
+	   <!-- <@p.layinput label="${(languaged !='')?string('bankCard','银行卡号')}"  datarule="required;" datamsgrequired="${(required)!''}" name="bankCard" value="${firm.bankCard}"/> -->
+	     </div>
+       <!--   <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('Head','公司配图')}"  datarule="required;" datamsgrequired="${(required)!''}" name="head" value="${firm.head}"/>    
+	     </div> -->
+	     	 <@p.legend text="LOGO" btnId="pre"/>
+		<div class="layui-form-item">
+		<div class="layui-inline" style="padding-left: 20px;"><@p.upload id="prePic" name="prePic" list=files delurl="${base}/admin/firm/firm_image_del.do" pathField="head" idField="head"  value="${firm.head}"/></div>
+		<input id="Head" name="Head" type="hidden" class="layui-input" value="${firm.head}">
+	</div>
+</@p.valid>
+	<script>
+	layui.use('laydate', function(){
+		  var laydate = layui.laydate;
+		  
+		  //执行一个laydate实例
+		  laydate.render({
+		    elem: '#test1' //指定元素
+		    ,format: 'yyyy-MM-dd HH:mm:ss'
+		    ,type: 'datetime', lang: 'en'
+		  });
+		});
+		$(function() {
+			var imgs = [];
+			var pre = new Upload({
+				filePicker : "pre",
+				fileList : "prePic",
+				num : 1,
+				params : {
+					businessKey : "30",
+					subClassName : "firm"
+				},
+				server : "${base}/admin/firm/firm_image_upload.do"
+			});
+			pre.uploadSuccess = function(file, data) {
+				$('#Head').val(data.filePath);
+			};
+		});
+	</script>
+</body>
+</html>

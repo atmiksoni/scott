@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxws="http://cxf.apache.org/jaxws" xsi:schemaLocation="
+	    http://www.springframework.org/schema/beans
+	    http://www.springframework.org/schema/beans/spring-beans.xsd
+	    http://cxf.apache.org/jaxws
+	    http://cxf.apache.org/schemas/jaxws.xsd">
+
+	<bean id="client" class="com.flyme.base.system.login.saas.SaaS2AppService" factory-bean="clientFactory" factory-method="create" />
+	<!--  <bean id="client" class="com.webservice.housefee.service.IReaderService" factory-bean="clientFactory" factory-method="create" />-->
+
+	<bean id="clientFactory" class="org.apache.cxf.jaxws.JaxWsProxyFactoryBean">
+		<property name="serviceClass" value="com.webservice.housefee.service.impl.ReaderService" />
+		<property name="address" value="http://192.168.1.197:8088/bfpms/service/readerService" />
+		<property name="outInterceptors">
+			<list>
+				<bean class="org.apache.cxf.interceptor.LoggingOutInterceptor" />
+				<bean class="org.apache.cxf.binding.soap.saaj.SAAJOutInterceptor" />
+				<bean class="org.apache.cxf.transport.common.gzip.GZIPOutInterceptor" />
+				<bean class="org.apache.cxf.ws.security.wss4j.WSS4JOutInterceptor">
+					<constructor-arg>
+						<map>
+							<entry key="action" value="UsernameToken" />
+							<entry key="passwordType" value="PasswordText" />
+							<entry key="user" value="cxfClient" />
+							<entry key="passwordCallbackRef">
+								<ref bean="clientPasswordCallback" />
+							</entry>
+						</map>
+					</constructor-arg>
+				</bean>
+			</list>
+		</property>
+		<property name="inInterceptors">
+			<list>
+				<bean class="org.apache.cxf.transport.common.gzip.GZIPInInterceptor" />
+			</list>
+		</property>
+	</bean>
+</beans>
+

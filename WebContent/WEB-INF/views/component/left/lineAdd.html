@@ -1,0 +1,62 @@
+<ul id="line" class="ztree"></ul>
+<div id="Line" class="easyui-menu" style="width: 120px;">
+	<div id="remove" onclick="remove()" data-options="iconCls:'icon-remove'">删除</div>
+	<div id="edit" onclick="edit()" data-options="iconCls:'icon-edit'">修改</div>
+</div>
+<script type="text/javascript">
+	var line;
+	$(function() {
+		line = new Tree();
+		line.queryParams = myparams;
+		line.menu = "${menu}";
+		line.url = "${base}/admin/line/line_tree_data.do";
+		line.initTree("line");
+		line.onClick = function(node) {
+			tree_click(node);
+		};
+		
+		$('#line_add').linkbutton({
+			iconCls : 'icon-add',
+			onClick : function() {
+				top.Dg.open2({
+					title : "添加大类型",
+					h : "415px",
+					w : "550px",
+					url : "${base}/admin/line/line_add_turn.do",
+					params : myparams,
+					callback : function(data) {
+						var index = parent.layer.getFrameIndex(window.name); //获取窗口索引  
+						parent.layer.close(index);//关闭弹出的子页面窗口 
+						line.initTree("line");
+					}
+				});
+			}
+		});
+	});
+	
+	function remove() {
+		var node = line.getNode();
+		line.remove({
+			msg : "确定删除该节点吗?",
+			url : "${base}/admin/line/line_del_sub.do",
+			params : {
+				id : node.id
+			}
+		});
+	}
+	
+	function edit() {
+		var node = line.getNode();
+		top.Dg.open2({
+			title : "修改大类型",
+			h : "415px",
+			w : "550px",
+			url : "${base}/admin/line/line_edit_turn.do",
+			params : {lineId:node.id},
+			callback : function(data) {
+				line.initTree("line");
+			}
+		});
+	}
+</script>
+</body>

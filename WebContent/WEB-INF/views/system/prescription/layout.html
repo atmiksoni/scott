@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<@p.resource types="Jquery,Easyui,AnyDataGrid,Tree,NiceScroll"/>
+<script type="text/javascript">
+  var myparams = {
+ 
+  };
+  $(function() {
+    niceScroll(".panel-body");
+    var tree = new Tree();
+    tree.queryParams = myparams;
+    tree.url = "prescription_tree_data.do";
+    tree.initTree("mytree");
+    tree.onClick = onClick;
+  });
+  function onClick(node) {
+    prescription.search(myparams);
+  }
+</script>
+</head>
+<body class="easyui-layout" style="overflow-y: hidden">
+ <div region="center" href="prescription_list_turn.do" style="padding: 0px; overflow: hidden; border: none"></div>
+</body>
+</html>

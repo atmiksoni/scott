@@ -1,0 +1,124 @@
+<body style="overflow: hidden">
+	<script type="text/javascript">
+		var organization;
+		$(function() {
+			organization = new Dd("organization");
+			organization.url = "organization_list_data.do";
+			organization.title = "公司管理";
+			organization.colM = [ [ {
+				title : "主键",
+				field : "organizationId",
+				alias : "o",
+				hidden : true,
+				width : 100,
+				align : "center"
+			}, {
+				title : "所属区域",
+				field : "areaName",
+				alias : "a",
+				width : 100,
+				align : "center"
+			}, {
+				title : "公司名称",
+				field : "organizationName",
+				alias : "o",
+				width : 100,
+				align : "center"
+			}, {
+				title : "联系人",
+				field : "linkMan",
+				alias : "o",
+				width : 100,
+				align : "center"
+			}, {
+				title : "联系电话",
+				field : "organTel",
+				alias : "o",
+				width : 100,
+				align : "center"
+			}, {
+				title : "地址",
+				field : "address",
+				alias : "o",
+				width : 100,
+				align : "center"
+			}, {
+				title : "创建日期",
+				field : "createDate",
+				alias : "o",
+				width : 100,
+				align : "center"
+			} ] ];
+
+			organization.toolbar = [ {
+				id : "organization_add",
+				text : "添加",
+				disabled : true,
+				iconCls : "icon-add",
+				handler : function() {
+					organization.open2({
+						title : "添加公司",
+						h : "60%",
+						w : "40%",
+						url : "organization_add_turn.do",
+						params : myparams
+					});
+				}
+			}, {
+				id : "organization_edit",
+				text : "修改",
+				iconCls : "icon-edit",
+				disabled : true,
+				handler : function() {
+					organization.updata2({
+						title : "修改公司",
+						h : "60%",
+						w : "40%",
+						url : "organization_edit_turn.do",
+						params : {
+							organizationId : organization.rowKey
+						}
+					});
+				}
+			}, {
+				id : "organization_del",
+				text : "删除",
+				iconCls : "icon-remove",
+				disabled : true,
+				handler : function() {
+					organization.remove({
+						url : "organization_del_sub.do",
+						params : {
+							organizationId : organization.rowKey
+						}
+					});
+				}
+			} ];
+			organization.param = myparams;
+			organization.onClickRow = function(rowIndex, rowData) {
+				$("#organization_edit,#organization_del").linkbutton("enable");
+			}
+			organization.onLoadSuccess = function(data) {
+				$("#organization_edit,#organization_del").linkbutton("disable");
+			};
+			organization.LoadDataGrid();
+			$('#search').linkbutton({
+				iconCls : 'icon-search',
+				onClick : function() {
+					myparams.organizationName = $("#organizationName").val();
+					organization.search(myparams);
+				}
+			});
+		});
+	</script>
+	<div fit="true" class="easyui-layout">
+		<div region="north" title="查询条件" style="height: 70px;">
+			<div class="pannel_search">
+				公司名称：<input type="text" class="easyui-textbox" id="organizationName" /> <a href="javascript:;" id="search">查询</a>
+			</div>
+		</div>
+		<div region="center" style="overflow: hidden; border: none;">
+			<table fit="true" namespace="organization" id="organization" class="datagrid"></table>
+		</div>
+	</div>
+</body>

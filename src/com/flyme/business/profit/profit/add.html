@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll"/>
+</head>
+<body>
+<@p.valid id="profit" action="profit_add_sub.do" class="layui-form" layui=true>
+ <@p.legend text="${(languaged !='')?string('Hint information','提示信息')}"/> 
+         <div class="layui-form-item"> 
+           <@p.layinput label="${(languaged !='')?string('manpower','劳动力成本')}"  datarule="required;" datamsgrequired="${(required)!''}" name="manpower" />
+	     </div>
+         <div class="layui-form-item"> 
+           <@p.layinput label="${(languaged !='')?string('partCost','零件成本')}"  datarule="required;" datamsgrequired="${(required)!''}" name="partCost" />
+	     </div>
+         <div class="layui-form-item"> 
+           <@p.layinput label="${(languaged !='')?string('totalCost','总成本')}"  datarule="required;" datamsgrequired="${(required)!''}" name="totalCost" />
+	     </div>
+         <div class="layui-form-item"> 
+           <@p.layinput label="${(languaged !='')?string(' profits','加价后的利润')}"  datarule="required;" datamsgrequired="${(required)!''}" name=" profits" />
+	     </div>
+</@p.valid>
+</body>
+</html>

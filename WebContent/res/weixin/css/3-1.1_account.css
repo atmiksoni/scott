@@ -1,0 +1,24 @@
+.account {font-size: 0.75rem;}
+.remain {margin: 48px 0 0;overflow: hidden;width: 94%;padding: 3%;background-color: white;border-bottom: 1px solid #f1f1f1;}
+.remain div {float: left;}
+.remain .left {width: 25%;}
+.remain .left img {width: 70%;}
+.integral .remain .left img {width: 80%;margin-top: 0.6rem;}
+.remain .right {width: 75%;}
+.remain .right p {font-size: 0.65rem;color: #666;}
+.remain .right h1 {font-size: 1.8rem;color: #333;line-height: 2rem;}
+ul li {background-color: white;}
+.recharge ul, .consume ul {margin-bottom: 0.5rem;}
+.recharge ul li span, .consume ul li span {float: right;}
+.recharge ul li, .consume ul li {width: 94%;padding: 0 3%;color: #666;}
+.recharge ul li:first-child, .consume ul li:first-child {padding-top: 0.5rem;}
+.recharge ul li:first-child span, .consume ul li:first-child span {font-size: 0.6rem;color: #999;}
+.recharge ul li:last-child, .consume ul li:last-child {padding-bottom: 0.5rem;}
+.recharge ul li:last-child em, .consume ul li:last-child em {font-size: 0.6rem;border: 1px solid #DCDCDC;border-radius: 3px;padding: 0.2rem;}
+.recharge ul li:last-child span, .consume ul li:last-child span {color: #333;}
+.weui_navbar_item.weui_bar_item_on {background-color: #fff;color: #E63C2D;}
+.weui_navbar_item {color: #666;}
+
+
+
+

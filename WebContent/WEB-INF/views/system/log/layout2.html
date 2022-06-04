@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<@p.resource types="Jquery,Easyui,AnyDataGrid,ComBo,Tree,NiceScroll"/>
+<script type="text/javascript" src="${base}/plug-in/easyui/extends/datagrid-detailview.js"></script>
+<script type="text/javascript">
+	var myparams = {
+    };
+    $(function() {
+	    niceScroll(".panel-body");
+	    var tree = new Tree();
+	    tree.queryParams = myparams;
+	    tree.url = "log_tree_data.do";
+	    tree.initTree("mytree");
+	    tree.onClick = onClick;
+
+	    if (top.userType == 2) {
+		    var community = new Cb("communityId");
+		    community.width = 180;
+		    community.url = 'getCommunity.do';
+		    community.showDefault = true;
+		    community.onSelect = function(node) {
+			    myparams.communityId = node.id;
+			    log.search(myparams);
+		    }
+		    community.LoadCombo();
+	    } else {
+		    $('#layout1').layout('remove', 'north');
+	    }
+
+    });
+    function onClick(node) {
+	    myparams.type = node.code;
+	    log.search(myparams);
+    }
+</script>
+</head>
+<body class="easyui-layout" style="overflow-y: hidden">
+ <div region="west" split="true" minWidth="230" maxWidth="230" title="日志类型" style="overflow: hidden; border-bottom: none">
+
+  <div id="layout1" class="easyui-layout" fit="true" style="border: none; overflow-y: hidden;">
+   <div region="north" style="border-top: none; border-left: none; border-right: none; height: 28px;">
+    <div class="datagrid-toolbar" style="border: none; overflow-y: hidden; height: 25px;">
+     <select id="communityId"></select>
+    </div>
+   </div>
+
+   <div region="center" style="border: none; overflow-y: hidden;" style="padding: 0px;">
+    <ul id="mytree" class="ztree"></ul>
+   </div>
+  </div>
+ </div>
+ <div region="center" href="log_list_turn.do" style="padding: 0px; overflow: hidden; border: none"></div>
+</body>
+</html>

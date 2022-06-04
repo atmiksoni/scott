@@ -1,0 +1,100 @@
+<body style="overflow: hidden">
+ <script type="text/javascript">
+      var rpcoupon;
+    $(function() {
+      rpcoupon = new Dd("rpcoupon");
+      rpcoupon.url = "rpcoupon_list_data.do";
+      rpcoupon.title = "充值套餐优惠券中间信息";
+      rpcoupon.colM = [ [ {
+        field : "ck",
+        checkbox : true,
+        align : "center"
+      }, {
+        title : "主键",
+        field : "rpcouponId",
+        alias : "r",
+        hidden:true
+      } ,{
+        title : "关联优惠券表",
+        field : "couponId",
+        alias : "r",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "创建时间",
+        field : "createDate",
+        alias : "r",
+        width : 100,
+        align : "center"
+      } ] ];
+
+      rpcoupon.toolbar = [ {
+        id : "rpcoupon_add",
+        text : "添加",
+        iconCls : "icon-add",
+        handler : function() {
+          rpcoupon.open2({
+            title : "添加充值套餐优惠券中间",
+            h : "70%",
+			w : "45%",
+            url : "rpcoupon_add_turn.do",
+            params : myparams
+          });
+        }
+      }, {
+        id : "rpcoupon_edit",
+        text : "修改",
+        iconCls : "icon-edit",
+        disabled : true,
+        handler : function() {
+          rpcoupon.updata2({
+            title : "修改充值套餐优惠券中间",
+            h : "70%",
+			w : "45%",
+            url : "rpcoupon_edit_turn.do",
+            params : {
+                rpcouponId : rpcoupon.rowKey
+            }
+		  });
+        }
+      }, {
+        id : "rpcoupon_del",
+        text : "删除充值套餐优惠券中间",
+        iconCls : "icon-remove",
+        disabled : true,
+        handler : function() {
+          rpcoupon.remove({
+             url : "rpcoupon_del_sub.do",
+             params : {
+                rpcouponId : rpcoupon.rowKey
+             }
+		  });
+        }
+      } ];
+      rpcoupon.param = myparams;
+      rpcoupon.onClickRow = function(rowIndex, rowData) {
+       $("#rpcoupon_edit,#rpcoupon_del").linkbutton("enable");
+      }
+      rpcoupon.onLoadSuccess = function(data) {
+       $("#rpcoupon_edit,#rpcoupon_del").linkbutton("disable");
+      };
+      rpcoupon.LoadDataGrid();
+      $('#searchd').linkbutton({
+        iconCls : 'icon-search',
+        onClick : function() {
+          rpcoupon.search(myparams);
+        }
+      });
+    });
+  </script>
+ <div fit="true" class="easyui-layout">
+  <div region="north" title="查询条件" style="height: 70px;">
+   <div class="pannel_search">
+       <a href="javascript:;" id="searchd">查询</a>
+   </div>
+  </div>
+  <div region="center" style="overflow: hidden;border: none;">
+   <table fit="true" namespace="rpcoupon" id="rpcoupon" class="datagrid"></table>
+  </div>
+ </div>
+</body>

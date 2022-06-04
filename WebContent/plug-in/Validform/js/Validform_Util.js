@@ -1,0 +1,5 @@
+VF={};
+VF.callback=function()
+{
+	
+}

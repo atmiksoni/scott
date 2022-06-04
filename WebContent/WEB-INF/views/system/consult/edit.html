@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll,zui,EasyUI"/>
+</head>
+<body>
+	<@p.valid id="consult" action="consult_edit_sub.do"  class="layui-form" layui=true>
+	<input type="hidden" name="consultId" value="${consult.consultId}" />
+	<fieldset class="layui-elem-field layui-field-title">
+		<legend>详细信息</legend>
+	</fieldset>
+	<div class="layui-form-item">
+		<@p.text label="反馈人" value="${accountInfo.userName}"/>
+	</div>
+	<div class="layui-form-item">
+		<@p.text label="反馈内容" value="${consult.content}"/>
+	</div>
+	<div class="layui-form-item">
+			<@p.textare label="<text style='font-weight:bold'>回复内容</text>"  value="${consult.reply}" name="reply" width=300/>
+		</div>
+	</div>
+	</@p.valid>
+</body>
+</html>

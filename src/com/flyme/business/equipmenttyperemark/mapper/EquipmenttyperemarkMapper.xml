@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Equipmenttyperemark">
+	<!-- Result Map 必须声明主键字段-->
+	<resultMap type="Equipmenttyperemark" id="BaseResultMap">
+		<result column="equipmentTypeRemarkId" property="equipmentTypeRemarkId" />
+	</resultMap>
+	<!--全部结果集 -->
+	<resultMap type="Equipmenttyperemark" id="ResultMap" extends="BaseResultMap">
+	</resultMap>
+	<!--分页结果集 -->
+	<resultMap type="Equipmenttyperemark" id="PagerResultMap" extends="BaseResultMap">
+	</resultMap>
+	<!--字段定义 -->
+	<sql id="Base_Column_List">
+		e.*
+    </sql>
+    <!-- 表名 -->
+	<sql id="t_name">t_b_Equipmenttyperemark</sql>
+	<!-- 别名 -->
+	<sql id="t_alias"> t_b_Equipmenttyperemark as e</sql>
+	<!--tree字段-->
+	<sql id="Tree_Column_List">
+		e.equipmentTypeRemarkId
+	</sql>
+	<!-- 查询条件 -->
+	<sql id="andOther">
+		<trim prefix="where" prefixOverrides="and | or ">
+				<if test="equipmentTypeRemarkId != null and equipmentTypeRemarkId !='' "> and e.equipmentTypeRemarkId = #{equipmentTypeRemarkId} </if>
+				<if test="equipmentTypeRemarkNameZn != null and equipmentTypeRemarkNameZn !='' "> and e.equipmentTypeRemarkNameZn = #{equipmentTypeRemarkNameZn} </if>
+				<if test="equipmentTypeRemarkNameEn != null and equipmentTypeRemarkNameEn !='' "> and e.equipmentTypeRemarkNameEn = #{equipmentTypeRemarkNameEn} </if>
+				<if test="indexs != null and indexs !='' "> and e.indexs = #{indexs} </if>
+				<if test="createDate != null and createDate !='' "> and e.createDate = #{createDate} </if>
+		</trim>
+	</sql>
+	<sql id="limit">
+		<if test="limit != null"> limit 0,#{limit}</if>
+	</sql>
+	
+	<!--定义外键表join -->
+	<sql id="join">
+	</sql>
+	
+	<!-- 保存对象 -->
+	<insert id="insert" parameterType="Equipmenttyperemark">
+		insert into
+		<include refid="t_name" />
+		(
+			equipmentTypeRemarkId,
+			equipmentTypeRemarkNameZn,
+			equipmentTypeRemarkNameEn,
+			indexs,
+			createDate
+		)
+		values(
+			#{equipmentTypeRemarkId,jdbcType=VARCHAR},
+			#{equipmentTypeRemarkNameZn,jdbcType=VARCHAR},
+			#{equipmentTypeRemarkNameEn,jdbcType=VARCHAR},
+			#{indexs,jdbcType=INTEGER},
+			#{createDate,jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	<!-- 批量插入-->
+	<insert id="batchInsert" parameterType="list">
+		insert into
+		<include refid="t_name" />
+		(
+			equipmentTypeRemarkId,
+			equipmentTypeRemarkNameZn,
+			equipmentTypeRemarkNameEn,
+			indexs,
+			createDate
+		)
+		values
+		<foreach collection="list" item="item" index="index" separator=",">
+		(
+			#{item.equipmentTypeRemarkId,jdbcType=VARCHAR},
+			#{item.equipmentTypeRemarkNameZn,jdbcType=VARCHAR},
+			#{item.equipmentTypeRemarkNameEn,jdbcType=VARCHAR},
+			#{item.indexs,jdbcType=INTEGER},
+			#{item.createDate,jdbcType=VARCHAR}
+		)
+		</foreach>
+	</insert>
+	
+	<!--更新对象 -->
+	<update id="update" parameterType="Equipmenttyperemark">
+		update
+		<include refid="t_name" />
+		<trim prefix="set" suffixOverrides=",">
+			<if test="equipmentTypeRemarkNameZn != null">equipmentTypeRemarkNameZn = #{equipmentTypeRemarkNameZn}, </if>
+			<if test="equipmentTypeRemarkNameEn != null">equipmentTypeRemarkNameEn = #{equipmentTypeRemarkNameEn}, </if>
+			<if test="indexs != null">indexs = #{indexs}, </if>
+		</trim>
+		<where>equipmentTypeRemarkId = #{equipmentTypeRemarkId}</where>
+	</update>
+	
+	<!-- 批量更新 -->
+	<update id="batchUpdate" parameterType="list">
+		<foreach collection="list" item="item" index="index" separator=";">
+			update 
+			<include refid="t_name" />
+			<trim prefix="set" suffixOverrides=",">
+				<if test="item.equipmentTypeRemarkId != null">equipmentTypeRemarkId = #{item.equipmentTypeRemarkId}, </if>
+				<if test="item.equipmentTypeRemarkNameZn != null">equipmentTypeRemarkNameZn = #{item.equipmentTypeRemarkNameZn}, </if>
+				<if test="item.equipmentTypeRemarkNameEn != null">equipmentTypeRemarkNameEn = #{item.equipmentTypeRemarkNameEn}, </if>
+				<if test="item.indexs != null">indexs = #{item.indexs}, </if>
+				<if test="item.createDate != null">createDate = #{item.createDate} </if>
+			</trim>
+			<where>equipmentTypeRemarkId = #{item.equipmentTypeRemarkId}</where>
+		</foreach>
+	</update>
+	
+	<!--根据主键查找对象 -->
+	<select id="findById" resultMap="ResultMap" parameterType="map">
+		select * 
+		from
+		<include refid="t_name" />
+		<where>equipmenttyperemarkId = #{equipmenttyperemarkId}</where>
+	</select>
+	<!--查找对象 -->
+	<select id="findMapById" resultType="CriterionMap" parameterType="Map">
+		select * from
+		<include refid="t_alias" />
+		<include refid="andOther" />
+	</select>
+	<!--查找对象 -->
+	<select id="findMapByMap" resultType="CriterionMap" parameterType="Map">
+		select * from
+		<include refid="t_alias" />
+		<include refid="andOther" />
+	</select>
+	<!--查找对象 -->
+	<select id="findByMap" resultMap="ResultMap" parameterType="Map">
+		select * from
+		<include refid="t_alias" />
+		<include refid="andOther" />
+	</select>
+		<!--查询对象是否存在 -->
+	<select id="countById" resultType="Int" >
+		select count(equipmentTypeRemarkId)
+		from
+		<include refid="t_name" />
+		<where>equipmentTypeRemarkId = #{equipmentTypeRemarkId}</where>
+	</select>
+	<!--查找对象 -->
+	<select id="findByCq" resultMap="ResultMap" parameterType="CriterionMap">
+		select
+		*
+		from
+		<include refid="t_alias" />
+		<include refid="join" />
+	</select>
+	<!--批量删除 -->
+	<delete id="deleteByIds" parameterType="list">
+		delete
+		from
+		<include refid="t_name" />
+		where equipmenttyperemarkId  in
+		<foreach collection="list" item="model" open="(" separator="," close=")">
+			#{model}
+		</foreach>
+	</delete>
+
+	<!--根据主键删除 -->
+	<delete id="delete" parameterType="String">
+		delete
+		from
+		<include refid="t_name" />
+		<where>equipmentTypeRemarkId = #{equipmentTypeRemarkId}</where>
+	</delete>
+	<!--根据主键删除 -->
+	<delete id="deleteByMap" parameterType="map">
+		delete e.*
+		from
+		<include refid="t_alias" />
+		<include refid="andOther" />
+	</delete>
+	<!--统计数量 -->
+	<select id="count" resultType="Integer" parameterType="map">
+		select count(*)
+		from
+		<include refid="t_alias" />
+		<include refid="andOther" />
+	</select>
+	<!-- 返回类型为BaseResultMap的结果集 - -->
+	<select id="selectByMap" parameterType="Map" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from
+		<include refid="t_alias" />
+		<include refid="andOther" />
+		<include refid="limit" />
+	</select>
+	<!--查找主键集合 -->
+	<select id="selectIdsByMap" resultType="String" parameterType="Map">
+		select equipmenttyperemarkId from
+		<include refid="t_alias" />
+		<include refid="andOther" />
+	</select>
+	<!-- 返回类型为CriterionMap的结果集 -->
+	<select id="selectMapResult" parameterType="Map" resultType="CriterionMap">
+		select
+		<include refid="Base_Column_List" />
+		from
+		<include refid="t_alias" />
+		<include refid="andOther" />
+		<include refid="limit" />
+	</select>
+	<!--加载全部数据-->
+	<select id="loadAll" resultMap="BaseResultMap">
+		select 
+		<include refid="Base_Column_List" />
+		from 
+		<include refid="t_alias"/>
+	</select>
+	
+	<!--Tree加载数据 -->
+	<select id="treeData" resultMap="BaseResultMap">
+		select
+		<include refid="Tree_Column_List" />
+		from
+		<include refid="t_name"/>
+		<include refid="andOther" />
+	</select>
+	<!--根据cq查找对象 -->
+	<select id="selectMap" resultType="CriterionMap" parameterType="PagerInfo">
+		select
+		${sqlfields}
+		from
+		<include refid="t_alias" />
+		<include refid="join" />
+	</select>
+	<!-- 分页列表 -->
+	<select id="pagerList" parameterType="PagerInfo" resultMap="PagerResultMap">
+		select
+		${sqlfields}
+		from
+		<include refid="t_alias" />
+		<include refid="join" />
+	</select>
+	<!-- 统计列表 -->
+	<select id="totalMap" parameterType="PagerInfo" resultMap="PagerResultMap">
+		select
+		${totalSqlField}
+		from
+		<include refid="t_alias" />
+		<include refid="join" />
+	</select>
+	<!-- 分页列表 -->
+	<select id="pagerMap" parameterType="PagerInfo" resultType="CriterionMap">
+		select
+		${sqlfields}
+		from
+		<include refid="t_alias" />
+		<include refid="join" />
+	</select>
+</mapper>

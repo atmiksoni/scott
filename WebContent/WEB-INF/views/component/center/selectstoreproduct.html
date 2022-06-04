@@ -1,0 +1,124 @@
+<body style="overflow: hidden">
+	<script type="text/javascript">
+		var storeproduct;
+		$(function() {
+			storeproduct = new Dd("storeproduct");
+			storeproduct.url = "select_storeproduct_data.do";
+			storeproduct.title = "门店产品信息";
+			storeproduct.colM = [ [
+					{
+						title : "主键",
+						field : "storeProductId",
+						alias : "s",
+						hidden : true
+					},
+					{
+						title : "产品名称",
+						field : "productName",
+						alias : "product",
+						width : 100,
+						align : "center"
+					},
+					{
+						title : "主图",
+						field : "productHead",
+						alias : "product",
+						width : 100,
+						align : "center",
+						formatter : function(value, row, index) {
+							return '<img width="80px;" align="center" height="50px;" src="../../'
+									+ row.productHead + '" />';
+						}
+					}, {
+						title : "平台最高价格",
+						field : "productPriceMax",
+						alias : "product",
+						width : 100,
+						align : "center",
+						formatter : function(value, row, index) {
+							return  row.productPriceMax.toFixed(2);
+						}
+					}, {
+						title : "平台最低价格",
+						field : "productPriceMin",
+						alias : "product",
+						width : 100,
+						align : "center",
+						formatter : function(value, row, index) {
+							return  row.productPriceMin.toFixed(2);
+						}
+					}, {
+						title : "门店价格",
+						field : "storeProductPrice",
+						alias : "s",
+						width : 100,
+						align : "center",
+						formatter : function(value, row, index) {
+							return  row.storeProductPrice.toFixed(2);
+						}
+					}, {
+						title : "详细介绍",
+						field : "content",
+						alias : "s",
+						width : 100,
+						hidden : true,
+						align : "center"
+					}, {
+						title : "排序",
+						field : "indexs",
+						alias : "s",
+						width : 100,
+						hidden : true,
+						align : "center"
+					}, {
+						title : "备注",
+						field : "remark",
+						alias : "s",
+						width : 100,
+						hidden : true,
+						align : "center"
+					}, {
+						title : "创建时间",
+						field : "createDate",
+						alias : "s",
+						width : 100,
+						align : "center"
+					} ] ];
+			
+			myparams.appointmentId=sessionStorage.getItem("appointmentId");
+			storeproduct.toolbar = [ ];
+			storeproduct.param = myparams;
+			storeproduct.onClickRow = function(rowIndex, rowData) {
+			}
+			storeproduct.onLoadSuccess = function(data) {
+			};
+			storeproduct.LoadDataGrid();
+			$('#searchs').linkbutton({
+				iconCls : 'icon-search',
+				onClick : function() {
+					myparams.storeProductName = $("#storeProductName").val();
+					storeproduct.search(myparams);
+				}
+			});
+			$('#sub').linkbutton({
+				iconCls : 'icon-save',
+				onClick : function() {
+					func.setTextBox(storeproduct.getSelectedRow());
+					var index = parent.layer.getFrameIndex(window.name); //获取窗口索引  
+					parent.layer.close(index);//关闭弹出的子页面窗口 
+				}
+			});
+		});
+	</script>
+	<div fit="true" class="easyui-layout">
+		<div region="north" title="查询条件" style="height: 70px;">
+			<div class="pannel_search">
+				产品名称：<input type="text" class="easyui-textbox" id="storeProductName" /> <a href="javascript:;" id="searchs">查询</a>
+				<a href="javascript:;" id="sub">确认</a>
+			</div>
+		</div>
+		<div region="center" style="overflow: hidden; border: none;">
+			<table fit="true" namespace="storeproduct" id="storeproduct" class="datagrid"></table>
+		</div>
+	</div>
+</body>

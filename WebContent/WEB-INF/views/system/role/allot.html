@@ -1,0 +1,43 @@
+<body>
+ <@p.resource types="Tree,NiceScroll"/>
+ <div class="datagrid-toolbar">
+  <a href="javascript:;" id="btn_save" class="easyui-linkbutton" plain="true" icon="icon-save">${(languaged !='')?string('preserve','保存')}</a>
+ </div>
+ <script type="text/javascript">
+		var resourceTree;
+        $(function() {
+	        resourceTree = new Tree();
+	        resourceTree.checkbox = true;
+	        resourceTree.url = "allot_role_treedata.do?roleId=${(role.roleId)!}&roleCode=${(role.roleCode)!}";
+	        resourceTree.onLoadSuccess = function(node, data) {
+		        resourceTree.expandAll();
+		        var options = resourceTree.getOptions();
+		        $(options.checkeds).each(function(i, value) {
+			        var node = $('#resourceTree').tree('find', value);
+			        if (resourceTree.isLeaf(node)) {
+				        resourceTree.checkNode(node);
+			        }
+		        });
+	        }
+	        resourceTree.initTree("resourceTree");
+	        $("#btn_save").on("click", save);
+        });
+
+        function save() {
+	        var options = $("#resourceTree").tree("options");
+	        var newchecked = resourceTree.getCheckedIds();
+	        var result = top.Dg.z.checkHas(options.checkeds, newchecked);
+	        if (result.length > 0) {
+		        var pram = {
+		            roleId : "${role.roleId}",
+		            roleCode : "${role.roleCode}",
+		            result : JSON.stringify(result)
+		        };
+		        Fm.ajax("allot_role_save.do", pram, function(data) {
+			        options.checkeds = newchecked;
+		        });
+	        }
+        }
+	</script>
+ <ul id="resourceTree"></ul>
+</body>

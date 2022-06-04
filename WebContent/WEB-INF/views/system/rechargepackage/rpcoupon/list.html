@@ -1,0 +1,114 @@
+<body style="overflow: hidden">
+ <script type="text/javascript">
+      var rpcoupon;
+    $(function() {
+      rpcoupon = new Dd("rpcoupon");
+      rpcoupon.url = "../rpcoupon/rpcoupon_list_data.do?rechargepackageId=${rechargepackageId}";
+      rpcoupon.title = "充值套餐优惠券信息";
+      rpcoupon.colM = [ [ /* {
+        field : "ck",
+        checkbox : true,
+        align : "center"
+      }, */ {
+        title : "主键",
+        field : "rpcouponId",
+        alias : "r",
+        hidden:true
+      } ,{
+        title : "关联优惠券表",
+        field : "couponId",
+        alias : "r",
+        width : 100,
+        align : "center",
+        hidden:true
+      },{
+          title : "充值套餐表",
+          field : "rechargePackageId",
+          alias : "r",
+          width : 100,
+          align : "center",
+          hidden:true
+        },{
+          title : "优惠券名称",
+          field : "couponName",
+          alias : "c",
+          width : 100,
+          align : "center"
+        } ,{
+          title : "优惠券金额",
+          field : "couponPrice",
+          alias : "c",
+          width : 100,
+          align : "center"
+        } ,{
+          title : "满N元可用",
+          field : "targetPrice",
+          alias : "c",
+          width : 100,
+          align : "center"
+        } ,{
+          title : "有效期(天)",
+          field : "validity",
+          alias : "c",
+          width : 100,
+          align : "center"
+        } ,{
+          title : "类型",
+          field : "couponType",
+          alias : "c",
+          width : 100,
+          align : "center",
+          
+        } ,{
+        title : "创建时间",
+        field : "createDate",
+        alias : "r",
+        width : 100,
+        align : "center",
+        hidden:true
+      } ] ];
+
+      rpcoupon.toolbar = [ {
+        id : "rpcoupon_del",
+        text : "删除优惠券",
+        iconCls : "icon-remove",
+        disabled : true,
+        handler : function() {
+          rpcoupon.remove({
+             url : "rpcoupon_del_sub.do",
+             params : {
+                rpcouponId : rpcoupon.rowKey
+             }
+		  });
+        }
+      } ];
+      rpcoupon.param = myparams;
+      rpcoupon.onClickRow = function(rowIndex, rowData) {
+       $("#rpcoupon_edit,#rpcoupon_del").linkbutton("enable");
+      }
+      rpcoupon.onLoadSuccess = function(data) {
+       $("#rpcoupon_edit,#rpcoupon_del").linkbutton("disable");
+      };
+      rpcoupon.LoadDataGrid();
+      $('#sear').linkbutton({
+        iconCls : 'icon-search',
+        onClick : function() {
+        	myparams.couponName=$("#couponName").val();
+          rpcoupon.search(myparams);
+        }
+      });
+    });
+  </script>
+ <div fit="true" class="easyui-layout">
+  <div region="north" title="查询条件" style="height: 70px;">
+   <div class="pannel_search">
+   	优惠券名称：<input type="text" class="easyui-textbox" id="couponName" />
+       <a href="javascript:;" id="sear">查询</a>
+   </div>
+  </div>
+  <div region="center" style="overflow: hidden;border: none;">
+   <table fit="true" namespace="rpcoupon" id="rpcoupon" class="datagrid"></table>
+  </div>
+
+ </div>
+</body>

@@ -1,0 +1,96 @@
+<body style="overflow: hidden">
+	<script type="text/javascript">
+		var cooperate;
+		$(function() {
+			cooperate = new Dd("cooperate");
+			cooperate.url = "cooperate_detial_data.do?companyId=${companyId}";
+			cooperate.title = "产品信息";
+			cooperate.colM = [ [ {
+				title : "主键",
+				field : "cooperateId",
+				alias : "c",
+				hidden : true,
+				width : 100,
+				align : "center"
+			}, {
+				title : "合作项目",
+				field : "cooperateTitle",
+				alias : "c",
+				width : 100,
+				align : "center"
+			}, {
+				title : "合作条件",
+				field : "cooperateCondition",
+				alias : "c",
+				width : 100,
+				align : "center"
+			}, {
+				title : "截止时间",
+				field : "expiryDate",
+				alias : "c",
+				width : 100,
+				align : "center"
+			}, {
+				title : "地址",
+				field : "address",
+				alias : "c",
+				width : 100,
+				align : "center"
+			}, {
+				title : "发布人",
+				field : "userName",
+				alias : "accountInfo",
+				width : 100,
+				align : "center"
+			}] ];
+			cooperate.toolbar = [{
+				id : "cooperate_edit",
+				text : "编辑",
+				iconCls : "icon-edit",
+				disabled : true,
+				handler : function() {
+					cooperate.updata2({
+						title : "编辑供货信息",
+						h : "70%",
+						w : "40%",
+						url : "cooperate_edit_turn.do",
+						params : {
+							cooperateId : cooperate.rowKey
+						}
+					});
+				}
+			},{
+				id : "cooperate_del",
+				text : "删除",
+				iconCls : "icon-remove",
+				disabled : true,
+				handler : function() {
+					cooperate.remove({
+						url : "cooperate_del_sub.do",
+						params : {
+							cooperateId : cooperate.rowKey
+						}
+					});
+				}
+			}];
+			cooperate.param = myparams;
+			cooperate.onClickRow = function(rowIndex, rowData) {
+			  $("#cooperate_edit,#cooperate_del").linkbutton("enable");
+			}
+			cooperate.onLoadSuccess = function(data) {
+		      $("#cooperate_edit,#cooperate_del").linkbutton("disable");
+		    };
+		    cooperate.LoadDataGrid();
+		});
+	</script>
+	<div fit="true" class="easyui-layout">
+		<!-- <div region="north" title="查询条件" style="height: 70px;">
+			<div class="pannel_search">
+				单位名称：<input type="text" class="easyui-textbox" id="compName" name="compName" /> <a href="javascript:;" id="search">查询</a> <a href="javascript:;" id="export">导出</a>
+			</div>
+		</div> -->
+		<div region="center" style="overflow: hidden; border: none;">
+			<table fit="true" namespace="cooperate" id="cooperate" class="datagrid"></table>
+		</div>
+	</div>
+</body>

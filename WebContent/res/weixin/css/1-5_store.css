@@ -1,0 +1,18 @@
+.store .city {position: fixed;top: 48px;left: 0;width: 100%;height: 48px;background-color: white;font-size: 0.50rem;border-bottom: 1px solid #DCDCDC;line-height: 48px;text-indent: 0.75rem;}
+.city a {position: absolute;top: 0;right: 0.5rem;}
+.city a img {height: 1rem;vertical-align: middle;}
+.container {position: fixed;top:0px;left: 0;width: 100%;width:100%;height:100%;overflow: auto;}
+.tabs {position: fixed;top:45px;left: 0;width:30%;height:100%;overflow: scroll;}
+.tabs li {float: left;width: 100%;height: 1.8rem;border-bottom: 1px solid #DCDCDC;line-height:1.8rem;font-size: 0.5rem;text-indent:0.75rem;box-sizing: border-box;}
+.tabs li a {color:  #666;}
+.tabs li.active {background-color: white;}
+.tab_container {background-color: white;position: fixed;top:45px;right: 0;width: 70%;height:100%;overflow: scroll;}
+.tab_content dl dd {border-bottom: 1px solid #DCDCDC;box-sizing: border-box;}
+.tab_content dl dd:last-child {margin-bottom: 97px;}
+.tab_content dl dt {font-size: 0.6rem;color: #666;padding: 0 4%;line-height: 1.25rem;background-color: #F0F0F6;}
+.tab_content dl dd h3 {font-size: 0.75rem;padding: 0 4%;line-height: 2rem;}
+.tab_content dl dd h4 {font-size: 0.6rem;padding: 2% 4%;}
+.tab_content p {font-size: 0.6rem;color: #999;padding: 2% 4%;}
+
+
+

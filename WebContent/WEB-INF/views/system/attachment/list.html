@@ -1,0 +1,106 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,Easyui,AnyDataGrid"/>
+</head>
+<body class="easyui-layout" style="overflow-y: hidden;">
+ <script type="text/javascript">
+    var attachment;
+    $(function() {
+      attachment = new Dd("attachment");
+      attachment.colM = [ [ {
+        title : "主键",
+        alias : "m",
+        field : "attachMentId",
+        width : 10,
+        align : "center",
+        hidden : true
+      }, {
+        title : "文件名",
+        alias : "m",
+        field : "title",
+        width : 200,
+        align : "center"
+      }, {
+        title : "上传人",
+        alias : "m",
+        field : "user_userId",
+        width : 80,
+        hidden : true,
+        align : "center"
+      }, {
+        title : "上传人",
+        alias : "m",
+        field : "user_userName",
+        width : 80,
+        align : "center"
+      }, {
+        title : "文件大小",
+        alias : "m",
+        field : "fileSize",
+        width : 100,
+        align : "center"
+      }, {
+        title : "文件类型",
+        alias : "m",
+        field : "extend",
+        width : 100,
+        align : "center"
+      }, {
+        title : "上传日期",
+        alias : "m",
+        field : "createDate",
+        width : 80,
+        align : "center"
+      }, {
+        title : "操作",
+        alias : "m",
+        field : "superviseStatus_opt",
+        width : 180,
+        align : "center",
+        formatter : function(value, rec) {
+          var href = '<a href="javascript:;" onclick="downloadfile(\'' + rec.attachMentId + '\')" style="color:blue" id="download">[下载]</a>';
+          if (rec.user_userId == "${userId}") {
+            href += '<a href="javascript:;" onclick="delfile(\'' + rec.attachMentId + '\')" style="color:blue" id="delfile">[删除]</a>';
+          }
+          return href;
+        }
+      } ] ];
+
+      attachment.toolbar = [ {
+        id : "attachment_add",
+        text : "添加附件",
+        iconCls : "icon-add",
+        handler : function() {
+          top.Dg.uploadfile({
+            url : "${base}/admin/upload/attachment_upload_turn.do?businessKey=${businessKey}&subClassName=${subClassName}"
+          });
+        }
+      } ];
+      attachment.param = {
+        businessKey : "${businessKey}",
+        subClassName : "${subClassName}"
+      };
+      attachment.url = "attachment_list_data.do";
+      attachment.LoadDataGrid();
+    });
+
+    function downloadfile(attachMentId) {
+      window.location.href = "${base}/admin/attachment/filedownload.do?attachMentId=" + attachMentId;
+    }
+
+    function delfile(fileId) {
+      attachment.confirmajax({
+        title : "文件删除",
+        msg : "确定删除该附件吗？",
+        url : "delete.do",
+        params : {
+          fileId : fileId
+        }
+      });
+    }
+  </script>
+ <table id="attachment" border="false" fit="true" namespace="attachment" class="datagrid"></table>
+</body>
+</html>

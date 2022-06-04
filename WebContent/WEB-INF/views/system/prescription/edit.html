@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll"/>
+</head>
+<body>
+<@p.valid id="prescription" action="prescription_edit_sub.do" class="layui-form" layui=true>
+ <@p.legend text="提示信息"/> 
+ <input type="hidden" name="prescriptionId" value="${prescription.prescriptionId}" />
+         <div class="layui-form-item">
+		    <@p.layinput label="处方名称"  datarule="required;"  name="prescriptionName" value="${prescription.prescriptionName}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.textare label="处方内容"   width=600 name="prescriptionContent" value="${prescription.prescriptionContent}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.textare label="付数"   width=600 name="prescriptionCount" value="${prescription.prescriptionCount}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.textare label="用法"   width=600 name="prescriptionUsage" value="${prescription.prescriptionUsage}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.textare label="诊断"   width=600 name="diagnosis" value="${prescription.diagnosis}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.textare label="治则 "  width=600  name="treatment" value="${prescription.treatment}"/>
+	     </div>
+         <div class="layui-form-item">
+		    <@p.textare label="组成"  width=600  name="constitute" value="${prescription.constitute}"/>
+	     </div>
+</@p.valid>
+</body>
+</html>

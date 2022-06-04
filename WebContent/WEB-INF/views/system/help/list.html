@@ -1,0 +1,111 @@
+<body style="overflow: hidden">
+ <script type="text/javascript">
+      var help;
+    $(function() {
+      help = new Dd("help");
+      help.url = "help_list_data.do";
+      help.title = "信息";
+      help.colM = [ [ {
+          title : "排序",
+          field : "helpNo",
+          alias : "h",
+          width : 15,
+          align : "center"
+        } , {
+        title : "主键",
+        field : "helpId",
+        alias : "h",
+        hidden:true,
+        width : 100,
+        align : "center"
+      } ,{
+        title : "问题",
+        field : "question",
+        alias : "h",
+        width : 60,
+        align : "center"
+      } ,{
+        title : "解答",
+        field : "answer",
+        alias : "h",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "类型: 备用",
+        field : "type",
+        alias : "h",
+        hidden:true,
+        width : 100,
+        align : "center"
+      } ,{
+        title : "创建日期",
+        field : "createDate",
+        alias : "h",
+        width : 30,
+        align : "center"
+      } ] ];
+
+      help.toolbar = [ {
+        id : "help_add",
+        text : "添加",
+        iconCls : "icon-add",
+        handler : function() {
+          help.open2({
+            title : "添加",
+            h : "50%",
+			w : "31%",
+            url : "help_add_turn.do"
+          });
+        }
+      }, {
+        id : "help_edit",
+        text : "编辑",
+        iconCls : "icon-edit",
+        disabled : true,
+        handler : function() {
+          help.updata2({
+            title : "编辑",
+            h : "50%",
+			w : "31%",
+            url : "help_edit_turn.do",
+            params : {
+                helpId : help.rowKey
+            }
+		  });
+        }
+      }, {
+        id : "help_del",
+        text : "删除",
+        iconCls : "icon-remove",
+        disabled : true,
+        handler : function() {
+          help.remove({
+             url : "help_del_sub.do",
+             params : {
+                helpId : help.rowKey
+             }
+		  });
+        }
+      } ];
+      help.param = myparams;
+      help.onClickRow = function(rowIndex, rowData) {
+       $("#help_edit,#help_del").linkbutton("enable");
+      }
+      help.onLoadSuccess = function(data) {
+       $("#help_edit,#help_del").linkbutton("disable");
+      };
+      help.LoadDataGrid();
+      $('#search').linkbutton({
+        iconCls : 'icon-save',
+        onClick : function() {
+          help.search(myparams);
+        }
+      });
+    });
+  </script>
+ <div fit="true" class="easyui-layout">
+  <div region="center" style="overflow: hidden;border: none;">
+   <table fit="true" namespace="help" id="help" class="datagrid"></table>
+  </div>
+ </div>
+</body>

@@ -1,0 +1,221 @@
+<body style="overflow: hidden">
+ <script type="text/javascript">
+      var workorder;
+    $(function() {
+      workorder = new Dd("workorder");
+      workorder.url = "platform_workorder_list_data.do";
+      workorder.title = "${(languaged !='')?string('Job Card',' 工作工单信息 ')}";
+      workorder.colM = [ [{
+        title : "主键",
+        field : "workorderId",
+        alias : "w",
+        hidden:true
+      },{
+              title : "${(languaged !='')?string('job number','工作工单编号')}",
+              field : "workOrderNo",
+              alias : "w",
+              width : 100,
+              align : "center"
+            },{
+              title : "${(languaged !='')?string('Technicians','工程师名称')}",
+              field : "engineerName",
+              alias : "engineer",
+              width : 100,
+              align : "center"
+            },{
+                title : "${(languaged !='')?string('Repair Company','维修公司')}",
+                field : "cm",
+                width : 100,
+                align : "center"
+              } ,{
+            title : "${(languaged !='')?string('Equipment Number','设备编号')}",
+            field : "equipmentNo",
+            alias : "equipment",
+            width : 100,
+            align : "center"
+          }  ,{
+        title : "${(languaged !='')?string('Equipment Type','设备类型')}",
+        field : "equipmentTypeName",
+        alias : "equipmentType",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "${(languaged !='')?string('Purchase Order Number','订购单号')}",
+        field : "orderNo",
+        alias : "equipment",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "${(languaged !='')?string('Customer','客户名称')}",
+        field : "companyName",
+        alias : "firm",
+        width : 100,
+        align : "center"
+      } ,{
+          title : "${(languaged !='')?string('site address','客户地址')}",
+          field : "Address",
+          alias : "firm",
+          width : 100,
+          align : "center"
+        }   ,{
+          title : "${(languaged !='')?string('profitpdf','发票')}",
+          field : "profitpdf",
+          alias : "profit",
+          width : 100,
+          hidden:true,
+          align : "center"
+        }  ,{
+        title : "${(languaged !='')?string('Repair progress','维修进度')}",
+        field : "repairStatus",
+        alias : "w",
+        width : 100,
+        align : "center",
+        formatter : function(value, rows, index) {
+            return Fm.formatter({
+            	 "0" : "${(languaged !='')?string('complete','工作完成')}",
+                 "1" : "${(languaged !='')?string('Processing for step 2/3/4','进一步工作')}",
+            }, value);
+        }
+      } ,{
+        title : "${(languaged !='')?string('pdfImg','报表')}",
+        field : "pdfImg",
+        alias : "w",
+        width : 100,
+        hidden:true,
+        align : "center"
+      } ,{
+        title : "${(languaged !='')?string('Deleted','是否删除')}",
+        field : "IsDel",
+        alias : "w",
+        width : 100,
+        align : "center",
+        formatter : function(value, rows, index) {
+            return Fm.formatter({
+            	 "0" : "${(languaged !='')?string('No','未删除')}",
+                 "1" : "${(languaged !='')?string('Yes','已删除')}",
+            }, value);
+        }
+      }   ,{
+          title : "${(languaged !='')?string('Repair time','维修时间')}",
+          field : "maintainDate",
+          alias : "w",
+          width : 100,
+          align : "center"
+        },{
+            title : "${(languaged !='')?string('Next Repair Date','下次维修时间')}",
+            field : "nextRepairTime",
+            alias : "w",
+            width : 100,
+            align : "center"
+          },{
+        title : "${(languaged !='')?string('creation time','创建时间')}",
+        field : "createDate",
+        alias : "w",
+        width : 100,
+        align : "center"
+      } ] ];
+
+      workorder.toolbar = [ 
+       {
+          id : "workorder_detail",
+          text : "${(languaged !='')?string('detail','详情')}",
+          iconCls : "icon-edit",
+          disabled : true,
+          handler : function() {
+            workorder.updata2({
+              title : "${(languaged !='')?string('detail','工作工单详情')}",
+              h : "90%",
+  			w : "70%",
+              url : "workorder_details_turn.do",
+              btn:"",
+             
+              params : {
+                  workorderId : workorder.rowKey
+              }
+  		  });
+          }
+        }
+       ,{
+           id : "workorder_add_detail",
+           text : "${(languaged !='')?string('Invoice details',' 发票详情')}",
+           iconCls : "icon-edit",
+           handler : function() {
+             workorder.open2({
+               title : "${(languaged !='')?string('Invoice details',' 发票详情')}",
+               h : "90%",
+   				w : "70%",
+               url : "../workorder/profit_details_turn.do",
+               btn:"",
+               btn:"",
+               params : {
+            	   workOrderNo : workorder.rowData.workOrderNo
+               }
+   		  });
+           }
+         }
+      ,{
+          id : "workorder_add",
+          text : "${(languaged !='')?string('Engineer log',' 工程师日志')}",
+          iconCls : "icon-edit",
+          handler : function() {
+            workorder.open2({
+              title : "${(languaged !='')?string('Engineer log',' 工程师日志')}",
+              h : "90%",
+  			w : "70%",
+              url : "../worktime/nowworktime_index.do",
+              btn:"",
+              btn:"",
+              params : {
+                  workorderId : workorder.rowKey
+              }
+  		  });
+          }
+        } 
+      
+      ];
+      workorder.param = myparams;
+      workorder.onClickRow = function(rowIndex, rowData) {
+       $("#workorder_del").linkbutton("enable");
+     if(rowData.profitpdf!=""){
+    	 $("#workorder_add_detail").linkbutton("enable");
+      }else{
+    	  $("#workorder_add_detail").linkbutton("disable");
+      }
+     
+     if(rowData.pdfImg!=""){
+   	 $("#workorder_detail").linkbutton("enable");
+     }else{
+   	  $("#workorder_detail").linkbutton("disable");
+     }
+     
+      }
+      workorder.onLoadSuccess = function(data) {
+       $("#workorder_del").linkbutton("disable");
+      };
+      workorder.LoadDataGrid();
+      $('#search').linkbutton({
+        iconCls : 'icon-search',
+        onClick : function() {
+          workorder.search(myparams);
+        }
+      });
+    });
+    function nameSearch(){
+   		myparams.searchContent = $("#searchContent").val();
+   		myparams.repairCompany = $("#repairCompany").val();
+   	}
+  </script>
+ <div fit="true" class="easyui-layout">
+     <div region="north" title="${(languaged !='')?string('search',' 查询条件 ')}" style="height: 70px;">
+   <div class="pannel_search">
+   	${(languaged !='')?string('clientele',' 客户 ')}：<input type="text" class="easyui-textbox" data-options="prompt:'	${(languaged !='')?string('clientele',' 客户 ')}'" id="searchContent"/> 
+        ${(languaged !='')?string('repairCompany',' 维修公司 ')}：<input type="text" class="easyui-textbox" data-options="prompt:'${(languaged !='')?string('repairCompany',' 检维修公司')}'" id="repairCompany"/>
+      
+       <a href="javascript:;" id="search" onClick="nameSearch()";>${(languaged !='')?string('search','查询')}</a>
+   </div>
+  </div>
+  <div region="center" style="overflow: hidden;border: none;">
+   <table fit="true" namespace="workorder" id="workorder" class="datagrid"></table>
+  </div>
+ </div>
+</body>

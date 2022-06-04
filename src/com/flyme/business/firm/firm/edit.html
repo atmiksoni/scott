@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll"/>
+</head>
+<body>
+<@p.valid id="firm" action="firm_edit_sub.do" class="layui-form" layui=true>
+ <@p.legend text="${(languaged !='')?string('Hint information','提示信息')}"/> 
+ <input type="hidden" name="firmId" value="${firm.firmId}" />
+         <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('companyName','公司名称')}"  datarule="required;" datamsgrequired="${(required)!''}" name="companyName" value="${firm.companyName}"/>    
+		    <@p.layinput label="${(languaged !='')?string('Address','所属地址')}"  datarule="required;" datamsgrequired="${(required)!''}" name="Address" value="${firm.Address}"/>    
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('mobile','公司电话')}"  datarule="required;" datamsgrequired="${(required)!''}" name="mobile" value="${firm.mobile}"/>    
+		    <@p.layinput label="${(languaged !='')?string('linkman','联系人')}"  datarule="required;" datamsgrequired="${(required)!''}" name="linkman" value="${firm.linkman}"/>    
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('Linkphone','联系电话')}"  datarule="required;" datamsgrequired="${(required)!''}" name="Linkphone" value="${firm.Linkphone}"/>    
+		    <@p.layinput label="${(languaged !='')?string('compEmail','联系邮箱')}"  datarule="required;" datamsgrequired="${(required)!''}" name="compEmail" value="${firm.compEmail}"/>    
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('postcodes','邮政编码')}"  datarule="required;" datamsgrequired="${(required)!''}" name="postcodes" value="${firm.postcodes}"/>    
+	     </div>
+         <div class="layui-form-item">
+	     </div>
+         <div class="layui-form-item">
+	     </div>
+         <div class="layui-form-item">
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('Head','公司配图')}"  datarule="required;" datamsgrequired="${(required)!''}" name="Head" value="${firm.Head}"/>    
+	     </div>
+</@p.valid>
+</body>
+</html>

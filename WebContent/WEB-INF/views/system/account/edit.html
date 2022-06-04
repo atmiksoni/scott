@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery"/>
+</head>
+<body>
+	<@p.valid id="account" action="account_edit_sub.do" class="layui-form" layui=true>
+	<div class="layui-tab layui-tab-brief" style="padding-left: 10px;">
+		<input type="hidden" name="accountId" value="${account.accountId}">
+		<div class="layui-tab-content">
+			<div class="layui-tab-item layui-show">
+				<div class="layui-form-item"><@p.text label="${(languaged !='')?string('Account name','账户名')}" value="${account.accountName}" /></div>
+				<#if Organ_On>
+				<div class="layui-form-item" id="organizationId"><@p.layselect label="所属公司" list=organizationList valueField="organizationId"
+					datarule="required;" textField="organizationName" width="190" data_target="#organizationId" defVal="--请选择公司--" name="organization.organizationId"
+					value="${(accountInfo.organization.organizationId)!}"/></div>
+				</#if> <#if Position_On>
+				<div class="layui-form-item" id="positionId"><@p.layselect label="职位" list=positionList valueField="positionId" datarule="required;"
+					textField="positionName" width="190" data_target="#positionId" defVal="--请选择职位--" name="position.positionId"
+					value="${(accountInfo.position.positionId)!}"/></div>
+				</#if>
+				<div class="layui-form-item"><@p.layinput label="${(languaged !='')?string('Real Name','真实姓名')}" name="userName" datarule="required;" value="${accountInfo.userName}"/></div>
+				<div class="layui-form-item"><@p.layinput label="${(languaged !='')?string('mobile','手机号')}" name="mobile" datarule="required;" value="${account.mobile}"/></div>
+			</div>
+		</div>
+	</div>
+	</@p.valid>
+</body>
+</html>

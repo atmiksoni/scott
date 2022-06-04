@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,EasyUI,AnyDataGrid"/>
+<script type="text/javascript">
+	var resource;
+	$(function() {
+		resource = new Dd("resource");
+		resource.title = "菜单管理";
+		resource.url = "list_data.do";
+		resource.colM = [ [ {
+			title : "主键",
+			field : "resourceId",
+			alias : "res",
+			width : 100,
+			hidden : true
+		}, {
+			title : "资源名称",
+			field : "resName",
+			alias : "res",
+			width : 100
+		}, {
+			title : "资源地址",
+			field : "resUrl",
+			alias : "res",
+			width : 100
+		}, {
+			title : "类型",
+			field : "resType",
+			alias : "res",
+			width : 100
+		}, {
+			title : "编码",
+			field : "resCode",
+			alias : "res",
+			width : 100
+		}, {
+			title : "图标",
+			field : "icon",
+			alias : "res",
+			width : 100
+		}, {
+			title : "父级",
+			field : "parentId",
+			alias : "res",
+			width : 100,
+
+		}, {
+			title : "父级",
+			field : "state",
+			hidden : true,
+			width : 100
+		} ] ];
+		resource.idField = "resourceId";
+		resource.treeField = "resName";
+		resource.pagination = false;
+		resource.rownumbers = false;
+		resource.LoadDataGrid();
+	});
+</script>
+</head>
+
+
+<body class="easyui-layout" style="overflow: hidden">
+	<div region="center" style="border: none;">
+		<table id="resource" fit=true border=false namespace="resource" class="datagrid"></table>
+	</div>
+</body>
+</html>

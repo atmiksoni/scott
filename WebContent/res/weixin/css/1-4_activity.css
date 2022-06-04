@@ -1,0 +1,11 @@
+.content {margin: 50px 0 0;padding: 0.6rem;}
+.content ul, .content ul li, .content ul li .top, .content ul li .top img {width: 100%;}
+.content ul li {text-align: center;margin-bottom: 0.6rem;border: 1px solid #DCDCDC;box-shadow: 2px 2px 2px #999;}
+.top {overflow: hidden;}
+.top img {float: left;}
+.bottom {background-color: white;}
+.bottom p {font-size: 0.6rem;color: #999;}
+.bottom input {margin: 0.5rem 0;border: 1px solid #E63C2D;border-radius: 5px;background-color: #fff;color: #E63C2D;font-size: 0.7rem;line-height: 1.6rem;width: 6.6rem;cursor: pointer;}
+.bottom input:hover {background-color: #E63C2D;color: #fff;}
+.content ul li h2 {color: #E63C2D;padding: 0.5rem 0 0;}
+.bottom p:last-child {padding: 0 0 0.5rem;}

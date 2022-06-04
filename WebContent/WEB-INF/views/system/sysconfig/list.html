@@ -1,0 +1,129 @@
+<body style="overflow: hidden">
+	<script type="text/javascript">
+		var sysconfig;
+		$(function() {
+			sysconfig = new Dd("sysconfig");
+			sysconfig.url = "sysconfig_list_data.do";
+			sysconfig.title = "${(languaged !='')?string('LOGO','LOGO')}";
+			sysconfig.colM = [ [ {
+				title : "主键",
+				field : "sysconfigId",
+				alias : "s",
+				hidden : true,
+				width : 100,
+				align : "center"
+			}, {
+				title : "LOGO",
+				field : "logo",
+				alias : "s",
+				width : 100,
+				align : "center",
+		        formatter : function(value, row, index) {
+					return '<img onclick="show()"  width="80px;" height="50px;" src="../../' + row.logo + '" />';
+				}
+			}/* , {
+				title : "配置代码",
+				field : "configName",
+				alias : "s",
+				width : 100,
+				align : "center"
+			}, {
+				title : "配置说明",
+				field : "remark",
+				alias : "s",
+				width : 100,
+				align : "center"
+			}, {
+				title : "配置属性",
+				field : "configVal",
+				alias : "s",
+				width : 100,
+				align : "center",
+				formatter : function(value, row, index) {
+					if(row.type=="Status"){
+						return Fm.formatter({
+							"1" : "开启",
+							"0" : "关闭"
+						}, value);
+					}else{
+						return value;
+					}
+				}
+			}, */ , {
+				title : "${(languaged !='')?string('creation time','创建时间')}",
+				field : "createDate",
+				alias : "s",
+				width : 100,
+				align : "center"
+			} ] ];
+ 
+			sysconfig.toolbar = [
+			                      /* {
+				id : "sysconfig_add",
+				text : "添加",
+				iconCls : "icon-add",
+				handler : function() {
+					sysconfig.open2({
+						title : "${(languaged !='')?string('add',' 添加 ')}",                                        
+						h : "70%",
+						w : "45%",
+						btn:["${(languaged !='')?string('confirm',' 确认 ')}","${(languaged !='')?string('close',' 关闭 ')}"],
+						url : "sysconfig_add_turn.do"
+					});
+				}
+			}, */ {
+				id : "sysconfig_edit",
+				text : "${(languaged !='')?string('edit',' 修改')}",
+				iconCls : "icon-edit",
+				disabled : true,
+				handler : function() {
+					sysconfig.updata2({
+						title : "编辑",
+						h : "70%",
+						w : "45%",
+						 btn:["${(languaged !='')?string('confirm',' 确认 ')}","${(languaged !='')?string('close',' 关闭 ')}"],
+						url : "sysconfig_edit_turn.do",
+						params : {
+							sysconfigId : sysconfig.rowKey
+						}
+					});
+				}
+			}/* , {
+		        id : "sysconfig_del",
+		        text : "${(languaged !='')?string('delete',' 删除')}",
+		        iconCls : "icon-remove",
+		        disabled : true,
+		        handler : function() {
+		        	sysconfig.remove({
+		             url : "sysconfig_del_sub.do",
+		             params : {
+		            	 sysconfigId : sysconfig.rowKey
+		             },
+		             title:"${(languaged !='')?string('are you delete?','')}",
+		             content:"${(languaged !='')?string('delete content','确定要删除所选记录吗?')}",
+		              btn:["${(languaged !='')?string('confirm',' 确认 ')}","${(languaged !='')?string('close',' 关闭 ')}"]
+				  });
+		        }
+		      } */];
+			sysconfig.param = myparams;
+			sysconfig.onClickRow = function(rowIndex, rowData) {
+				$("#sysconfig_edit,#sysconfig_del,#sysconfig_search").linkbutton("enable");
+			}
+			sysconfig.onLoadSuccess = function(data) {
+				$("#sysconfig_edit,#sysconfig_del,#sysconfig_search").linkbutton("disable");
+			};
+			sysconfig.LoadDataGrid();
+			$('#search').linkbutton({
+				iconCls : 'icon-save',
+				onClick : function() {
+					sysconfig.search(myparams);
+				}
+			});
+		});
+	</script>
+	<div fit="true" class="easyui-layout">
+		<div region="center" style="overflow: hidden; border: none;">
+			<table fit="true" namespace="sysconfig" id="sysconfig" class="datagrid"></table>
+		</div>
+	</div>
+</body>

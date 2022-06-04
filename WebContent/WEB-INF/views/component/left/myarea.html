@@ -1,0 +1,31 @@
+<body class="easyui-layout" style="margin-top: 1px; overflow-y: hidden">
+	<ul id="myarea" class="ztree"></ul>
+	<script type="text/javascript">
+		var myarea;
+		var myparams = {
+			userId : top.userId
+		};
+		$(function() {
+			niceScroll(".panel-body");
+			myarea = new Tree();
+			myarea.queryParams = myparams;
+			myarea.url = "${base}/admin/component/select_myarea_data.do";
+			myarea.initTree("myarea");
+			myarea.onClick = function(node) {
+				myparams.areaId = node.id;
+				myparams.nodeCode=node.code;
+				var isLeaf = myarea.isLeaf(node);
+				myarea_onclick(node,isLeaf);
+			};
+			$('#ptree').panel({
+				tools : [ {
+					iconCls : 'icon-add',
+					handler : function() {
+						myarea.expandAll();
+					}
+				} ]
+			});
+		});
+		
+	</script>
+</body>

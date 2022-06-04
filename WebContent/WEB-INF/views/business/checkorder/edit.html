@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll"/>
+</head>
+<body>
+<@p.valid id="checkorder" action="checkorder_edit_sub.do" class="layui-form" layui=true>
+ <@p.legend text="${(languaged !='')?string('Hint information','提示信息')}"/> 
+ <input type="hidden" name="checkorderId" value="${checkorder.checkorderId}" />
+         <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('equipmentId','设备ID')}"  datarule="required;" datamsgrequired="${(required)!''}" name="equipmentId" value="${checkorder.equipmentId}"/>    
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('companyId','公司ID')}"  datarule="required;" datamsgrequired="${(required)!''}" name="companyId" value="${checkorder.companyId}"/>    
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('engineerId','工程师ID')}"  datarule="required;" datamsgrequired="${(required)!''}" name="engineerId" value="${checkorder.engineerId}"/>    
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('checkOrderNo','工单编号')}"  datarule="required;" datamsgrequired="${(required)!''}" name="checkOrderNo" value="${checkorder.checkOrderNo}"/>    
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('pdfImg','报表')}"  datarule="required;" datamsgrequired="${(required)!''}" name="pdfImg" value="${checkorder.pdfImg}"/>    
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('IsDel','删除')}"  datarule="required;" datamsgrequired="${(required)!''}" name="IsDel" value="${checkorder.IsDel}"/>    
+	     </div>
+</@p.valid>
+</body>
+</html>

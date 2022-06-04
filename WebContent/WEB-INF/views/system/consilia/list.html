@@ -1,0 +1,203 @@
+<body style="overflow: hidden">
+ <script type="text/javascript">
+      var consilia;
+    $(function() {
+      consilia = new Dd("consilia");
+      consilia.url = "consilia_list_data.do";
+      consilia.title = "医案信息";
+      consilia.colM = [ [ {
+        title : "主键",
+        field : "consiliaId",
+        alias : "c",
+        hidden:true
+      } ,{
+        title : "医生ID",
+        field : "doctorId",
+        alias : "c",
+        width : 100,
+        align : "center",
+        hidden:true
+      } ,{
+        title : "医案名称",
+        field : "consiliaName",
+        alias : "c",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "就诊时间",
+        field : "visitDate",
+        alias : "c",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "患者名称",
+        field : "patientName",
+        alias : "c",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "年龄",
+        field : "age",
+        alias : "c",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "性别",
+        field : "sex",
+        alias : "c",
+        width : 100,
+        align : "center",
+        formatter : function(value, row, index) {
+			return Fm.formatter({
+				"0" : "男",
+				"1" : "女"
+			}, value);
+		}
+      } ,{
+        title : "症状主诉",
+        field : "symptom",
+        alias : "c",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "现病史",
+        field : "hpi",
+        alias : "c",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "既往史",
+        field : "history",
+        alias : "c",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "刻下症",
+        field : "EngravedDisease",
+        alias : "c",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "中医诊断",
+        field : "cmDiagnosis",
+        alias : "c",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "西医诊断",
+        field : "wmDiagnosis",
+        alias : "c",
+        width : 100,
+        align : "center"
+      },{
+          title : "名家医案",
+          field : "isMasters",
+          alias : "c",
+          width : 100,
+          align : "center",
+          formatter : function(value, row, index) {
+  			return Fm.formatter({
+  				"0" : "否",
+  				"1" : "是"
+  			}, value);
+  		}
+      } ,{
+        title : "创建日期",
+        field : "createDate",
+        alias : "c",
+        width : 100,
+        align : "center"
+      } ] ];
+
+      consilia.toolbar = [ {
+        id : "consilia_add",
+        text : "添加",
+        iconCls : "icon-add",
+        handler : function() {
+          consilia.open2({
+            title : "添加医案",
+            h : "70%",
+			w : "55%",
+            url : "consilia_add_turn.do",
+            params : myparams
+          });
+        }
+      }, {
+        id : "consilia_edit",
+        text : "修改",
+        iconCls : "icon-edit",
+        disabled : true,
+        handler : function() {
+          consilia.updata2({
+            title : "修改医案",
+            h : "70%",
+			w : "45%",
+            url : "consilia_edit_turn.do",
+            params : {
+                consiliaId : consilia.rowKey
+            }
+		  });
+        }
+      }, {
+          id : "consilia_details",
+          text : "详情",
+          iconCls : "icon-search",
+          disabled : true,
+          handler : function() {
+            consilia.updata2({
+              title : "医案详情",
+              h : "70%",
+  			w : "45%",
+  			btn:"",
+              url : "consilia_details_turn.do",
+              params : {
+                  consiliaId : consilia.rowKey
+              }
+  		  });
+          }
+        }, {
+        id : "consilia_del",
+        text : "删除医案",
+        iconCls : "icon-remove",
+        disabled : true,
+        handler : function() {
+          consilia.remove({
+             url : "consilia_del_sub.do",
+             params : {
+                consiliaId : consilia.rowKey
+             }
+		  });
+        }
+      } 
+      ];
+      consilia.param = myparams;
+      consilia.onClickRow = function(rowIndex, rowData) {
+       $("#consilia_edit,#consilia_del,#consilia_details").linkbutton("enable");
+      }
+      consilia.onLoadSuccess = function(data) {
+       $("#consilia_edit,#consilia_del,#consilia_details").linkbutton("disable");
+      };
+      consilia.LoadDataGrid();
+      $('#search').linkbutton({
+        iconCls : 'icon-search',
+        onClick : function() {
+        	myparams.consiliaName=$("#consiliaName").val();
+        	myparams.isMasters = $("#isMasters").combobox('getValue');
+          consilia.search(myparams);
+        }
+      });
+    });
+  </script>
+ <div fit="true" class="easyui-layout">
+  <div region="north" title="查询条件" style="height: 70px;">
+   <div class="pannel_search">
+    医案名称：<input type="text" class="easyui-textbox" id="consiliaName" /> 
+    是否名家医案：<@p.select class="easyui-combobox" id="isMasters" list={"0":"否","1":"是"} width="150" defVal="全部"/> 
+       <a href="javascript:;" id="search">查询</a>
+   </div>
+  </div>
+  <div region="center" style="overflow: hidden;border: none;">
+   <table fit="true" namespace="consilia" id="consilia" class="datagrid"></table>
+  </div>
+ </div>
+</body>

@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery"/>
+<script src="${base}/plug-in/jquery/jquery.pjax.js"></script>
+</head>
+<body>
+	<@p.valid id="account" action="account_add_sub.do" class="layui-form" layui=true>
+	<div class="layui-tab layui-tab-brief" style="padding-left: 10px;">
+		<div class="layui-tab-content">
+			<div class="layui-tab-item layui-show">
+				<div class="layui-form-item"><#if Organ_On> <@p.layselect label="所属公司" id="organizationId" list=organizationList valueField="organizationId"
+					datarule="required;" textField="organizationName" width="190" defVal="--请选择公司--" name="organization.organizationId" /> </#if></div>
+				<div class="layui-form-item"><#if Position_On> <@p.layselect label="职位" id="positionId" list=positionList valueField="positionId"
+					datarule="required;" textField="positionName" width="190" defVal="--请选择职位--" name="position.positionId" /> </#if></div>
+				<div class="layui-form-item"><@p.layinput label="${(languaged !='')?string('Account name','账户名')}" datarule="required;username;remote[${base}/admin/account/account_check_sub.do]"
+					name="accountName" /></div>
+				<div class="layui-form-item"><@p.layinput label="${(languaged !='')?string('Real Name','真实姓名')}" name="userName" datarule="required;"/></div>
+				<div class="layui-form-item"><@p.layinput label="${(languaged !='')?string('Mobile','手机号')}" name="mobile"
+					datarule="required;remote[${base}/admin/account/mobile_check_sub.do]"/></div>
+			</div>
+		</div>
+	</div>
+	</@p.valid>
+	<script>
+		function chooseShipper() {
+			top.Dg.select({
+				title : "货主选择",
+				center : "shipper",
+				setTextBox : function(rowData) {
+					$("#shipperInfoId").val(rowData.accountInfoId);
+					$("#choose").text(rowData.userName);
+				}
+			});
+		}
+		function deleteShipper(){
+			$("#shipperInfoId").val("");
+			$("#choose").text("选择");
+		}
+	</script>
+</body>
+</html>

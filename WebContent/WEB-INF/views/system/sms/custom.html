@@ -1,0 +1,292 @@
+<body style="overflow: hidden">
+ <script src="${base}/res/bfpms/js/SMSKeyWords.js"></script>
+ <@p.resource types="NiceScroll,AnyDataGrid,ComBo"/>
+ <div class="easyui-layout" fit="true" style="overflow-y: hidden; border: none">
+  <div region="center" style="border: none">
+   <div class="easyui-layout" fit="true" style="overflow-y: hidden; border: none">
+    <div region="north" title="自定义短信(可用短信条数:<span class='money'>${smsNu}</span>)<span class='money'>[每条短信最长70汉字(包含后缀和括号)，超出部分另外计费]</span>" style="border-top: none; height: 800px">
+     <div class="cztable">
+      <table>
+       <tr>
+        <td width="100px" class="tdc">短信内容：</td>
+        <td width="15%" valign="top">
+        <textarea style="overflow: hidden; width: 520px; height: 100px;" class="txtInput"   id="smsContent" name="smsContent" datatype="*1-200" onBlur="countChar('smsContent','counter_input');" onkeydown="countChar('smsContent','counter_input');" onkeyup="countChar('smsContent','counter_input');"></textarea>
+        <br/> <span id="message">内容： <font color="red" id="counter_input">0</font> 字符+签名<font color="red" id="mark">6</font>个字符=<font style="color: red; font-family: Constantia, Georgia; font-size: 18px;" id="counter_sum">0</font> 字符,还剩<font color="red" id="counter_follow">500</font> ,移动/联通/电信每条<font
+          style="color: red;  font-size: 18px;" id="counter_code">70</font> ,内容限制:<font color="red" id="counter_all">500</font>
+        </span></td>
+        <td rowspan="3" valign="top" width="30%" style="border-left: #E6E6E6 solid 1px; line-height: 28px; color: #FF6600; padding-left: 8px; padding-top: 8px;">
+        <strong>短信统计：</strong> 
+        <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;条数
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;手机数
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;总条数 
+        <br> 移动：<input type="text" id="cmbt" size="1" value="0" disabled> x <input type="text" id="cmbs" size="4" value="0" disabled> = <input type="text" id="cmba" size="4" value="0" disabled> 
+        <br> 联通：<input type="text" id="cunt" size="1" value="0" disabled> x <input type="text" id="cuns" size="4" value="0" disabled>= <input type="text" id="cuna" size="4" value="0" disabled> 
+        <br> 电信：<input type="text" id="ctt" size="1" value="0" disabled> x <input type="text" id="cts" size="4" value="0" disabled> = <input type="text" id="cta" size="4" value="0" disabled>
+        <br> 合计：<input type="text" id="sumt" size="1" value="0" disabled> x <input type="text" id="sums" size="4" value="0" disabled> = <input type="text" id="suma" size="4" value="0" disabled></td>
+       </tr>
+       <tr>
+        <td width="15%" class="tdc">手机号码：</td>
+        <td width="15%"><textarea style="overflow: hidden; width: 520px; height: 100px;" class="txtInput" style="overflow-y: hidden" cols="50" id="mobiles" name="mobiles" datatype="*1-200" onBlur="countPhone('mobiles');" onkeydown="countPhone('mobiles');" onkeyup="countPhone('mobiles');" style="border:1px solid #6E9FDE;width:380px; height:85px; margin-bottom:5px;" rows="6" valid="required"></textarea><br> 手动输入号码请用<font color="red">英文逗号</font>( <font color="red">,</font> )隔开。 <br> <a href="javascript:;" id="mobileCK">&nbsp;过滤错号，重号&nbsp;</a></td>
+       </tr>
+       <tr>
+        <td width="15%" class="tdc"></td>
+
+        <td width="15%"><br> <a href="javascript:;" id="smsSend">&nbsp;发送短信&nbsp;</a></td>
+
+       </tr>
+      </table>
+     </div>
+    </div>
+   </div>
+  </div>
+ </div>
+ <script type="text/javascript">
+    //计算祝福文本内容普显示内容条数
+    function countChar(id, counter_input) {
+
+      if (checkSignature($.trim($("#blessContent").val()))) {//内容无签名容
+        $("#mark").text(6);//签名字数
+      } else {//内容有签名
+        $("#mark").text(6);//签名字数
+      }
+      var mark = $("#mark").text();//签名字数
+      $("#" + counter_input + "").html($("#" + id + "").val().length);
+      $("#counter_sum").html(eval(eval(mark) + eval($("#counter_input").text())));
+      $("#counter_follow").html(500 - eval($("#counter_sum").text()));
+      /* if(eval($("#counter_sum").text())== 68 || eval($("#counter_sum").text())== 69 || eval($("#counter_sum").text())== 70){
+      	alert("您的信息字符数"+eval($("#counter_sum").text())+"字,不再属于1条普通短信 将按长短信2条计费,确认这样发送吗?");
+      } */
+      if (eval($("#counter_sum").text()) > 500) {
+        $("#" + id + "").attr('value', document.getElementById(id).value.substring(0, 500 - eval(mark)));
+        $("#" + counter_input + "").html($("#" + id + "").val().length);
+        $("#counter_sum").html(eval(eval(mark) + eval($("#counter_input").text())));
+        $("#counter_follow").html(500 - eval($("#counter_sum").text()));
+      }
+
+    }
+
+    //签名判断
+    function checkSignature(title) {
+      var Letters = "【】";
+      var i;
+      var c;
+      for (i = 0; i < Letters.length; i++) {
+        c = Letters.charAt(i);
+        if (title.indexOf(c) > -1)
+          return true;
+      }
+      return false;
+    }
+
+    //计算手机个数
+    function countPhone(id) {
+
+      //输入时有效值为'0' /上传时无效值为'1'
+      var vali_flag = $("#vali_flag").val();
+      if (vali_flag == '1') {
+        return;
+      }
+      var arrData = new Array();
+      var obj = document.getElementById(id);
+      var mob = $.trim(obj.value);
+      if (mob.length < 9) {
+        return;
+      }
+      //		    mob=guoliphone();
+      arrData = mob.match(/\d{11}/g);
+      if (arrData == "" || arrData == null) {
+        return;
+      }
+
+      if (arrData.length > 0) {
+        calWho(mob);
+      }
+    }
+    //手机号校验正则表达式
+    var pattern_mobile = /^((13[0-9]|15[0-9]|18[0-9]|14[1|3|5|7|8|9]|17[6,7,8])\d{8})|((170[5,9,0,7,8])\d{7})$/;
+    //移动：134、135、136、137、138、139、150、151、157(TD)、158、159、187、188、182、183 
+    var pattern_mobile_yd = /^((13[4|5|6|7|8|9]|15[0|1|2|4|7|8|9]|18[2|3|4|7|8]|14[1|3|7|8|9]|17[8])\d{8})|((170[5])\d{7})$/;
+    //联通：130、131、132、152、155、156、185、186
+    var pattern_mobile_lt = /^((13[0|1|2]|15[5|6]|18[5|6]|14[5]|17[6])\d{8})|((170[9,7,8])\d{7})$/;
+    //电信：133、153、180、189
+    var pattern_mobile_dx = /^((13[3]|15[3]|18[0|1|9]|17[7])\d{8})|((170[0])\d{7})$/;
+    //根据号段数据去查找属于哪个运营商的手机号
+    function whatHaoDuanPhone(val) {
+      //alert("@@@@@@@"+val);//3位
+      if (pattern_mobile_yd.test(val))
+        return 1;
+      if (pattern_mobile_lt.test(val))
+        return 2;
+      if (pattern_mobile_dx.test(val))
+        return 3;
+      return 0;
+    }
+    //手机分类效率低
+    function calWho(mob) {
+      var arrData = new Array();
+      if (mob.length < 9) {
+        return;
+      }
+      arrData = mob.match(/\d{11}/g);
+      if (arrData == "" || arrData == null) {
+        return;
+      }
+      if (arrData.length > 0) {
+        var tx = 0, lt = 0, yd = 0;
+        for (var i = 0; i < arrData.length; i++) {
+          var type = whatHaoDuanPhone(arrData[i]);
+          if (type == 3) {
+            tx++;
+          }
+          if (type == 2) {
+            lt++;
+          }
+          if (type == 1) {
+            yd++;
+          }
+          if (type == 0 && i == 0) {
+            alert("目前" + arrData[i].substring(0, 4) + "段没有加入，请联系管理员");
+            $("#mobile").attr('value', '');
+            return;
+          }
+        }
+        showResultNum(yd, lt, tx);
+      }
+    }
+    function showResultNum(mobileNum, UnionNum, TelconNum) {
+      $("#cmbs").attr('value', mobileNum);
+      $("#cuns").attr('value', UnionNum);
+      $("#cts").attr('value', TelconNum);
+      var pro_code = $("#counter_code").text();
+      if (mobileNum > 0) {
+        $("#cmbt").attr('value', (Math.ceil($("#counter_sum").text() / eval(pro_code))));//移动条数计算
+      } else {
+        $("#cmbt").attr('value', 0);//移动条数计算
+      }
+      if (UnionNum > 0) {
+        $("#cunt").attr('value', (Math.ceil($("#counter_sum").text() / eval(pro_code))));//联通条数计算
+      } else {
+        $("#cunt").attr('value', 0);//联通条数计算
+      }
+      if (TelconNum > 0) {
+        $("#ctt").attr('value', (Math.ceil($("#counter_sum").text() / eval(pro_code))));//电信条数计算
+      } else {
+        $("#ctt").attr('value', 0);//电信条数计算
+      }
+      calAllSum();
+    }
+    function calAllSum() {
+      $("#cmba").attr('value', eval($("#cmbs").val()) * eval($("#cmbt").val()));
+      $("#cuna").attr('value', eval($("#cuns").val()) * eval($("#cunt").val()));
+      $("#cta").attr('value', eval($("#cts").val()) * eval($("#ctt").val()));
+      var sum = eval($("#cmbt").val());
+      if (sum == 0)
+        sum = eval($("#cunt").val());
+      if (sum == 0)
+        sum = eval($("#ctt").val());
+
+      $("#sumt").attr('value', sum);
+      $("#sums").attr('value', eval($("#cmbs").val()) + eval($("#cuns").val()) + eval($("#cts").val()));
+      $("#suma").attr('value', eval($("#cmba").val()) + eval($("#cuna").val()) + eval($("#cta").val()));
+
+      $("#sendsms_count").attr('value', $("#sums").val());
+      $("#sendsms_send_charge").attr('value', $("#suma").val());
+    }
+
+    /*----------------------------------End--------------------------------------*/
+
+    //计算短信长度
+    $(function() {
+      $("#smsContent").keyup(function() {
+        var tmp = $("#smsContent").attr("hiddenval");
+        var smslength = $("#smsContent").val().length;
+        var fulllength = smslength + 6;
+        var msg = "内容长度" + smslength + "+签名长度6 =" + fulllength + "个字符";
+        $("#lengthTips").html(msg);
+      });
+      niceScroll(".scroll");
+
+      $("#mobileCK").linkbutton({
+        disabled : false,
+        iconCls : "icon-remove",
+        onClick : function() {
+          ajaxCheckMobiles();
+        }
+      });
+      $("#smsSend").linkbutton({
+        disabled : false,
+        iconCls : "icon-refresh",
+        onClick : function() {
+          if (checkMsg()) {
+            var tmp = $("#mobiles").val();
+            var smsContent = $("#smsContent").val();
+            if (tmp.length == 0) {
+              top.Dg.z.tip("手机号不能为空", 4000, 300, "error");
+              return false;
+            }
+            if (tmp.length < 11) {
+              top.Dg.z.tip("手机号码有误", 4000, 300, "error");
+              return false;
+            }
+            tmp = tmp.replace(/，/g, ",");
+            $.ajax({
+              type : "get",
+              url : "sms_mobiles_check.do?mobiles=" + tmp,
+              success : function(data) {
+                if (data.length > 10) {
+                  sendSMS(smsContent, data);
+                }
+              }
+            });
+          }
+        }
+      });
+    });
+
+    function sendSMS(smsContent, mobiles) {
+      $.ajax({
+        type : "post",
+        url : "send_customsms.do",
+        data : {
+          smsContent : smsContent,
+          mobiles : mobiles
+        },
+        success : function(data) {
+          top.Dg.z.tip(data.msg, 4000, 300, data.status);
+          $("#mobiles").val("");
+          tree.unCheckAll();
+        }
+      });
+    }
+
+    function ajaxCheckMobiles() {
+      var tmp = $("#mobiles").val();
+      if (tmp.length < 11) {
+        $("#mobiles").val("");
+        return false;
+      }
+      tmp = tmp.replace(/，/g, ",");
+      $.ajax({
+        type : "get",
+        url : "sms_mobiles_check.do?mobiles=" + tmp,
+        success : function(data) {
+          $("#mobiles").val(data);
+        }
+      });
+    }
+
+    function checkMsg() {
+      var smsContent = $("#smsContent").val();
+      if (smsContent.length == 0) {
+        top.Dg.z.tip("短信不能为空", 4000, 300, "error");
+        return false;
+      }
+      var tips = CheckSMSKeyWords(smsContent);
+      if (tips != "OK") {
+        top.Dg.z.tip(tips, 4000, 300, "error");
+        return false;
+      }
+      return true;
+    }
+  </script>
+</body>

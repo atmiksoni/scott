@@ -1,0 +1,27 @@
+.head img.logo {width:36%;height:36px;position: absolute;top: 0.4rem;left: 32%;}
+.banner {margin: 48px 0 0;width: 100%;height: 9.6rem;}
+.swiper-slide {height: 9.75rem;}
+.banner img {width: 100%;height: 100%;}
+.service ul {overflow: hidden;background:#ffffff;}
+.service ul li {float: left;border-bottom: 1px solid #DCDCDC;width: 49.8%;}
+.service ul li:first-child {border-right: 1px solid #DCDCDC;}
+.service ul li img {padding-top:15px;width: 42%;}
+.service ul li a {display: inline-block;width: 100%;text-align: center;margin: 1rem 0;font-size: 0.7rem;}
+.items ul {overflow: hidden;background:#ffffff;}
+.items ul li {float: left;width: 49.8%;border-bottom: 1px solid #DCDCDC;}
+.items ul li:nth-child(3), .items ul li:first-child {border-right: 1px solid #DCDCDC;}
+.items ul li img {width: 100%;margin-top: 0.2rem;}
+.swiper-pagination-bullet-active {background: #E63C2D;}
+.swiper-container-horizontal>.swiper-pagination-bullets {bottom: 0;}
+.weui_grid_icon {position: relative;}
+.weui_grid_icon span {background-color: #E63C2D;border-radius: 6px;color: #fff;position: absolute;top: -0.1rem;right: -0.1rem;display: block;width: 0.6rem;height: 0.6rem;font-size: 0.5rem;line-height: 0.6rem;text-align: center;}
+.weui_grid_icon span i {font-size: 0.4rem;line-height: 0.3rem;}
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll,webuploader"/>
+</head>
+<body>
+<@p.valid id="repaircompany" action="repaircompany_edit_sub.do" class="layui-form" layui=true>
+ <@p.legend text="${(languaged !='')?string('Hint information','提示信息')}"/> 
+ <input type="hidden" name="repairCompanyId" value="${repaircompany.repairCompanyId}" />
+	      <div class="layui-form-item"> 
+           <@p.layinput label="${(languaged !='')?string('companyName','公司名称')}"  datarule="required;" datamsgrequired="${(required)!''}" name="companyName"  value="${repaircompany.companyName}"/>
+           <@p.layinput label="${(languaged !='')?string('linkman','联系人')}"  datarule="required;" datamsgrequired="${(required)!''}" name="linkman"  value="${repaircompany.linkman}"/>
+	     </div>
+    
+         <div class="layui-form-item"> 
+           <@p.layinput label="${(languaged !='')?string('linkphone','联系电话')}"  datarule="required;" datamsgrequired="${(required)!''}" name="linkphone"  value="${repaircompany.linkphone}"/>
+           <@p.layinput label="${(languaged !='')?string('mobile','公司电话')}"  datarule="required;" datamsgrequired="${(required)!''}" name="mobile"  value="${repaircompany.mobile}"/>
+	     </div>
+	          <div class="layui-form-item"> 
+           <@p.layinput label="${(languaged !='')?string('compEmail','联系邮箱')}"  datarule="required;" datamsgrequired="${(required)!''}" name="compEmail"  value="${repaircompany.compEmail}"/>
+	      <@p.layinput label="${(languaged !='')?string('address','地址')}"  datarule="required;" datamsgrequired="${(required)!''}" name="address" value="${repaircompany.address}"/>
+	     </div>
+         <div class="layui-form-item"> 
+	     </div>
+	     <div class="layui-form-item">
+	     <@p.layinput label="${(languaged !='')?string('bankCard','银行卡号')}"  datarule="required;" datamsgrequired="${(required)!''}" name="bankCard" value="${repaircompany.bankCard}"/>
+	     </div>
+	     <@p.legend text="${(languaged !='')?string('logo','logo')}" btnId="pre"/>
+		<div class="layui-form-item">
+		<div class="layui-inline" style="padding-left: 20px;"><@p.upload id="preP" name="preP" list=files delurl="${base}/admin/repaircompany/repaircompany_image_del.do" pathField="logo" idField="logo"  value="${repaircompany.logo}"/></div>
+		<input id="logo" name="logo" type="hidden" class="layui-input" value="${repaircompany.logo}">
+	</div>
+</@p.valid>
+<script>
+layui.use('laydate', function(){
+	  var laydate = layui.laydate;
+	  
+	  //执行一个laydate实例
+	  laydate.render({
+	    elem: '#test1' //指定元素
+	    ,format: 'yyyy-MM-dd HH:mm:ss'
+	    ,type: 'datetime', lang: 'en'
+	  });
+	});
+		$(function() {
+			var imgs = [];
+			var pre = new Upload({
+				filePicker : "pre",
+				fileList : "preP",
+				num : 1,
+				params : {
+					businessKey : "30",
+					subClassName : "logo"
+				},
+				server : "${base}/admin/repaircompany/repaircompany_image_upload.do"
+			});
+			pre.uploadSuccess = function(file, data) {
+				$('#logo').val(data.filePath);
+			};
+		});
+	</script>
+</body>
+</html>

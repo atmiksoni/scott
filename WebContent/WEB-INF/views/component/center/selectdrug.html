@@ -1,0 +1,181 @@
+<body style="overflow: hidden">
+<script src="/plug-in/viewer/js/viewer.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="/plug-in/viewer/css/viewer.min.css" />
+ <script type="text/javascript">
+      var drug;
+    $(function() {
+      drug = new Dd("drug");
+      drug.url = "select_drug_data.do";
+      drug.title = "药店药品信息";
+      drug.colM = [ [ {
+        title : "主键",
+        field : "drugId",
+        alias : "d",
+        hidden:true
+      } ,{
+        title : "药品类型ID",
+        field : "drugTypeId",
+        alias : "d",
+        width : 100,
+        align : "center",
+        hidden:true
+      } ,{
+        title : "药店ID",
+        field : "pharmacyId",
+        alias : "d",
+        width : 100,
+        align : "center",
+        hidden:true
+      },{
+          title : "药店名称",
+          field : "pharmacyName",
+          alias : "pharmacy",
+          width : 100,
+          align : "center"
+        }  ,{
+        title : "药品名称",
+        field : "drugName",
+        alias : "d",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "图片",
+        field : "imgs",
+        alias : "d",
+        width : 100,
+        align : "center",
+        formatter : function(value, row, index) {
+			return '<img onclick="show()"  width="80px;" height="50px;" src="../../' + row.imgs + '" />';
+		}
+      } ,{
+        title : "价格",
+        field : "amount",
+        alias : "d",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "规格",
+        field : "specifications",
+        alias : "d",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "备注",
+        field : "remark",
+        alias : "d",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "创建日期",
+        field : "createDate",
+        alias : "d",
+        width : 100,
+        align : "center",
+        hidden:true
+      } ,{
+			title : "状态",
+			field : "status",
+			alias : "d",
+			width : 100,
+			align : "center",
+			formatter : function(value, row, index) {
+				return Fm.formatter({
+					"1" : "启用",
+					"0" : "禁用"
+				}, value);
+			},
+	        hidden:true
+		} ] ];
+
+      drug.toolbar = [ /* {
+        id : "drug_add",
+        text : "添加",
+        iconCls : "icon-add",
+        handler : function() {
+          drug.open2({
+            title : "添加药店药品",
+            h : "70%",
+			w : "45%",
+            url : "drug_add_turn.do",
+            params : myparams
+          });
+        }
+      }, {
+        id : "drug_edit",
+        text : "修改",
+        iconCls : "icon-edit",
+        disabled : true,
+        handler : function() {
+          drug.updata2({
+            title : "修改药店药品",
+            h : "70%",
+			w : "45%",
+            url : "drug_edit_turn.do",
+            params : {
+                drugId : drug.rowKey
+            }
+		  });
+        }
+      }, {
+        id : "drug_del",
+        text : "删除药店药品",
+        iconCls : "icon-remove",
+        disabled : true,
+        handler : function() {
+          drug.remove({
+             url : "drug_del_sub.do",
+             params : {
+                drugId : drug.rowKey
+             }
+		  });
+        }
+      }  */];
+      drug.param = myparams;
+      drug.onClickRow = function(rowIndex, rowData) {
+       $("#drug_edit,#drug_del").linkbutton("enable");
+      }
+      drug.onLoadSuccess = function(data) {
+       $("#drug_edit,#drug_del").linkbutton("disable");
+      };
+      drug.LoadDataGrid();
+      $('#search').linkbutton({
+        iconCls : 'icon-search',
+        onClick : function() {
+        	myparams.drugName=$("#drugName").val();
+        	myparams.drugName=$("#drugName").val();
+        	myparams.pharmacyName=$("#pharmacyName").val();
+			//myparams.status=$("#status").combobox('getValue');
+          drug.search(myparams);
+        }
+      });
+      $('#sub').linkbutton({
+			iconCls : 'icon-save',
+			onClick : function() {
+				func.setTextBox(drug.getSelectedRow());
+				var index = parent.layer.getFrameIndex(window.name); //获取窗口索引  
+				parent.layer.close(index);//关闭弹出的子页面窗口 
+			}
+		});
+    });
+    function show() {
+		var viewer = new Viewer(document.getElementById('imgdiv'), {
+			url : 'data-original'
+		});
+		viewer.show();
+	}
+  </script>
+ <div fit="true" class="easyui-layout">
+  <div region="north" title="查询条件" style="height: 70px;">
+   <div class="pannel_search">
+     	药店名称：<input type="text" class="easyui-textbox" id="pharmacyName" />
+     	药品名称：<input type="text" class="easyui-textbox" id="drugName" />
+		<!-- 启用状态：<@p.select class="easyui-combobox" id="status" list={"0":"禁用","1":"启用"} width="150" defVal="全部"/> -->
+       <a href="javascript:;" id="search">查询</a>
+       <a href="javascript:;" id="sub">确认</a>
+   </div>
+  </div>
+  <div  id="imgdiv" region="center" style="overflow: hidden;border: none;">
+   <table fit="true" namespace="drug" id="drug" class="datagrid"></table>
+  </div>
+ </div>
+</body>

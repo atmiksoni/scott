@@ -1,0 +1,111 @@
+<body style="overflow: hidden">
+ <script type="text/javascript">
+      var evaluative;
+    $(function() {
+      evaluative = new Dd("evaluative");
+      evaluative.url = "evaluative_list_data.do";
+      evaluative.title = "信息";
+      evaluative.colM = [ [  {
+        title : "主键",
+        field : "evaluativeId",
+        alias : "e",
+        hidden:true
+      } ,{
+        title : "评价名字",
+        field : "evaluativeName",
+        alias : "e",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "评价类型 ",
+        field : "evaluativeType",
+        alias : "e",
+        width : 100,
+        align : "center",formatter : function(value, row, index) {
+			return Fm.formatter({
+				"Doctor" : "医生",
+				"Nurse" : "护士"
+			}, value);
+		}
+      } ,{
+        title : "",
+        field : "createDate",
+        alias : "e",
+        width : 100,
+        align : "center"
+      } ] ];
+
+      evaluative.toolbar = [ {
+        id : "evaluative_add",
+        text : "添加",
+        iconCls : "icon-add",
+        handler : function() {
+          evaluative.open2({
+            title : "添加",
+            h : "70%",
+			w : "45%",
+            url : "evaluative_add_turn.do",
+            params : myparams
+          });
+        }
+      }, {
+        id : "evaluative_edit",
+        text : "修改",
+        iconCls : "icon-edit",
+        disabled : true,
+        handler : function() {
+          evaluative.updata2({
+            title : "修改",
+            h : "70%",
+			w : "45%",
+            url : "evaluative_edit_turn.do",
+            params : {
+                evaluativeId : evaluative.rowKey
+            }
+		  });
+        }
+      }, {
+        id : "evaluative_del",
+        text : "删除",
+        iconCls : "icon-remove",
+        disabled : true,
+        handler : function() {
+          evaluative.remove({
+             url : "evaluative_del_sub.do",
+             params : {
+                evaluativeId : evaluative.rowKey
+             }
+		  });
+        }
+      } ];
+      evaluative.param = myparams;
+      evaluative.onClickRow = function(rowIndex, rowData) {
+       $("#evaluative_edit,#evaluative_del").linkbutton("enable");
+      }
+      evaluative.onLoadSuccess = function(data) {
+       $("#evaluative_edit,#evaluative_del").linkbutton("disable");
+      };
+      evaluative.LoadDataGrid();
+      $('#search').linkbutton({
+        iconCls : 'icon-search',
+        onClick : function() {
+        	myparams.evaluativeName=$("#evaluativeName").val();
+			myparams.evaluativeType=$("#evaluativeType").combobox('getValue');
+          evaluative.search(myparams);
+        }
+      });
+    });
+  </script>
+ <div fit="true" class="easyui-layout">
+  <div region="north" title="查询条件" style="height: 70px;">
+   <div class="pannel_search">
+   	名称：<input type="text" class="easyui-textbox" id="evaluativeName" />
+	类型：<@p.select class="easyui-combobox" id="evaluativeType" list={"Doctor":"医生","Nurse":"护士"} width="150" defVal="全部"/>
+       <a href="javascript:;" id="search">查询</a>
+   </div>
+  </div>
+  <div region="center" style="overflow: hidden;border: none;">
+   <table fit="true" namespace="evaluative" id="evaluative" class="datagrid"></table>
+  </div>
+ </div>
+</body>

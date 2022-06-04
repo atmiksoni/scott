@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<@p.resource types="Jquery,Easyui,AnyDataGrid,Tree,NiceScroll"/>
+<script type="text/javascript">
+  var myparams = {
+ 
+  };
+  function tree_click(node) {
+	  $("#disease_add").linkbutton("enable");
+	  myparams.diseaseId = node.id;
+	  disease.search(myparams);
+}
+</script>
+</head>
+<body class="easyui-layout" style="overflow-y: hidden">
+<div region="west" split="true" title="类型选择" minWidth="230" maxWidth="230" style="overflow: hidden;">
+		<div class="easyui-layout" fit="true" style="border: none; overflow-y: hidden;">
+			<div region="north" style="border-bottom: none; border-left: none; border-right: none; height: 28px;">
+				<div class="datagrid-toolbar" style="overflow-y: hidden; height: 25px;">
+					<a href="javascript:;" id="typeadd" plain="true">添加大类型</a>
+				</div>
+			</div>
+			<div class="scroll" region="center" href="${base}/admin/componet/select_disease_turn.do" style="border: none;"></div>
+		</div>
+	</div>
+ <div region="center" href="disease_list_turn.do" style="padding: 0px; overflow: hidden; border: none"></div>
+</body>
+</html>

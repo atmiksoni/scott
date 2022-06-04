@@ -1,0 +1,86 @@
+<body style="overflow: hidden">
+	<script src="/plug-in/viewer/js/viewer.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="/plug-in/viewer/css/viewer.min.css" />
+	<script type="text/javascript">
+		var product;
+		$(function() {
+			product = new Dd("product");
+			product.url = "product_detial_data.do?companyId=${companyId}";
+			product.title = "产品信息";
+			product.colM = [ [ {
+				title : "主键",
+				field : "productId",
+				alias : "p",
+				hidden : true,
+				width : 100,
+				align : "center"
+			}, {
+				title : "产品图片",
+				field : "productPic",
+				alias : "p",
+				width : 100,
+				align : "center",
+				formatter:function(value, row, index){
+					return '<img onclick="show()"  width="80px;" height="50px;" src="../'+value.productPic+'" />';
+				}
+			}, {
+				title : "产品名称",
+				field : "productName",
+				alias : "p",
+				width : 100,
+				sortable : true,
+				align : "center"
+			}, {
+				title : "企业描述",
+				field : "productDescribe",
+				alias : "p",
+				width : 100,
+				align : "center"
+			}, {
+				title : "产品价格",
+				field : "productPrice",
+				alias : "p",
+				width : 100,
+				align : "center"
+			} ] ];
+			product.toolbar = [{
+				id : "product_del",
+				text : "删除",
+				iconCls : "icon-remove",
+				disabled : true,
+				handler : function() {
+					product.remove({
+						url : "product_del_sub.do",
+						params : {
+							productId : product.rowKey
+						}
+					});
+				}
+			}];
+			product.param = myparams;
+			product.onClickRow = function(rowIndex, rowData) {
+			  $("#product_edit,#product_del").linkbutton("enable");
+			}
+			product.onLoadSuccess = function(data) {
+		      $("#product_edit,#product_del").linkbutton("disable");
+		    };
+		    product.LoadDataGrid();
+		});
+		function show() {
+			var viewer = new Viewer(document.getElementById('imgdiv'), {
+				url : 'data-original'
+			});
+			viewer.show();
+		}
+	</script>
+	<div fit="true" class="easyui-layout">
+		<!-- <div region="north" title="查询条件" style="height: 70px;">
+			<div class="pannel_search">
+				单位名称：<input type="text" class="easyui-textbox" id="compName" name="compName" /> <a href="javascript:;" id="search">查询</a> <a href="javascript:;" id="export">导出</a>
+			</div>
+		</div> -->
+		<div id="imgdiv" region="center" style="overflow: hidden; border: none;">
+			<table fit="true" namespace="product" id="product" class="datagrid"></table>
+		</div>
+	</div>
+</body>

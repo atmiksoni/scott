@@ -1,0 +1,198 @@
+<body style="overflow: hidden">
+	<script src="/plug-in/viewer/js/viewer.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="/plug-in/viewer/css/viewer.min.css" />
+	<script type="text/javascript">
+		var identity;
+		$(function() {
+			identity = new Dd("identity");
+			identity.url = "identity_list_data.do";
+			identity.title = "信息";
+			identity.colM = [ [
+					{
+						title : "主键",
+						field : "identityId",
+						alias : "i",
+						hidden : true,
+						align : "center"
+					},
+					{
+						title : "用户电话",
+						field : "linkPhone",
+						alias : "accountInfo",
+						width : 50,
+						align : "center"
+					},
+					{
+						title : "姓名",
+						field : "userName",
+						alias : "i",
+						width : 40,
+						align : "center"
+					},
+					{
+						title : "身份证号",
+						field : "cardNo",
+						alias : "i",
+						width : 100,
+						align : "center"
+					},
+					{
+						title : "身份证正面照",
+						field : "frontCard",
+						alias : "i",
+						align : "center",
+						formatter : function(value, row, index) {
+							return '<img onclick="show()"  width="80px;" height="80px;" src="../../' + row.frontCard + '" />';
+						}
+					},
+					{
+						title : "身份证反面照",
+						field : "backCard",
+						alias : "i",
+						align : "center",
+						formatter : function(value, row, index) {
+							return '<img onclick="show()"  width="80px;" height="80px;" src="../../' + row.backCard + '" />';
+						}
+					},
+					{
+						title : "手持身份证照",
+						field : "handCard",
+						alias : "i",
+						align : "center",
+						formatter : function(value, row, index) {
+							return '<img onclick="show()"  width="80px;" height="80px;" src="../../' + row.handCard + '" />';
+						}
+					}, {
+						title : "是否通过实名认证",
+						field : "isPass",
+						alias : "i",
+						width : 100,
+						align : "center",
+						formatter : function(value, row, index) {
+							return Fm.formatter({
+								"1" : "已通过",
+								"-1" : "未通过",
+								"0" : "未审核"
+							}, value);
+						}
+					}, {
+						title : "性别",
+						field : "sex",
+						alias : "accountInfo",
+						width : 100,
+						align : "center",
+						formatter : function(value, row, index) {
+							return Fm.formatter({
+								"1" : "男",
+								"0" : "女"
+							}, value);
+						}
+					}, {
+						title : "认证日期",
+						field : "createDate",
+						alias : "i",
+						width : 100,
+						align : "center"
+					} ] ];
+
+			identity.toolbar = [ {
+				id : "identity_edit",
+				text : "审批",
+				iconCls : "icon-edit",
+				disabled : true,
+				handler : function() {
+					identity.updata2({
+						title : "审批",
+						h : "70%",
+						w : "70%",
+						url : "identity_edit_turn.do",
+						params : {
+							identityId : identity.rowKey
+						}
+					});
+				}
+			}, {
+				id : "identity_del",
+				text : "删除",
+				iconCls : "icon-remove",
+				disabled : true,
+				handler : function() {
+					identity.remove({
+						url : "identity_del_sub.do",
+						params : {
+							identityId : identity.rowKey
+						}
+					});
+				}
+			} ];
+			identity.param = myparams;
+			identity.onClickRow = function(rowIndex, rowData) {
+				if (rowData.isPass == 0 || rowData.isTeacher == 0) {
+					$("#identity_edit,#identity_del").linkbutton("enable");
+				}
+				if (rowData.isPass == -1) {
+					$("#identity_del").linkbutton("enable");
+				}
+			}
+			identity.onLoadSuccess = function(data) {
+				$("#identity_edit,#identity_del").linkbutton("disable");
+			};
+			identity.LoadDataGrid();
+			$('#search').linkbutton({
+				iconCls : 'icon-search',
+				onClick : function() {
+					var telephone = $("#telephone").val();
+					var user_name = $("#user_name").val();
+					var status = $("#status").val();
+					var type = $("#type").val();
+					myparams.status = status;
+					myparams.user_name = user_name;
+					myparams.telephone = telephone;
+					myparams.type = type;
+					identity.search(myparams);
+				}
+			});
+			document.onkeydown = function(event) {
+				var e = event || window.event || arguments.callee.caller.arguments[0];
+				if (e && e.keyCode == 13) { // enter 键
+					var user_name = $("#user_name").val();
+					var telephone = $("#telephone").val();
+					var status = $("#status").val();
+					var isTeacher = $("#isTeacher").val();
+					var type = $("#type").val();
+					myparams.isTeacher = isTeacher;
+					myparams.status = status;
+					myparams.user_name = user_name;
+					myparams.telephone = telephone;
+					myparams.type = type;
+					identity.search(myparams);
+				}
+			};
+		});
+
+		function show() {
+			var viewer = new Viewer(document.getElementById('imgdiv'), {
+				url : 'data-original'
+			});
+			viewer.show();
+		}
+	</script>
+	<div fit="true" class="easyui-layout">
+		<div region="north" title="查询条件" style="height: 70px;">
+			<div class="pannel_search">
+				姓名: <input type="text" class="easyui-textbox" id="user_name" name="user_name" /> 
+				电话：<input type="text" class="easyui-textbox" id="telephone" name="telephone" /> 
+				审批状态: <select class="layui-input-block"
+					style="width: 120px; height: 30px;" id="status" name="status">
+					<option value="">全部</option>
+					<option value="0" style="color: blue;">未审核</option>
+					<option value="1" style="color: green;">已通过</option>
+					<option value="-1" style="color: red;">未通过</option>
+				</select> <a href="javascript:;" id="search">查询</a>
+			</div>
+		</div>
+		<div id="imgdiv" region="center" style="overflow: hidden; border: none;">
+			<table fit="true" namespace="identity" id="identity" class="datagrid"></table>
+		</div>
+	</div>
+</body>

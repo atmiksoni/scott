@@ -1,0 +1,22 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll"/>
+</head>
+<body>
+<@p.valid id="equipmenttyperemarkitem" action="equipmenttyperemarkitem_edit_sub.do" class="layui-form" layui=true>
+ <@p.legend text="${(languaged !='')?string('Hint information','提示信息')}"/> 
+ <input type="hidden" name="equipmenttyperemarkitemId" value="${equipmenttyperemarkitem.equipmenttyperemarkitemId}" />
+         <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('equipmentTypeRemarkId','设备类型备注ID')}"  datarule="required;" datamsgrequired="${(required)!''}" name="equipmentTypeRemarkId" value="${equipmenttyperemarkitem.equipmentTypeRemarkId}"/>    
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('equipmentTypeRemarkItemName','设备类型备注详情名称')}"  datarule="required;" datamsgrequired="${(required)!''}" name="equipmentTypeRemarkItemName" value="${equipmenttyperemarkitem.equipmentTypeRemarkItemName}"/>    
+	     </div>
+         <div class="layui-form-item">
+		    <@p.layinput label="${(languaged !='')?string('indexs','排序')}"  datarule="required;" datamsgrequired="${(required)!''}" name="indexs" value="${equipmenttyperemarkitem.indexs}"/>    
+	     </div>
+</@p.valid>
+</body>
+</html>

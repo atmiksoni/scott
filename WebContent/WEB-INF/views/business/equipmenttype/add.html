@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<@p.resource types="Jquery,NiceScroll"/>
+</head>
+<body>
+<@p.valid id="equipmenttype" action="equipmenttype_add_sub.do" class="layui-form" layui=true>
+ <@p.legend text="${(languaged !='')?string('Device type','添加设备类型')}"/> 
+         <div class="layui-form-item"> 
+           <@p.layinput label="${(languaged !='')?string('Type name','设备类型名称')}"  datarule="required;" datamsgrequired="${(required)!''}" name="equipmentTypeName" />
+           <@p.layinput label="${(languaged !='')?string('Type english name','设备类型英文名称')}"  datarule="required;" datamsgrequired="${(required)!''}" name="equipmentTypeEnglishName" />
+	     </div>
+         <div class="layui-form-item"> 
+	     </div>
+        <!--  <div class="layui-form-item"> 
+           <@p.layinput label="${(languaged !='')?string('equipmentTypeRemarkId','设备类型备注一')}"  datarule="required;" datamsgrequired="${(required)!''}" name="equipmentTypeRemarkId" />
+           <@p.layinput label="${(languaged !='')?string('equipmentTypeRemarkTwoId','设备类型备注二')}"  datarule="required;" datamsgrequired="${(required)!''}" name="equipmentTypeRemarkTwoId" />
+	     </div> -->
+         <div class="layui-form-item"> 
+	     </div>
+	      <div class="layui-form-item"> 
+           <@p.layinput label="${(languaged !='')?string('sequence','排序')}"  datarule="required;" datamsgrequired="${(required)!''}" name="Indexs" />
+	     </div>
+</@p.valid>
+</body>
+</html>

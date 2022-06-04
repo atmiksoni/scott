@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<link rel="stylesheet" href="/plug-in/webui/layui/css/layui.css" media="all">
+<link rel="stylesheet" href="/plug-in/webui/layui/css/global.css" media="all">
+<@p.resource types="Jquery,NiceScroll,EasyUI,webuploader"/>
+<@p.css href="plug-in/webuploader/css/style.css"/> 
+<@p.js src="plug-in/webuploader/js/imgupload.js"/>
+</head>
+<body>
+	<@p.valid id="accountinfo" action="accountinfo_edit_sub.do" class="layui-form">
+	<fieldset class="layui-elem-field layui-field-title">
+		<legend>查看用户信息</legend>
+	</fieldset>
+    <input type="hidden" name="accountInfoId" value="${accountInfo.accountInfoId}" />
+          		<div class="layui-form-item">
+				    <div class="layui-inline">
+				   		<label class="layui-form-label">姓名:</label>
+						<div class="layui-input-inline">
+							<input id="userName" name="userName" type="text" disabled="disabled" value="${accountInfo.userName}" class="layui-input">
+						</div>
+				    </div>
+			     </div>
+          		<div class="layui-form-item">
+				    <div class="layui-inline">
+				   		<label class="layui-form-label">昵称:</label>
+						<div class="layui-input-inline">
+							<input id="nickName" name="nickName" type="text" disabled="disabled" value="${accountInfo.nickName}" class="layui-input">
+						</div>
+				    </div>
+			     </div>
+			     <#if "${accountInfo.sex==1}">
+          		<div class="layui-form-item">
+				    <div class="layui-inline">
+				   		<label class="layui-form-label">性别:</label>
+						<div class="layui-input-inline">
+							<input id="sex" name="sex" type="text" disabled="disabled" value="男"  class="layui-input">
+						</div>
+				    </div>
+			     </div>
+			     </#if>
+			      <#if "${accountInfo.sex==0}">
+          		<div class="layui-form-item">
+				    <div class="layui-inline">
+				   		<label class="layui-form-label">性别:</label>
+						<div class="layui-input-inline">
+							<input id="sex" name="sex" type="text" disabled="disabled" value="女"  class="layui-input">
+						</div>
+				    </div>
+			     </div>
+			     </#if>
+          		<div class="layui-form-item">
+				    <div class="layui-inline">
+				   		<label class="layui-form-label">手机号:</label>
+						<div class="layui-input-inline">
+							<input id="telephone" name="telephone" type="text" disabled="disabled" value="${accountInfo.telephone}" class="layui-input">
+						</div>
+				    </div>
+			     </div>
+    </table>
+ </@p.valid> 
+</body>
+</html>

@@ -1,0 +1,139 @@
+<body style="overflow: hidden">
+	<script type="text/javascript">
+		var doctoridentity;
+		$(function() {
+			doctoridentity = new Dd("doctoridentity");
+			doctoridentity.url = "doctoridentity_list_data.do";
+			doctoridentity.title = "信息";
+			doctoridentity.colM = [ [ {
+				title : "主键",
+				field : "doctorIdentityId",
+				alias : "d",
+				hidden : true
+			}, {
+				title : "用户姓名",
+				field : "userName",
+				alias : "accountInfo",
+				width : 100,
+				align : "center"
+			}, {
+				title : "医生等级",
+				field : "doctorLevel",
+				alias : "d",
+				width : 100,
+				align : "center"
+			}, {
+				title : "医院名称",
+				field : "hospitalName",
+				alias : "d",
+				width : 100,
+				align : "center"
+			}, {
+				title : "科室ID",
+				field : "departmentId",
+				alias : "d",
+				width : 100,
+				align : "center"
+			}, {
+				title : "资格证",
+				field : "qualificationCertificate",
+				alias : "d",
+				width : 100,
+				align : "center",
+				formatter : function(value, row, index) {
+					return '<img width="71px;" align="center" height="60px;" src="../../' + row.qualificationCertificate
+							+ '" />';
+				}
+			}, {
+				title : "资格证编号",
+				field : "qualificationCertificateNo",
+				alias : "d",
+				width : 100,
+				align : "center"
+			}, {
+				title : "执业证",
+				field : "practiceCertificate",
+				alias : "d",
+				width : 100,
+				align : "center",
+				formatter : function(value, row, index) {
+					return '<img width="71px;" align="center" height="60px;" src="../../' + row.practiceCertificate
+							+ '" />';
+				}
+			}, {
+				title : "执业证编号",
+				field : "practiceCertificateNo",
+				alias : "d",
+				width : 100,
+				align : "center"
+			}, {
+				title : "是否通过",
+				field : "isPass",
+				alias : "d",
+				width : 100,
+				align : "center",
+				formatter : function(value, row, index) {
+					return Fm.formatter({
+						"-1" : "未通过",
+						"0" : "待审核",
+						"1" : "已通过"
+					}, value);
+				}
+			}, {
+				title : "创建时间",
+				field : "createDate",
+				alias : "d",
+				width : 100,
+				align : "center"
+			}, {
+				title : "失败原因",
+				field : "reason",
+				alias : "d",
+				width : 100,
+				align : "center"
+			} ] ];
+
+			doctoridentity.toolbar = [ {
+				id : "doctoridentity_edit",
+				text : "审核",
+				iconCls : "icon-edit",
+				disabled : true,
+				handler : function() {
+					doctoridentity.updata2({
+						title : "审核",
+						h : "70%",
+						w : "45%",
+						url : "doctoridentity_edit_turn.do",
+						params : {
+							doctorIdentityId : doctoridentity.rowKey
+						}
+					});
+				}
+			} ];
+			doctoridentity.param = myparams;
+			doctoridentity.onClickRow = function(rowIndex, rowData) {
+				$("#doctoridentity_edit,#doctoridentity_del").linkbutton("enable");
+			}
+			doctoridentity.onLoadSuccess = function(data) {
+				$("#doctoridentity_edit,#doctoridentity_del").linkbutton("disable");
+			};
+			doctoridentity.LoadDataGrid();
+			$('#search').linkbutton({
+				iconCls : 'icon-search',
+				onClick : function() {
+					doctoridentity.search(myparams);
+				}
+			});
+		});
+	</script>
+	<div fit="true" class="easyui-layout">
+		<div region="north" title="查询条件" style="height: 70px;">
+			<div class="pannel_search">
+				<a href="javascript:;" id="search">查询</a>
+			</div>
+		</div>
+		<div region="center" style="overflow: hidden; border: none;">
+			<table fit="true" namespace="doctoridentity" id="doctoridentity" class="datagrid"></table>
+		</div>
+	</div>
+</body>

@@ -1,0 +1,123 @@
+<body style="overflow: hidden">
+ <script type="text/javascript">
+      var checkresult;
+    $(function() {
+      checkresult = new Dd("checkresult");
+      checkresult.url = "checkresult_list_data.do";
+      checkresult.title = "${(languaged !='')?string('Result',' 检查结果信息')}";
+      checkresult.colM = [ [ /* {
+        field : "ck",
+        checkbox : true,
+        align : "center"
+      },  */{
+        title : "主键",
+        field : "checkresultId",
+        alias : "c",
+        hidden:true
+      }  ,{
+        title : "${(languaged !='')?string('Result code','检查结果编号')}",
+        field : "checkResultCode",
+        alias : "c",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "${(languaged !='')?string('Result name','检查结果名称')}",
+        field : "checkResultName",
+        alias : "c",
+        width : 100,
+        align : "center"
+      } ,{
+          title : "${(languaged !='')?string('Result english name','检查项目英文名称')}",
+          field : "checkResultEnglishName",
+          alias : "c",
+          width : 100,
+          align : "center"
+        },{
+        title : "${(languaged !='')?string('Sorting','排序')}",
+        field : "Indexs",
+        alias : "c",
+        width : 100,
+        align : "center"
+      } ,{
+        title : "${(languaged !='')?string('creation time','创建时间')}",
+        field : "createDate",
+        alias : "c",
+        width : 100,
+        align : "center"
+      } ] ];
+
+      checkresult.toolbar = [ {
+        id : "checkresult_add",
+        text : "${(languaged !='')?string('add',' 添加 ')}",
+        iconCls : "icon-add",
+        handler : function() {
+          checkresult.open2({
+            title : "${(languaged !='')?string('add','添加 检查结果')}",
+            h : "70%",
+			w : "45%",
+			btn:["${(languaged !='')?string('confirm',' 确认 ')}","${(languaged !='')?string('close',' 关闭 ')}"],
+            url : "checkresult_add_turn.do",
+            params : myparams
+          });
+        }
+      }, {
+        id : "checkresult_edit",
+        text : "${(languaged !='')?string('edit',' 修改')}",
+        iconCls : "icon-edit",
+        disabled : true,
+        handler : function() {
+          checkresult.updata2({
+            title : "${(languaged !='')?string('edit','修改 检查结果')}",
+            h : "70%",
+			w : "45%",
+            url : "checkresult_edit_turn.do",
+            btn:["${(languaged !='')?string('confirm',' 确认 ')}","${(languaged !='')?string('close',' 关闭 ')}"],
+            params : {
+                checkresultId : checkresult.rowKey
+            }
+		  });
+        }
+      }/* , {
+        id : "checkresult_del",
+        text : "${(languaged !='')?string('delete',' 删除')}",
+        iconCls : "icon-remove",
+        disabled : true,
+        handler : function() {
+          checkresult.remove({
+             url : "checkresult_del_sub.do",
+             params : {
+                checkresultId : checkresult.rowKey
+             },
+             title:"${(languaged !='')?string('are you delete?','')}",
+             content:"${(languaged !='')?string('delete content','确定要删除所选记录吗?')}",
+              btn:["${(languaged !='')?string('confirm',' 确认 ')}","${(languaged !='')?string('close',' 关闭 ')}"]
+		  });
+        }
+      }  */];
+      checkresult.param = myparams;
+      checkresult.onClickRow = function(rowIndex, rowData) {
+       $("#checkresult_edit,#checkresult_del").linkbutton("enable");
+      }
+      checkresult.onLoadSuccess = function(data) {
+       $("#checkresult_edit,#checkresult_del").linkbutton("disable");
+      };
+      checkresult.LoadDataGrid();
+      $('#search').linkbutton({
+        iconCls : 'icon-search',
+        onClick : function() {
+          checkresult.search(myparams);
+        }
+      });
+    });
+  </script>
+ <div fit="true" class="easyui-layout">
+<!--   <div region="north" title="查询条件" style="height: 70px;">
+   <div class="pannel_search">
+       <a href="javascript:;" id="search">${(languaged !='')?string('search','查询')}</a>
+   </div>
+  </div> -->
+  <div region="center" style="overflow: hidden;border: none;">
+   <table fit="true" namespace="checkresult" id="checkresult" class="datagrid"></table>
+  </div>
+ </div>
+</body>
